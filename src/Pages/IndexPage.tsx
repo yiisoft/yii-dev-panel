@@ -1,9 +1,7 @@
-import {Link} from "react-router-dom";
-
 export function IndexPage() {
     return (
         <>
-            <Link to={'/inspector'}>Inspector</Link>
+            Use navigation menu to choose needed module
         </>
     )
 }
