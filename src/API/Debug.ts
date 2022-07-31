@@ -6,7 +6,7 @@ interface Pokemon {
 
 // Define a service using a base URL and expected endpoints
 export const debugApi = createApi({
-    reducerPath: 'debug',
+    reducerPath: 'api.debug',
     baseQuery: fetchBaseQuery({baseUrl: 'http://127.0.0.1:8080/debug/api/'}),
     endpoints: (builder) => ({
         getDebug: builder.query<Pokemon, string>({

@@ -11,6 +11,7 @@ import {ParametersPage} from "./Pages/Inspector/ParametersPage";
 import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
 import {ContainerPage} from "./Pages/Inspector/ContainerPage";
 import {InfoPage} from "./Pages/Debug/InfoPage";
+import {DebugLayout} from "./Pages/Debug/Layout";
 
 function App() {
     return (
@@ -26,7 +27,7 @@ function App() {
                                 <Route path='configuration' element={<ConfigurationPage/>}/>
                                 <Route path='container' element={<ContainerPage/>}/>
                             </Route>
-                            <Route path="/debug">
+                            <Route path="/debug" element={<DebugLayout />}>
                                 <Route path='info' element={<InfoPage/>}/>
                             </Route>
                         </Route>

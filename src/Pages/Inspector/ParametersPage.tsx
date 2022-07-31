@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetParametersQuery} from "../../API/Inspector/Inspector";
-import ReactJson from "react-json-view";
+import {JsonRenderer} from "../../Helper/JsonRenderer";
 
 const columns: GridColDef[] = [
     { field: '0', headerName: 'Name', width: 130 },
@@ -10,7 +10,7 @@ const columns: GridColDef[] = [
         field: '1',
         headerName: 'Value',
         width: 1000,
-        renderCell: (params: GridRenderCellParams) => <ReactJson src={params.value} />
+        renderCell: (params: GridRenderCellParams) => <JsonRenderer value={params.value}/>
     },
 ];
 
