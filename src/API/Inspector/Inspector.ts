@@ -6,6 +6,7 @@ interface Pokemon {
 
 export const inspectorApi = createApi({
     reducerPath: 'api.inspector',
+    keepUnusedDataFor: 0,
     baseQuery: fetchBaseQuery({baseUrl: process.env.REACT_APP_BACKEND_URL + '/inspect/api/'}),
     endpoints: (builder) => ({
         getParameters: builder.query<Pokemon, string>({

@@ -6,7 +6,7 @@ import {useGetDebugQuery} from "../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
-import {changeEntryAction} from "../../Provider/Debug/DebugEntryContext";
+import {changeEntryAction, useDebugEntry} from "../../Provider/Debug/DebugEntryContext";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -15,10 +15,11 @@ function formatDate(unixTimeStamp: number) {
 export const DebugLayout = () => {
     const dispatch = useDispatch()
     const {data, isLoading, isSuccess} = useGetDebugQuery('');
-    const [selectedEntry, setSelectedEntry] = useState(null);
+    const debugEntry = useDebugEntry();
+    const [selectedEntry, setSelectedEntry] = useState(debugEntry);
 
     useEffect(() => {
-        if (isSuccess && data!.data && data!.data.length) {
+        if (isSuccess && data!.data && data!.data.length && !selectedEntry) {
             const entry = data!.data[0];
             setSelectedEntry(entry);
             dispatch(changeEntryAction(entry))
