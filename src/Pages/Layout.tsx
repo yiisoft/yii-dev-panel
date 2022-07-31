@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {Fragment} from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -27,7 +28,6 @@ const NavLink = (props: { link: string, name: string } & any) => {
     const {link, name, ...other} = props;
     return <Link
         href={link}
-        key={name}
         sx={{my: 2, mx: 1, color: 'white', display: 'block'}}
         {...other}
     >
@@ -42,7 +42,7 @@ export const Layout = () => {
         setAnchorElUser({...anchorElUser, [key]: event.currentTarget});
     };
 
-    const handleCloseUserMenu = (key:string) => {
+    const handleCloseUserMenu = (key: string, event: any) => {
         const newAnchors = {...anchorElUser}
         delete newAnchors[key]
         setAnchorElUser(newAnchors);
@@ -70,10 +70,10 @@ export const Layout = () => {
                         <Box sx={{flexGrow: 1, display: 'flex'}}>
                             {pages.map((page) => {
                                     if (!page.items) {
-                                        return <NavLink name={page.name} link={page.link}/>
+                                        return <NavLink key={page.name} name={page.name} link={page.link}/>
                                     }
                                     let key = page.name;
-                                    return <>
+                                    return <Fragment key={page.name}>
                                         <NavLink name={page.name} link={'#'} onClick={handleOpenUserMenu.bind(this, key)}/>
                                         <Menu
                                             anchorEl={anchorElUser[key]}
@@ -82,17 +82,17 @@ export const Layout = () => {
                                             onClose={handleCloseUserMenu.bind(this, key)}
                                         >
                                             {page.items.map((item) => (
-                                                <MenuItem key={item.name} onClick={handleCloseUserMenu.bind(this, key)}>
-                                                    <NavLink
-                                                        name={item.name}
-                                                        link={item.link}
-                                                        onClick={handleOpenUserMenu.bind(this, key)}
-                                                        sx={{display: 'block'}}
-                                                    />
+                                                <MenuItem
+                                                    key={item.name}
+                                                    href={item.link}
+                                                    onClick={handleCloseUserMenu.bind(this, key)}
+                                                    component={Link}
+                                                >
+                                                    {item.name}
                                                 </MenuItem>
                                             ))}
                                         </Menu>
-                                    </>
+                                    </Fragment>
                                 }
                             )}
                         </Box>
