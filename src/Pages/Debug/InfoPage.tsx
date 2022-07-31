@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetParametersQuery} from "../../API/Inspector/Inspector";
 import ReactJson from "react-json-view";
+import {useGetDebugQuery} from "../../API/Debug";
 
 const columns: GridColDef[] = [
     { field: '0', headerName: 'Name', width: 130 },
@@ -14,25 +14,14 @@ const columns: GridColDef[] = [
     },
 ];
 
-const rows = [
-    { name: 'Snow', value: 'Jon'},
-    { name: 'Lannister', value: 'Cersei'},
-    { name: 'Lannister', value: 'Jaime'},
-    { name: 'Stark', value: 'Arya'},
-    { name: 'Targaryen', value: 'Daenerys'},
-    { name: 'Melisandre', value: null},
-    { name: 'Clifford', value: 'Ferrara'},
-    { name: 'Frances', value: 'Rossini'},
-    { name: 'Roxie', value: 'Harvey'},
-];
-
-export const IndexPage = () => {
-    const {data, isLoading} = useGetParametersQuery('');
+export const InfoPage = () => {
+    const {data, isLoading} = useGetDebugQuery('');
 
     if (isLoading) {
         return <>Loading..</>
     }
-    const rows = Object.entries(data!.data as any)
+
+    const rows = Object.entries(data!.data[0] || [] as any)
 
     return (
         <div style={{ height: 400, width: '100%' }}>

@@ -2,7 +2,6 @@ import React from 'react';
 import './App.css';
 import {BrowserRouter, Route, Routes,} from "react-router-dom";
 import {IndexPage} from "./Pages/IndexPage";
-import {IndexPage as InspectorIndexPage} from "./Pages/Inspector/IndexPage";
 import {Layout} from "./Pages/Layout";
 import {ThemeProvider} from "@mui/material";
 import {theme} from "./Theme/DefaultTheme";
@@ -11,6 +10,7 @@ import {store} from "./store";
 import {ParametersPage} from "./Pages/Inspector/ParametersPage";
 import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
 import {ContainerPage} from "./Pages/Inspector/ContainerPage";
+import {InfoPage} from "./Pages/Debug/InfoPage";
 
 function App() {
     return (
@@ -22,10 +22,12 @@ function App() {
                             <Route index element={<IndexPage/>}/>
 
                             <Route path="/inspector">
-                                <Route index element={<InspectorIndexPage/>}/>
                                 <Route path='parameters' element={<ParametersPage/>}/>
                                 <Route path='configuration' element={<ConfigurationPage/>}/>
                                 <Route path='container' element={<ContainerPage/>}/>
+                            </Route>
+                            <Route path="/debug">
+                                <Route path='info' element={<InfoPage/>}/>
                             </Route>
                         </Route>
                     </Routes>

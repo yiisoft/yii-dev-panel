@@ -10,9 +10,13 @@ import {Outlet} from "react-router";
 
 const pages = [
     {name: 'Gii', link: '#'},
-    {name: 'Debug', link: '#'},
     {
-        name: 'Inspector', link: '/inspector', items: [
+        name: 'Debug', link: '#', items: [
+            {name: 'Info', link: '/debug/info'},
+        ]
+    },
+    {
+        name: 'Inspector', link: '#', items: [
             {name: 'Parameters', link: '/inspector/parameters'},
             {name: 'Configuration', link: '/inspector/configuration'},
             {name: 'Container', link: '/inspector/container'},
@@ -32,14 +36,16 @@ const NavLink = (props: { link: string, name: string } & any) => {
 }
 
 export const Layout = () => {
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
 
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
+    const handleOpenUserMenu = (key: string, event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser({...anchorElUser, [key]: event.currentTarget});
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
+    const handleCloseUserMenu = (key:string) => {
+        const newAnchors = {...anchorElUser}
+        delete newAnchors[key]
+        setAnchorElUser(newAnchors);
     };
     return (
         <>
@@ -66,20 +72,21 @@ export const Layout = () => {
                                     if (!page.items) {
                                         return <NavLink name={page.name} link={page.link}/>
                                     }
+                                    let key = page.name;
                                     return <>
-                                        <NavLink name={page.name} link={'#'} onClick={handleOpenUserMenu}/>
+                                        <NavLink name={page.name} link={'#'} onClick={handleOpenUserMenu.bind(this, key)}/>
                                         <Menu
-                                            anchorEl={anchorElUser}
+                                            anchorEl={anchorElUser[key]}
                                             keepMounted
-                                            open={Boolean(anchorElUser)}
-                                            onClose={handleCloseUserMenu}
+                                            open={Boolean(anchorElUser[key])}
+                                            onClose={handleCloseUserMenu.bind(this, key)}
                                         >
                                             {page.items.map((item) => (
-                                                <MenuItem key={item.name} onClick={handleCloseUserMenu}>
+                                                <MenuItem key={item.name} onClick={handleCloseUserMenu.bind(this, key)}>
                                                     <NavLink
                                                         name={item.name}
                                                         link={item.link}
-                                                        onClick={handleOpenUserMenu}
+                                                        onClick={handleOpenUserMenu.bind(this, key)}
                                                         sx={{display: 'block'}}
                                                     />
                                                 </MenuItem>

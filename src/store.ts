@@ -1,13 +1,15 @@
 import {configureStore} from '@reduxjs/toolkit'
 import {setupListeners} from "@reduxjs/toolkit/query";
 import {inspectorApi} from "./API/Inspector/Inspector";
+import {debugApi} from "./API/Debug";
 
 export const store = configureStore({
     reducer: {
         [inspectorApi.reducerPath]: inspectorApi.reducer,
+        [debugApi.reducerPath]: debugApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(inspectorApi.middleware),
+        getDefaultMiddleware().concat([inspectorApi.middleware, debugApi.middleware]),
 })
 
 setupListeners(store.dispatch)
