@@ -11,9 +11,12 @@ export const inspectorApi = createApi({
         getParameters: builder.query<Pokemon, string>({
             query: () => `params`,
         }),
+        getConfiguration: builder.query<Pokemon, string>({
+            query: () => `config`,
+        }),
     }),
 })
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetParametersQuery } = inspectorApi
+export const { useGetParametersQuery, useGetConfigurationQuery } = inspectorApi

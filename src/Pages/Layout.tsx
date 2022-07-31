@@ -14,6 +14,7 @@ const pages = [
     {
         name: 'Inspector', link: '/inspector', items: [
             {name: 'Parameters', link: '/inspector/parameters'},
+            {name: 'Configuration', link: '/inspector/configuration'},
         ]
     },
 ];

@@ -9,6 +9,7 @@ import {theme} from "./Theme/DefaultTheme";
 import {Provider} from "react-redux";
 import {store} from "./store";
 import {ParametersPage} from "./Pages/Inspector/ParametersPage";
+import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
 
 function App() {
     return (
@@ -22,6 +23,7 @@ function App() {
                             <Route path="/inspector">
                                 <Route index element={<InspectorIndexPage/>}/>
                                 <Route path='parameters' element={<ParametersPage/>}/>
+                                <Route path='configuration' element={<ConfigurationPage/>}/>
                             </Route>
                         </Route>
                     </Routes>
