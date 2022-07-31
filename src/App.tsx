@@ -10,6 +10,7 @@ import {Provider} from "react-redux";
 import {store} from "./store";
 import {ParametersPage} from "./Pages/Inspector/ParametersPage";
 import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
+import {ContainerPage} from "./Pages/Inspector/ContainerPage";
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                                 <Route index element={<InspectorIndexPage/>}/>
                                 <Route path='parameters' element={<ParametersPage/>}/>
                                 <Route path='configuration' element={<ConfigurationPage/>}/>
+                                <Route path='container' element={<ContainerPage/>}/>
                             </Route>
                         </Route>
                     </Routes>
