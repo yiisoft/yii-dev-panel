@@ -15,7 +15,6 @@ const columns: GridColDef[] = [
 
 export const InfoPage = () => {
     const data = useDebugEntry()
-    console.log(data)
 
     const rows = Object.entries(data || [] as any)
 
