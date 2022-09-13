@@ -13,6 +13,7 @@ import {ContainerPage} from "./Pages/Inspector/ContainerPage";
 import {InfoPage} from "./Pages/Debug/InfoPage";
 import {DebugLayout} from "./Pages/Debug/Layout";
 import {PersistGate} from "redux-persist/integration/react";
+import {ContainerEntryPage} from "./Pages/Inspector/ContainerEntryPage";
 
 function App() {
     return (
@@ -24,12 +25,15 @@ function App() {
                             <Route path="/" element={<Layout/>}>
                                 <Route index element={<IndexPage/>}/>
 
-                                <Route path="/inspector">
+                                <Route path="inspector">
                                     <Route path='parameters' element={<ParametersPage/>}/>
                                     <Route path='configuration' element={<ConfigurationPage/>}/>
-                                    <Route path='container' element={<ContainerPage/>}/>
+                                    <Route path="container">
+                                        <Route index element={<ContainerPage/>}/>
+                                        <Route path='view' element={<ContainerEntryPage/>}/>
+                                    </Route>
                                 </Route>
-                                <Route path="/debug" element={<DebugLayout/>}>
+                                <Route path="debug" element={<DebugLayout/>}>
                                     <Route path='info' element={<InfoPage/>}/>
                                 </Route>
                             </Route>

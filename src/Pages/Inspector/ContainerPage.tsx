@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useState} from 'react';
 import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery,} from "../../API/Inspector/Inspector";
-import {Button} from "@mui/material";
+import {Button, Link} from "@mui/material";
 
 export const ContainerPage = () => {
     const {data, isLoading} = useGetClassesQuery('');
@@ -39,7 +39,10 @@ export const ContainerPage = () => {
                     return <div dangerouslySetInnerHTML={{__html: html}}/>
                 }
 
-                return <Button onClick={() => handleLoadObject(params.row[0])}>Load</Button>
+                return <>
+                    <Button onClick={() => handleLoadObject(params.row[0])}>Load</Button>
+                    <Link href={'view?class='+params.row[0]}>View</Link>
+                    </>
             }
         },
     ];

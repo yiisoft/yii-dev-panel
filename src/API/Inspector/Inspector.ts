@@ -24,4 +24,10 @@ export const inspectorApi = createApi({
     }),
 })
 
-export const {useGetParametersQuery, useGetConfigurationQuery, useGetClassesQuery, useLazyGetObjectQuery} = inspectorApi
+export const {
+    useGetParametersQuery,
+    useGetConfigurationQuery,
+    useGetObjectQuery,
+    useGetClassesQuery,
+    useLazyGetObjectQuery
+} = inspectorApi
