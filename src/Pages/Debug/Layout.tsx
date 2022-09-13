@@ -1,12 +1,13 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {Outlet} from "react-router";
+import {Outlet, useLocation} from "react-router";
 import {Autocomplete, TextField} from "@mui/material";
 import {useGetDebugQuery} from "../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
 import {changeEntryAction, useDebugEntry} from "../../Provider/Debug/DebugEntryContext";
+import {ErrorBoundary} from "react-error-boundary";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -14,6 +15,7 @@ function formatDate(unixTimeStamp: number) {
 
 export const DebugLayout = () => {
     const dispatch = useDispatch()
+    const location = useLocation()
     const {data, isLoading, isSuccess} = useGetDebugQuery('');
     const debugEntry = useDebugEntry();
     const [selectedEntry, setSelectedEntry] = useState(debugEntry);
@@ -29,6 +31,7 @@ export const DebugLayout = () => {
     if (isLoading) {
         return <>Loading..</>
     }
+
     function getOptions(entry: any) {
         if ('console' in entry) {
             return [formatDate(entry.console.request.startTime), entry.command.input].join(' ')
@@ -53,7 +56,9 @@ export const DebugLayout = () => {
                 }}
                 sx={{my: 1}}
             />
-            <Outlet/>
+            <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
+                <Outlet/>
+            </ErrorBoundary>
         </>
     );
 };

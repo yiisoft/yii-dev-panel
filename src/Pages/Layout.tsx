@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link, Menu, MenuItem} from "@mui/material";
-import {Outlet} from "react-router";
+import {Outlet, useLocation} from "react-router";
+import {ErrorBoundary} from "react-error-boundary";
 
 const pages = [
     {name: 'Gii', link: '#'},
@@ -36,6 +37,7 @@ const NavLink = (props: { link: string, name: string } & any) => {
 }
 
 export const Layout = () => {
+    const location = useLocation();
     const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
 
     const handleOpenUserMenu = (key: string, event: React.MouseEvent<HTMLElement>) => {
@@ -101,7 +103,9 @@ export const Layout = () => {
             </AppBar>
 
             <Container>
-                <Outlet/>
+                <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname]}>
+                    <Outlet/>
+                </ErrorBoundary>
             </Container>
         </>
     );
