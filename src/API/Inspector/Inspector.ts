@@ -1,7 +1,7 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
 
-interface Pokemon {
-    [name: string]: string | object | []
+interface Response {
+    data: any
 }
 
 export const inspectorApi = createApi({
@@ -9,17 +9,26 @@ export const inspectorApi = createApi({
     keepUnusedDataFor: 0,
     baseQuery: fetchBaseQuery({baseUrl: process.env.REACT_APP_BACKEND_URL + '/inspect/api/'}),
     endpoints: (builder) => ({
-        getParameters: builder.query<Pokemon, string>({
+        getParameters: builder.query<Response, string>({
             query: () => `params`,
+            transformResponse: (result: Response)=> (result.data) || []
         }),
-        getConfiguration: builder.query<Pokemon, string>({
+        getConfiguration: builder.query<Response, string>({
             query: () => `config`,
+            transformResponse: (result: Response)=> (result.data) || []
         }),
-        getClasses: builder.query<Pokemon, string>({
+        getClasses: builder.query<Response, string>({
             query: () => `classes`,
+            transformResponse: (result: Response)=> (result.data) || []
         }),
-        getObject: builder.query<Pokemon, string>({
+        getObject: builder.query<Response, string>({
             query: (classname) => `object?classname=${classname}`,
+            transformResponse: (result: Response)=> (result.data) || []
+        }),
+        getCommand: builder.query<Response, string>({
+            // query: (command) => `command?command=${command}`,
+            query: (command) => `command`,
+            transformResponse: (result: Response)=> (result.data) || []
         }),
     }),
 })
@@ -29,5 +38,7 @@ export const {
     useGetConfigurationQuery,
     useGetObjectQuery,
     useGetClassesQuery,
-    useLazyGetObjectQuery
+    useLazyGetObjectQuery,
+    useGetCommandQuery,
+    useLazyGetCommandQuery,
 } = inspectorApi
