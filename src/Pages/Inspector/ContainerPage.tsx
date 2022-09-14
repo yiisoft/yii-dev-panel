@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery,} from "../../API/Inspector/Inspector";
 import {Button, Link} from "@mui/material";
+import {JsonRenderer} from "../../Helper/JsonRenderer";
 
 export const ContainerPage = () => {
     const {data, isLoading} = useGetClassesQuery('');
@@ -32,11 +33,7 @@ export const ContainerPage = () => {
             width: 1000,
             renderCell: (params: GridRenderCellParams) => {
                 if (params.row[1]) {
-                    let html = params.row[1]
-                        .replaceAll('\n', '<br/>')
-                        .replaceAll(' ', '&nbsp')
-                    ;
-                    return <div dangerouslySetInnerHTML={{__html: html}}/>
+                    return <JsonRenderer value={params.row[1]} collapsed={true} />
                 }
 
                 return <>
