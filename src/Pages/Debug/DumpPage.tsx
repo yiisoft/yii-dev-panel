@@ -12,7 +12,7 @@ const columns: GridColDef[] = [
     },
 ];
 
-export const LogPage = ({data}: any) => {
+export const DumpPage = ({data}: any) => {
     const rows = Object.entries(data || [] as any)
 
     return (
@@ -21,8 +21,8 @@ export const LogPage = ({data}: any) => {
                 rows={rows as GridValidRowModel[]}
                 getRowId={(row) => row[0]}
                 columns={columns}
-                pageSize={15}
-                rowsPerPageOptions={[15]}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
                 autoHeight
                 getRowHeight={() => 'auto'}
             />

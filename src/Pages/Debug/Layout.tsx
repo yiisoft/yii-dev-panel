@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from "react-router";
 import {Autocomplete, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField} from "@mui/material";
-import {DebugEntry, useGetDebugQuery} from "../../API/Debug";
+import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
@@ -12,6 +12,7 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {LogPage} from "./LogPage";
+import {DumpPage} from "./DumpPage";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -46,6 +47,10 @@ export const DebugLayout = () => {
     const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
     const navigate = useNavigate();
 
+    const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery()
+
+    console.log('c', collectorQueryInfo)
+
     useEffect(() => {
         if (isSuccess && data && data.length && !selectedEntry) {
             const entry = data[0];
@@ -53,6 +58,13 @@ export const DebugLayout = () => {
             dispatch(changeEntryAction(entry))
         }
     }, [isSuccess])
+
+    useEffect(() => {
+        collectorInfo({
+            id: debugEntry!.id,
+            collector: searchParams.get('collector') || ''
+        });
+    }, [searchParams.get('collector')])
 
     if (isLoading) {
         return <>Loading..</>
@@ -66,6 +78,11 @@ export const DebugLayout = () => {
             return ['[' + getEntryTarget(debugEntry) + ']', formatDate(entry.web.request.startTime), entry.request.method, entry.request.path].join(' ')
         }
         return entry.id
+    }
+
+    const pages = {
+        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPage data={data}/>,
+        'default': (data: any) => <DumpPage data={data}/>,
     }
 
     return (
@@ -104,14 +121,22 @@ export const DebugLayout = () => {
                 </Grid>
                 <Grid item xs={9}>
                     <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
-                        {searchParams.has('collector') && searchParams.get('collector') === 'Yiisoft\\Yii\\Debug\\Collector\\LogCollector'
-                            ? <LogPage/>
-                            : <Outlet/>
+                        {(!searchParams.has('collector') || searchParams.get('collector') === '')
+                            ? <Outlet/>
+                            : (
+                                collectorQueryInfo.isLoading
+                                    ? <>Loading..</>
+                                    : (
+                                        !!collectorQueryInfo.currentData
+                                            // @ts-ignore
+                                            ? (pages[searchParams.get('collector')] ?? pages['default'])(collectorQueryInfo.currentData)
+                                            : <>Unknown error...</>
+                                    )
+                            )
                         }
                     </ErrorBoundary>
                 </Grid>
             </Grid>
-
         </>
     );
 };
