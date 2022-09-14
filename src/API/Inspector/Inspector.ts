@@ -26,8 +26,8 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response)=> (result.data) || []
         }),
         getCommand: builder.query<Response, string>({
-            // query: (command) => `command?command=${command}`,
-            query: (command) => `command`,
+            query: (command) => `command?command=${command}`,
+            // query: (command) => `command`,
             transformResponse: (result: Response)=> (result.data) || []
         }),
     }),

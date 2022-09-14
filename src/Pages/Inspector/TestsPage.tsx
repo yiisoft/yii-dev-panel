@@ -17,7 +17,7 @@ const columns: GridColDef[] = [
         headerName: 'Status',
         width: 30,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value === 'ok' ? <CheckIcon color="success" /> : <CloseIcon color="error" />
+            return params.value === 'ok' ? <CheckIcon color="success"/> : <CloseIcon color="error"/>
         }
     },
     {
@@ -25,7 +25,7 @@ const columns: GridColDef[] = [
         headerName: 'Stacktrace',
         width: 400,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value === 'ok' ? null : <JsonRenderer collapsed={true} key={params.id} value={params.value} />
+            return params.value === 'ok' ? null : <JsonRenderer collapsed={true} key={params.id} value={params.value}/>
         }
     },
 ];
@@ -33,12 +33,9 @@ const columns: GridColDef[] = [
 export const TestsPage = () => {
     const [commandQuery, commandQueryInfo] = useLazyGetCommandQuery();
     const [rows, setRows] = useState<any[]>([])
-    // const [columns, setColumns] = useState<any[]>()
 
-    // const rows = Object.entries(data as any)
-
-    async function  runPhpUnitHandler() {
-        const data = await commandQuery('test/phpunit');
+    async function runCodeceptionHandler() {
+        const data = await commandQuery('test/codeception');
         console.log(data.data);
 
         const resultRows = []
@@ -54,15 +51,11 @@ export const TestsPage = () => {
         setRows(resultRows);
     }
 
-    // async function runCodeceptionHandler() {
-    //     return commandQuery('test/codeception');
-    // }
 
     return (
         <>
             <h2>{'Tests'}</h2>
-            <Button onClick={runPhpUnitHandler}>Run PHPUnit</Button>
-            {/*<Button onClick={runCodeceptionHandler}>Run Codeception</Button>*/}
+            <Button onClick={runCodeceptionHandler}>Run Codeception</Button>
             {commandQueryInfo.isSuccess && (
                 <DataGrid
                     rows={rows as GridValidRowModel[]}

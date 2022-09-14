@@ -7,11 +7,18 @@ const LinkBehavior = React.forwardRef<HTMLAnchorElement,
     Omit<RouterLinkProps, 'to'> & { href: RouterLinkProps['to'] }>((props, ref) => {
     const {href, ...other} = props;
 
+    if (typeof href !== "string" || href === '#') {
+        return <a href={'#'} ref={ref} {...other} />;
+    }
+
+    if (href.startsWith('http://') || href.startsWith('https://')) {
+        return <a href={href} ref={ref} {...other} />;
+    }
+
     // Map href (MUI) -> to (react-router)
-    return href && href !== '#'
-        ? <RouterLink ref={ref} to={href} {...other} />
-        : <a href={'#'} ref={ref} {...other} />;
+    return <RouterLink ref={ref} to={href} {...other} />
 });
+
 export const theme = createTheme({
     components: {
         MuiLink: {
