@@ -12,12 +12,7 @@ import {ErrorBoundary} from "react-error-boundary";
 
 const pages = [
     {name: 'Gii', link: '#'},
-    {
-        name: 'Debug', link: '#', items: [
-            {name: 'Index', link: '/debug'},
-            {name: 'Logger', link: '/debug/logger'},
-        ]
-    },
+    {name: 'Debug', link: '/debug'},
     {
         name: 'Inspector', link: '#', items: [
             {name: 'Parameters', link: '/inspector/parameters'},
