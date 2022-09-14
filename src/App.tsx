@@ -14,6 +14,7 @@ import {InfoPage} from "./Pages/Debug/InfoPage";
 import {DebugLayout} from "./Pages/Debug/Layout";
 import {PersistGate} from "redux-persist/integration/react";
 import {ContainerEntryPage} from "./Pages/Inspector/ContainerEntryPage";
+import {LogPage} from "./Pages/Debug/LogPage";
 
 function App() {
     return (
@@ -34,7 +35,8 @@ function App() {
                                     </Route>
                                 </Route>
                                 <Route path="debug" element={<DebugLayout/>}>
-                                    <Route path='info' element={<InfoPage/>}/>
+                                    <Route index element={<InfoPage/>}/>
+                                    <Route path='logger' element={<LogPage/>}/>
                                 </Route>
                             </Route>
                         </Routes>

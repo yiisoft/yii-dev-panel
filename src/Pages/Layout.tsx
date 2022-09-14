@@ -14,7 +14,8 @@ const pages = [
     {name: 'Gii', link: '#'},
     {
         name: 'Debug', link: '#', items: [
-            {name: 'Info', link: '/debug/info'},
+            {name: 'Index', link: '/debug'},
+            {name: 'Logger', link: '/debug/logger'},
         ]
     },
     {

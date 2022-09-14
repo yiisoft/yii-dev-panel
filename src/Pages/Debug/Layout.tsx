@@ -1,13 +1,17 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {Outlet, useLocation} from "react-router";
-import {Autocomplete, TextField} from "@mui/material";
-import {useGetDebugQuery} from "../../API/Debug";
+import {Outlet, useLocation, useNavigate} from "react-router";
+import {Autocomplete, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField} from "@mui/material";
+import {DebugEntry, useGetDebugQuery} from "../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
 import {changeEntryAction, useDebugEntry} from "../../Provider/Debug/DebugEntryContext";
 import {ErrorBoundary} from "react-error-boundary";
+import InboxIcon from '@mui/icons-material/Inbox';
+import MailIcon from '@mui/icons-material/Mail';
+import {useSearchParams} from "react-router-dom";
+import {LogPage} from "./LogPage";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -29,16 +33,22 @@ function getEntryTarget(entry: any) {
             : 'unknown');
 }
 
+function parseCollectorName(text: string) {
+    return text.replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
+}
+
 export const DebugLayout = () => {
     const dispatch = useDispatch()
     const location = useLocation()
-    const {data, isLoading, isSuccess} = useGetDebugQuery('');
+    const [searchParams] = useSearchParams()
+    const {data, isLoading, isSuccess} = useGetDebugQuery();
     const debugEntry = useDebugEntry();
-    const [selectedEntry, setSelectedEntry] = useState(debugEntry);
+    const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        if (isSuccess && data!.data && data!.data.length && !selectedEntry) {
-            const entry = data!.data[0];
+        if (isSuccess && data && data.length && !selectedEntry) {
+            const entry = data[0];
             setSelectedEntry(entry);
             dispatch(changeEntryAction(entry))
         }
@@ -64,18 +74,44 @@ export const DebugLayout = () => {
             <Autocomplete
                 freeSolo
                 value={selectedEntry}
-                options={data!.data}
+                options={data as DebugEntry[]}
                 getOptionLabel={getOptions}
                 renderInput={(params) => <TextField {...params} label="Record"/>}
                 onChange={(event, value) => {
-                    setSelectedEntry(value);
-                    dispatch(changeEntryAction(value));
+                    if (typeof value === 'object') {
+                        setSelectedEntry(value);
+                        dispatch(changeEntryAction(value));
+                    }
                 }}
                 sx={{my: 1}}
             />
-            <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
-                <Outlet/>
-            </ErrorBoundary>
+            <Grid container>
+                <Grid item xs={3}>
+                    <List>
+                        {debugEntry && debugEntry.collectors.map((text, index) => (
+                            <ListItem key={index} disablePadding>
+                                <ListItemButton onClick={() => navigate('?collector=' + text)}>
+                                    <ListItemIcon>
+                                        {index % 2 === 0 ? <InboxIcon/> : <MailIcon/>}
+                                    </ListItemIcon>
+                                    <ListItemText>
+                                        {parseCollectorName(text)}
+                                    </ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                </Grid>
+                <Grid item xs={9}>
+                    <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
+                        {searchParams.has('collector') && searchParams.get('collector') === 'Yiisoft\\Yii\\Debug\\Collector\\LogCollector'
+                            ? <LogPage/>
+                            : <Outlet/>
+                        }
+                    </ErrorBoundary>
+                </Grid>
+            </Grid>
+
         </>
     );
 };

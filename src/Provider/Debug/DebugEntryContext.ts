@@ -1,10 +1,11 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
+import {DebugEntry} from "../../API/Debug";
 
 export const debugSlice = createSlice({
     name: 'store.debug',
     initialState: {
-        entry: null,
+        entry: null as null | DebugEntry,
     },
     reducers: {
         changeEntryAction: (state, action) => {
