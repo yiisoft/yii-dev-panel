@@ -101,7 +101,7 @@ export const PsalmPage = () => {
                 <>
                     <Accordion key="panel1" expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Typography sx={{width: '33%', flexShrink: 0}}>Info</Typography>
+                            <Typography sx={{width: '33%', flexShrink: 0}}>Info ({infoRows.length})</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             {renderGrid(infoRows)}
@@ -109,7 +109,7 @@ export const PsalmPage = () => {
                     </Accordion>
                     <Accordion key="panel2" expanded={expanded.includes('panel2')} onChange={handleChange('panel2')}>
                         <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
-                            <Typography sx={{width: '33%', flexShrink: 0}}>Errors</Typography>
+                            <Typography sx={{width: '33%', flexShrink: 0}}>Errors ({errorRows.length})</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             {renderGrid(errorRows)}
