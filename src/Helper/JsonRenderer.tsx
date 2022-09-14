@@ -1,4 +1,4 @@
-import ReactJson from "react-json-view";
+import ReactJson from '@textea/json-viewer'
 import * as React from "react";
 
 export const JsonRenderer = ({value, collapsed = false}: { value: any , collapsed?: boolean}) => {
