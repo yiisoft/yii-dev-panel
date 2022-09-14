@@ -9,5 +9,5 @@ export const JsonRenderer = ({value, collapsed = false}: { value: any , collapse
         ;
         return <div dangerouslySetInnerHTML={{__html: html}}/>
     }
-    return <ReactJson src={value} collapsed={collapsed}/>
+    return <ReactJson src={value} collapsed={collapsed} name={false}/>
 }
