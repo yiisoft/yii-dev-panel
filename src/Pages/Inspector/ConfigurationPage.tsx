@@ -25,14 +25,17 @@ export const ConfigurationPage = () => {
     const rows = Object.entries(data!.data as any)
 
     return (
-        <DataGrid
-            rows={rows as GridValidRowModel[]}
-            getRowId={(row) => row[0]}
-            columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            autoHeight
-            getRowHeight={() => 'auto'}
-        />
+        <>
+            <h2>{'Configuration'}</h2>
+            <DataGrid
+                rows={rows as GridValidRowModel[]}
+                getRowId={(row) => row[0]}
+                columns={columns}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                autoHeight
+                getRowHeight={() => 'auto'}
+            />
+        </>
     );
 }

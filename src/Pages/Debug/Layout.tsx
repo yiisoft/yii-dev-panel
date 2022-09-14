@@ -13,6 +13,22 @@ function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
 }
 
+function isDebugEntryAboutConsole(entry: any) {
+    return 'console' in entry;
+}
+
+function isDebugEntryAboutWeb(entry: any) {
+    return 'web' in entry;
+}
+
+function getEntryTarget(entry: any) {
+    return isDebugEntryAboutWeb(entry)
+        ? 'web'
+        : (isDebugEntryAboutConsole(entry)
+            ? 'console'
+            : 'unknown');
+}
+
 export const DebugLayout = () => {
     const dispatch = useDispatch()
     const location = useLocation()
@@ -33,17 +49,18 @@ export const DebugLayout = () => {
     }
 
     function getOptions(entry: any) {
-        if ('console' in entry) {
-            return [formatDate(entry.console.request.startTime), entry.command.input].join(' ')
+        if (isDebugEntryAboutConsole(entry)) {
+            return ['[' + getEntryTarget(debugEntry) + ']', formatDate(entry.console.request.startTime), entry.command.input].join(' ')
         }
-        if ('web' in entry) {
-            return [formatDate(entry.web.request.startTime), entry.request.method, entry.request.path].join(' ')
+        if (isDebugEntryAboutWeb(entry)) {
+            return ['[' + getEntryTarget(debugEntry) + ']', formatDate(entry.web.request.startTime), entry.request.method, entry.request.path].join(' ')
         }
         return entry.id
     }
 
     return (
         <>
+            <h2>{'Debug'}</h2>
             <Autocomplete
                 freeSolo
                 value={selectedEntry}

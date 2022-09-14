@@ -5,7 +5,8 @@ import {JsonRenderer} from "../../Helper/JsonRenderer";
 
 export const ContainerEntryPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
-    const {data, isLoading} = useGetObjectQuery(searchParams.get('class') || '');
+    const objectClass = searchParams.get('class') || '';
+    const {data, isLoading} = useGetObjectQuery(objectClass);
 
     if (isLoading) {
         return <>Loading..</>
@@ -13,6 +14,7 @@ export const ContainerEntryPage = () => {
 
     return (
         <pre>
+            <h2>{objectClass}</h2>
             <JsonRenderer value={data!.data}/>
         </pre>
     );

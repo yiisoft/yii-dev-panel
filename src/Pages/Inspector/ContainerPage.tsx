@@ -33,27 +33,30 @@ export const ContainerPage = () => {
             width: 1000,
             renderCell: (params: GridRenderCellParams) => {
                 if (params.row[1]) {
-                    return <JsonRenderer value={params.row[1]} collapsed={true} />
+                    return <JsonRenderer value={params.row[1]} collapsed={true}/>
                 }
 
                 return <>
                     <Button onClick={() => handleLoadObject(params.row[0])}>Load</Button>
-                    <Link href={'view?class='+params.row[0]}>View</Link>
-                    </>
+                    <Link href={'view?class=' + params.row[0]}>View</Link>
+                </>
             }
         },
     ];
 
 
     return (
-        <DataGrid
-            rows={rows as GridValidRowModel[]}
-            getRowId={(row) => row[0]}
-            columns={getColumns()}
-            pageSize={10}
-            rowsPerPageOptions={[10]}
-            autoHeight
-            getRowHeight={() => 'auto'}
-        />
+        <>
+            <h2>{'Container'}</h2>
+            <DataGrid
+                rows={rows as GridValidRowModel[]}
+                getRowId={(row) => row[0]}
+                columns={getColumns()}
+                pageSize={10}
+                rowsPerPageOptions={[10]}
+                autoHeight
+                getRowHeight={() => 'auto'}
+            />
+        </>
     );
 }
