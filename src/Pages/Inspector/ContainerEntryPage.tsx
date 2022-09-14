@@ -15,7 +15,7 @@ export const ContainerEntryPage = () => {
     return (
         <pre>
             <h2>{objectClass}</h2>
-            <JsonRenderer value={data!.data}/>
+            <JsonRenderer value={data}/>
         </pre>
     );
 }

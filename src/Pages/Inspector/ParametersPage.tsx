@@ -20,7 +20,7 @@ export const ParametersPage = () => {
     if (isLoading) {
         return <>Loading..</>
     }
-    const rows = Object.entries(data!.data as any)
+    const rows = Object.entries(data as any)
 
     return (
         <>

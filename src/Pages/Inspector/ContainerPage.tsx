@@ -16,10 +16,10 @@ export const ContainerPage = () => {
 
     const handleLoadObject = async (id: string) => {
         const result = await lazyLoadObject(id)
-        setObject(prev => ({...prev, [id]: result.data!.data}))
+        setObject(prev => ({...prev, [id]: result.data}))
     }
 
-    const rows = (data!.data as string[]).map((v: string) => [v, objects.hasOwnProperty(v) ? objects[v] : null])
+    const rows = (data as any).map((v: string) => [v, v in objects ? objects[v] : null])
 
 
     const getColumns = (): GridColDef[] => [

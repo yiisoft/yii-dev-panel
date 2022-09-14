@@ -35,7 +35,7 @@ export const TestsPage = () => {
     const [rows, setRows] = useState<any[]>([])
     // const [columns, setColumns] = useState<any[]>()
 
-    // const rows = Object.entries(data!.data as any)
+    // const rows = Object.entries(data as any)
 
     async function  runPhpUnitHandler() {
         const data = await commandQuery('test/phpunit');
