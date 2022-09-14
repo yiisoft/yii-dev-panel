@@ -24,8 +24,8 @@ export const InfoPage = () => {
                 rows={rows as GridValidRowModel[]}
                 getRowId={(row) => row[0]}
                 columns={columns}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
+                pageSize={15}
+                rowsPerPageOptions={[15]}
                 autoHeight
                 getRowHeight={() => 'auto'}
             />
