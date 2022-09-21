@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetConfigurationQuery, useLazyGetObjectQuery} from "../../API/Inspector/Inspector";
 import {JsonRenderer} from "../../Helper/JsonRenderer";
 import {Button} from "@mui/material";
+import {DataTable} from "../../Component/Grid";
 
 
 export const ConfigurationPage = () => {
@@ -48,14 +49,10 @@ export const ConfigurationPage = () => {
     return (
         <>
             <h2>{'Configuration'}</h2>
-            <DataGrid
+            <DataTable
                 rows={rows as GridValidRowModel[]}
                 getRowId={(row) => row[0]}
                 columns={columns}
-                pageSize={20}
-                rowsPerPageOptions={[20]}
-                autoHeight
-                getRowHeight={() => 'auto'}
             />
         </>
     );

@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {DataGrid, GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useLazyGetCommandQuery} from "../../API/Inspector/Inspector";
 import {Accordion, AccordionDetails, AccordionSummary, Button, Link} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
+import {DataTable} from "../../Component/Grid";
 
 const columns: GridColDef[] = [
     {
@@ -29,14 +30,9 @@ const columns: GridColDef[] = [
 ];
 
 function renderGrid(data: any) {
-    return <DataGrid
+    return <DataTable
         rows={data as GridValidRowModel[]}
-        getRowId={(row) => row.id}
         columns={columns as GridColumns}
-        pageSize={50}
-        rowsPerPageOptions={[50]}
-        autoHeight
-        getRowHeight={() => 'auto'}
     />;
 }
 

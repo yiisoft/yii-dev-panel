@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {DataGrid, GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetConfigurationQuery} from "../../API/Inspector/Inspector";
+import {DataTable} from "../../Component/Grid";
 
 const groupsColumns: GridColDef[] = [
     {
@@ -46,14 +47,9 @@ const routesColumns: GridColDef[] = [
 ];
 
 function renderGrid(data: any, columns: GridColumns) {
-    return <DataGrid
+    return <DataTable
         rows={data as GridValidRowModel[]}
-        getRowId={(row) => row.id}
         columns={columns}
-        pageSize={50}
-        rowsPerPageOptions={[50]}
-        autoHeight
-        getRowHeight={() => 'auto'}
     />;
 }
 

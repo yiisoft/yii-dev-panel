@@ -1,7 +1,8 @@
 import * as React from 'react';
-import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useDebugEntry} from "../../Provider/Debug/DebugEntryContext";
 import {JsonRenderer} from "../../Helper/JsonRenderer";
+import {DataTable} from "../../Component/Grid";
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},
@@ -20,14 +21,10 @@ export const InfoPage = () => {
 
     return (
         <div style={{height: 400, width: '100%'}}>
-            <DataGrid
+            <DataTable
                 rows={rows as GridValidRowModel[]}
                 getRowId={(row) => row[0]}
                 columns={columns}
-                pageSize={15}
-                rowsPerPageOptions={[15]}
-                autoHeight
-                getRowHeight={() => 'auto'}
             />
         </div>
     );

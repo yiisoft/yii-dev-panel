@@ -1,9 +1,10 @@
 import * as React from 'react';
 import {useState} from 'react';
-import {DataGrid, GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery,} from "../../API/Inspector/Inspector";
 import {Button, Link} from "@mui/material";
 import {JsonRenderer} from "../../Helper/JsonRenderer";
+import {DataTable} from "../../Component/Grid";
 
 export const ContainerPage = () => {
     const {data, isLoading} = useGetClassesQuery('');
@@ -48,14 +49,10 @@ export const ContainerPage = () => {
     return (
         <>
             <h2>{'Container'}</h2>
-            <DataGrid
+            <DataTable
                 rows={rows as GridValidRowModel[]}
                 getRowId={(row) => row[0]}
                 columns={getColumns()}
-                pageSize={10}
-                rowsPerPageOptions={[10]}
-                autoHeight
-                getRowHeight={() => 'auto'}
             />
         </>
     );
