@@ -7,7 +7,7 @@ import {Button} from "@mui/material";
 
 
 export const ConfigurationPage = () => {
-    const {data, isLoading} = useGetConfigurationQuery('');
+    const {data, isLoading} = useGetConfigurationQuery('web');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({})
 
