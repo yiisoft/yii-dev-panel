@@ -14,7 +14,7 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response)=> (result.data) || []
         }),
         getConfiguration: builder.query<Response, string>({
-            query: () => `config`,
+            query: (group = 'web') => `config?group=${group}`,
             transformResponse: (result: Response)=> (result.data) || []
         }),
         getClasses: builder.query<Response, string>({
@@ -27,7 +27,6 @@ export const inspectorApi = createApi({
         }),
         getCommand: builder.query<Response, string>({
             query: (command) => `command?command=${command}`,
-            // query: (command) => `command`,
             transformResponse: (result: Response)=> (result.data) || []
         }),
     }),

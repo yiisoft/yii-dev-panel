@@ -17,6 +17,7 @@ import {ContainerEntryPage} from "./Pages/Inspector/ContainerEntryPage";
 import {LogPage} from "./Pages/Debug/LogPage";
 import {TestsPage} from "./Pages/Inspector/TestsPage";
 import {PsalmPage} from "./Pages/Inspector/PsalmPage";
+import {RoutesPage} from "./Pages/Inspector/RoutesPage";
 
 function App() {
     return (
@@ -33,6 +34,7 @@ function App() {
                                     <Route path='configuration' element={<ConfigurationPage/>}/>
                                     <Route path='tests' element={<TestsPage/>}/>
                                     <Route path='analyse' element={<PsalmPage/>}/>
+                                    <Route path='routes' element={<RoutesPage/>}/>
                                     <Route path="container">
                                         <Route index element={<ContainerPage/>}/>
                                         <Route path='view' element={<ContainerEntryPage/>}/>
