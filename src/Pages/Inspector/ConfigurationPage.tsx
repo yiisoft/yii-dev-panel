@@ -24,7 +24,7 @@ export const ConfigurationPage = () => {
             renderCell: (params: GridRenderCellParams) => {
                 if (typeof params.value === "string") {
                     if (params.value in objects) {
-                        return <JsonRenderer value={objects[params.value]}/>
+                        return <JsonRenderer key={params.id} value={objects[params.value]}/>
                     }
                     return <>
                         {params.value}
@@ -32,7 +32,7 @@ export const ConfigurationPage = () => {
 
                     </>;
                 }
-                return <JsonRenderer value={params.value}/>
+                return <JsonRenderer key={params.id} value={params.value}/>
             }
         },
     ];

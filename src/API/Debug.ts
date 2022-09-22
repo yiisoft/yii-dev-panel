@@ -14,6 +14,11 @@ interface GetCollectorInfoProps {
     collector: string;
 }
 
+interface GetObjectProps {
+    debugEntryId: string;
+    objectId: number;
+}
+
 type CollectorResponseType = any;
 
 export const debugApi = createApi({
@@ -22,13 +27,17 @@ export const debugApi = createApi({
     endpoints: (builder) => ({
         getDebug: builder.query<DebugEntry[], void>({
             query: () => ``,
-            transformResponse: (result: SummaryResponseType)=> (result.data as DebugEntry[]) || []
+            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || []
+        }),
+        getObject: builder.query<DebugEntry[], GetObjectProps>({
+            query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
+            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || []
         }),
         getCollectorInfo: builder.query<CollectorResponseType, GetCollectorInfoProps>({
             query: (args) => `view/${args.id}/?collector=${args.collector}`,
-            transformResponse: (result: SummaryResponseType)=> (result.data as CollectorResponseType[]) || []
+            transformResponse: (result: SummaryResponseType) => (result.data as CollectorResponseType[]) || []
         }),
     }),
 })
 
-export const {useGetDebugQuery, useGetCollectorInfoQuery, useLazyGetCollectorInfoQuery} = debugApi
+export const {useGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi

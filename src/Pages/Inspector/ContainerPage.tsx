@@ -34,7 +34,7 @@ export const ContainerPage = () => {
             width: 1000,
             renderCell: (params: GridRenderCellParams) => {
                 if (params.row[1]) {
-                    return <JsonRenderer value={params.row[1]} collapsed={true}/>
+                    return <JsonRenderer key={params.id} value={params.row[1]}/>
                 }
 
                 return <>

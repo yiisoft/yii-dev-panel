@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
         headerName: 'Stacktrace',
         width: 400,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value === 'ok' ? null : <JsonRenderer collapsed={true} key={params.id} value={params.value}/>
+            return params.value === 'ok' ? null : <JsonRenderer key={params.id} value={params.value}/>
         }
     },
 ];

@@ -11,7 +11,7 @@ const columns: GridColDef[] = [
         field: '1',
         headerName: 'Value',
         width: 1000,
-        renderCell: (params: GridRenderCellParams) => <JsonRenderer value={params.value}/>
+        renderCell: (params: GridRenderCellParams) => <JsonRenderer key={params.id} value={params.value}/>
     },
 ];
 
