@@ -20,6 +20,12 @@ export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPag
         pageSize={pageSize}
         onPageSizeChange={setPageSize}
         autoHeight
+        sx={{
+            '& .MuiDataGrid-cell': {
+                alignItems:'flex-start',
+                flexDirection: 'column'
+            },
+        }}
         getRowHeight={() => 'auto'}
     />;
 }

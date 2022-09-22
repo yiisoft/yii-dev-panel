@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetConfigurationQuery} from "../../API/Inspector/Inspector";
 import {DataTable} from "../../Component/Grid";
+import {Typography} from "@mui/material";
 
 const groupsColumns: GridColDef[] = [
     {
@@ -18,7 +19,7 @@ const groupsColumns: GridColDef[] = [
         field: 'routes', headerName: 'Routes', width: 700,
         renderCell: (params: GridRenderCellParams) => {
             return <>
-                {params.value.join(", ")}
+                {params.value.map((route: any) => <Typography component="div">{route}</Typography>)}
             </>
 
         }
