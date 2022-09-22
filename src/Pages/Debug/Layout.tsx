@@ -49,8 +49,6 @@ export const DebugLayout = () => {
 
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery()
 
-    console.log('c', collectorQueryInfo)
-
     useEffect(() => {
         if (isSuccess && data && data.length && !selectedEntry) {
             const entry = data[0];
