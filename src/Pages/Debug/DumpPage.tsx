@@ -19,6 +19,7 @@ export const DumpPage = ({data}: any) => {
     return (
         <div style={{height: 400, width: '100%'}}>
             <DataTable
+                getRowId={(row) => row[0]}
                 rows={rows as GridValidRowModel[]}
                 columns={columns}
             />
