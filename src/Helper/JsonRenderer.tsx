@@ -18,7 +18,7 @@ export const JsonRenderer = ({value, collapsed = false}: { value: any, collapsed
         collapseStringsAfterLength={50}
         valueTypes={[
             {
-                is: ((value: any): boolean => typeof value === 'string' && value.startsWith('@')) as any,
+                is: ((value: any): any => typeof value === 'string' && value.startsWith('@')) as any,
                 Component: (props) => {
                     return <>alias: {props.value}</>;
                 },
