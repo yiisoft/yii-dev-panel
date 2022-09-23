@@ -1,7 +1,19 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from "react-router";
-import {Autocomplete, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField} from "@mui/material";
+import {
+    Autocomplete,
+    Breadcrumbs,
+    Grid,
+    Link,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    TextField,
+    Typography
+} from "@mui/material";
 import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
@@ -47,6 +59,7 @@ export const DebugLayout = () => {
     const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
     const navigate = useNavigate();
 
+    const collectorName = (searchParams.get('collector') || '').split('\\').pop();
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery()
 
     useEffect(() => {
@@ -85,13 +98,25 @@ export const DebugLayout = () => {
 
     return (
         <>
-            <h2>{'Debug'}</h2>
+            <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
+                <Link underline="hover" color="inherit" href="/debug">
+                    Debug
+                </Link>
+                {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
+            </Breadcrumbs>
             <Autocomplete
                 freeSolo
                 value={selectedEntry}
                 options={data as DebugEntry[]}
                 getOptionLabel={getOptions}
-                renderInput={(params) => <TextField {...params} label="Record"/>}
+                renderOption={(props, option) => {
+                    return (
+                        <li {...props} key={option.id}>
+                            {getOptions(option)}
+                        </li>
+                    );
+                }}
+                renderInput={(params) => <TextField {...params} key={params.id} label="Record"/>}
                 onChange={(event, value) => {
                     if (typeof value === 'object') {
                         setSelectedEntry(value);
