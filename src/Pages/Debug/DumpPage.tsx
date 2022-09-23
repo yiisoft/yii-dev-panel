@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
 export const DumpPage = ({data}: any) => {
     const isArray = Array.isArray(data)
     let rows = Object.entries(data || []);
-    rows = rows.map((el) => ({0:el[0], 1:Object.assign({}, el[1])})) as any;
+    rows = rows.map((el) => ({0:el[0], 1:isArray?Object.assign({}, el[1]):el[1]})) as any;
 
     return (
         <div style={{height: 400, width: '100%'}}>
