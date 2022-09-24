@@ -1,4 +1,5 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {createApi} from '@reduxjs/toolkit/query/react'
+import {createBaseQuery} from "./createBaseQuery";
 
 interface Response {
     data: any
@@ -7,27 +8,27 @@ interface Response {
 export const inspectorApi = createApi({
     reducerPath: 'api.inspector',
     keepUnusedDataFor: 0,
-    baseQuery: fetchBaseQuery({baseUrl: process.env.REACT_APP_BACKEND_URL + '/inspect/api/'}),
+    baseQuery: createBaseQuery('/inspect/api/'),
     endpoints: (builder) => ({
         getParameters: builder.query<Response, string>({
             query: () => `params`,
-            transformResponse: (result: Response)=> (result.data) || []
+            transformResponse: (result: Response) => (result.data) || []
         }),
         getConfiguration: builder.query<Response, string>({
             query: (group = 'web') => `config?group=${group}`,
-            transformResponse: (result: Response)=> (result.data) || []
+            transformResponse: (result: Response) => (result.data) || []
         }),
         getClasses: builder.query<Response, string>({
             query: () => `classes`,
-            transformResponse: (result: Response)=> (result.data) || []
+            transformResponse: (result: Response) => (result.data) || []
         }),
         getObject: builder.query<Response, string>({
             query: (classname) => `object?classname=${classname}`,
-            transformResponse: (result: Response)=> (result.data) || []
+            transformResponse: (result: Response) => (result.data) || []
         }),
         getCommand: builder.query<Response, string>({
             query: (command) => `command?command=${command}`,
-            transformResponse: (result: Response)=> (result.data) || []
+            transformResponse: (result: Response) => (result.data) || []
         }),
     }),
 })

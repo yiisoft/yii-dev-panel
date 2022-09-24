@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useLazyGetCommandQuery} from "../../API/Inspector/Inspector";
+import {useLazyGetCommandQuery} from "../../API/Inspector";
 import {Accordion, AccordionDetails, AccordionSummary, Button, Link} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";

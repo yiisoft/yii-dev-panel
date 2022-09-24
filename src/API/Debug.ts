@@ -1,4 +1,5 @@
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import {createApi} from '@reduxjs/toolkit/query/react'
+import {createBaseQuery} from "./createBaseQuery";
 
 export type DebugEntry = {
     id: string;
@@ -23,7 +24,7 @@ type CollectorResponseType = any;
 
 export const debugApi = createApi({
     reducerPath: 'api.debug',
-    baseQuery: fetchBaseQuery({baseUrl: process.env.REACT_APP_BACKEND_URL + '/debug/api/'}),
+    baseQuery: createBaseQuery('/debug/api/'),
     endpoints: (builder) => ({
         getDebug: builder.query<DebugEntry[], void>({
             query: () => ``,

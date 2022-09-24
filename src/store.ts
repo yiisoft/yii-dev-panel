@@ -1,23 +1,24 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {setupListeners} from "@reduxjs/toolkit/query";
-import {inspectorApi} from "./API/Inspector/Inspector";
+import {inspectorApi} from "./API/Inspector";
 import {debugApi} from "./API/Debug";
 import {debugSlice} from "./Provider/Debug/DebugEntryContext";
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import storage from "redux-persist/lib/storage";
+import {ApplicationSlice} from "./Provider/ApplicationContext";
+import {useSelector} from "react-redux";
 
 const commonConfig = {version: 1, storage};
-const inspectorApiConfig = {key: inspectorApi.reducer.name, ...commonConfig};
-const debugApiConfig = {key: debugApi.reducer.name, ...commonConfig};
+const applicationSliceConfig = {key: ApplicationSlice.reducer.name, ...commonConfig};
+const debugSliceConfig = {key: debugSlice.reducer.name, ...commonConfig};
 
 const rootReducer = combineReducers({
+    [ApplicationSlice.name]: persistReducer(applicationSliceConfig, ApplicationSlice.reducer),
+    [debugSlice.name]: persistReducer(debugSliceConfig, debugSlice.reducer),
+
     [inspectorApi.reducerPath]: inspectorApi.reducer,
     [debugApi.reducerPath]: debugApi.reducer,
-    [debugSlice.name]: persistReducer(inspectorApiConfig, debugSlice.reducer),
-
 });
-
-// const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: rootReducer,
@@ -38,3 +39,7 @@ export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch
+const useAppSelector = useSelector<RootState>;
+
+export {useAppSelector as useSelector};
+

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useGetObjectQuery,} from "../../API/Inspector/Inspector";
+import {useGetObjectQuery,} from "../../API/Inspector";
 import {useSearchParams} from "react-router-dom";
 import {JsonRenderer} from "../../Helper/JsonRenderer";
 
