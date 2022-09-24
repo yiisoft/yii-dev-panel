@@ -72,10 +72,12 @@ export const Layout = () => {
     }, [isSuccess, data, dispatch, selectedEntry])
 
     useEffect(() => {
-        collectorInfo({
-            id: debugEntry!.id,
-            collector: selectedCollector
-        });
+        if (selectedCollector !== '') {
+            collectorInfo({
+                id: debugEntry!.id,
+                collector: selectedCollector
+            });
+        }
     }, [selectedCollector, collectorInfo, debugEntry])
 
     if (isLoading) {
