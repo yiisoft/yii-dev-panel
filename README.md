@@ -33,9 +33,13 @@ npm install
 
    For example, you can clone [`yiisoft/demo-api`](https://github.com/yiisoft/demo-api) and serve it.
 
-   `git clone git@github.com:yiisoft/demo-api demo-api`
+   ```shell
+   git clone git@github.com:yiisoft/demo-api demo-api
+   ```
 
-   `./yii serve`
+   ```shell
+   ./yii serve
+   ```
 
 1. Set up the environment variables if needed.
 
@@ -44,14 +48,20 @@ npm install
 
 2. Clone the project
 
-   `git clone git@github.com:xepozz/yii-dev-panel yii-dev-panel`
+   ```shell
+   git clone git@github.com:xepozz/yii-dev-panel yii-dev-panel
+   ```
 
 3. Install dependencies
 
-   `npm install --legacy-peer-deps`
+   ```shell
+   npm install --legacy-peer-deps
+   ```
 
 4. Run dev server
 
-   `npm start`
+   ```shell
+   npm start
+   ```
 
 5. Feel free to make Pull Request
