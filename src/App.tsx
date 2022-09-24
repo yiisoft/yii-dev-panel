@@ -10,11 +10,9 @@ import {persistor, store} from "./store";
 import {ParametersPage} from "./Pages/Inspector/ParametersPage";
 import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
 import {ContainerPage} from "./Pages/Inspector/ContainerPage";
-import {InfoPage} from "./Pages/Debug/InfoPage";
-import {DebugLayout} from "./Pages/Debug/Layout";
+import * as DebugPages from "./Pages/Debug";
 import {PersistGate} from "redux-persist/integration/react";
 import {ContainerEntryPage} from "./Pages/Inspector/ContainerEntryPage";
-import {LogPage} from "./Pages/Debug/LogPage";
 import {TestsPage} from "./Pages/Inspector/TestsPage";
 import {PsalmPage} from "./Pages/Inspector/PsalmPage";
 import {RoutesPage} from "./Pages/Inspector/RoutesPage";
@@ -40,9 +38,9 @@ export default function App() {
                                         <Route path='view' element={<ContainerEntryPage/>}/>
                                     </Route>
                                 </Route>
-                                <Route path="debug" element={<DebugLayout/>}>
-                                    <Route index element={<InfoPage/>}/>
-                                    <Route path='logger' element={<LogPage/>}/>
+                                <Route path="debug" element={<DebugPages.Layout/>}>
+                                    <Route index element={<DebugPages.IndexPage/>}/>
+                                    <Route path='logger' element={<DebugPages.LogPage/>}/>
                                 </Route>
                             </Route>
                         </Routes>

@@ -50,7 +50,7 @@ function parseCollectorName(text: string) {
     return text.replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
 }
 
-export const DebugLayout = () => {
+export const Layout = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const [searchParams] = useSearchParams()

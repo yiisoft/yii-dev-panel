@@ -14,10 +14,12 @@ const columns: GridColDef[] = [
     },
 ];
 
-export const InfoPage = () => {
+export const IndexPage = () => {
     const data = useDebugEntry()
 
-    const rows = Object.entries(data || [] as any)
+    const isArray = Array.isArray(data)
+    let rows = Object.entries(data || [] as any)
+    rows = rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
 
     return (
         <div style={{height: 400, width: '100%'}}>
