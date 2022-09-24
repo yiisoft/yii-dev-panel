@@ -6,7 +6,7 @@ import {useDebugEntry} from "../Provider/Debug/DebugEntryContext";
 import {deepUpdate} from "immupdate";
 
 export const JsonRenderer = ({value}: { value: any }) => {
-    const [objectQuery, objectQueryInfo] = useLazyGetObjectQuery();
+    const [objectQuery] = useLazyGetObjectQuery();
     const [data, setData] = useState(value);
     const debugEntry = useDebugEntry();
 

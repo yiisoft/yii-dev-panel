@@ -19,7 +19,7 @@ import {TestsPage} from "./Pages/Inspector/TestsPage";
 import {PsalmPage} from "./Pages/Inspector/PsalmPage";
 import {RoutesPage} from "./Pages/Inspector/RoutesPage";
 
-function App() {
+export default function App() {
     return (
         <Provider store={store}>
             <PersistGate persistor={persistor}>
@@ -52,5 +52,3 @@ function App() {
         </Provider>
     );
 }
-
-export default App;

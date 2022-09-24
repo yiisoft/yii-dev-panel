@@ -19,7 +19,8 @@ const groupsColumns: GridColDef[] = [
         field: 'routes', headerName: 'Routes', width: 700,
         renderCell: (params: GridRenderCellParams) => {
             return <>
-                {params.value.map((route: any, index: number) => <Typography key={index} component="div">{route}</Typography>)}
+                {params.value.map((route: any, index: number) => <Typography key={index}
+                                                                             component="div">{route}</Typography>)}
             </>
 
         }
@@ -91,7 +92,7 @@ export const RoutesPage = () => {
 
         setGroups(groups);
         setRoutes(routes);
-    }, [isSuccess])
+    }, [isSuccess, data])
 
     if (isLoading) {
         return <>Loading..</>

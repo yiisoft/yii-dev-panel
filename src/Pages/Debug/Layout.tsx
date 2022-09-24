@@ -59,7 +59,8 @@ export const DebugLayout = () => {
     const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
     const navigate = useNavigate();
 
-    const collectorName = (searchParams.get('collector') || '').split('\\').pop();
+    const selectedCollector = searchParams.get('collector') || '';
+    const collectorName = selectedCollector.split('\\').pop();
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery()
 
     useEffect(() => {
@@ -68,14 +69,14 @@ export const DebugLayout = () => {
             setSelectedEntry(entry);
             dispatch(changeEntryAction(entry))
         }
-    }, [isSuccess])
+    }, [isSuccess, data, dispatch, selectedEntry])
 
     useEffect(() => {
         collectorInfo({
             id: debugEntry!.id,
-            collector: searchParams.get('collector') || ''
+            collector: selectedCollector
         });
-    }, [searchParams.get('collector')])
+    }, [selectedCollector, collectorInfo, debugEntry])
 
     if (isLoading) {
         return <>Loading..</>
@@ -144,7 +145,7 @@ export const DebugLayout = () => {
                 </Grid>
                 <Grid item xs={9}>
                     <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
-                        {(!searchParams.has('collector') || searchParams.get('collector') === '')
+                        {(!searchParams.has('collector') || selectedCollector === '')
                             ? <Outlet/>
                             : (
                                 collectorQueryInfo.isLoading

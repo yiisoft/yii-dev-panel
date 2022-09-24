@@ -4,7 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import {JsonRenderer} from "../../Helper/JsonRenderer";
 
 export const ContainerEntryPage = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const objectClass = searchParams.get('class') || '';
     const {data, isLoading} = useGetObjectQuery(objectClass);
 
