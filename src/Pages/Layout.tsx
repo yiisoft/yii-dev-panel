@@ -5,10 +5,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import AdbIcon from '@mui/icons-material/Adb';
 import {Link, Menu, MenuItem} from "@mui/material";
 import {Outlet, useLocation} from "react-router";
 import {ErrorBoundary} from "react-error-boundary";
+import {YiiIcon} from "../Component/SvgIcon/YiiIcon";
 
 const pages = [
     {name: 'Gii', link: '#'},
@@ -50,21 +50,21 @@ export const Layout = () => {
     };
     return (
         <>
-            <AppBar position="static">
+            <AppBar position="static" color="primary">
                 <Container>
                     <Toolbar disableGutters>
-                        <AdbIcon sx={{display: 'flex', mr: 1}}/>
+                        <Link href={'/'}>
+                            <YiiIcon sx={{display: 'flex', mr: 1}}/>
+                        </Link>
                         <Typography variant="h6">
                             <Link
                                 href={'/'}
                                 sx={{
-                                    my: 2,
-                                    mx: 1,
                                     color: 'white',
                                     textDecoration: 'none',
                                 }}
                             >
-                                Yii
+                                Yii Dev Panel
                             </Link>
                         </Typography>
 

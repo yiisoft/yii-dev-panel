@@ -20,6 +20,14 @@ const LinkBehavior = React.forwardRef<HTMLAnchorElement,
 });
 
 export const theme = createTheme({
+    palette:{
+        primary: {
+            main: '#00617B',
+        },
+        secondary: {
+            main: '#873C00'
+        }
+    },
     components: {
         MuiLink: {
             defaultProps: {
