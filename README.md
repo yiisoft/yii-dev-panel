@@ -18,10 +18,14 @@ Yii Development Panel – it is an application that aggregates such different mo
 ## Installation
 
 ```shell
-npm install --legacy-peer-deps
+npm install
 ```
 
 > **Note:** `legacy-peer-deps` flag is required because `react-json-view` does not support React 18.
+
+## Screenshot
+
+![Screenshot](docs/screenshot.png)
 
 ## Contributing
 
