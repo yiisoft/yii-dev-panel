@@ -110,7 +110,7 @@ export const Layout = () => {
             <Autocomplete
                 freeSolo
                 value={selectedEntry}
-                options={data as DebugEntry[]}
+                options={(data || []) as DebugEntry[]}
                 getOptionLabel={getOptions}
                 renderOption={(props, option) => {
                     return (

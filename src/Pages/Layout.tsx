@@ -5,10 +5,13 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {Link, Menu, MenuItem} from "@mui/material";
+import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
 import {Outlet, useLocation} from "react-router";
 import {ErrorBoundary} from "react-error-boundary";
 import {YiiIcon} from "../Component/SvgIcon/YiiIcon";
+import {ErrorFallback} from "../Component/ErrorFallback";
+import {ContentCut, GitHub} from "@mui/icons-material";
+import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
     {name: 'Gii', link: '#'},
@@ -35,6 +38,9 @@ const NavLink = (props: { link: string, name: string } & any) => {
     </Link>
 }
 
+const buildVersion = 'REACT_APP_BUILD_ID' in process.env ? '#' + process.env.REACT_APP_BUILD_ID : 'development';
+const repositoryUrl = 'https://github.com/xepozz/yii-dev-panel';
+
 export const Layout = () => {
     const location = useLocation();
     const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
@@ -48,6 +54,17 @@ export const Layout = () => {
         delete newAnchors[key]
         setAnchorElUser(newAnchors);
     };
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
     return (
         <>
             <AppBar position="static" color="primary">
@@ -97,12 +114,37 @@ export const Layout = () => {
                                 }
                             )}
                         </Box>
+                        <div>
+                            <IconButton size="large" onClick={handleMenu} color="inherit">
+                                <AdbIcon/>
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                onClose={handleClose}
+                            >
+                                <MenuItem component={Link} href={repositoryUrl} target="_blank">
+                                    <ListItemIcon>
+                                        <GitHub fontSize="small"/>
+                                    </ListItemIcon>
+                                    <ListItemText>Open Github</ListItemText>
+                                </MenuItem>
+                                <MenuItem component="span" disableTouchRipple disableRipple>
+                                    <ListItemIcon>
+                                        <ContentCut fontSize="small"/>
+                                    </ListItemIcon>
+                                    <ListItemText>Build <b>{buildVersion}</b></ListItemText>
+                                </MenuItem>
+                            </Menu>
+                        </div>
                     </Toolbar>
                 </Container>
+
             </AppBar>
 
             <Container>
-                <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname]}>
+                <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
                     <Outlet/>
                 </ErrorBoundary>
             </Container>

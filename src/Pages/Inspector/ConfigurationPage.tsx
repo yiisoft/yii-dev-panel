@@ -47,7 +47,7 @@ export const ConfigurationPage = () => {
         return <>Loading..</>
     }
     const isArray = Array.isArray(data)
-    let rows = Object.entries(data as any)
+    let rows = Object.entries(data || [] as any)
     rows = rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
 
     return (
