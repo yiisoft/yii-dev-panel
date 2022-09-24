@@ -15,7 +15,6 @@ export function IndexPage() {
     function handleChangeUrl(event: { preventDefault: () => void; }) {
         event.preventDefault();
         dispatch(changeBaseUrl(url))
-        console.log('change apps setting', url)
     }
 
     return (

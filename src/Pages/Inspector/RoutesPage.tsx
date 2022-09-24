@@ -19,7 +19,7 @@ const groupsColumns: GridColDef[] = [
         field: 'routes', headerName: 'Routes', width: 700,
         renderCell: (params: GridRenderCellParams) => {
             return <>
-                {params.value.map((route: any) => <Typography component="div">{route}</Typography>)}
+                {params.value.map((route: any, index: number) => <Typography key={index} component="div">{route}</Typography>)}
             </>
 
         }
@@ -80,7 +80,6 @@ export const RoutesPage = () => {
     const [routes, setRoutes] = useState<any>([])
     const [groups, setGroups] = useState<any>([])
 
-    console.log(data)
     useEffect(() => {
         if (!isSuccess) {
             return;

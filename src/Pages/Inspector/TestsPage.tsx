@@ -37,7 +37,6 @@ export const TestsPage = () => {
 
     async function runCodeceptionHandler() {
         const data = await commandQuery('test/codeception');
-        console.log(data.data);
 
         const resultRows = []
         for (let event of (data.data as any)) {
