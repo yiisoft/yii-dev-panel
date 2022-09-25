@@ -5,7 +5,7 @@ import {useLazyGetObjectQuery} from "../API/Debug";
 import {useDebugEntry} from "../Provider/Debug/DebugEntryContext";
 import {deepUpdate} from "immupdate";
 
-export const JsonRenderer = ({value}: { value: any }) => {
+export const JsonRenderer = ({value, depth = 5}: { value: any; depth?: number}) => {
     const [objectQuery] = useLazyGetObjectQuery();
     const [data, setData] = useState(value);
     const debugEntry = useDebugEntry();
@@ -34,17 +34,17 @@ export const JsonRenderer = ({value}: { value: any }) => {
         rootName={false}
         value={data}
         enableClipboard={true}
-        defaultInspectDepth={5}
+        defaultInspectDepth={depth}
         groupArraysAfterLength={50}
         collapseStringsAfterLength={50}
         valueTypes={[
             {
-                is: ((value: any): any => typeof value === 'string' && value.startsWith('@')) as any,
+                is: (value: any) => typeof value === 'string' && value.startsWith('@'),
                 Component: (props) => {
                     return <>alias: {props.value}</>;
                 },
             }, {
-                is: ((value: any): any => typeof value === 'string' && value.match(/object@[\w\\]+#\d/)) as any,
+                is: (value: any) => typeof value === 'string' && !!value.match(/object@[\w\\]+#\d/),
                 Component: (props) => {
                     return <>
                         {props.value}

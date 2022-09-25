@@ -4,6 +4,7 @@ import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '
 import {useGetConfigurationQuery} from "../../API/Inspector";
 import {DataTable} from "../../Component/Grid";
 import {Typography} from "@mui/material";
+import {JsonRenderer} from "../../Helper/JsonRenderer";
 
 const groupsColumns: GridColDef[] = [
     {
@@ -25,6 +26,12 @@ const groupsColumns: GridColDef[] = [
 
         }
     },
+    {
+        field: 'middlewares', headerName: 'Middlewares', width: 700,
+        renderCell: (params: GridRenderCellParams) => {
+            return <JsonRenderer depth={0} value={params.value} />
+        }
+    },
 ];
 
 const routesColumns: GridColDef[] = [
@@ -38,12 +45,18 @@ const routesColumns: GridColDef[] = [
         }
     },
     {
-        field: 'pattern', headerName: 'Pattern', width: 700,
+        field: 'pattern', headerName: 'Pattern', width: 300,
         renderCell: (params: GridRenderCellParams) => {
             return <>
                 [{params.row.methods.join('|')}]: {params.value}
             </>
 
+        }
+    },
+    {
+        field: 'middlewares', headerName: 'Middlewares', width: 400,
+        renderCell: (params: GridRenderCellParams) => {
+            return <JsonRenderer depth={0} value={params.value} />
         }
     },
 ];
@@ -55,21 +68,24 @@ function renderGrid(data: any, columns: GridColumns) {
     />;
 }
 
-function collectGroupsAndRoutes(data: any, groupPrefix: string, groups: object[], routes: object[]) {
+function collectGroupsAndRoutes(data: any, groupPrefix: string, groups: object[], routes: object[], group?: any) {
     for (const datum of data) {
         if ('items' in datum) {
-            groups.push({
+            const group = {
                 'id': datum['$__id__$'],
                 'prefix': groupPrefix + datum.prefix,
                 'routes': datum.items.map((item: any) => item.pattern),
-            })
-            collectGroupsAndRoutes(datum.items, datum.prefix, groups, routes)
+                'middlewares': datum.middlewareDefinitions || [],
+            };
+            groups.push(group)
+            collectGroupsAndRoutes(datum.items, datum.prefix, groups, routes, group)
         } else {
             routes.push({
                 'id': datum['$__id__$'],
                 'name': datum.name,
                 'pattern': groupPrefix + datum.pattern,
                 'methods': datum.methods ?? [],
+                'middlewares': [].concat(group?.middlewares || [], datum.middlewareDefinitions || []),
             })
         }
 
