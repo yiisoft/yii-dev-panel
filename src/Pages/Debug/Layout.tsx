@@ -2,7 +2,10 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Outlet, useLocation, useNavigate} from "react-router";
 import {
+    Alert,
+    AlertTitle,
     Autocomplete,
+    Box,
     Breadcrumbs,
     Grid,
     Link,
@@ -25,6 +28,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {LogPage} from "./LogPage";
 import {DumpPage} from "./DumpPage";
+import {ErrorFallback} from "../../Component/ErrorFallback";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -48,6 +52,34 @@ function getEntryTarget(entry: any) {
 
 function parseCollectorName(text: string) {
     return text.replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
+}
+
+interface CollectorDataProps {
+    collectorData: any
+    selectedCollector: string
+}
+
+function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
+    const pages = {
+        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPage data={data}/>,
+        'default': (data: any) => <DumpPage data={data}/>,
+    }
+
+    if (selectedCollector === '') {
+        return <Outlet/>;
+    }
+
+    // @ts-ignore
+    return (pages[selectedCollector] ?? pages['default'])(collectorData)
+}
+
+function HttpRequestError({error}: {error: any}) {
+    return <Box m={2}>
+        <Alert severity="error">
+            <AlertTitle>Something went wrong:</AlertTitle>
+            <pre>{error}</pre>
+        </Alert>
+    </Box>;
 }
 
 export const Layout = () => {
@@ -92,11 +124,6 @@ export const Layout = () => {
             return ['[' + getEntryTarget(debugEntry) + ']', formatDate(entry.web.request.startTime), entry.request.method, entry.request.path].join(' ')
         }
         return entry.id
-    }
-
-    const pages = {
-        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPage data={data}/>,
-        'default': (data: any) => <DumpPage data={data}/>,
     }
 
     return (
@@ -146,20 +173,10 @@ export const Layout = () => {
                     </List>
                 </Grid>
                 <Grid item xs={9}>
-                    <ErrorBoundary fallback={<>An error was occurred</>} resetKeys={[location.pathname, selectedEntry]}>
-                        {(!searchParams.has('collector') || selectedCollector === '')
-                            ? <Outlet/>
-                            : (
-                                collectorQueryInfo.isLoading
-                                    ? <>Loading..</>
-                                    : (
-                                        !!collectorQueryInfo.currentData
-                                            // @ts-ignore
-                                            ? (pages[searchParams.get('collector')] ?? pages['default'])(collectorQueryInfo.currentData)
-                                            : <>Unknown error...</>
-                                    )
-                            )
-                        }
+                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname, selectedEntry]}>
+                        {collectorQueryInfo.isLoading && <>Loading...</>}
+                        {collectorQueryInfo.isError && <HttpRequestError error={(collectorQueryInfo.error as any)?.error}/> }
+                        {collectorQueryInfo.isSuccess && <CollectorData selectedCollector={selectedCollector} collectorData={collectorQueryInfo.currentData} />}
                     </ErrorBoundary>
                 </Grid>
             </Grid>
