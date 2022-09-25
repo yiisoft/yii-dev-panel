@@ -19,6 +19,10 @@ export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPag
         rowsPerPageOptions={rowsPerPage}
         pageSize={pageSize}
         onPageSizeChange={setPageSize}
+        disableVirtualization
+        autoPageSize
+        rowBuffer={0}
+        rowThreshold={0}
         autoHeight
         sx={{
             '& .MuiDataGrid-cell': {
