@@ -21,8 +21,6 @@ Yii Development Panel – it is an application that aggregates such different mo
 npm install
 ```
 
-> **Note:** `legacy-peer-deps` flag is required because `react-json-view` does not support React 18.
-
 ## Screenshot
 
 ![Screenshot](docs/screenshot.png)
@@ -55,7 +53,7 @@ npm install
 3. Install dependencies
 
    ```shell
-   npm install --legacy-peer-deps
+   npm install
    ```
 
 4. Run dev server
