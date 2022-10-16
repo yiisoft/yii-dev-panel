@@ -7,6 +7,7 @@ import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, RE
 import storage from "redux-persist/lib/storage";
 import {ApplicationSlice} from "./Provider/ApplicationContext";
 import {useSelector} from "react-redux";
+import {giiApi} from "./API/Gii";
 
 const commonConfig = {version: 1, storage};
 const applicationSliceConfig = {key: ApplicationSlice.reducer.name, ...commonConfig};
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 
     [inspectorApi.reducerPath]: inspectorApi.reducer,
     [debugApi.reducerPath]: debugApi.reducer,
+    [giiApi.reducerPath]: giiApi.reducer,
 });
 
 export const store = configureStore({
@@ -27,7 +29,7 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat([inspectorApi.middleware, debugApi.middleware]),
+        }).concat([inspectorApi.middleware, debugApi.middleware, giiApi.middleware]),
     devTools: process.env.NODE_ENV !== 'production',
 })
 

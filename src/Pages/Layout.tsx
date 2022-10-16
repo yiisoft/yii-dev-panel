@@ -14,7 +14,7 @@ import {ContentCut, GitHub} from "@mui/icons-material";
 import AdbIcon from '@mui/icons-material/Adb';
 
 const pages = [
-    {name: 'Gii', link: '#'},
+    {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
     {
         name: 'Inspector', link: '#', items: [
