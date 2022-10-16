@@ -9,7 +9,7 @@ interface GridProps {
     getRowId?: (row: any) => string | number
 }
 
-export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPage = [20, 50, 100, 1000]}: GridProps) {
+export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]}: GridProps) {
     const [pageSize, setPageSize] = useState(Math.min(...rowsPerPage))
 
     return <DataGrid
@@ -18,9 +18,8 @@ export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPag
         columns={columns}
         rowsPerPageOptions={rowsPerPage}
         pageSize={pageSize}
-        onPageSizeChange={setPageSize}
+        onPageSizeChange={(value) => setPageSize(Math.min(value, 100))}
         disableVirtualization
-        autoPageSize
         rowBuffer={0}
         rowThreshold={0}
         autoHeight
