@@ -1,8 +1,13 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {FormEvent, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router";
 import {
+    Autocomplete,
+    Box,
     Breadcrumbs,
+    Button,
+    FormControl,
+    FormHelperText,
     Grid,
     Link,
     List,
@@ -10,6 +15,7 @@ import {
     ListItemButton,
     ListItemIcon,
     ListItemText,
+    TextField,
     Typography
 } from "@mui/material";
 import {ErrorBoundary} from "react-error-boundary";
@@ -17,8 +23,79 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {ErrorFallback} from "../../Component/ErrorFallback";
-import {GiiGenerator, useGetGeneratorsQuery} from "../../API/Gii";
-import {JsonRenderer} from "../../Helper/JsonRenderer";
+import {GiiGenerator, GiiGeneratorAttribute, GiiGeneratorAttributeRule, useGetGeneratorsQuery} from "../../API/Gii";
+
+function matchInputType(rules: GiiGeneratorAttributeRule[]) {
+    let possibleType = 'text';
+    for (let rule of rules) {
+        if (rule[0] === 'each') {
+            possibleType = 'select';
+            break;
+        }
+        if (rule[0] === 'number') {
+            possibleType = 'number';
+            break;
+        }
+    }
+    return possibleType;
+}
+
+function renderInput(type: string, attributeName: string, attribute: GiiGeneratorAttribute) {
+    if (type === 'text') {
+        return <TextField
+            helperText={attribute.hint}
+            label={attribute.label}
+            name={attributeName}
+            defaultValue={attribute.defaultValue}
+            placeholder={String(attribute.defaultValue)}
+        />;
+    }
+    if (type === 'select') {
+        return <FormControl sx={{m: 1, minWidth: 120}}>
+            <Autocomplete
+                multiple
+                freeSolo={true}
+                defaultValue={Array.isArray(attribute.defaultValue) ? attribute.defaultValue : []}
+                options={[]}
+                renderInput={(params) => (
+                    <TextField {...params} name={attributeName} label={attribute.label}/>
+                )}
+            />
+            <FormHelperText>{attribute.hint}</FormHelperText>
+        </FormControl>
+    }
+    return null
+}
+
+function GeneratorForm({generator}: { generator: GiiGenerator }) {
+    const attributes = generator.attributes;
+
+    function onSubmitHandler(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        console.log(event)
+        const form = event.target;
+    }
+
+    return (
+        <>
+            <Box component="form" onSubmit={onSubmitHandler} my={2}>
+                {Object.entries(attributes).map(([attributeName, attribute], index) => {
+                    return (<React.Fragment key={index}>
+                        <Typography>
+                            {attributeName}:
+                        </Typography>
+                        <Box>
+                        {
+                            renderInput(matchInputType(attribute.rules), attributeName, attribute)
+                        }
+                        </Box>
+                    </React.Fragment>)
+                })}
+                <Button type="submit">Submit</Button>
+            </Box>
+        </>
+    );
+}
 
 export const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null)
@@ -38,6 +115,8 @@ export const Layout = () => {
     if (isLoading) {
         return <>Loading..</>
     }
+
+    console.log(selectedGenerator)
 
     return (
         <>
@@ -66,7 +145,9 @@ export const Layout = () => {
                 </Grid>
                 <Grid item xs={9}>
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
-                        {!!selectedGenerator && <JsonRenderer key={selectedGenerator?.id} value={selectedGenerator}/>}
+                        {!!selectedGenerator && <GeneratorForm generator={selectedGenerator}/>}
+                        {/*{!!selectedGenerator &&*/}
+                        {/*    <JsonRenderer key={selectedGenerator?.id} value={selectedGenerator}/>}*/}
                         {!selectedGenerator && (
                             <>
                                 Select a generator to see more options
