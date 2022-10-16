@@ -33,7 +33,7 @@ export const Layout = () => {
     useEffect(() => {
         const selectedGenerator = generators.find(v => v.id === selectedGeneratorId) || null;
         setSelectedGenerator(selectedGenerator);
-    }, [selectedGeneratorId])
+    }, [selectedGeneratorId, data])
 
     if (isLoading) {
         return <>Loading..</>
