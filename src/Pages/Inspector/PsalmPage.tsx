@@ -18,7 +18,7 @@ const columns: GridColDef[] = [
         }
     },
     {
-        field: 'message', headerName: 'Message', width: 800,
+        field: 'message', headerName: 'Message', flex: 1,
         renderCell: (params: GridRenderCellParams) => {
             return <>
                 <b><Link href={params.row.link} target="_blank">{params.row.type}</Link></b>:&nbsp;

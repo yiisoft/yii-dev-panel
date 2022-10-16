@@ -22,6 +22,7 @@ export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPag
         disableVirtualization
         rowBuffer={0}
         rowThreshold={0}
+        hideFooterSelectedRowCount
         autoHeight
         sx={{
             '& .MuiDataGrid-cell': {

@@ -20,7 +20,7 @@ export const ConfigurationPage = () => {
         {
             field: '1',
             headerName: 'Value',
-            width: 1000,
+            flex: 1,
             renderCell: (params: GridRenderCellParams) => {
                 if (typeof params.value === "string") {
                     if (params.value in objects) {

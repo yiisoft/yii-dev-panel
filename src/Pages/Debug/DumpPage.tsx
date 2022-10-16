@@ -6,7 +6,7 @@ import {DataTable} from "../../Component/Grid";
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},
     {
-        field: '1', headerName: 'Value', width: 1000,
+        field: '1', headerName: 'Value', flex: 1,
         renderCell: (params) => {
             return <JsonRenderer key={params.id} value={params.value}/>
         }

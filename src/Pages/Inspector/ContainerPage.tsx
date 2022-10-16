@@ -30,7 +30,7 @@ export const ContainerPage = () => {
         {
             field: '1',
             headerName: 'Value',
-            width: 1000,
+            flex: 1,
             renderCell: (params: GridRenderCellParams) => {
                 if (params.row[1]) {
                     return <JsonRenderer key={params.id} value={params.row[1]}/>

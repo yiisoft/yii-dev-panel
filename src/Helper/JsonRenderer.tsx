@@ -10,13 +10,13 @@ export const JsonRenderer = ({value, depth = 5}: { value: any; depth?: number}) 
     const [data, setData] = useState(value);
     const debugEntry = useDebugEntry();
 
-    if (typeof data == 'string') {
-        let html = value
-            .replaceAll('\n', '<br/>')
-            .replaceAll(' ', '&nbsp')
-        ;
-        return <div dangerouslySetInnerHTML={{__html: html}}/>
-    }
+    // if (typeof data == 'string' && data.match(/\\n|<[\w\d ="'\/?]+>.*(?:<\/\w+>)?/)?.length) {
+    //     let html = value
+    //         .replaceAll('\n', '<br/>')
+    //         .replaceAll(' ', '&nbsp')
+    //     ;
+    //     return <div dangerouslySetInnerHTML={{__html: html}}/>
+    // }
     const objectLoader = async (objectString: string, pathes: (string | number)[]) => {
         const objectId = Number(objectString.substring(objectString.indexOf('#', -1) + 1))
 

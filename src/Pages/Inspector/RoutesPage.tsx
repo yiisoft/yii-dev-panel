@@ -20,8 +20,9 @@ const groupsColumns: GridColDef[] = [
         field: 'routes', headerName: 'Routes', width: 700,
         renderCell: (params: GridRenderCellParams) => {
             return <>
-                {params.value.map((route: any, index: number) => <Typography key={index}
-                                                                             component="div">{route}</Typography>)}
+                {params.value.map((route: any, index: number) => (
+                    <Typography key={index} component="div">{route}</Typography>
+                ))}
             </>
 
         }
@@ -54,7 +55,7 @@ const routesColumns: GridColDef[] = [
         }
     },
     {
-        field: 'middlewares', headerName: 'Middlewares', width: 400,
+        field: 'middlewares', headerName: 'Middlewares', flex: 1,
         renderCell: (params: GridRenderCellParams) => {
             return <JsonRenderer depth={0} value={params.value} />
         }
@@ -74,7 +75,7 @@ function collectGroupsAndRoutes(data: any, groupPrefix: string, groups: object[]
             const group = {
                 'id': datum['$__id__$'],
                 'prefix': groupPrefix + datum.prefix,
-                'routes': datum.items.map((item: any) => item.pattern),
+                'routes': datum.items.map((item: any) => item.methods + ': ' +item.pattern),
                 'middlewares': datum.middlewareDefinitions || [],
             };
             groups.push(group)

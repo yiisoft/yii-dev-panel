@@ -43,9 +43,7 @@ export default function App() {
                                     <Route index element={<DebugPages.IndexPage/>}/>
                                     <Route path='logger' element={<DebugPages.LogPage/>}/>
                                 </Route>
-                                <Route path="gii" element={<GiiPages.Layout/>}>
-                                    <Route index element={<GiiPages.IndexPage/>}/>
-                                </Route>
+                                <Route path="gii" element={<GiiPages.Layout/>} />
                             </Route>
                         </Routes>
                     </BrowserRouter>
