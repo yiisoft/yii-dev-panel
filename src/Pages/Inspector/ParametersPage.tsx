@@ -16,7 +16,7 @@ const columns: GridColDef[] = [
 ];
 
 export const ParametersPage = () => {
-    const {data, isLoading} = useGetParametersQuery('');
+    const {data, isLoading} = useGetParametersQuery();
 
     if (isLoading) {
         return <>Loading..</>

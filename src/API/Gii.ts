@@ -11,10 +11,10 @@ type SummaryResponseType = {
 
 export const giiApi = createApi({
     reducerPath: 'api.gii',
-    baseQuery: createBaseQuery('/gii/api/generator'),
+    baseQuery: createBaseQuery('/gii/api'),
     endpoints: (builder) => ({
         getGenerators: builder.query<GiiGenerator[], void>({
-            query: () => ``,
+            query: () => `/generator`,
             transformResponse: (result: SummaryResponseType) => (result.generators as GiiGenerator[]) || []
         }),
     }),

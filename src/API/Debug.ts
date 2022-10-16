@@ -41,4 +41,4 @@ export const debugApi = createApi({
     }),
 })
 
-export const {useGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi
+export const {useGetDebugQuery, useLazyGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi

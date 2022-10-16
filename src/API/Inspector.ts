@@ -10,7 +10,7 @@ export const inspectorApi = createApi({
     keepUnusedDataFor: 0,
     baseQuery: createBaseQuery('/inspect/api/'),
     endpoints: (builder) => ({
-        getParameters: builder.query<Response, string>({
+        getParameters: builder.query<Response, void>({
             query: () => `params`,
             transformResponse: (result: Response) => (result.data) || []
         }),
@@ -35,6 +35,7 @@ export const inspectorApi = createApi({
 
 export const {
     useGetParametersQuery,
+    useLazyGetParametersQuery,
     useGetConfigurationQuery,
     useGetObjectQuery,
     useGetClassesQuery,
