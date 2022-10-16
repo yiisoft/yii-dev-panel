@@ -5,18 +5,20 @@ import {useLazyGetObjectQuery} from "../API/Debug";
 import {useDebugEntry} from "../Provider/Debug/DebugEntryContext";
 import {deepUpdate} from "immupdate";
 
-export const JsonRenderer = ({value, depth = 5}: { value: any; depth?: number}) => {
+const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
+
+export const JsonRenderer = ({value, depth = 5}: { value: any; depth?: number }) => {
     const [objectQuery] = useLazyGetObjectQuery();
     const [data, setData] = useState(value);
     const debugEntry = useDebugEntry();
 
-    // if (typeof data == 'string' && data.match(/\\n|<[\w\d ="'\/?]+>.*(?:<\/\w+>)?/)?.length) {
-    //     let html = value
-    //         .replaceAll('\n', '<br/>')
-    //         .replaceAll(' ', '&nbsp')
-    //     ;
-    //     return <div dangerouslySetInnerHTML={{__html: html}}/>
-    // }
+    if (typeof data == 'string' && data.match(REGEXP_PHP_FUNCTION)?.length) {
+        let html = value
+            .replaceAll('\n', '<br/>')
+            .replaceAll(' ', '&nbsp')
+        ;
+        return <div dangerouslySetInnerHTML={{__html: html}}/>
+    }
     const objectLoader = async (objectString: string, pathes: (string | number)[]) => {
         const objectId = Number(objectString.substring(objectString.indexOf('#', -1) + 1))
 
