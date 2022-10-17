@@ -56,7 +56,7 @@ type FormInputProps = {
 };
 
 function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
-    const result: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'> = {};
+    let result: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'> = {};
     for (let rule of rules) {
         switch (rule[0]) {
             case 'required':
@@ -65,10 +65,29 @@ function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
                     message: rule.message,
                 }
                 break;
+            case 'each':
+                // result = {...result, ...createValidationRules(rule.rules)}
+                result.validate = function (value) {
+                    console.log('validating', 'value', value)
+
+                    return true
+                }
+                break;
             case 'regex':
-                const regex = (rule.pattern as string).slice(1).slice(0, -1);
+                const originalPattern = rule.pattern as string;
+                const lastSlashPosition = originalPattern.lastIndexOf('/');
+
+                const flags = originalPattern.slice(lastSlashPosition + 1);
+                const regex = originalPattern
+                    .slice(0, lastSlashPosition - originalPattern.length)
+                    .slice(1)
+                // console.log(
+                //     'orig', originalPattern,
+                //     'new', regex,
+                //     'flags', flags
+                // )
                 result.pattern = {
-                    value: new RegExp(regex),
+                    value: new RegExp(regex, flags),
                     message: rule.message.message,
                 }
                 break;
@@ -80,6 +99,11 @@ function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
 function FormInput({type, attributeName, attribute}: FormInputProps) {
     const form = useFormContext();
     const rules = createValidationRules(attribute.rules);
+    console.log(
+        'attribute name', attributeName,
+        'rules', rules,
+        'attribute', attribute.defaultValue,
+    )
     if (type === 'text') {
         return <Controller
             name={attributeName}
@@ -100,24 +124,35 @@ function FormInput({type, attributeName, attribute}: FormInputProps) {
             )}
         />
     }
+
     if (type === 'select') {
         return <Controller
             control={form.control}
+            rules={rules}
             defaultValue={Array.isArray(attribute.defaultValue) ? attribute.defaultValue : []}
             name={attributeName}
-            render={({field: {onChange, value},}) => (
+            render={({field: {value, onChange, onBlur, ref}, fieldState: {error}}) => (
                 <>
                     <Autocomplete
-                        multiple
-                        onChange={(event, item) => {
-                            console.log(event, item)
-                            onChange(item);
-                        }}
                         value={value}
+                        onChange={(_, items) => onChange(items)}
+                        multiple
+                        filterSelectedOptions
+                        filterOptions={(v) => v}
                         freeSolo={true}
                         options={[]}
                         renderInput={(params) => (
-                            <TextField {...params} name={attributeName} label={attribute.label}/>
+                            <TextField
+                                {...params}
+                                ref={ref}
+                                onBlur={() => {
+                                    onBlur()
+                                }}
+                                name={attributeName}
+                                helperText={error ? error.message : null}
+                                error={!!error}
+                                label={attribute.label}
+                            />
                         )}
                     />
                     <FormHelperText>{attribute.hint}</FormHelperText>
@@ -130,8 +165,10 @@ function FormInput({type, attributeName, attribute}: FormInputProps) {
 
 function GeneratorForm({generator}: { generator: GiiGenerator }) {
     const attributes = generator.attributes;
-    const form = useForm();
-    const [previewQuery, previewQueryInfo] = usePostPreviewMutation();
+    const form = useForm({
+        mode: "onBlur",
+    });
+    const [previewQuery] = usePostPreviewMutation();
     const [generateQuery] = usePostGenerateMutation();
 
     async function previewHandler(data: FieldValues) {
