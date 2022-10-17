@@ -32,6 +32,7 @@ import {
     usePostPreviewMutation
 } from "../../API/Gii";
 import {Controller, FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
+import {RegisterOptions} from "react-hook-form/dist/types/validator";
 
 function matchInputType(rules: GiiGeneratorAttributeRule[]) {
     let possibleType = 'text';
@@ -54,11 +55,35 @@ type FormInputProps = {
     attribute: GiiGeneratorAttribute
 };
 
+function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
+    const result: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'> = {};
+    for (let rule of rules) {
+        switch (rule[0]) {
+            case 'required':
+                result.required = {
+                    value: true,
+                    message: rule.message,
+                }
+                break;
+            case 'regex':
+                const regex = (rule.pattern as string).slice(1).slice(0, -1);
+                result.pattern = {
+                    value: new RegExp(regex),
+                    message: rule.message.message,
+                }
+                break;
+        }
+    }
+    return result;
+}
+
 function FormInput({type, attributeName, attribute}: FormInputProps) {
     const form = useFormContext();
+    const rules = createValidationRules(attribute.rules);
     if (type === 'text') {
         return <Controller
             name={attributeName}
+            rules={rules}
             defaultValue={String(attribute.defaultValue ?? '')}
             control={form.control}
             render={({field, fieldState: {error}}) => (
@@ -139,7 +164,6 @@ function GeneratorForm({generator}: { generator: GiiGenerator }) {
             const errors = errorsMap[attribute];
             form.setError(attribute, {message: errors.join(' ')})
         }
-        console.log(res)
     }
 
     console.log(form)
