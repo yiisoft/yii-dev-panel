@@ -1,12 +1,12 @@
 import * as React from 'react';
-import {FormEvent, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router";
 import {
     Autocomplete,
     Box,
     Breadcrumbs,
     Button,
-    FormControl,
+    ButtonGroup,
     FormHelperText,
     Grid,
     Link,
@@ -23,7 +23,15 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {ErrorFallback} from "../../Component/ErrorFallback";
-import {GiiGenerator, GiiGeneratorAttribute, GiiGeneratorAttributeRule, useGetGeneratorsQuery} from "../../API/Gii";
+import {
+    GiiGenerator,
+    GiiGeneratorAttribute,
+    GiiGeneratorAttributeRule,
+    useGetGeneratorsQuery,
+    usePostGenerateMutation,
+    usePostPreviewMutation
+} from "../../API/Gii";
+import {Controller, FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
 
 function matchInputType(rules: GiiGeneratorAttributeRule[]) {
     let possibleType = 'text';
@@ -40,59 +48,141 @@ function matchInputType(rules: GiiGeneratorAttributeRule[]) {
     return possibleType;
 }
 
-function renderInput(type: string, attributeName: string, attribute: GiiGeneratorAttribute) {
+type FormInputProps = {
+    type: string,
+    attributeName: string,
+    attribute: GiiGeneratorAttribute
+};
+
+function FormInput({type, attributeName, attribute}: FormInputProps) {
+    const form = useFormContext();
     if (type === 'text') {
-        return <TextField
-            helperText={attribute.hint}
-            label={attribute.label}
+        return <Controller
             name={attributeName}
-            defaultValue={attribute.defaultValue}
-            placeholder={String(attribute.defaultValue)}
-        />;
+            defaultValue={String(attribute.defaultValue ?? '')}
+            control={form.control}
+            render={({field, fieldState: {error}}) => (
+                <>
+                    <TextField
+                        {...field}
+                        placeholder={String(attribute.defaultValue ?? '')}
+                        label={attribute.label}
+                        error={!!error}
+                        helperText={error ? error.message : null}
+                    />
+                    {!!attribute.hint && <FormHelperText>{attribute.hint}</FormHelperText>}
+                </>
+            )}
+        />
     }
     if (type === 'select') {
-        return <FormControl sx={{m: 1, minWidth: 120}}>
-            <Autocomplete
-                multiple
-                freeSolo={true}
-                defaultValue={Array.isArray(attribute.defaultValue) ? attribute.defaultValue : []}
-                options={[]}
-                renderInput={(params) => (
-                    <TextField {...params} name={attributeName} label={attribute.label}/>
-                )}
-            />
-            <FormHelperText>{attribute.hint}</FormHelperText>
-        </FormControl>
+        return <Controller
+            control={form.control}
+            defaultValue={Array.isArray(attribute.defaultValue) ? attribute.defaultValue : []}
+            name={attributeName}
+            render={({field: {onChange, value},}) => (
+                <>
+                    <Autocomplete
+                        multiple
+                        onChange={(event, item) => {
+                            console.log(event, item)
+                            onChange(item);
+                        }}
+                        value={value}
+                        freeSolo={true}
+                        options={[]}
+                        renderInput={(params) => (
+                            <TextField {...params} name={attributeName} label={attribute.label}/>
+                        )}
+                    />
+                    <FormHelperText>{attribute.hint}</FormHelperText>
+                </>
+            )}
+        />
     }
     return null
 }
 
 function GeneratorForm({generator}: { generator: GiiGenerator }) {
     const attributes = generator.attributes;
+    const form = useForm();
+    const [previewQuery, previewQueryInfo] = usePostPreviewMutation();
+    const [generateQuery] = usePostGenerateMutation();
 
-    function onSubmitHandler(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault();
-        console.log(event)
-        const form = event.target;
+    async function previewHandler(data: FieldValues) {
+        console.log('preview', data)
+        const res = await previewQuery({
+            generator: generator.id,
+            body: data,
+        })
+        // @ts-ignore
+        const errorsMap = res.error.data.errors as Record<string, string[]>;
+        console.log(errorsMap)
+
+        for (let attribute in errorsMap) {
+            const errors = errorsMap[attribute];
+            form.setError(attribute, {message: errors.join(' ')})
+        }
     }
+
+    async function generateHandler(data: FieldValues) {
+        console.log('generate', data)
+        const res = await generateQuery({
+            generator: generator.id,
+            body: data,
+        })
+        // @ts-ignore
+        const errorsMap = res.error.data.errors as Record<string, string[]>;
+        console.log(errorsMap)
+
+        for (let attribute in errorsMap) {
+            const errors = errorsMap[attribute];
+            form.setError(attribute, {message: errors.join(' ')})
+        }
+        console.log(res)
+    }
+
+    console.log(form)
 
     return (
         <>
-            <Box component="form" onSubmit={onSubmitHandler} my={2}>
-                {Object.entries(attributes).map(([attributeName, attribute], index) => {
-                    return (<React.Fragment key={index}>
-                        <Typography>
-                            {attributeName}:
-                        </Typography>
-                        <Box>
-                        {
-                            renderInput(matchInputType(attribute.rules), attributeName, attribute)
-                        }
-                        </Box>
-                    </React.Fragment>)
-                })}
-                <Button type="submit">Submit</Button>
-            </Box>
+            <FormProvider {...form}>
+                <Box component="form"
+                     onReset={form.reset}
+                     onSubmit={(e) => {
+                         // @ts-ignore
+                         const buttonName = e.nativeEvent.submitter.name;
+                         if (buttonName === 'preview') {
+                             form.handleSubmit(previewHandler)(e)
+                         } else {
+                             form.handleSubmit(generateHandler)(e)
+                         }
+                     }}
+                     my={2}
+                >
+                    {Object.entries(attributes).map(([attributeName, attribute], index) => {
+                        return (<React.Fragment key={index}>
+                            <Typography>
+                                {attributeName}:
+                            </Typography>
+                            <Box mb={1}>
+                                <FormInput
+                                    type={matchInputType(attribute.rules)}
+                                    attributeName={attributeName}
+                                    attribute={attribute}
+                                />
+                            </Box>
+                        </React.Fragment>)
+                    })}
+                    <Box my={2}>
+                        <ButtonGroup>
+                            <Button type="submit" name="preview" color="secondary">Preview</Button>
+                            <Button type="submit" name="generate">Generate</Button>
+                            <Button type="reset" color="warning">Reset</Button>
+                        </ButtonGroup>
+                    </Box>
+                </Box>
+            </FormProvider>
         </>
     );
 }
