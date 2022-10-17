@@ -32,7 +32,8 @@ import {
     usePostPreviewMutation
 } from "../../API/Gii";
 import {Controller, FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
-import {RegisterOptions} from "react-hook-form/dist/types/validator";
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as yup from 'yup'
 
 function matchInputType(rules: GiiGeneratorAttributeRule[]) {
     let possibleType = 'text';
@@ -55,23 +56,43 @@ type FormInputProps = {
     attribute: GiiGeneratorAttribute
 };
 
-function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
-    let result: Omit<RegisterOptions, 'valueAsNumber' | 'valueAsDate' | 'setValueAs' | 'disabled'> = {};
+function createYupValidationSchema(attributes: Record<string, GiiGeneratorAttribute>) {
+    const rulesSet: Record<string, any> = {};
+    Object.entries(attributes).map(([attributeName, attribute], index) => {
+        rulesSet[attributeName] = createYupValidationRules(attribute.rules)
+    });
+
+    return yup.object(rulesSet)
+}
+
+declare module 'yup' {
+    interface MixedSchema<TType, TContext, TDefault, TFlags> {
+        sequence(schemas: any[]): this;
+    }
+}
+yup.addMethod(yup.MixedSchema, 'sequence', function (funcList) {
+    return this.test(async (value, context) => {
+        try {
+            for (const func of funcList) {
+                await func.validate(value);
+            }
+        } catch ({message}) {
+            return context.createError({message: message as any});
+        }
+        return true;
+    });
+});
+
+function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {
+    let currentSet: any[] = [];
+
     for (let rule of rules) {
         switch (rule[0]) {
             case 'required':
-                result.required = {
-                    value: true,
-                    message: rule.message,
-                }
+                currentSet.push(yup.string().required(rule.message))
                 break;
             case 'each':
-                // result = {...result, ...createValidationRules(rule.rules)}
-                result.validate = function (value) {
-                    console.log('validating', 'value', value)
-
-                    return true
-                }
+                currentSet.push(yup.array(createYupValidationRules(rule.rules)) as any)
                 break;
             case 'regex':
                 const originalPattern = rule.pattern as string;
@@ -86,28 +107,25 @@ function createValidationRules(rules: GiiGeneratorAttributeRule[]) {
                 //     'new', regex,
                 //     'flags', flags
                 // )
-                result.pattern = {
-                    value: new RegExp(regex, flags),
-                    message: rule.message.message,
-                }
+                currentSet.push(yup.string().matches(new RegExp(regex, flags), {message: rule.message.message}))
+
                 break;
         }
     }
-    return result;
+
+    return yup.mixed().sequence(currentSet)
 }
 
 function FormInput({type, attributeName, attribute}: FormInputProps) {
     const form = useFormContext();
-    const rules = createValidationRules(attribute.rules);
     console.log(
         'attribute name', attributeName,
-        'rules', rules,
         'attribute', attribute.defaultValue,
     )
     if (type === 'text') {
         return <Controller
             name={attributeName}
-            rules={rules}
+            // rules={rules}
             defaultValue={String(attribute.defaultValue ?? '')}
             control={form.control}
             render={({field, fieldState: {error}}) => (
@@ -128,7 +146,7 @@ function FormInput({type, attributeName, attribute}: FormInputProps) {
     if (type === 'select') {
         return <Controller
             control={form.control}
-            rules={rules}
+            // rules={rules}
             defaultValue={Array.isArray(attribute.defaultValue) ? attribute.defaultValue : []}
             name={attributeName}
             render={({field: {value, onChange, onBlur, ref}, fieldState: {error}}) => (
@@ -165,8 +183,11 @@ function FormInput({type, attributeName, attribute}: FormInputProps) {
 
 function GeneratorForm({generator}: { generator: GiiGenerator }) {
     const attributes = generator.attributes;
+    const validationSchema = createYupValidationSchema(attributes);
+
     const form = useForm({
         mode: "onBlur",
+        resolver: yupResolver(validationSchema)
     });
     const [previewQuery] = usePostPreviewMutation();
     const [generateQuery] = usePostGenerateMutation();
