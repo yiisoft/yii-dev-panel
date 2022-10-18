@@ -103,9 +103,13 @@ export function GenerateStep({generator, onComplete}: StepProps) {
         if ('error' in response) {
             console.log(response)
             mapErrorsToForm(response, form);
-        } else {
-            onComplete();
+            return;
         }
+
+        // @ts-ignore
+        context.setResults(response.data);
+
+        onComplete();
     }
 
     console.log(form)

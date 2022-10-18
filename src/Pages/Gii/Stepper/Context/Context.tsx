@@ -11,20 +11,29 @@ export type GiiFile = {
     type: string;
 }
 
+export type GiiResult = {
+    id: string;
+    status: string;
+    error: string;
+}
+
 interface State {
-    files: GiiFile[],
+    files: GiiFile[];
     operations: any[],
     parameters: any[];
+    results: GiiResult[];
 }
 
 const initialState: State = {
     files: [],
     operations: [],
     parameters: [],
+    results: [],
 }
 const setFiles = createAction<any>('setFiles')
 const setOperations = createAction<any>('setOperations')
 const setParameters = createAction<any>('setParameters')
+const setResults = createAction<any>('setResults')
 
 
 export const Reducer = createReducer(initialState, (builder) => {
@@ -37,6 +46,9 @@ export const Reducer = createReducer(initialState, (builder) => {
         })
         .addCase(setParameters, (state, action) => {
             state.parameters = action.payload as any
+        })
+        .addCase(setResults, (state, action) => {
+            state.results = action.payload as any
         })
 })
 
@@ -56,6 +68,10 @@ export const ContextProvider = ({children}: any) => {
         operations: state.operations,
         setOperations: (operations: any[]) => {
             dispatch(setOperations(operations));
+        },
+        results: state.results,
+        setResults: (results: any[]) => {
+            dispatch(setResults(results));
         },
     };
 
