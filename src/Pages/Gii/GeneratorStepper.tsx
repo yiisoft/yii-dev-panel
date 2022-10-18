@@ -7,6 +7,7 @@ import {StepContent} from "@mui/material";
 import {GiiGenerator} from "../../API/Gii";
 import {PreviewStep} from "./GeneratorSteps/PreviewStep";
 import {ResultStep} from "./GeneratorSteps/ResultStep";
+import {GenerateStep} from "./GeneratorSteps/GenerateStep";
 
 const steps = [
     {
@@ -15,7 +16,7 @@ const steps = [
         buttonLabel: 'preview',
     },
     {
-        component: PreviewStep,
+        component: GenerateStep,
         label: 'Generate',
         buttonLabel: 'generate',
     },
@@ -30,12 +31,7 @@ export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
     const [activeStepIndex, setActiveStepIndex] = React.useState(0);
 
     const handleNext = async () => {
-        // await onCompleteRef.current()
         setActiveStepIndex(prev => prev + 1)
-    };
-
-    const handleBack = () => {
-        setActiveStepIndex(prev => prev - 1)
     };
 
     const handleReset = () => {
@@ -50,24 +46,6 @@ export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
                         <StepLabel>{step.label}</StepLabel>
                         <StepContent>
                             <step.component generator={generator} onComplete={handleNext}/>
-                            {/*<Box sx={{mb: 2}}>*/}
-                            {/*    <div>*/}
-                            {/*        <Button*/}
-                            {/*            variant="contained"*/}
-                            {/*            onClick={handleNext}*/}
-                            {/*            sx={{mt: 1, mr: 1}}*/}
-                            {/*        >*/}
-                            {/*            {step.buttonLabel}*/}
-                            {/*        </Button>*/}
-                            {/*        <Button*/}
-                            {/*            disabled={index === 0}*/}
-                            {/*            onClick={handleBack}*/}
-                            {/*            sx={{mt: 1, mr: 1}}*/}
-                            {/*        >*/}
-                            {/*            Back*/}
-                            {/*        </Button>*/}
-                            {/*    </div>*/}
-                            {/*</Box>*/}
                         </StepContent>
                     </Step>
                 ))}

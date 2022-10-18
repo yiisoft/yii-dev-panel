@@ -1,4 +1,4 @@
-import {usePostPreviewMutation} from "../../../API/Gii";
+import {usePostGenerateMutation} from "../../../API/Gii";
 import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
 import {FieldValues, FormProvider, useForm, UseFormReturn} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
@@ -19,7 +19,7 @@ function handleResponseErrors(response: any, form: UseFormReturn) {
     }
 }
 
-export function PreviewStep({generator, onComplete}: StepProps) {
+export function GenerateStep({generator, onComplete}: StepProps) {
     const attributes = generator.attributes;
     const validationSchema = createYupValidationSchema(attributes);
 
@@ -27,11 +27,11 @@ export function PreviewStep({generator, onComplete}: StepProps) {
         mode: "onBlur",
         resolver: yupResolver(validationSchema),
     });
-    const [previewQuery] = usePostPreviewMutation();
+    const [generateQuery] = usePostGenerateMutation();
 
-    async function previewHandler(data: FieldValues) {
-        console.log('preview', data)
-        const response = await previewQuery({
+    async function generateHandler(data: FieldValues) {
+        console.log('generate', data)
+        const response = await generateQuery({
             generator: generator.id,
             body: data,
         })
@@ -47,7 +47,7 @@ export function PreviewStep({generator, onComplete}: StepProps) {
             <FormProvider {...form}>
                 <Box component="form"
                      onReset={form.reset}
-                     onSubmit={form.handleSubmit(previewHandler)}
+                     onSubmit={form.handleSubmit(generateHandler)}
                      my={2}
                 >
                     {Object.entries(attributes).map(([attributeName, attribute], index) => {
@@ -65,7 +65,7 @@ export function PreviewStep({generator, onComplete}: StepProps) {
                     })}
                     <Box my={2}>
                         <ButtonGroup>
-                            <Button type="submit" name="preview" color="secondary">Preview</Button>
+                            <Button type="submit" name="generate">Generate</Button>
                             <Button type="reset" color="warning">Reset</Button>
                         </ButtonGroup>
                     </Box>
