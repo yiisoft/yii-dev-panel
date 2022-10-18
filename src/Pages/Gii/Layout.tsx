@@ -18,7 +18,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {ErrorFallback} from "../../Component/ErrorFallback";
 import {GiiGenerator, useGetGeneratorsQuery} from "../../API/Gii";
-import {GeneratorForm} from "./GeneratorForm";
+import {GeneratorStepper} from "./GeneratorStepper";
 
 export const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null)
@@ -69,7 +69,7 @@ export const Layout = () => {
                 <Grid item xs={9}>
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
                         {!!selectedGenerator
-                            ? <GeneratorForm generator={selectedGenerator}/>
+                            ? <GeneratorStepper generator={selectedGenerator}/>
                             : (
                                 <>
                                     Select a generator to see more options

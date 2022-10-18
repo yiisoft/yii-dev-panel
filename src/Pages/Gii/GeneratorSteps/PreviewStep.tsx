@@ -1,12 +1,12 @@
-import {GiiGenerator, usePostGenerateMutation, usePostPreviewMutation} from "../../API/Gii";
-import {createYupValidationSchema} from "../../Adapter/yup/yii.validator";
+import {GiiGenerator, usePostGenerateMutation, usePostPreviewMutation} from "../../../API/Gii";
+import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {Box, Button, ButtonGroup, Typography} from "@mui/material";
 import * as React from "react";
-import {FormInput} from "./FormInput";
+import {FormInput} from "../FormInput";
 
-export function GeneratorForm({generator}: { generator: GiiGenerator }) {
+export function PreviewStep({generator}: { generator: GiiGenerator }) {
     const attributes = generator.attributes;
     const validationSchema = createYupValidationSchema(attributes);
 
