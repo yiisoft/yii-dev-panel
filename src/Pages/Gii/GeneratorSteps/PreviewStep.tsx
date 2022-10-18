@@ -2,7 +2,7 @@ import {usePostPreviewMutation} from "../../../API/Gii";
 import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
-import {Box, Button, ButtonGroup, Typography} from "@mui/material";
+import {Box, Button, ButtonGroup} from "@mui/material";
 import * as React from "react";
 import {useContext} from "react";
 import {FormInput} from "../FormInput";
@@ -55,9 +55,6 @@ export function PreviewStep({generator, onComplete}: StepProps) {
                 >
                     {Object.entries(attributes).map(([attributeName, attribute], index) => {
                         return (<React.Fragment key={index}>
-                            <Typography>
-                                {attribute.label || attributeName}:
-                            </Typography>
                             <Box mb={1}>
                                 <FormInput
                                     attributeName={attributeName}

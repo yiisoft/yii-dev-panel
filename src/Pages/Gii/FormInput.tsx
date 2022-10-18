@@ -28,7 +28,7 @@ export function FormInput({attributeName, attribute}: FormInputProps) {
                     <TextField
                         {...field}
                         placeholder={String(attribute.defaultValue ?? '')}
-                        label={attribute.label}
+                        label={attribute.label || attributeName}
                         error={!!error}
                         helperText={error ? error.message : null}
                     />
