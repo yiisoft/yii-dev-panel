@@ -13,10 +13,10 @@ export function FormInput({attributeName, attribute}: FormInputProps) {
     const form = useFormContext();
     const type= matchInputType(attribute.rules)
 
-    console.log(
-        'attribute name', attributeName,
-        'attribute', attribute.defaultValue,
-    )
+    // console.log(
+    //     'attribute name', attributeName,
+    //     'attribute', attribute.defaultValue,
+    // )
     if (type === 'text') {
         return <Controller
             name={attributeName}

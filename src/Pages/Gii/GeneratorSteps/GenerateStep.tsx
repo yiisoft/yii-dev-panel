@@ -10,7 +10,7 @@ import {StepProps} from "./Step.types";
 function handleResponseErrors(response: any, form: UseFormReturn) {
     if ('error' in response) {
         const errorsMap = response.error?.data?.errors as Record<string, string[]> || {};
-        console.log(errorsMap)
+        console.error(errorsMap)
 
         for (let attribute in errorsMap) {
             const errors = errorsMap[attribute];
@@ -40,7 +40,7 @@ export function GenerateStep({generator, onComplete}: StepProps) {
         onComplete();
     }
 
-    console.log(form)
+    // console.log(form)
 
     return (
         <>
