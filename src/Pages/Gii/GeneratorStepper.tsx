@@ -14,17 +14,14 @@ const steps = [
     {
         component: PreviewStep,
         label: 'Preview',
-        buttonLabel: 'preview',
     },
     {
         component: GenerateStep,
         label: 'Generate',
-        buttonLabel: 'generate',
     },
     {
         component: ResultStep,
         label: 'Result',
-        buttonLabel: 'finish',
     },
 ];
 
@@ -47,7 +44,12 @@ export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
                         <Step key={index}>
                             <StepLabel>{step.label}</StepLabel>
                             <StepContent>
-                                <step.component generator={generator} onComplete={handleNext}/>
+                                <step.component generator={generator} onComplete={() => {
+                                    if (index === steps.length - 1) {
+                                        return handleReset()
+                                    }
+                                    return handleNext();
+                                }}/>
                             </StepContent>
                         </Step>
                     ))}
