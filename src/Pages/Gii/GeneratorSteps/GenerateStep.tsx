@@ -116,7 +116,6 @@ export function GenerateStep({generator, onComplete}: StepProps) {
 
     return (
         <>
-            {/*{context.files.map((file, index) => <FilePreview key={index} file={file}/>)}*/}
             <FormProvider {...form}>
                 <Box component="form"
                      onReset={form.reset as any}
