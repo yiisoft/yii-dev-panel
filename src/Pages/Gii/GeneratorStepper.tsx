@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
 import {StepContent} from "@mui/material";
 import {GiiGenerator} from "../../API/Gii";
 import {PreviewStep} from "./GeneratorSteps/PreviewStep";
@@ -30,7 +29,8 @@ const steps = [
 export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
     const [activeStepIndex, setActiveStepIndex] = React.useState(0);
 
-    const handleNext = () => {
+    const handleNext = async () => {
+        // await onCompleteRef.current()
         setActiveStepIndex(prev => prev + 1)
     };
 
@@ -49,25 +49,25 @@ export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
                     <Step key={index}>
                         <StepLabel>{step.label}</StepLabel>
                         <StepContent>
-                            <step.component generator={generator}/>
-                            <Box sx={{mb: 2}}>
-                                <div>
-                                    <Button
-                                        variant="contained"
-                                        onClick={handleNext}
-                                        sx={{mt: 1, mr: 1}}
-                                    >
-                                        {step.buttonLabel}
-                                    </Button>
-                                    <Button
-                                        disabled={index === 0}
-                                        onClick={handleBack}
-                                        sx={{mt: 1, mr: 1}}
-                                    >
-                                        Back
-                                    </Button>
-                                </div>
-                            </Box>
+                            <step.component generator={generator} onComplete={handleNext}/>
+                            {/*<Box sx={{mb: 2}}>*/}
+                            {/*    <div>*/}
+                            {/*        <Button*/}
+                            {/*            variant="contained"*/}
+                            {/*            onClick={handleNext}*/}
+                            {/*            sx={{mt: 1, mr: 1}}*/}
+                            {/*        >*/}
+                            {/*            {step.buttonLabel}*/}
+                            {/*        </Button>*/}
+                            {/*        <Button*/}
+                            {/*            disabled={index === 0}*/}
+                            {/*            onClick={handleBack}*/}
+                            {/*            sx={{mt: 1, mr: 1}}*/}
+                            {/*        >*/}
+                            {/*            Back*/}
+                            {/*        </Button>*/}
+                            {/*    </div>*/}
+                            {/*</Box>*/}
                         </StepContent>
                     </Step>
                 ))}

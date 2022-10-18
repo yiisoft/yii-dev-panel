@@ -1,30 +1,15 @@
-import {GiiGenerator, usePostGenerateMutation, usePostPreviewMutation} from "../../../API/Gii";
+import {usePostGenerateMutation, usePostPreviewMutation} from "../../../API/Gii";
 import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
-import {FieldValues, FormProvider, useForm} from "react-hook-form";
+import {FieldValues, FormProvider, useForm, UseFormReturn} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {Box, Button, ButtonGroup, Typography} from "@mui/material";
 import * as React from "react";
 import {FormInput} from "../FormInput";
+import {StepProps} from "./Step.types";
 
-export function PreviewStep({generator}: { generator: GiiGenerator }) {
-    const attributes = generator.attributes;
-    const validationSchema = createYupValidationSchema(attributes);
-
-    const form = useForm({
-        mode: "onBlur",
-        resolver: yupResolver(validationSchema)
-    });
-    const [previewQuery] = usePostPreviewMutation();
-    const [generateQuery] = usePostGenerateMutation();
-
-    async function previewHandler(data: FieldValues) {
-        console.log('preview', data)
-        const res = await previewQuery({
-            generator: generator.id,
-            body: data,
-        })
-        // @ts-ignore
-        const errorsMap = res.error.data.errors as Record<string, string[]>;
+function handleResponseErrors(response: any, form: UseFormReturn) {
+    if ('error' in response) {
+        const errorsMap = response.error?.data?.errors as Record<string, string[]> || {};
         console.log(errorsMap)
 
         for (let attribute in errorsMap) {
@@ -32,21 +17,39 @@ export function PreviewStep({generator}: { generator: GiiGenerator }) {
             form.setError(attribute, {message: errors.join(' ')})
         }
     }
+}
 
-    async function generateHandler(data: FieldValues) {
-        console.log('generate', data)
-        const res = await generateQuery({
+export function PreviewStep({generator, onComplete}: StepProps) {
+    const attributes = generator.attributes;
+    const validationSchema = createYupValidationSchema(attributes);
+
+    const form = useForm({
+        mode: "onBlur",
+        resolver: yupResolver(validationSchema),
+    });
+    const [previewQuery] = usePostPreviewMutation();
+    const [generateQuery] = usePostGenerateMutation();
+
+    async function previewHandler(data: FieldValues) {
+        console.log('preview', data)
+        const response = await previewQuery({
             generator: generator.id,
             body: data,
         })
-        // @ts-ignore
-        const errorsMap = res.error.data.errors as Record<string, string[]>;
-        console.log(errorsMap)
+        handleResponseErrors(response, form);
 
-        for (let attribute in errorsMap) {
-            const errors = errorsMap[attribute];
-            form.setError(attribute, {message: errors.join(' ')})
-        }
+        onComplete();
+    }
+
+    async function generateHandler(data: FieldValues) {
+        console.log('generate', data)
+        const response = await generateQuery({
+            generator: generator.id,
+            body: data,
+        })
+        handleResponseErrors(response, form);
+
+        onComplete();
     }
 
     console.log(form)
