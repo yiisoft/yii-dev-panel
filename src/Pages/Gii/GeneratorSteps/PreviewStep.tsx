@@ -56,7 +56,7 @@ export function PreviewStep({generator, onComplete}: StepProps) {
                     {Object.entries(attributes).map(([attributeName, attribute], index) => {
                         return (<React.Fragment key={index}>
                             <Typography>
-                                {attributeName}:
+                                {attribute.label || attributeName}:
                             </Typography>
                             <Box mb={1}>
                                 <FormInput
