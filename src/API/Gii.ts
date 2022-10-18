@@ -29,7 +29,12 @@ type PreviewResponseType = {
 
 type GiiPreviewType = {
     generator: string;
-    body: any;
+    parameters: any;
+};
+type GiiGenerateType = {
+    generator: string;
+    parameters: any;
+    answers: any;
 };
 export const giiApi = createApi({
     reducerPath: 'api.gii',
@@ -40,17 +45,17 @@ export const giiApi = createApi({
             transformResponse: (result: SummaryResponseType) => (result.generators as GiiGenerator[]) || []
         }),
         postPreview: builder.mutation<PreviewResponseType, GiiPreviewType>({
-            query: ({ generator, body }) => ({
+            query: ({ generator, parameters }) => ({
                 url: `/generator/${generator}/preview`,
                 method: 'POST',
-                body: {parameters: body},
+                body: {parameters},
             }),
         }),
-        postGenerate: builder.mutation<PreviewResponseType, GiiPreviewType>({
-            query: ({ generator, body }) => ({
+        postGenerate: builder.mutation<PreviewResponseType, GiiGenerateType>({
+            query: ({ generator, parameters, answers }) => ({
                 url: `/generator/${generator}/generate`,
                 method: 'POST',
-                body: {parameters: body},
+                body: {parameters, answers},
             }),
         }),
     }),

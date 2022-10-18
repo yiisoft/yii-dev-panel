@@ -8,6 +8,7 @@ import {GiiGenerator} from "../../API/Gii";
 import {PreviewStep} from "./GeneratorSteps/PreviewStep";
 import {ResultStep} from "./GeneratorSteps/ResultStep";
 import {GenerateStep} from "./GeneratorSteps/GenerateStep";
+import {ContextProvider} from "./Stepper/Context/Context";
 
 const steps = [
     {
@@ -40,16 +41,18 @@ export function GeneratorStepper({generator}: { generator: GiiGenerator }) {
 
     return (
         <Box sx={{width: '100%'}}>
-            <Stepper activeStep={activeStepIndex} orientation="vertical">
-                {Object.values(steps).map((step, index) => (
-                    <Step key={index}>
-                        <StepLabel>{step.label}</StepLabel>
-                        <StepContent>
-                            <step.component generator={generator} onComplete={handleNext}/>
-                        </StepContent>
-                    </Step>
-                ))}
-            </Stepper>
+            <ContextProvider>
+                <Stepper activeStep={activeStepIndex} orientation="vertical">
+                    {Object.values(steps).map((step, index) => (
+                        <Step key={index}>
+                            <StepLabel>{step.label}</StepLabel>
+                            <StepContent>
+                                <step.component generator={generator} onComplete={handleNext}/>
+                            </StepContent>
+                        </Step>
+                    ))}
+                </Stepper>
+            </ContextProvider>
         </Box>
     );
 }

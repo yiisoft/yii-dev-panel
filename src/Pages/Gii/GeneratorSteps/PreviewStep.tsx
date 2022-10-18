@@ -1,27 +1,19 @@
 import {usePostPreviewMutation} from "../../../API/Gii";
 import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
-import {FieldValues, FormProvider, useForm, UseFormReturn} from "react-hook-form";
+import {FieldValues, FormProvider, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {Box, Button, ButtonGroup, Typography} from "@mui/material";
 import * as React from "react";
+import {useContext} from "react";
 import {FormInput} from "../FormInput";
 import {StepProps} from "./Step.types";
-
-function handleResponseErrors(response: any, form: UseFormReturn) {
-    if ('error' in response) {
-        const errorsMap = response.error?.data?.errors as Record<string, string[]> || {};
-        console.error(errorsMap)
-
-        for (let attribute in errorsMap) {
-            const errors = errorsMap[attribute];
-            form.setError(attribute, {message: errors.join(' ')})
-        }
-    }
-}
+import {mapErrorsToForm} from "./errorMapper";
+import {Context} from "../Stepper/Context/Context";
 
 export function PreviewStep({generator, onComplete}: StepProps) {
     const attributes = generator.attributes;
     const validationSchema = createYupValidationSchema(attributes);
+    const context = useContext(Context);
 
     const form = useForm({
         mode: "onBlur",
@@ -33,10 +25,21 @@ export function PreviewStep({generator, onComplete}: StepProps) {
         console.log('preview', data)
         const response = await previewQuery({
             generator: generator.id,
-            body: data,
+            parameters: data,
         })
-        handleResponseErrors(response, form);
+        console.log(response)
+        if ('error' in response) {
+            mapErrorsToForm(response, form);
+            return;
+        }
 
+        // TODO: fix types
+        // @ts-ignore
+        context.setFiles(response.data.files);
+        // @ts-ignore
+        context.setParameters(data);
+        // @ts-ignore
+        context.setOperations(response.data.operations);
         onComplete();
     }
 
@@ -65,7 +68,7 @@ export function PreviewStep({generator, onComplete}: StepProps) {
                     })}
                     <Box my={2}>
                         <ButtonGroup>
-                            <Button type="submit" name="preview" color="secondary">Preview</Button>
+                            <Button type="submit" name="preview" variant="contained">Preview</Button>
                             <Button type="reset" color="warning">Reset</Button>
                         </ButtonGroup>
                     </Box>
