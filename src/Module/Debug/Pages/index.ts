@@ -1,5 +1,3 @@
-import {IndexPage} from "./IndexPage";
-import {Layout} from "./Layout";
-import {LogPage} from "./LogPage";
-
-export {IndexPage, Layout, LogPage}
+export {IndexPage} from "./IndexPage";
+export {Layout} from "./Layout";
+export {LogPage} from "./LogPage";
