@@ -13,6 +13,7 @@ import {ErrorFallback} from "../Component/ErrorFallback";
 import {ContentCut, GitHub} from "@mui/icons-material";
 import AdbIcon from '@mui/icons-material/Adb';
 
+// TODO: replace with context and provider
 const pages = [
     {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
