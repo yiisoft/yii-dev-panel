@@ -1,12 +1,12 @@
 import {Alert, Box, IconButton, InputBase, Paper, Typography} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import CheckIcon from '@mui/icons-material/Check';
-import {changeBaseUrl} from "../Provider/ApplicationContext";
+import {changeBaseUrl} from "../Context/ApplicationContext";
 import {useDispatch} from "react-redux";
-import {useSelector} from "../store";
-import {useLazyGetDebugQuery} from "../Module/Debug/API/Debug";
-import {useLazyGetGeneratorsQuery} from "../Module/Gii/API/Gii";
-import {useLazyGetParametersQuery} from "../Module/Inspector/API/Inspector";
+import {useSelector} from "../../store";
+import {useLazyGetDebugQuery} from "../../Module/Debug/API/Debug";
+import {useLazyGetGeneratorsQuery} from "../../Module/Gii/API/Gii";
+import {useLazyGetParametersQuery} from "../../Module/Inspector/API/Inspector";
 
 const defaultBackendUrl = process.env.REACT_APP_BACKEND_URL;
 
