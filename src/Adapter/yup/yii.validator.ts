@@ -1,4 +1,4 @@
-import {GiiGeneratorAttribute, GiiGeneratorAttributeRule} from "../../API/Gii";
+import {GiiGeneratorAttribute, GiiGeneratorAttributeRule} from "../../Module/Gii/API/Gii";
 import {yup} from ".";
 
 function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {

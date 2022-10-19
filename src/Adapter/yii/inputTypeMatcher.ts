@@ -1,4 +1,4 @@
-import {GiiGeneratorAttributeRule} from "../../API/Gii";
+import {GiiGeneratorAttributeRule} from "../../Module/Gii/API/Gii";
 
 export function matchInputType(rules: GiiGeneratorAttributeRule[]) {
     let possibleType = 'text';

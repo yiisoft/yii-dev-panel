@@ -1,5 +1,5 @@
 import {createApi} from '@reduxjs/toolkit/query/react'
-import {createBaseQuery} from "./createBaseQuery";
+import {createBaseQuery} from "../../../API/createBaseQuery";
 
 export type GiiGeneratorAttributeRule = {
     0: string;

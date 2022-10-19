@@ -1,13 +1,13 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {setupListeners} from "@reduxjs/toolkit/query";
-import {inspectorApi} from "./API/Inspector";
-import {debugApi} from "./API/Debug";
+import {middlewares as InspectorMiddlewares, reducers as InspectorReducers} from "./Module/Inspector/api";
+import {middlewares as DebugMiddlewares, reducers as DebugReducers} from "./Module/Debug/api";
+import {middlewares as GiiMiddlewares, reducers as GiiReducers} from "./Module/Gii/api";
 import {debugSlice} from "./Provider/Debug/DebugEntryContext";
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import storage from "redux-persist/lib/storage";
 import {ApplicationSlice} from "./Provider/ApplicationContext";
 import {useSelector} from "react-redux";
-import {giiApi} from "./API/Gii";
 
 const commonConfig = {version: 1, storage};
 const applicationSliceConfig = {key: ApplicationSlice.reducer.name, ...commonConfig};
@@ -17,9 +17,9 @@ const rootReducer = combineReducers({
     [ApplicationSlice.name]: persistReducer(applicationSliceConfig, ApplicationSlice.reducer),
     [debugSlice.name]: persistReducer(debugSliceConfig, debugSlice.reducer),
 
-    [inspectorApi.reducerPath]: inspectorApi.reducer,
-    [debugApi.reducerPath]: debugApi.reducer,
-    [giiApi.reducerPath]: giiApi.reducer,
+    ...InspectorReducers,
+    ...DebugReducers,
+    ...GiiReducers,
 });
 
 export const store = configureStore({
@@ -29,7 +29,11 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat([inspectorApi.middleware, debugApi.middleware, giiApi.middleware]),
+        }).concat([
+            ...InspectorMiddlewares,
+            ...DebugMiddlewares,
+            ...GiiMiddlewares,
+        ]),
     devTools: process.env.NODE_ENV !== 'production',
 })
 

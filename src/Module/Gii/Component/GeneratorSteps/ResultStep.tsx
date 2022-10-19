@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useContext} from "react";
 import {StepProps} from "./Step.types";
-import {Context} from "../Stepper/Context/Context";
+import {Context} from "../../Context/Context";
 import {Alert, AlertColor, AlertTitle, Box, Button, ButtonGroup} from "@mui/material";
 
 function matchSeverity(status: string): AlertColor {

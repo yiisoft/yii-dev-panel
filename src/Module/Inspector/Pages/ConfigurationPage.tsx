@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetConfigurationQuery, useLazyGetObjectQuery} from "../../../API/Inspector";
-import {JsonRenderer} from "../../../Helper/JsonRenderer";
+import {useGetConfigurationQuery, useLazyGetObjectQuery} from "../API/Inspector";
+import {JsonRenderer} from "../../../Component/JsonRenderer";
 import {Button} from "@mui/material";
 import {DataTable} from "../../../Component/Grid";
 

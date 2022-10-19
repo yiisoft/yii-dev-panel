@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetConfigurationQuery} from "../../../API/Inspector";
+import {useGetConfigurationQuery} from "../API/Inspector";
 import {DataTable} from "../../../Component/Grid";
 import {Typography} from "@mui/material";
-import {JsonRenderer} from "../../../Helper/JsonRenderer";
+import {JsonRenderer} from "../../../Component/JsonRenderer";
 
 const groupsColumns: GridColDef[] = [
     {

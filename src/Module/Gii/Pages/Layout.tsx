@@ -17,8 +17,8 @@ import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {ErrorFallback} from "../../../Component/ErrorFallback";
-import {GiiGenerator, useGetGeneratorsQuery} from "../../../API/Gii";
-import {GeneratorStepper} from "./GeneratorStepper";
+import {GiiGenerator, useGetGeneratorsQuery} from "../API/Gii";
+import {GeneratorStepper} from "../Component/GeneratorSteps/GeneratorStepper";
 
 export const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null)

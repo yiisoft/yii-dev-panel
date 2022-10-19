@@ -1,7 +1,7 @@
 import {JsonViewer} from '@textea/json-viewer'
 import * as React from "react";
 import {useState} from "react";
-import {useLazyGetObjectQuery} from "../API/Debug";
+import {useLazyGetObjectQuery} from "../Module/Debug/API/Debug";
 import {useDebugEntry} from "../Provider/Debug/DebugEntryContext";
 import {deepUpdate} from "immupdate";
 

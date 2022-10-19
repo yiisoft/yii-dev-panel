@@ -17,7 +17,7 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../../../API/Debug";
+import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";

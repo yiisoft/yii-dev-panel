@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useLazyGetCommandQuery} from "../../../API/Inspector";
-import {JsonRenderer} from "../../../Helper/JsonRenderer";
+import {useLazyGetCommandQuery} from "../API/Inspector";
+import {JsonRenderer} from "../../../Component/JsonRenderer";
 import {Button} from "@mui/material";
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';

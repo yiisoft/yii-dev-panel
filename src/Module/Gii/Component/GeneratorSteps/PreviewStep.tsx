@@ -1,4 +1,4 @@
-import {usePostPreviewMutation} from "../../../../API/Gii";
+import {usePostPreviewMutation} from "../../API/Gii";
 import {createYupValidationSchema} from "../../../../Adapter/yup/yii.validator";
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
@@ -7,8 +7,8 @@ import * as React from "react";
 import {useContext} from "react";
 import {FormInput} from "../FormInput";
 import {StepProps} from "./Step.types";
-import {mapErrorsToForm} from "./errorMapper";
-import {Context} from "../Stepper/Context/Context";
+import {mapErrorsToForm} from "../errorMapper";
+import {Context} from "../../Context/Context";
 
 export function PreviewStep({generator, onComplete}: StepProps) {
     const attributes = generator.attributes;

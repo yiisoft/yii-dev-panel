@@ -4,9 +4,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import {changeBaseUrl} from "../Provider/ApplicationContext";
 import {useDispatch} from "react-redux";
 import {useSelector} from "../store";
-import {useLazyGetDebugQuery} from "../API/Debug";
-import {useLazyGetGeneratorsQuery} from "../API/Gii";
-import {useLazyGetParametersQuery} from "../API/Inspector";
+import {useLazyGetDebugQuery} from "../Module/Debug/API/Debug";
+import {useLazyGetGeneratorsQuery} from "../Module/Gii/API/Gii";
+import {useLazyGetParametersQuery} from "../Module/Inspector/API/Inspector";
 
 const defaultBackendUrl = process.env.REACT_APP_BACKEND_URL;
 

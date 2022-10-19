@@ -1,4 +1,4 @@
-import {GiiGeneratorAttribute} from "../../../API/Gii";
+import {GiiGeneratorAttribute} from "../API/Gii";
 import {Controller, useFormContext} from "react-hook-form";
 import {Autocomplete, FormHelperText, TextField} from "@mui/material";
 import * as React from "react";

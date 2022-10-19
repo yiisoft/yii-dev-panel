@@ -13,12 +13,13 @@ import {
 import * as React from "react";
 import {useContext, useMemo, useState} from "react";
 import {StepProps} from "./Step.types";
-import {Context, FileOperationEnum, FileStateEnum, GiiFile} from "../Stepper/Context/Context";
+import {Context} from "../../Context/Context";
 import {FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
-import {mapErrorsToForm} from "./errorMapper";
-import {usePostGenerateMutation} from "../../../../API/Gii";
+import {mapErrorsToForm} from "../errorMapper";
+import {usePostGenerateMutation} from "../../API/Gii";
 import {yup} from "../../../../Adapter/yup";
 import {FilePreviewDialog} from "../FilePreviewDialog";
+import {FileOperationEnum, FileStateEnum, GiiFile} from "../../Types/FIle.types";
 
 function createValidationSchema(files: GiiFile[]) {
     const rulesSet: Record<string, any> = {};

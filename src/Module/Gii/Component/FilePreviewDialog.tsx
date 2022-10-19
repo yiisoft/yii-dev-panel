@@ -1,8 +1,8 @@
 import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import {GiiFile} from "./Stepper/Context/Context";
 import {CodeHighlight} from "../../../Component/CodeHighlight";
+import {GiiFile} from "../Types/FIle.types";
 
 export interface FilePreviewDialogProps {
     open: boolean;
