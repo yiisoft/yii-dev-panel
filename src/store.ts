@@ -1,19 +1,14 @@
 import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import {setupListeners} from "@reduxjs/toolkit/query";
+import {middlewares as ApplicationMiddlewares, reducers as ApplicationReducers} from "./Application/api";
 import {middlewares as InspectorMiddlewares, reducers as InspectorReducers} from "./Module/Inspector/api";
 import {middlewares as DebugMiddlewares, reducers as DebugReducers} from "./Module/Debug/api";
 import {middlewares as GiiMiddlewares, reducers as GiiReducers} from "./Module/Gii/api";
-import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
-import storage from "redux-persist/lib/storage";
-import {ApplicationSlice} from "./Application/Context/ApplicationContext";
+import {FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import {useSelector} from "react-redux";
 
-const commonConfig = {version: 1, storage};
-const applicationSliceConfig = {key: ApplicationSlice.reducer.name, ...commonConfig};
-
 const rootReducer = combineReducers({
-    [ApplicationSlice.name]: persistReducer(applicationSliceConfig, ApplicationSlice.reducer),
-
+    ...ApplicationReducers,
     ...InspectorReducers,
     ...DebugReducers,
     ...GiiReducers,
@@ -27,6 +22,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }).concat([
+            ...ApplicationMiddlewares,
             ...InspectorMiddlewares,
             ...DebugMiddlewares,
             ...GiiMiddlewares,
