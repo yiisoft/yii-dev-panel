@@ -36,5 +36,5 @@ export const JsonRenderer = (props: JsonRendererProps) => {
             },
         },
     ]
-    return <OriginalJsonRenderer value={props.value} valueTypes={valueTypes}/>
+    return <OriginalJsonRenderer value={data} valueTypes={valueTypes}/>
 }
