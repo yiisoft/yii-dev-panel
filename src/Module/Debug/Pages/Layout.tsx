@@ -21,7 +21,7 @@ import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../API
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
-import {changeEntryAction, useDebugEntry} from "../../../Provider/Debug/DebugEntryContext";
+import {changeEntryAction, useDebugEntry} from "../Context/Context";
 import {ErrorBoundary} from "react-error-boundary";
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';

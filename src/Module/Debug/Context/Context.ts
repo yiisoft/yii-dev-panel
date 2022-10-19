@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {useSelector} from "react-redux";
-import {DebugEntry} from "../../Module/Debug/API/Debug";
+import {DebugEntry} from "../API/Debug";
 
 export const debugSlice = createSlice({
     name: 'store.debug',

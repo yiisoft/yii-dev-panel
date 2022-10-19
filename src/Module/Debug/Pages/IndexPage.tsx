@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useDebugEntry} from "../../../Provider/Debug/DebugEntryContext";
+import {useDebugEntry} from "../Context/Context";
 import {JsonRenderer} from "../../../Component/JsonRenderer";
 import {DataTable} from "../../../Component/Grid";
 

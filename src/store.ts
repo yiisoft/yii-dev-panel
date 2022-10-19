@@ -3,7 +3,6 @@ import {setupListeners} from "@reduxjs/toolkit/query";
 import {middlewares as InspectorMiddlewares, reducers as InspectorReducers} from "./Module/Inspector/api";
 import {middlewares as DebugMiddlewares, reducers as DebugReducers} from "./Module/Debug/api";
 import {middlewares as GiiMiddlewares, reducers as GiiReducers} from "./Module/Gii/api";
-import {debugSlice} from "./Provider/Debug/DebugEntryContext";
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import storage from "redux-persist/lib/storage";
 import {ApplicationSlice} from "./Provider/ApplicationContext";
@@ -11,11 +10,9 @@ import {useSelector} from "react-redux";
 
 const commonConfig = {version: 1, storage};
 const applicationSliceConfig = {key: ApplicationSlice.reducer.name, ...commonConfig};
-const debugSliceConfig = {key: debugSlice.reducer.name, ...commonConfig};
 
 const rootReducer = combineReducers({
     [ApplicationSlice.name]: persistReducer(applicationSliceConfig, ApplicationSlice.reducer),
-    [debugSlice.name]: persistReducer(debugSliceConfig, debugSlice.reducer),
 
     ...InspectorReducers,
     ...DebugReducers,

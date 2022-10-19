@@ -2,8 +2,10 @@ import {JsonViewer} from '@textea/json-viewer'
 import * as React from "react";
 import {useState} from "react";
 import {useLazyGetObjectQuery} from "../Module/Debug/API/Debug";
-import {useDebugEntry} from "../Provider/Debug/DebugEntryContext";
+import {useDebugEntry} from "../Module/Debug/Context/Context";
 import {deepUpdate} from "immupdate";
+
+// TODO: remove modules dependencies
 
 const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
 

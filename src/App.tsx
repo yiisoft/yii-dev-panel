@@ -4,7 +4,7 @@ import {createBrowserRouter, RouterProvider,} from "react-router-dom";
 import {IndexPage} from "./Pages/IndexPage";
 import {Layout} from "./Pages/Layout";
 import {ThemeProvider} from "@mui/material";
-import {theme} from "./Theme/DefaultTheme";
+import {theme} from "./Component/Theme/DefaultTheme";
 import {Provider} from "react-redux";
 import {persistor, store} from "./store";
 import {routes as DebugRoutes} from "./Module/Debug/router";
