@@ -1,5 +1,5 @@
-import {usePostPreviewMutation} from "../../../API/Gii";
-import {createYupValidationSchema} from "../../../Adapter/yup/yii.validator";
+import {usePostPreviewMutation} from "../../../../API/Gii";
+import {createYupValidationSchema} from "../../../../Adapter/yup/yii.validator";
 import {FieldValues, FormProvider, useForm} from "react-hook-form";
 import {yupResolver} from "@hookform/resolvers/yup/dist/yup";
 import {Box, Button, ButtonGroup} from "@mui/material";

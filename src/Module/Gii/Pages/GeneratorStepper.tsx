@@ -4,7 +4,7 @@ import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import {StepContent} from "@mui/material";
-import {GiiGenerator} from "../../API/Gii";
+import {GiiGenerator} from "../../../API/Gii";
 import {PreviewStep} from "./GeneratorSteps/PreviewStep";
 import {ResultStep} from "./GeneratorSteps/ResultStep";
 import {GenerateStep} from "./GeneratorSteps/GenerateStep";

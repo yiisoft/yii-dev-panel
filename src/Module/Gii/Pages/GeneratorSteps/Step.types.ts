@@ -1,4 +1,4 @@
-import {GiiGenerator} from "../../../API/Gii";
+import {GiiGenerator} from "../../../../API/Gii";
 
 export type StepProps = {
     generator: GiiGenerator;

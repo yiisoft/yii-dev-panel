@@ -7,16 +7,16 @@ import {ThemeProvider} from "@mui/material";
 import {theme} from "./Theme/DefaultTheme";
 import {Provider} from "react-redux";
 import {persistor, store} from "./store";
-import {ParametersPage} from "./Pages/Inspector/ParametersPage";
-import {ConfigurationPage} from "./Pages/Inspector/ConfigurationPage";
-import {ContainerPage} from "./Pages/Inspector/ContainerPage";
-import * as DebugPages from "./Pages/Debug";
-import * as GiiPages from "./Pages/Gii";
+import {ParametersPage} from "./Module/Inspector/Pages/ParametersPage";
+import {ConfigurationPage} from "./Module/Inspector/Pages/ConfigurationPage";
+import {ContainerPage} from "./Module/Inspector/Pages/ContainerPage";
+import * as DebugPages from "./Module/Debug/Pages";
+import * as GiiPages from "./Module/Gii/Pages";
 import {PersistGate} from "redux-persist/integration/react";
-import {ContainerEntryPage} from "./Pages/Inspector/ContainerEntryPage";
-import {TestsPage} from "./Pages/Inspector/TestsPage";
-import {PsalmPage} from "./Pages/Inspector/PsalmPage";
-import {RoutesPage} from "./Pages/Inspector/RoutesPage";
+import {ContainerEntryPage} from "./Module/Inspector/Pages/ContainerEntryPage";
+import {TestsPage} from "./Module/Inspector/Pages/TestsPage";
+import {PsalmPage} from "./Module/Inspector/Pages/PsalmPage";
+import {RoutesPage} from "./Module/Inspector/Pages/RoutesPage";
 
 export default function App() {
     return (

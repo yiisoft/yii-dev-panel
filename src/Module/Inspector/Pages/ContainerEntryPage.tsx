@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {useGetObjectQuery,} from "../../API/Inspector";
+import {useGetObjectQuery,} from "../../../API/Inspector";
 import {useSearchParams} from "react-router-dom";
-import {JsonRenderer} from "../../Helper/JsonRenderer";
+import {JsonRenderer} from "../../../Helper/JsonRenderer";
 
 export const ContainerEntryPage = () => {
     const [searchParams] = useSearchParams();

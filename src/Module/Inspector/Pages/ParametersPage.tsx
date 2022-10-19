@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetParametersQuery} from "../../API/Inspector";
-import {JsonRenderer} from "../../Helper/JsonRenderer";
-import {DataTable} from "../../Component/Grid";
+import {useGetParametersQuery} from "../../../API/Inspector";
+import {JsonRenderer} from "../../../Helper/JsonRenderer";
+import {DataTable} from "../../../Component/Grid";
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},

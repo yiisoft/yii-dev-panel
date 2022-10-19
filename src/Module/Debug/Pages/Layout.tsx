@@ -17,18 +17,18 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../../API/Debug";
+import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from "../../../API/Debug";
 import format from 'date-fns/format'
 import {fromUnixTime} from "date-fns";
 import {useDispatch} from "react-redux";
-import {changeEntryAction, useDebugEntry} from "../../Provider/Debug/DebugEntryContext";
+import {changeEntryAction, useDebugEntry} from "../../../Provider/Debug/DebugEntryContext";
 import {ErrorBoundary} from "react-error-boundary";
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
 import {LogPage} from "./LogPage";
 import {DumpPage} from "./DumpPage";
-import {ErrorFallback} from "../../Component/ErrorFallback";
+import {ErrorFallback} from "../../../Component/ErrorFallback";
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -129,7 +129,7 @@ export const Layout = () => {
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/debug">
+                <Link underline="hover" color="inherit" href="/src/Module/Debug/Pages/Pages">
                     Debug
                 </Link>
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}

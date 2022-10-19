@@ -16,8 +16,8 @@ import {StepProps} from "./Step.types";
 import {Context, FileOperationEnum, FileStateEnum, GiiFile} from "../Stepper/Context/Context";
 import {FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
 import {mapErrorsToForm} from "./errorMapper";
-import {usePostGenerateMutation} from "../../../API/Gii";
-import {yup} from "../../../Adapter/yup";
+import {usePostGenerateMutation} from "../../../../API/Gii";
+import {yup} from "../../../../Adapter/yup";
 import {FilePreviewDialog} from "../FilePreviewDialog";
 
 function createValidationSchema(files: GiiFile[]) {

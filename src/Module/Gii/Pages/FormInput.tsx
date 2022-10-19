@@ -1,8 +1,8 @@
-import {GiiGeneratorAttribute} from "../../API/Gii";
+import {GiiGeneratorAttribute} from "../../../API/Gii";
 import {Controller, useFormContext} from "react-hook-form";
 import {Autocomplete, FormHelperText, TextField} from "@mui/material";
 import * as React from "react";
-import {matchInputType} from "../../Adapter/yii/inputTypeMatcher";
+import {matchInputType} from "../../../Adapter/yii/inputTypeMatcher";
 
 type FormInputProps = {
     attributeName: string,

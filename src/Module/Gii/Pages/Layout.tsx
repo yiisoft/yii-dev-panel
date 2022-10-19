@@ -16,8 +16,8 @@ import {ErrorBoundary} from "react-error-boundary";
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from "react-router-dom";
-import {ErrorFallback} from "../../Component/ErrorFallback";
-import {GiiGenerator, useGetGeneratorsQuery} from "../../API/Gii";
+import {ErrorFallback} from "../../../Component/ErrorFallback";
+import {GiiGenerator, useGetGeneratorsQuery} from "../../../API/Gii";
 import {GeneratorStepper} from "./GeneratorStepper";
 
 export const Layout = () => {
@@ -44,7 +44,7 @@ export const Layout = () => {
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/gii">
+                <Link underline="hover" color="inherit" href="/src/Module/Gii/Pages/Pages">
                     Gii
                 </Link>
                 {!!selectedGenerator && <Typography color="text.primary">{selectedGenerator.name}</Typography>}
