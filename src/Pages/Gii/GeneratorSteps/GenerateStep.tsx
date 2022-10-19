@@ -13,7 +13,7 @@ import {
 import * as React from "react";
 import {useContext, useMemo, useState} from "react";
 import {StepProps} from "./Step.types";
-import {Context, GiiFile} from "../Stepper/Context/Context";
+import {Context, FileOperationEnum, FileStateEnum, GiiFile} from "../Stepper/Context/Context";
 import {FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
 import {mapErrorsToForm} from "./errorMapper";
 import {usePostGenerateMutation} from "../../../API/Gii";
@@ -46,13 +46,24 @@ function FileAction({file}: { file: GiiFile }) {
     return (
         <>
             <ListItem>
-                <ListItemText primary={file.relativePath}/>
+                <ListItemText
+                    primary={file.relativePath}
+                    secondary={file.state}
+                />
                 <ListItemSecondaryAction>
                     <Box mr={2} display='inline-block'>
-                        <Button size='large' variant="contained" onClick={handleClickOpen}>Preview</Button>
+                        {file.state === FileStateEnum.NOT_EXIST
+                            ? <Button size='large' variant="contained" onClick={handleClickOpen}>Preview</Button>
+                            : (
+                                file.state === FileStateEnum.PRESENT_DIFFERENT
+                                    ? <Button size='large' variant="contained" onClick={handleClickOpen}>Diff</Button>
+                                    : null
+                            )
+                        }
                     </Box>
                     <ToggleButtonGroup
                         value={value}
+                        disabled={file.operation === FileOperationEnum.SKIP}
                         exclusive
                         onChange={(_, value) => {
                             setValue(value)

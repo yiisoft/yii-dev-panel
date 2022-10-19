@@ -30,14 +30,14 @@ export function ResultStep({generator, onComplete}: StepProps) {
 
     return (
         <Box>
-            {context.results.map(result => {
+            {context.results.map((result, index) => {
                 const file = files.find(file => file.id === result.id)
                 if (!file) {
-                    return <Alert severity='error'>Unknown file with ID: {result.id}</Alert>
+                    return <Alert key={index} severity='error'>Unknown file with ID: {result.id}</Alert>
                 }
                 // TODO: show errors more user-friendly
                 return (
-                    <Alert severity={matchSeverity(result.status)}>
+                    <Alert key={index} severity={matchSeverity(result.status)}>
                         {result.status === 'error' && <AlertTitle>{result.error}</AlertTitle>}
                         {file.relativePath}
                     </Alert>
