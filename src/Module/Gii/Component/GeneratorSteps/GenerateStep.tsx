@@ -8,7 +8,8 @@ import {
     ListItemText,
     ListSubheader,
     ToggleButton,
-    ToggleButtonGroup
+    ToggleButtonGroup,
+    Typography
 } from "@mui/material";
 import * as React from "react";
 import {useContext, useMemo, useState} from "react";
@@ -16,10 +17,28 @@ import {StepProps} from "./Step.types";
 import {Context} from "../../Context/Context";
 import {FieldValues, FormProvider, useForm, useFormContext} from "react-hook-form";
 import {mapErrorsToForm} from "../errorMapper";
-import {usePostGenerateMutation} from "../../API/Gii";
+import {GiiGenerator, usePostDiffMutation, usePostGenerateMutation} from "../../API/Gii";
 import {yup} from "../../../../Adapter/yup";
 import {FilePreviewDialog} from "../FilePreviewDialog";
 import {FileOperationEnum, FileStateEnum, GiiFile} from "../../Types/FIle.types";
+import {matchSeverityByFileState} from "../matchSeverity";
+import {FileDiffDialog} from "../FileDiffDialog";
+
+function getStateLabel(state: FileStateEnum) {
+    let result = 'Unknown state';
+    switch (state) {
+        case FileStateEnum.PRESENT_SAME:
+            result = 'Same'
+            break;
+        case FileStateEnum.PRESENT_DIFFERENT:
+            result = 'Different'
+            break;
+        case FileStateEnum.NOT_EXIST:
+            result = 'Not exist'
+            break;
+    }
+    return result;
+}
 
 function createValidationSchema(files: GiiFile[]) {
     const rulesSet: Record<string, any> = {};
@@ -30,34 +49,64 @@ function createValidationSchema(files: GiiFile[]) {
     return yup.object(rulesSet)
 }
 
-function FileAction({file}: { file: GiiFile }) {
+type HandleClickOpenParams = (state: boolean) => void;
+
+function FileAction({file, generator}: { file: GiiFile , generator: GiiGenerator}) {
     const context = useContext(Context);
     const form = useFormContext();
     const [value, setValue] = useState(form.getValues(file.id))
-    const [open, setOpen] = React.useState(false);
+    const [openPreviewDialog, setOpenPreviewDialog] = React.useState(false);
+    const [openDiffDialog, setOpenDiffDialog] = React.useState(false);
+    const [diffQuery] = usePostDiffMutation();
+    const [diff, setDiff] = useState('');
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handlePreviewDialogOpen = () => {
+        setOpenPreviewDialog(true);
+    };
+    const handlePreviewDialogClose = () => {
+        setOpenPreviewDialog(false);
+    };
+    const handleDiffDialogOpen = () => {
+        setOpenDiffDialog(true);
+    };
+    const handleDiffDialogClose = () => {
+        setOpenDiffDialog(false);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleDiff = async () => {
+        const response = await diffQuery({
+            generator: generator.id,
+            parameters: context.parameters,
+            fileId: file.id,
+        });
+        console.log('response', response)
+        // @ts-ignore
+        setDiff(response.data.diff)
+        handleDiffDialogOpen()
     };
+
 
     return (
         <>
             <ListItem>
                 <ListItemText
                     primary={file.relativePath}
-                    secondary={file.state}
+                    secondary={
+                        <Typography
+                            component="span"
+                            color={matchSeverityByFileState(file.state) + ".main"}
+                        >
+                            {getStateLabel(file.state)}
+                        </Typography>
+                    }
                 />
                 <ListItemSecondaryAction>
                     <Box mr={2} display='inline-block'>
                         {file.state === FileStateEnum.NOT_EXIST
-                            ? <Button size='large' variant="contained" onClick={handleClickOpen}>Preview</Button>
+                            ? <Button size='large' variant="contained" onClick={handlePreviewDialogOpen}>Preview</Button>
                             : (
                                 file.state === FileStateEnum.PRESENT_DIFFERENT
-                                    ? <Button size='large' variant="contained" onClick={handleClickOpen}>Diff</Button>
+                                    ? <Button size='large' variant="contained" onClick={handleDiff}>Diff</Button>
                                     : null
                             )
                         }
@@ -81,8 +130,14 @@ function FileAction({file}: { file: GiiFile }) {
             </ListItem>
             <FilePreviewDialog
                 file={file}
-                open={open}
-                onClose={handleClose}
+                open={openPreviewDialog}
+                onClose={handlePreviewDialogClose}
+            />
+            <FileDiffDialog
+                file={file}
+                content={diff}
+                open={openDiffDialog}
+                onClose={handleDiffDialogClose}
             />
         </>
     );
@@ -135,7 +190,11 @@ export function GenerateStep({generator, onComplete}: StepProps) {
                      my={2}
                 >
                     <List subheader={<ListSubheader>Operations</ListSubheader>}>
-                        {context.files.map((file, index) => <FileAction key={index} file={file}/>)}
+                        {context.files.map((file, index) => <FileAction
+                            key={index}
+                            file={file}
+                            generator={generator}
+                        />)}
                     </List>
 
                     <Box my={2}>

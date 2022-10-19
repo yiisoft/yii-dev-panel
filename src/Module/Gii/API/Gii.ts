@@ -36,6 +36,11 @@ type GiiGenerateType = {
     parameters: any;
     answers: any;
 };
+type GiiDiffType = {
+    generator: string;
+    parameters: any;
+    fileId: string;
+};
 export const giiApi = createApi({
     reducerPath: 'api.gii',
     baseQuery: createBaseQuery('/gii/api'),
@@ -58,6 +63,13 @@ export const giiApi = createApi({
                 body: {parameters, answers},
             }),
         }),
+        postDiff: builder.mutation<PreviewResponseType, GiiDiffType>({
+            query: ({ generator, parameters, fileId }) => ({
+                url: `/generator/${generator}/diff?file=${fileId}`,
+                method: 'POST',
+                body: {parameters},
+            }),
+        }),
     }),
 })
 
@@ -66,4 +78,5 @@ export const {
     useLazyGetGeneratorsQuery,
     usePostPreviewMutation,
     usePostGenerateMutation,
+    usePostDiffMutation,
 } = giiApi

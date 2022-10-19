@@ -2,23 +2,8 @@ import * as React from "react";
 import {useContext} from "react";
 import {StepProps} from "./Step.types";
 import {Context} from "../../Context/Context";
-import {Alert, AlertColor, AlertTitle, Box, Button, ButtonGroup} from "@mui/material";
-
-function matchSeverity(status: string): AlertColor {
-    let result: AlertColor = 'error';
-    switch (status) {
-        case 'created':
-            result = 'success';
-            break;
-        case 'overwrote':
-            result = 'info';
-            break;
-        case 'skipped':
-            result = 'warning';
-            break;
-    }
-    return result;
-}
+import {Alert, AlertTitle, Box, Button, ButtonGroup} from "@mui/material";
+import {matchSeverityByResultStatus} from "../matchSeverity";
 
 export function ResultStep({generator, onComplete}: StepProps) {
     const context = useContext(Context);
@@ -37,7 +22,7 @@ export function ResultStep({generator, onComplete}: StepProps) {
                 }
                 // TODO: show errors more user-friendly
                 return (
-                    <Alert key={index} severity={matchSeverity(result.status)}>
+                    <Alert key={index} severity={matchSeverityByResultStatus(result.status)}>
                         {result.status === 'error' && <AlertTitle>{result.error}</AlertTitle>}
                         {file.relativePath}
                     </Alert>
