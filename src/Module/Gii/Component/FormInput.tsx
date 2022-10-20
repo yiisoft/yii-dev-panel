@@ -11,7 +11,7 @@ type FormInputProps = {
 
 export function FormInput({attributeName, attribute}: FormInputProps) {
     const form = useFormContext();
-    const type= matchInputType(attribute.rules)
+    const type= matchInputType(attribute.rules.map(rule => rule[0]))
 
     // console.log(
     //     'attribute name', attributeName,

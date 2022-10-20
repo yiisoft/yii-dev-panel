@@ -1,14 +1,11 @@
-import {GiiGeneratorAttributeRule} from "../../Module/Gii/API/Gii";
-
-// TODO: pass scalar type
-export function matchInputType(rules: GiiGeneratorAttributeRule[]) {
+export function matchInputType(rules: string[]) {
     let possibleType = 'text';
     for (let rule of rules) {
-        if (rule[0] === 'each') {
+        if (rule === 'each') {
             possibleType = 'select';
             break;
         }
-        if (rule[0] === 'number') {
+        if (rule === 'number') {
             possibleType = 'number';
             break;
         }

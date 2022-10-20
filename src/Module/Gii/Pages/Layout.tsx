@@ -44,13 +44,13 @@ export const Layout = () => {
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/src/Module/Gii/Pages/Pages">
+                <Link underline="hover" color="inherit" href="/gii">
                     Gii
                 </Link>
                 {!!selectedGenerator && <Typography color="text.primary">{selectedGenerator.name}</Typography>}
             </Breadcrumbs>
             <Grid container>
-                <Grid item xs={3}>
+                <Grid item xs={1} md={3}>
                     <List>
                         {generators.map((generator, index) => (
                             <ListItem key={index} disablePadding>
@@ -66,7 +66,7 @@ export const Layout = () => {
                         ))}
                     </List>
                 </Grid>
-                <Grid item xs={9}>
+                <Grid item xs={11} md={9}>
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
                         {!!selectedGenerator
                             ? <GeneratorStepper generator={selectedGenerator}/>
