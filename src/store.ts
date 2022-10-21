@@ -7,6 +7,7 @@ import {middlewares as GiiMiddlewares, reducers as GiiReducers} from "./Module/G
 import {FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import {useSelector} from "react-redux";
 
+// TODO: get reducers and middlewares from modules.ts
 const rootReducer = combineReducers({
     ...ApplicationReducers,
     ...InspectorReducers,
