@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export const ApplicationSlice = createSlice({
     name: 'application',
@@ -7,9 +7,9 @@ export const ApplicationSlice = createSlice({
     },
     reducers: {
         changeBaseUrl(state, action: PayloadAction<string>) {
-            state.baseUrl = action.payload
+            state.baseUrl = action.payload;
         },
     },
-})
+});
 
-export const {changeBaseUrl} = ApplicationSlice.actions
+export const {changeBaseUrl} = ApplicationSlice.actions;

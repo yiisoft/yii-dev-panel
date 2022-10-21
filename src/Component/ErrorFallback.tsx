@@ -1,7 +1,7 @@
-import {FallbackProps} from "react-error-boundary";
-import Box from "@mui/material/Box";
-import {Accordion, AccordionDetails, Alert, AlertTitle, Button} from "@mui/material";
-import * as React from "react";
+import {FallbackProps} from 'react-error-boundary';
+import Box from '@mui/material/Box';
+import {Accordion, AccordionDetails, Alert, AlertTitle, Button} from '@mui/material';
+import * as React from 'react';
 
 export const ErrorFallback = ({error, resetErrorBoundary}: FallbackProps) => {
     return (
@@ -14,8 +14,10 @@ export const ErrorFallback = ({error, resetErrorBoundary}: FallbackProps) => {
                         <pre>{error.stack?.toString()}</pre>
                     </AccordionDetails>
                 </Accordion>
-                <Button color="error" variant="outlined" onClick={resetErrorBoundary}>Try again</Button>
+                <Button color="error" variant="outlined" onClick={resetErrorBoundary}>
+                    Try again
+                </Button>
             </Alert>
         </Box>
-    )
-}
+    );
+};

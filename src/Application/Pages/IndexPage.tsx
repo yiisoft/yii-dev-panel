@@ -1,12 +1,12 @@
-import {Alert, Box, IconButton, InputBase, Paper, Typography} from "@mui/material";
-import React, {useEffect, useState} from "react";
+import {Alert, Box, IconButton, InputBase, Paper, Typography} from '@mui/material';
+import React, {useEffect, useState} from 'react';
 import CheckIcon from '@mui/icons-material/Check';
-import {changeBaseUrl} from "../Context/ApplicationContext";
-import {useDispatch} from "react-redux";
-import {useSelector} from "../../store";
-import {useLazyGetDebugQuery} from "../../Module/Debug/API/Debug";
-import {useLazyGetGeneratorsQuery} from "../../Module/Gii/API/Gii";
-import {useLazyGetParametersQuery} from "../../Module/Inspector/API/Inspector";
+import {changeBaseUrl} from '../Context/ApplicationContext';
+import {useDispatch} from 'react-redux';
+import {useSelector} from '../../store';
+import {useLazyGetDebugQuery} from '../../Module/Debug/API/Debug';
+import {useLazyGetGeneratorsQuery} from '../../Module/Gii/API/Gii';
+import {useLazyGetParametersQuery} from '../../Module/Inspector/API/Inspector';
 
 const defaultBackendUrl = process.env.REACT_APP_BACKEND_URL;
 
@@ -27,19 +27,19 @@ export function IndexPage() {
 
     async function checkStatus() {
         debugQuery()
-            .then(response => setStatus(s => ({...s, debug: response.isSuccess})))
-            .catch(() => setStatus(s => ({...s, debug: false})));
+            .then((response) => setStatus((s) => ({...s, debug: response.isSuccess})))
+            .catch(() => setStatus((s) => ({...s, debug: false})));
         inspectorQuery()
-            .then(response => setStatus(s => ({...s, inspector: response.isSuccess})))
-            .catch(() => setStatus(s => ({...s, inspector: false})));
+            .then((response) => setStatus((s) => ({...s, inspector: response.isSuccess})))
+            .catch(() => setStatus((s) => ({...s, inspector: false})));
         giiQuery()
-            .then(response => setStatus(s => ({...s, gii: response.isSuccess})))
-            .catch(() => setStatus(s => ({...s, gii: false})));
+            .then((response) => setStatus((s) => ({...s, gii: response.isSuccess})))
+            .catch(() => setStatus((s) => ({...s, gii: false})));
     }
 
-    async function handleChangeUrl(event: { preventDefault: () => void; }) {
+    async function handleChangeUrl(event: {preventDefault: () => void}) {
         event.preventDefault();
-        dispatch(changeBaseUrl(url))
+        dispatch(changeBaseUrl(url));
         await checkStatus();
     }
 
@@ -55,16 +55,16 @@ export function IndexPage() {
             </Typography>
             <Typography>
                 API Statuses:
-                {Object.entries(status).map(((status) => (
+                {Object.entries(status).map((status) => (
                     <Typography>
                         <span style={{textTransform: 'capitalize'}}>{status[0]}</span>:
-                        {
-                            status[1]
-                                ? <Alert severity="success">connected</Alert>
-                                : <Alert severity="error">not connected</Alert>
-                        }
+                        {status[1] ? (
+                            <Alert severity="success">connected</Alert>
+                        ) : (
+                            <Alert severity="error">not connected</Alert>
+                        )}
                     </Typography>
-                )))}
+                ))}
             </Typography>
             <Paper
                 component="form"
@@ -78,9 +78,9 @@ export function IndexPage() {
                     onChange={(event) => setUrl(event.target.value)}
                 />
                 <IconButton type="submit" sx={{p: 2}}>
-                    <CheckIcon/>
+                    <CheckIcon />
                 </IconButton>
             </Paper>
         </Box>
-    )
+    );
 }

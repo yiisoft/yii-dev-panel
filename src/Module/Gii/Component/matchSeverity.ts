@@ -1,5 +1,5 @@
-import {AlertColor} from "@mui/material";
-import {FileStateEnum} from "../Types/FIle.types";
+import {AlertColor} from '@mui/material';
+import {FileStateEnum} from '../Types/FIle.types';
 
 export function matchSeverityByResultStatus(status: string): AlertColor {
     let result: AlertColor = 'error';

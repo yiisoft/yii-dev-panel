@@ -5,12 +5,12 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem} from "@mui/material";
-import {Outlet, useLocation} from "react-router";
-import {ErrorBoundary} from "react-error-boundary";
-import {YiiIcon} from "../Component/SvgIcon/YiiIcon";
-import {ErrorFallback} from "../Component/ErrorFallback";
-import {ContentCut, GitHub} from "@mui/icons-material";
+import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem} from '@mui/material';
+import {Outlet, useLocation} from 'react-router';
+import {ErrorBoundary} from 'react-error-boundary';
+import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
+import {ErrorFallback} from '../Component/ErrorFallback';
+import {ContentCut, GitHub} from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
 
 // TODO: replace with context and provider
@@ -18,26 +18,26 @@ const pages = [
     {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
     {
-        name: 'Inspector', link: '#', items: [
+        name: 'Inspector',
+        link: '#',
+        items: [
             {name: 'Routes', link: '/inspector/routes'},
             {name: 'Parameters', link: '/inspector/parameters'},
             {name: 'Configuration', link: '/inspector/configuration'},
             {name: 'Container', link: '/inspector/container'},
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
-        ]
+        ],
     },
 ];
-const NavLink = (props: { link: string, name: string } & any) => {
+const NavLink = (props: {link: string; name: string} & any) => {
     const {link, name, ...other} = props;
-    return <Link
-        href={link}
-        sx={{my: 2, mx: 1, color: 'white', display: 'block'}}
-        {...other}
-    >
-        {name}
-    </Link>
-}
+    return (
+        <Link href={link} sx={{my: 2, mx: 1, color: 'white', display: 'block'}} {...other}>
+            {name}
+        </Link>
+    );
+};
 
 const buildVersion = 'REACT_APP_BUILD_ID' in process.env ? '#' + process.env.REACT_APP_BUILD_ID : 'development';
 const repositoryUrl = 'https://github.com/xepozz/yii-dev-panel';
@@ -51,8 +51,8 @@ export const Layout = () => {
     };
 
     const handleCloseUserMenu = (key: string, event: any) => {
-        const newAnchors = {...anchorElUser}
-        delete newAnchors[key]
+        const newAnchors = {...anchorElUser};
+        delete newAnchors[key];
         setAnchorElUser(newAnchors);
     };
 
@@ -72,7 +72,7 @@ export const Layout = () => {
                 <Container>
                     <Toolbar disableGutters>
                         <Link href={'/'}>
-                            <YiiIcon sx={{display: 'flex', mr: 1}}/>
+                            <YiiIcon sx={{display: 'flex', mr: 1}} />
                         </Link>
                         <Typography variant="h6">
                             <Link
@@ -88,12 +88,17 @@ export const Layout = () => {
 
                         <Box sx={{flexGrow: 1, display: 'flex'}}>
                             {pages.map((page) => {
-                                    if (!page.items) {
-                                        return <NavLink key={page.name} name={page.name} link={page.link}/>
-                                    }
-                                    let key = page.name;
-                                    return <Fragment key={page.name}>
-                                        <NavLink name={page.name} link={'#'} onClick={handleOpenUserMenu.bind(this, key)}/>
+                                if (!page.items) {
+                                    return <NavLink key={page.name} name={page.name} link={page.link} />;
+                                }
+                                let key = page.name;
+                                return (
+                                    <Fragment key={page.name}>
+                                        <NavLink
+                                            name={page.name}
+                                            link={'#'}
+                                            onClick={handleOpenUserMenu.bind(this, key)}
+                                        />
                                         <Menu
                                             anchorEl={anchorElUser[key]}
                                             keepMounted
@@ -112,41 +117,37 @@ export const Layout = () => {
                                             ))}
                                         </Menu>
                                     </Fragment>
-                                }
-                            )}
+                                );
+                            })}
                         </Box>
                         <div>
                             <IconButton size="large" onClick={handleMenu} color="inherit">
-                                <AdbIcon/>
+                                <AdbIcon />
                             </IconButton>
-                            <Menu
-                                anchorEl={anchorEl}
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                onClose={handleClose}
-                            >
+                            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                                 <MenuItem component={Link} href={repositoryUrl} target="_blank">
                                     <ListItemIcon>
-                                        <GitHub fontSize="small"/>
+                                        <GitHub fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>Open Github</ListItemText>
                                 </MenuItem>
                                 <MenuItem component="span" disableTouchRipple disableRipple>
                                     <ListItemIcon>
-                                        <ContentCut fontSize="small"/>
+                                        <ContentCut fontSize="small" />
                                     </ListItemIcon>
-                                    <ListItemText>Build <b>{buildVersion}</b></ListItemText>
+                                    <ListItemText>
+                                        Build <b>{buildVersion}</b>
+                                    </ListItemText>
                                 </MenuItem>
                             </Menu>
                         </div>
                     </Toolbar>
                 </Container>
-
             </AppBar>
 
             <Container>
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
-                    <Outlet/>
+                    <Outlet />
                 </ErrorBoundary>
             </Container>
         </>

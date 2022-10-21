@@ -1,8 +1,6 @@
-import {giiApi} from "./API/Gii";
+import {giiApi} from './API/Gii';
 
 export const reducers = {
     [giiApi.reducerPath]: giiApi.reducer,
-}
-export const middlewares = [
-    giiApi.middleware,
-]
+};
+export const middlewares = [giiApi.middleware];

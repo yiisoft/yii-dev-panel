@@ -1,11 +1,11 @@
-import React, {createContext} from "react";
-import {createAction, createReducer} from "@reduxjs/toolkit";
-import {GiiFile} from "../Types/FIle.types";
-import {GiiResult} from "../Types/Result.types";
+import React, {createContext} from 'react';
+import {createAction, createReducer} from '@reduxjs/toolkit';
+import {GiiFile} from '../Types/FIle.types';
+import {GiiResult} from '../Types/Result.types';
 
 interface State {
     files: GiiFile[];
-    operations: any[],
+    operations: any[];
     parameters: any[];
     results: GiiResult[];
 }
@@ -15,28 +15,27 @@ const initialState: State = {
     operations: [],
     parameters: [],
     results: [],
-}
-const setFiles = createAction<any>('setFiles')
-const setOperations = createAction<any>('setOperations')
-const setParameters = createAction<any>('setParameters')
-const setResults = createAction<any>('setResults')
-
+};
+const setFiles = createAction<any>('setFiles');
+const setOperations = createAction<any>('setOperations');
+const setParameters = createAction<any>('setParameters');
+const setResults = createAction<any>('setResults');
 
 export const Reducer = createReducer(initialState, (builder) => {
     builder
         .addCase(setFiles, (state, action) => {
-            state.files = action.payload as any
+            state.files = action.payload as any;
         })
         .addCase(setOperations, (state, action) => {
-            state.operations = action.payload as any
+            state.operations = action.payload as any;
         })
         .addCase(setParameters, (state, action) => {
-            state.parameters = action.payload as any
+            state.parameters = action.payload as any;
         })
         .addCase(setResults, (state, action) => {
-            state.results = action.payload as any
-        })
-})
+            state.results = action.payload as any;
+        });
+});
 
 export const Context = createContext(initialState);
 export const ContextProvider = ({children}: any) => {
@@ -61,9 +60,5 @@ export const ContextProvider = ({children}: any) => {
         },
     };
 
-    return (
-        <Context.Provider value={value}>
-            {children}
-        </Context.Provider>
-    );
+    return <Context.Provider value={value}>{children}</Context.Provider>;
 };

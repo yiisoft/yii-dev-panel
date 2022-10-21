@@ -1,6 +1,6 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {useSelector} from "react-redux";
-import {DebugEntry} from "../API/Debug";
+import {createSlice} from '@reduxjs/toolkit';
+import {useSelector} from 'react-redux';
+import {DebugEntry} from '../API/Debug';
 
 export const debugSlice = createSlice({
     name: 'store.debug',
@@ -9,12 +9,12 @@ export const debugSlice = createSlice({
     },
     reducers: {
         changeEntryAction: (state, action) => {
-            state.entry = action.payload
+            state.entry = action.payload;
         },
     },
-})
+});
 
-export const {changeEntryAction} = debugSlice.actions
+export const {changeEntryAction} = debugSlice.actions;
 
-type State = {[debugSlice.name]: ReturnType<typeof debugSlice.getInitialState>}
-export const useDebugEntry = () => useSelector((state: State) => state[debugSlice.name].entry)
+type State = {[debugSlice.name]: ReturnType<typeof debugSlice.getInitialState>};
+export const useDebugEntry = () => useSelector((state: State) => state[debugSlice.name].entry);

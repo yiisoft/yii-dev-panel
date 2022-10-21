@@ -1,4 +1,4 @@
-import * as yup from "yup";
+import * as yup from 'yup';
 
 declare module 'yup' {
     interface MixedSchema<TType, TContext, TDefault, TFlags> {

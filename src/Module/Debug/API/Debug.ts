@@ -1,13 +1,13 @@
-import {createApi} from '@reduxjs/toolkit/query/react'
-import {createBaseQuery} from "../../../API/createBaseQuery";
+import {createApi} from '@reduxjs/toolkit/query/react';
+import {createBaseQuery} from '../../../API/createBaseQuery';
 
 export type DebugEntry = {
     id: string;
     collectors: string[];
-    [name: string]: any
+    [name: string]: any;
 };
 type SummaryResponseType = {
-    data: DebugEntry[]
+    data: DebugEntry[];
 };
 
 interface GetCollectorInfoProps {
@@ -28,17 +28,17 @@ export const debugApi = createApi({
     endpoints: (builder) => ({
         getDebug: builder.query<DebugEntry[], void>({
             query: () => ``,
-            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || []
+            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
         }),
         getObject: builder.query<DebugEntry[], GetObjectProps>({
             query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
-            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || []
+            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
         }),
         getCollectorInfo: builder.query<CollectorResponseType, GetCollectorInfoProps>({
             query: (args) => `view/${args.id}/?collector=${args.collector}`,
-            transformResponse: (result: SummaryResponseType) => (result.data as CollectorResponseType[]) || []
+            transformResponse: (result: SummaryResponseType) => (result.data as CollectorResponseType[]) || [],
         }),
     }),
-})
+});
 
-export const {useGetDebugQuery, useLazyGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi
+export const {useGetDebugQuery, useLazyGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi;

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import {CodeHighlight} from "../../../Component/CodeHighlight";
-import {GiiFile} from "../Types/FIle.types";
+import {CodeHighlight} from '../../../Component/CodeHighlight';
+import {GiiFile} from '../Types/FIle.types';
 
 export interface FileDiffDialogProps {
     open: boolean;
@@ -19,9 +19,9 @@ export function FileDiffDialog(props: FileDiffDialogProps) {
     };
 
     return (
-        <Dialog onClose={handleClose} open={open} fullWidth maxWidth='md'>
+        <Dialog onClose={handleClose} open={open} fullWidth maxWidth="md">
             <DialogTitle>{file.relativePath}</DialogTitle>
-            <CodeHighlight language='diff' code={content}/>
+            <CodeHighlight language="diff" code={content} />
         </Dialog>
     );
 }

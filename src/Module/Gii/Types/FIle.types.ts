@@ -1,4 +1,3 @@
-
 export enum FileOperationEnum {
     SAVE = 'save',
     SKIP = 'skip',
@@ -19,4 +18,4 @@ export type GiiFile = {
     relativePath: string;
     state: FileStateEnum;
     type: string;
-}
+};

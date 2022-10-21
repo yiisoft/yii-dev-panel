@@ -1,8 +1,6 @@
-import {inspectorApi} from "./API/Inspector";
+import {inspectorApi} from './API/Inspector';
 
 export const reducers = {
     [inspectorApi.reducerPath]: inspectorApi.reducer,
-}
-export const middlewares = [
-    inspectorApi.middleware,
-]
+};
+export const middlewares = [inspectorApi.middleware];

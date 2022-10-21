@@ -1,43 +1,43 @@
-import {RouteObject} from "react-router-dom";
-import React from "react";
-import * as Pages from "./Pages";
+import {RouteObject} from 'react-router-dom';
+import React from 'react';
+import * as Pages from './Pages';
 
 export const routes = [
     {
-        path: "/inspector",
+        path: '/inspector',
         children: [
             {
                 path: 'parameters',
-                element: <Pages.ParametersPage/>
+                element: <Pages.ParametersPage />,
             },
             {
                 path: 'configuration',
-                element: <Pages.ConfigurationPage/>
+                element: <Pages.ConfigurationPage />,
             },
             {
                 path: 'tests',
-                element: <Pages.TestsPage/>
+                element: <Pages.TestsPage />,
             },
             {
                 path: 'analyse',
-                element: <Pages.PsalmPage/>
+                element: <Pages.PsalmPage />,
             },
             {
                 path: 'routes',
-                element: <Pages.RoutesPage/>
+                element: <Pages.RoutesPage />,
             },
             {
                 path: 'container',
                 children: [
                     {
                         index: true,
-                        element: <Pages.ContainerPage/>
+                        element: <Pages.ContainerPage />,
                     },
                     {
                         path: 'view',
-                        element: <Pages.ContainerEntryPage/>
+                        element: <Pages.ContainerEntryPage />,
                     },
-                ]
+                ],
             },
         ],
     },

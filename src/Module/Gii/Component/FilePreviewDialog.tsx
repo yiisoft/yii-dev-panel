@@ -1,8 +1,8 @@
 import * as React from 'react';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
-import {CodeHighlight} from "../../../Component/CodeHighlight";
-import {GiiFile} from "../Types/FIle.types";
+import {CodeHighlight} from '../../../Component/CodeHighlight';
+import {GiiFile} from '../Types/FIle.types';
 
 export interface FilePreviewDialogProps {
     open: boolean;
@@ -18,9 +18,9 @@ export function FilePreviewDialog(props: FilePreviewDialogProps) {
     };
 
     return (
-        <Dialog onClose={handleClose} open={open} fullWidth maxWidth='md'>
+        <Dialog onClose={handleClose} open={open} fullWidth maxWidth="md">
             <DialogTitle>{file.relativePath}</DialogTitle>
-            <CodeHighlight language={file.type} code={file.content}/>
+            <CodeHighlight language={file.type} code={file.content} />
         </Dialog>
     );
 }
