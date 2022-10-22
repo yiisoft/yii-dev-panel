@@ -94,11 +94,7 @@ export const Layout = () => {
                                 const key = page.name;
                                 return (
                                     <Fragment key={page.name}>
-                                        <NavLink
-                                            name={page.name}
-                                            link={'#'}
-                                            onClick={handleOpenUserMenu.bind(this, key)}
-                                        />
+                                        <NavLink name={page.name} onClick={handleOpenUserMenu.bind(this, key)} />
                                         <Menu
                                             anchorEl={anchorElUser[key]}
                                             keepMounted
