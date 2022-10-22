@@ -5,13 +5,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem, styled} from '@mui/material';
+import {IconButton, Link, LinkTypeMap, ListItemIcon, ListItemText, Menu, MenuItem, styled} from '@mui/material';
 import {Outlet, useLocation} from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary';
 import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
 import {ErrorFallback} from '../Component/ErrorFallback';
 import {ContentCut, GitHub} from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
+import {OverrideProps} from '@mui/material/OverridableComponent';
 
 // TODO: replace with context and provider
 const pages = [
@@ -37,14 +38,22 @@ const StyledLink = styled(Link)(({theme}) => {
     };
 });
 
-const NavLink = (props: {link: string; name: string} & any) => {
-    const {link, name, onClick, ...other} = props;
-    if (!link) {
+type NavLinkType = OverrideProps<LinkTypeMap, 'a'> & {
+    name: string;
+    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+};
+
+const NavLink = (props: NavLinkType) => {
+    const {href, name, onClick, ...other} = props;
+    if (!href) {
         return (
             <StyledLink
                 onClick={(e) => {
                     e.preventDefault();
-                    return onClick(e);
+                    if (onClick) {
+                        return onClick(e);
+                    }
+                    return false;
                 }}
                 {...other}
             >
@@ -53,7 +62,7 @@ const NavLink = (props: {link: string; name: string} & any) => {
         );
     }
     return (
-        <StyledLink href={link} {...other}>
+        <StyledLink href={href} {...other}>
             {name}
         </StyledLink>
     );
@@ -70,7 +79,7 @@ export const Layout = () => {
         setAnchorElUser({...anchorElUser, [key]: event.currentTarget});
     };
 
-    const handleCloseUserMenu = (key: string, event: any) => {
+    const handleCloseUserMenu = (key: string) => {
         const newAnchors = {...anchorElUser};
         delete newAnchors[key];
         setAnchorElUser(newAnchors);
@@ -109,7 +118,7 @@ export const Layout = () => {
                         <Box sx={{flexGrow: 1, display: 'flex'}}>
                             {pages.map((page) => {
                                 if (!page.items) {
-                                    return <NavLink key={page.name} name={page.name} link={page.link} />;
+                                    return <NavLink key={page.name} name={page.name} href={page.link} />;
                                 }
                                 const key = page.name;
                                 return (
