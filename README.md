@@ -6,7 +6,7 @@ Yii Development Panel – it is an application that aggregates such different mo
 
 - Debug
 - Inspector
-- Gii (not ready to use yet)
+- Gii
 
 > **Note:** this project is like a Proof of Concept and not officially supported by @yiisoft organization 
 > even if I am a core developer.

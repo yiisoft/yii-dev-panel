@@ -1,5 +1,5 @@
 import {Layout} from './Pages/Layout';
-import {createBrowserRouter, RouteObject} from 'react-router-dom';
+import {createBrowserRouter, createHashRouter, RouteObject} from 'react-router-dom';
 import React from 'react';
 import {ModuleInterface} from './Module/Module.types';
 
@@ -11,5 +11,5 @@ export function createRouter(modules: ModuleInterface[]) {
             children: ([] as RouteObject[]).concat(...modules.map((module) => module.routes)),
         },
     ];
-    return createBrowserRouter(routes);
+    return process.env.REACT_APP_ENV === 'github' ? createHashRouter(routes) : createBrowserRouter(routes);
 }
