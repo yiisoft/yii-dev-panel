@@ -21,6 +21,21 @@ Yii Development Panel – it is an application that aggregates such different mo
 npm install
 ```
 
+## Usage
+
+### PWA
+
+The application use HTTP API to work with modules. 
+To use the application you need to have the built app and working API.
+Unfortunately, browsers prohibit working with `localhost` from the Internet by security reasons.
+But here is workaround:
+
+1. Open https://xepozz.github.io/yii-dev-panel
+2. Click "Install" button to install PWA application
+3. Run the application from the Applications
+4. Make sure your API works by clicking on "check mark"
+5. Use Yii dev panel
+
 ## Screenshot
 
 ![Screenshot](docs/screenshot.png)
