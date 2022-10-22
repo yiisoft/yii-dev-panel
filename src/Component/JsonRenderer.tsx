@@ -10,7 +10,7 @@ export type JsonRendererProps = {
 };
 export const JsonRenderer = ({value, depth = 5, valueTypes = []}: JsonRendererProps) => {
     if (typeof value == 'string' && value.match(REGEXP_PHP_FUNCTION)?.length) {
-        let html = value.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp');
+        const html = value.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp');
         return <div dangerouslySetInnerHTML={{__html: html}} />;
     }
 

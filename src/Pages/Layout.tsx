@@ -91,7 +91,7 @@ export const Layout = () => {
                                 if (!page.items) {
                                     return <NavLink key={page.name} name={page.name} link={page.link} />;
                                 }
-                                let key = page.name;
+                                const key = page.name;
                                 return (
                                     <Fragment key={page.name}>
                                         <NavLink

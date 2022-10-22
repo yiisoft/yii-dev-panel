@@ -3,12 +3,12 @@ import {createAction, createReducer} from '@reduxjs/toolkit';
 import {GiiFile} from '../Types/FIle.types';
 import {GiiResult} from '../Types/Result.types';
 
-interface State {
+type State = {
     files: GiiFile[];
     operations: any[];
     parameters: any[];
     results: GiiResult[];
-}
+};
 
 const initialState: State = {
     files: [],

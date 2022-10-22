@@ -5,7 +5,7 @@ export function mapErrorsToForm(response: any, form: UseFormReturn) {
         const errorsMap = (response.error?.data?.errors as Record<string, string[]>) || {};
         console.error(errorsMap);
 
-        for (let attribute in errorsMap) {
+        for (const attribute in errorsMap) {
             const errors = errorsMap[attribute];
             form.setError(attribute, {message: errors.join(' ')});
         }

@@ -41,7 +41,7 @@ export const TestsPage = () => {
         const data = await commandQuery('test/codeception');
 
         const resultRows = [];
-        for (let event of data.data as any) {
+        for (const event of data.data as any) {
             const testName = [event.suite]
                 .concat(event.test)
                 .filter((v) => !!v)

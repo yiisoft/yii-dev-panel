@@ -2,9 +2,9 @@ import {GiiGeneratorAttribute, GiiGeneratorAttributeRule} from '../../Module/Gii
 import {yup} from '.';
 
 function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {
-    let currentSet: any[] = [];
+    const currentSet: any[] = [];
 
-    for (let rule of rules) {
+    for (const rule of rules) {
         switch (rule[0]) {
             case 'required':
                 currentSet.push(yup.string().required(rule.message));
@@ -13,6 +13,7 @@ function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {
                 currentSet.push(yup.array(createYupValidationRules(rule.rules)) as any);
                 break;
             case 'regex':
+                /*eslint no-case-declarations: "off"*/
                 const originalPattern = rule.pattern as string;
                 const lastSlashPosition = originalPattern.lastIndexOf('/');
 

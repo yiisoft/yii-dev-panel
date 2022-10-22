@@ -64,7 +64,7 @@ export const Layout = () => {
                 </Grid>
                 <Grid item xs={11} md={9}>
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
-                        {!!selectedGenerator ? (
+                        {selectedGenerator ? (
                             <GeneratorStepper generator={selectedGenerator} />
                         ) : (
                             <>Select a generator to see more options</>

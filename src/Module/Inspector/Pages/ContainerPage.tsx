@@ -20,7 +20,7 @@ export const ContainerPage = () => {
         setObject((prev) => ({...prev, [id]: result.data}));
     };
 
-    let rows = (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
+    const rows = (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
 
     const getColumns = (): GridColDef[] => [
         {

@@ -65,7 +65,7 @@ export const PsalmPage = () => {
             link: '',
         };
         let id = 0;
-        for (let event of data.data as any) {
+        for (const event of data.data as any) {
             id++;
             tempObject = {
                 id,

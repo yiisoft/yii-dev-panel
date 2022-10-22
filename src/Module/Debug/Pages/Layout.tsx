@@ -50,10 +50,10 @@ function parseCollectorName(text: string) {
     return text.replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
 }
 
-interface CollectorDataProps {
+type CollectorDataProps = {
     collectorData: any;
     selectedCollector: string;
-}
+};
 
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {

@@ -10,15 +10,15 @@ type SummaryResponseType = {
     data: DebugEntry[];
 };
 
-interface GetCollectorInfoProps {
+type GetCollectorInfoProps = {
     id: string;
     collector: string;
-}
+};
 
-interface GetObjectProps {
+type GetObjectProps = {
     debugEntryId: string;
     objectId: number;
-}
+};
 
 type CollectorResponseType = any;
 

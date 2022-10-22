@@ -1,9 +1,9 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '../../../API/createBaseQuery';
 
-interface Response {
+type Response = {
     data: any;
-}
+};
 
 export const inspectorApi = createApi({
     reducerPath: 'api.inspector',

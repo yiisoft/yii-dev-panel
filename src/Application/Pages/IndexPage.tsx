@@ -18,7 +18,7 @@ export function IndexPage() {
     const baseUrl = useSelector((state) => state.application.baseUrl);
     const [url, setUrl] = useState<string>(String(baseUrl));
     // TODO remove direct access to modules API
-    let initialStatus = {
+    const initialStatus = {
         debug: false,
         inspector: false,
         gii: false,

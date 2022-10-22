@@ -4,12 +4,12 @@ import Dialog from '@mui/material/Dialog';
 import {CodeHighlight} from '../../../Component/CodeHighlight';
 import {GiiFile} from '../Types/FIle.types';
 
-export interface FileDiffDialogProps {
+export type FileDiffDialogProps = {
     open: boolean;
     file: GiiFile;
     content: string;
     onClose: () => void;
-}
+};
 
 export function FileDiffDialog(props: FileDiffDialogProps) {
     const {onClose, file, content, open} = props;
