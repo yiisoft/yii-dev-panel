@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem} from '@mui/material';
+import {IconButton, Link, ListItemIcon, ListItemText, Menu, MenuItem, styled} from '@mui/material';
 import {Outlet, useLocation} from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary';
 import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
@@ -30,12 +30,32 @@ const pages = [
         ],
     },
 ];
+const StyledLink = styled(Link)(({theme}) => {
+    return {
+        margin: theme.spacing(2, 1),
+        color: 'white',
+    };
+});
+
 const NavLink = (props: {link: string; name: string} & any) => {
-    const {link, name, ...other} = props;
+    const {link, name, onClick, ...other} = props;
+    if (!link) {
+        return (
+            <StyledLink
+                onClick={(e) => {
+                    e.preventDefault();
+                    return onClick(e);
+                }}
+                {...other}
+            >
+                {name}
+            </StyledLink>
+        );
+    }
     return (
-        <Link href={link} sx={{my: 2, mx: 1, color: 'white', display: 'block'}} {...other}>
+        <StyledLink href={link} {...other}>
             {name}
-        </Link>
+        </StyledLink>
     );
 };
 

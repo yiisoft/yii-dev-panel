@@ -53,19 +53,19 @@ export function IndexPage() {
             <Typography>
                 Default backend url is: <b>{defaultBackendUrl}</b>
             </Typography>
-            <Typography>
-                API Statuses:
-                {Object.entries(status).map((status) => (
+            <Typography>API Statuses:</Typography>
+            {Object.entries(status).map((status, index) => (
+                <React.Fragment key={index}>
                     <Typography>
                         <span style={{textTransform: 'capitalize'}}>{status[0]}</span>:
-                        {status[1] ? (
-                            <Alert severity="success">connected</Alert>
-                        ) : (
-                            <Alert severity="error">not connected</Alert>
-                        )}
                     </Typography>
-                ))}
-            </Typography>
+                    {status[1] ? (
+                        <Alert severity="success">connected</Alert>
+                    ) : (
+                        <Alert severity="error">not connected</Alert>
+                    )}
+                </React.Fragment>
+            ))}
             <Paper
                 component="form"
                 onSubmit={handleChangeUrl}
