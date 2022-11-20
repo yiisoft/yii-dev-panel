@@ -27,6 +27,10 @@ export const routes = [
                 element: <Pages.RoutesPage />,
             },
             {
+                path: 'files',
+                element: <Pages.FilesPage />,
+            },
+            {
                 path: 'container',
                 children: [
                     {

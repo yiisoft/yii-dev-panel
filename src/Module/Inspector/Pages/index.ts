@@ -5,3 +5,4 @@ export {PsalmPage} from './PsalmPage';
 export {RoutesPage} from './RoutesPage';
 export {ContainerPage} from './ContainerPage';
 export {ContainerEntryPage} from './ContainerEntryPage';
+export {FilesPage} from './FilesPage';

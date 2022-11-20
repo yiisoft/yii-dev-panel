@@ -30,6 +30,10 @@ export const inspectorApi = createApi({
             query: (command) => `command?command=${command}`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getFiles: builder.query<string[], string>({
+            query: (command) => `files?path=${command}`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -41,5 +45,7 @@ export const {
     useGetClassesQuery,
     useLazyGetObjectQuery,
     useGetCommandQuery,
+    useGetFilesQuery,
+    useLazyGetFilesQuery,
     useLazyGetCommandQuery,
 } = inspectorApi;
