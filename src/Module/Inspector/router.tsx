@@ -27,6 +27,10 @@ export const routes = [
                 element: <Pages.RoutesPage />,
             },
             {
+                path: 'translations',
+                element: <Pages.TranslationsPage />,
+            },
+            {
                 path: 'container',
                 children: [
                     {

@@ -30,6 +30,10 @@ export const inspectorApi = createApi({
             query: (command) => `command?command=${command}`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getTranslations: builder.query<Response, void>({
+            query: () => `translations`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -41,5 +45,6 @@ export const {
     useGetClassesQuery,
     useLazyGetObjectQuery,
     useGetCommandQuery,
+    useGetTranslationsQuery,
     useLazyGetCommandQuery,
 } = inspectorApi;
