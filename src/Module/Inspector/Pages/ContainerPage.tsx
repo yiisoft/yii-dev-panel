@@ -1,26 +1,32 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery} from '../API/Inspector';
 import {Button, Link} from '@mui/material';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {DataTable} from '../../../Component/Grid';
+import {FilterInput} from '../../../Component/Form/FilterInput';
+import {regexpQuote} from '../../../Helper/regexpQuote';
 
 export const ContainerPage = () => {
-    const {data, isLoading} = useGetClassesQuery('');
+    const {data} = useGetClassesQuery('');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
-
-    if (isLoading) {
-        return <>Loading..</>;
-    }
+    const [searchString, setSearchString] = useState<string>('');
 
     const handleLoadObject = async (id: string) => {
         const result = await lazyLoadObject(id);
         setObject((prev) => ({...prev, [id]: result.data}));
     };
 
-    const rows = (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
+    const rows = useMemo(() => {
+        return (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
+    }, [data]);
+
+    const filteredRows = useMemo(() => {
+        const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
+        return rows.filter((object: any) => object[0].match(regExp));
+    }, [rows, searchString]);
 
     const getColumns = (): GridColDef[] => [
         {
@@ -51,7 +57,8 @@ export const ContainerPage = () => {
     return (
         <>
             <h2>{'Container'}</h2>
-            <DataTable rows={rows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={getColumns()} />
+            <FilterInput onChange={setSearchString} />
+            <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={getColumns()} />
         </>
     );
 };

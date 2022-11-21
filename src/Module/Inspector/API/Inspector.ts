@@ -37,6 +37,7 @@ export const {
     useGetParametersQuery,
     useLazyGetParametersQuery,
     useGetConfigurationQuery,
+    useLazyGetConfigurationQuery,
     useGetObjectQuery,
     useGetClassesQuery,
     useLazyGetObjectQuery,
