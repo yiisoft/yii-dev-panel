@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useRef} from 'react';
-import {FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput} from '@mui/material';
+import {FormControl, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
 import {Clear} from '@mui/icons-material';
 
 export type FilterInputProps = {
@@ -9,15 +9,16 @@ export type FilterInputProps = {
 };
 export const FilterInput = (props: FilterInputProps) => {
     const {onChange, value = ''} = props;
+    const inputRef = useRef<HTMLInputElement>();
     const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
     return (
-        <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
+        <FormControl sx={{mb: 1}} variant="standard">
             <InputLabel htmlFor="filter">Filter</InputLabel>
-            <OutlinedInput
+            <Input
                 id="filter"
-                label="Filter"
                 autoFocus
+                inputRef={inputRef}
                 defaultValue={value}
                 onChange={(e) => {
                     clearTimeout(timeoutIdRef.current);
@@ -27,7 +28,15 @@ export const FilterInput = (props: FilterInputProps) => {
                 }}
                 endAdornment={
                     <InputAdornment position="end">
-                        <IconButton onClick={() => onChange('')} edge="end">
+                        <IconButton
+                            onClick={async () => {
+                                onChange('');
+                                if (inputRef.current) {
+                                    inputRef.current.value = '';
+                                }
+                            }}
+                            edge="end"
+                        >
                             <Clear />
                         </IconButton>
                     </InputAdornment>

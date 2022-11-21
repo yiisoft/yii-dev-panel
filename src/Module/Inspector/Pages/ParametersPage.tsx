@@ -38,7 +38,7 @@ export const ParametersPage = () => {
         <>
             <h2>{'Parameters'}</h2>
             <FilterInput onChange={setSearchString} />
-            <div style={{height: 400, width: '100%'}}>
+            <div style={{width: '100%'}}>
                 <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />
             </div>
         </>

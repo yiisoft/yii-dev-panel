@@ -21,7 +21,7 @@ export const ContainerPage = () => {
 
     const rows = useMemo(() => {
         return (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
-    }, [data]);
+    }, [data, objects]);
 
     const filteredRows = useMemo(() => {
         const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
