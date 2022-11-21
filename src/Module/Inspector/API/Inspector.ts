@@ -1,8 +1,22 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '../../../API/createBaseQuery';
 
-type Response = {
-    data: any;
+export type InspectorFile = {
+    path: string;
+    baseName: string;
+    extension: string;
+    user: {uid: number; gid?: number; name?: string};
+    group: {gid: number; name?: string};
+    size: number;
+    type: string;
+    permissions: string;
+};
+export type InspectorFileContent = {
+    directory: string;
+    content: string;
+} & InspectorFile;
+type Response<T = any> = {
+    data: T;
 };
 
 export const inspectorApi = createApi({
@@ -30,9 +44,9 @@ export const inspectorApi = createApi({
             query: (command) => `command?command=${command}`,
             transformResponse: (result: Response) => result.data || [],
         }),
-        getFiles: builder.query<string[], string>({
+        getFiles: builder.query<InspectorFile[], string>({
             query: (command) => `files?path=${command}`,
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
     }),
 });
