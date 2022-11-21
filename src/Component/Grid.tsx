@@ -1,16 +1,27 @@
 import {DataGrid, GridColumns, GridValidRowModel} from '@mui/x-data-grid';
 import * as React from 'react';
 import {useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {useSelector} from '../store';
+import {setPreferredPageSize} from '../Application/Context/ApplicationContext';
 
 type GridProps = {
     rows: GridValidRowModel[];
     columns: GridColumns;
     rowsPerPage?: number[];
     getRowId?: (row: any) => string | number;
+    pageSize?: number;
 };
 
-export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]}: GridProps) {
-    const [pageSize, setPageSize] = useState(Math.min(...rowsPerPage));
+export function DataTable(props: GridProps) {
+    const {rows, columns, getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]} = props;
+
+    const dispatch = useDispatch();
+    const preferredPageSize = useSelector((state) => state.application.preferredPageSize) as number;
+
+    const [searchParams, setSearchParams] = useSearchParams({page: '0'});
+    const [pageSize, setPageSize] = useState(preferredPageSize || Math.min(...rowsPerPage));
 
     return (
         <DataGrid
@@ -19,8 +30,14 @@ export function DataTable({rows, columns, getRowId = (row) => row.id, rowsPerPag
             columns={columns}
             rowsPerPageOptions={rowsPerPage}
             pageSize={pageSize}
-            onPageSizeChange={(value) => setPageSize(Math.min(value, 100))}
-            disableVirtualization
+            page={Number(searchParams.get('page'))}
+            onPageChange={(page) => {
+                setSearchParams({page: String(page)});
+            }}
+            onPageSizeChange={(value) => {
+                setPageSize(value);
+                dispatch(setPreferredPageSize(value));
+            }}
             rowBuffer={0}
             rowThreshold={0}
             hideFooterSelectedRowCount
