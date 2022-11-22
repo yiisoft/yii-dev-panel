@@ -19,7 +19,7 @@ export const ContainerEntryPage = () => {
             <h2>
                 {objectClass}{' '}
                 <Tooltip title="Examine as a file">
-                    <IconButton size="small" target="_blank" href={'/inspector/container/files?path=' + data?.path}>
+                    <IconButton size="small" target="_blank" href={'/inspector/files?path=' + data?.path}>
                         <OpenInNew fontSize="small" />
                     </IconButton>
                 </Tooltip>
