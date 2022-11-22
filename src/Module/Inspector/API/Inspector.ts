@@ -5,6 +5,20 @@ type ObjectType = {
     object: object;
     path: string;
 };
+export type InspectorFile = {
+    path: string;
+    baseName: string;
+    extension: string;
+    user: {uid: number; gid?: number; name?: string};
+    group: {gid: number; name?: string};
+    size: number;
+    type: string;
+    permissions: string;
+};
+export type InspectorFileContent = {
+    directory: string;
+    content: string;
+} & InspectorFile;
 type Response<T = any> = {
     data: T;
 };
@@ -34,6 +48,10 @@ export const inspectorApi = createApi({
             query: (command) => `command?command=${command}`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getFiles: builder.query<InspectorFile[], string>({
+            query: (command) => `files?path=${command}`,
+            transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
+        }),
     }),
 });
 
@@ -46,5 +64,7 @@ export const {
     useGetClassesQuery,
     useLazyGetObjectQuery,
     useGetCommandQuery,
+    useGetFilesQuery,
+    useLazyGetFilesQuery,
     useLazyGetCommandQuery,
 } = inspectorApi;
