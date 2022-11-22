@@ -14,6 +14,11 @@ type LogEntry = {
 type LogPanelProps = {
     data: LogEntry[];
 };
+
+function parseFilePath(lineAndNumber: string) {
+    return lineAndNumber.replace(/(:[0-9]+)$/, '');
+}
+
 export const LogPanel = ({data}: LogPanelProps) => {
     return (
         <>
@@ -27,7 +32,7 @@ export const LogPanel = ({data}: LogPanelProps) => {
                                 <IconButton
                                     sx={{display: 'flex'}}
                                     size="small"
-                                    href={`/inspector/files?path=${entry.line}`}
+                                    href={`/inspector/files?path=${parseFilePath(entry.line)}`}
                                 >
                                     <FilePresent fontSize="small" />
                                 </IconButton>
