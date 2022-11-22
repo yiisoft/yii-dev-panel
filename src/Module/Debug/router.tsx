@@ -4,7 +4,7 @@ import React from 'react';
 
 export const routes = [
     {
-        path: '/debug',
+        path: 'debug',
         element: <Pages.Layout />,
         children: [
             {
@@ -14,6 +14,15 @@ export const routes = [
             {
                 path: 'logger',
                 element: <Pages.LogPage />,
+            },
+        ],
+    },
+    {
+        path: 'debug',
+        children: [
+            {
+                path: 'object',
+                element: <Pages.ObjectPage />,
             },
         ],
     },

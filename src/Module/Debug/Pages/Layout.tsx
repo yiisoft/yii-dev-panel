@@ -29,6 +29,7 @@ import {useSearchParams} from 'react-router-dom';
 import {LogPage} from './LogPage';
 import {DumpPage} from './DumpPage';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
+import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -58,6 +59,7 @@ type CollectorDataProps = {
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
         'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPage data={data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewareTimeline {...data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
 

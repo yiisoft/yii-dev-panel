@@ -5,6 +5,7 @@ import {useState} from 'react';
 import {useLazyGetObjectQuery} from '../API/Debug';
 import {useDebugEntry} from '../Context/Context';
 import {DataType} from '@textea/json-viewer';
+import {objectIdParser} from '../../../Helper/objectIdParser';
 
 export const JsonRenderer = (props: JsonRendererProps) => {
     const [objectQuery] = useLazyGetObjectQuery();
@@ -12,9 +13,7 @@ export const JsonRenderer = (props: JsonRendererProps) => {
     const [data, setData] = useState(props.value);
 
     const objectLoader = async (objectString: string, pathes: (string | number)[]) => {
-        const objectId = Number(objectString.substring(objectString.indexOf('#', -1) + 1));
-
-        const response = await objectQuery({debugEntryId: debugEntry!.id, objectId: objectId});
+        const response = await objectQuery({debugEntryId: debugEntry!.id, objectId: objectIdParser(objectString)});
         let pointer = deepUpdate(data);
 
         for (const path of pathes) {
