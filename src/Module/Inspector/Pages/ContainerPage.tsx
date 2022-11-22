@@ -2,11 +2,13 @@ import * as React from 'react';
 import {useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery} from '../API/Inspector';
-import {Button, Link} from '@mui/material';
+import {Button, IconButton, Tooltip} from '@mui/material';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {DataTable} from '../../../Component/Grid';
 import {FilterInput} from '../../../Component/Form/FilterInput';
 import {regexpQuote} from '../../../Helper/regexpQuote';
+import clipboardCopy from 'clipboard-copy';
+import {ContentCopy, OpenInNew} from '@mui/icons-material';
 
 export const ContainerPage = () => {
     const {data} = useGetClassesQuery('');
@@ -33,7 +35,24 @@ export const ContainerPage = () => {
             field: '0',
             headerName: 'Name',
             width: 200,
-            renderCell: (params: GridRenderCellParams) => <span style={{wordBreak: 'break-all'}}>{params.value}</span>,
+            renderCell: (params: GridRenderCellParams) => {
+                const value = params.value as string;
+                return (
+                    <div style={{wordBreak: 'break-all'}}>
+                        <Tooltip title="Copy">
+                            <IconButton size="small" onClick={() => clipboardCopy(value)}>
+                                <ContentCopy fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Examine as a container entry">
+                            <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
+                                <OpenInNew fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                        {value}
+                    </div>
+                );
+            },
         },
         {
             field: '1',
@@ -47,7 +66,6 @@ export const ContainerPage = () => {
                 return (
                     <>
                         <Button onClick={() => handleLoadObject(params.row[0])}>Load</Button>
-                        <Link href={'view?class=' + params.row[0]}>View</Link>
                     </>
                 );
             },

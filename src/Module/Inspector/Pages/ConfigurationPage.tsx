@@ -3,10 +3,12 @@ import {useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetConfigurationQuery, useLazyGetObjectQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
-import {Button} from '@mui/material';
+import {Button, IconButton, Tooltip} from '@mui/material';
 import {DataTable} from '../../../Component/Grid';
 import {regexpQuote} from '../../../Helper/regexpQuote';
 import {FilterInput} from '../../../Component/Form/FilterInput';
+import {ContentCopy, OpenInNew} from '@mui/icons-material';
+import clipboardCopy from 'clipboard-copy';
 
 export const ConfigurationPage = () => {
     const {data} = useGetConfigurationQuery('web');
@@ -19,7 +21,24 @@ export const ConfigurationPage = () => {
             field: '0',
             headerName: 'Name',
             width: 200,
-            renderCell: (params: GridRenderCellParams) => <span style={{wordBreak: 'break-all'}}>{params.value}</span>,
+            renderCell: (params: GridRenderCellParams) => {
+                const value = params.value as string;
+                return (
+                    <div style={{wordBreak: 'break-all'}}>
+                        <Tooltip title="Copy">
+                            <IconButton size="small" onClick={() => clipboardCopy(value)}>
+                                <ContentCopy fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Examine as a container entry">
+                            <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
+                                <OpenInNew fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                        {value}
+                    </div>
+                );
+            },
         },
         {
             field: '1',
@@ -63,6 +82,7 @@ export const ConfigurationPage = () => {
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
 
+    console.log('render');
     return (
         <>
             <h2>Configuration</h2>

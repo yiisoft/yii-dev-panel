@@ -1,8 +1,12 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '../../../API/createBaseQuery';
 
-type Response = {
-    data: any;
+type ObjectType = {
+    object: object;
+    path: string;
+};
+type Response<T = any> = {
+    data: T;
 };
 
 export const inspectorApi = createApi({
@@ -22,9 +26,9 @@ export const inspectorApi = createApi({
             query: () => `classes`,
             transformResponse: (result: Response) => result.data || [],
         }),
-        getObject: builder.query<Response, string>({
+        getObject: builder.query<ObjectType, string>({
             query: (classname) => `object?classname=${classname}`,
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<ObjectType>) => result.data || [],
         }),
         getCommand: builder.query<Response, string>({
             query: (command) => `command?command=${command}`,
