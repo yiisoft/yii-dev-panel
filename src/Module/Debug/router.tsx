@@ -4,16 +4,21 @@ import React from 'react';
 
 export const routes = [
     {
-        path: '/debug',
+        path: 'debug',
         element: <Pages.Layout />,
         children: [
             {
                 element: <Pages.IndexPage />,
                 index: true,
             },
+        ],
+    },
+    {
+        path: 'debug',
+        children: [
             {
-                path: 'logger',
-                element: <Pages.LogPage />,
+                path: 'object',
+                element: <Pages.ObjectPage />,
             },
         ],
     },

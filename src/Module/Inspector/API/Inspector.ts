@@ -1,8 +1,26 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '../../../API/createBaseQuery';
 
-type Response = {
-    data: any;
+type ObjectType = {
+    object: object;
+    path: string;
+};
+export type InspectorFile = {
+    path: string;
+    baseName: string;
+    extension: string;
+    user: {uid: number; gid?: number; name?: string};
+    group: {gid: number; name?: string};
+    size: number;
+    type: string;
+    permissions: string;
+};
+export type InspectorFileContent = {
+    directory: string;
+    content: string;
+} & InspectorFile;
+type Response<T = any> = {
+    data: T;
 };
 
 export const inspectorApi = createApi({
@@ -22,13 +40,17 @@ export const inspectorApi = createApi({
             query: () => `classes`,
             transformResponse: (result: Response) => result.data || [],
         }),
-        getObject: builder.query<Response, string>({
+        getObject: builder.query<ObjectType, string>({
             query: (classname) => `object?classname=${classname}`,
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<ObjectType>) => result.data || [],
         }),
         getCommand: builder.query<Response, string>({
             query: (command) => `command?command=${command}`,
             transformResponse: (result: Response) => result.data || [],
+        }),
+        getFiles: builder.query<InspectorFile[], string>({
+            query: (command) => `files?path=${command}`,
+            transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
         getTranslations: builder.query<Response, void>({
             query: () => `translations`,
@@ -41,10 +63,13 @@ export const {
     useGetParametersQuery,
     useLazyGetParametersQuery,
     useGetConfigurationQuery,
+    useLazyGetConfigurationQuery,
     useGetObjectQuery,
     useGetClassesQuery,
     useLazyGetObjectQuery,
     useGetCommandQuery,
+    useGetFilesQuery,
+    useLazyGetFilesQuery,
     useGetTranslationsQuery,
     useLazyGetCommandQuery,
 } = inspectorApi;

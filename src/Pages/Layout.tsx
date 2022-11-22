@@ -28,6 +28,7 @@ const pages = [
             {name: 'Container', link: '/inspector/container'},
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
+            {name: 'File Explorer', link: '/inspector/files'},
             {name: 'Translations', link: '/inspector/translations'},
         ],
     },

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useMemo} from 'react';
 import {GridColDef, GridValidRowModel} from '@mui/x-data-grid';
 import {DataTable} from '../../../Component/Grid';
 import {JsonRenderer} from '../Component/JsonRenderer';
@@ -17,17 +18,17 @@ const columns: GridColDef[] = [
 
 export const DumpPage = ({data}: any) => {
     const isArray = Array.isArray(data);
-    let rows = Object.entries(data || []);
-    rows = rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
+    const rows = useMemo(() => {
+        const rows = Object.entries(data || []);
+        return rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
+    }, [data]);
 
     return (
-        <div style={{height: 400, width: '100%'}}>
-            <DataTable
-                getRowId={() => Math.random() * 1000}
-                rows={rows as GridValidRowModel[]}
-                // @ts-ignore
-                columns={isArray ? [[...columns].pop()] : columns}
-            />
-        </div>
+        <DataTable
+            getRowId={() => Math.random() * 1000}
+            rows={rows as GridValidRowModel[]}
+            // @ts-ignore
+            columns={isArray ? [[...columns].pop()] : columns}
+        />
     );
 };

@@ -37,8 +37,15 @@ export const debugApi = createApi({
         getCollectorInfo: builder.query<CollectorResponseType, GetCollectorInfoProps>({
             query: (args) => `view/${args.id}/?collector=${args.collector}`,
             transformResponse: (result: SummaryResponseType) => (result.data as CollectorResponseType[]) || [],
+            transformErrorResponse: (result) => result.data,
         }),
     }),
 });
 
-export const {useGetDebugQuery, useLazyGetDebugQuery, useLazyGetObjectQuery, useLazyGetCollectorInfoQuery} = debugApi;
+export const {
+    useGetDebugQuery,
+    useLazyGetDebugQuery,
+    useGetObjectQuery,
+    useLazyGetObjectQuery,
+    useLazyGetCollectorInfoQuery,
+} = debugApi;
