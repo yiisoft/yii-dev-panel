@@ -117,7 +117,7 @@ export const FileExplorerPage = () => {
                     </h2>
                     <CodeHighlight language={file.extension} code={file.content} />
                     <Box>
-                        <Typography>Directory: {file.directory}</Typography>
+                        <Typography>Directory: @root{file.directory}</Typography>
                         <Typography>Permissions: {file.permissions}</Typography>
                         <Typography>
                             Owner: {file.user?.name ?? file.user.uid}:{file.group?.name ?? file.group.gid}
