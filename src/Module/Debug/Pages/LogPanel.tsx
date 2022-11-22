@@ -23,8 +23,12 @@ export const LogPanel = ({data}: LogPanelProps) => {
                         <Box sx={{display: 'flex'}}>
                             <AlertTitle sx={{display: 'flex', flexGrow: 1}}>{entry.message}</AlertTitle>
 
-                            <Tooltip title="Open in file explorer">
-                                <IconButton sx={{display: 'flex'}} size="small" onClick={() => null}>
+                            <Tooltip title="Open in File Explorer">
+                                <IconButton
+                                    sx={{display: 'flex'}}
+                                    size="small"
+                                    href={`/inspector/files?path=${entry.line}`}
+                                >
                                     <FilePresent fontSize="small" />
                                 </IconButton>
                             </Tooltip>

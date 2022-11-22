@@ -61,7 +61,7 @@ const PathBreadcrumbs = ({path, onClick}: PathBreadcrumbsProps) => {
     );
 };
 
-export const FilesPage = () => {
+export const FileExplorerPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const path = searchParams.get('path') || '/';
 

@@ -28,7 +28,7 @@ export const routes = [
             },
             {
                 path: 'files',
-                element: <Pages.FilesPage />,
+                element: <Pages.FileExplorerPage />,
             },
             {
                 path: 'container',
