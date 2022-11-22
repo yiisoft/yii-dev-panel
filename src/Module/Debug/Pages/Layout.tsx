@@ -26,7 +26,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from 'react-router-dom';
-import {LogPage} from './LogPage';
+import {LogPanel} from './LogPanel';
 import {DumpPage} from './DumpPage';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
 import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
@@ -58,7 +58,7 @@ type CollectorDataProps = {
 
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
-        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPage data={data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPanel data={data} />,
         'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewareTimeline {...data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
@@ -72,11 +72,12 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
 }
 
 function HttpRequestError({error}: {error: any}) {
+    console.error(error);
     return (
         <Box m={2}>
             <Alert severity="error">
                 <AlertTitle>Something went wrong:</AlertTitle>
-                <pre>{error}</pre>
+                <pre>{error?.toString() || 'unknown'}</pre>
             </Alert>
         </Box>
     );
@@ -85,15 +86,20 @@ function HttpRequestError({error}: {error: any}) {
 export const Layout = () => {
     const dispatch = useDispatch();
     const location = useLocation();
+    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const {data, isLoading, isSuccess} = useGetDebugQuery();
     const debugEntry = useDebugEntry();
     const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
-    const navigate = useNavigate();
+    const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
+    const [collectorData, setCollectorData] = useState<any>(undefined);
 
-    const selectedCollector = searchParams.get('collector') || '';
-    const collectorName = selectedCollector.split('\\').pop();
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
+
+    // useEffect(() => {
+    //     const newCollector = searchParams.get('collector') || '';
+    //     setSelectedCollector(newCollector);
+    // }, [searchParams]);
 
     useEffect(() => {
         if (isSuccess && data && data.length && !selectedEntry) {
@@ -104,13 +110,18 @@ export const Layout = () => {
     }, [isSuccess, data, dispatch, selectedEntry]);
 
     useEffect(() => {
-        if (selectedCollector !== '') {
-            collectorInfo({
-                id: debugEntry!.id,
-                collector: selectedCollector,
-            });
+        const collector = searchParams.get('collector') || '';
+        if (collector.trim() === '') {
+            return;
         }
-    }, [selectedCollector, collectorInfo, debugEntry]);
+        collectorInfo({
+            id: debugEntry!.id,
+            collector,
+        }).then(({data}) => {
+            setSelectedCollector(collector);
+            setCollectorData(data);
+        });
+    }, [searchParams, debugEntry]);
 
     if (isLoading) {
         return <>Loading..</>;
@@ -135,10 +146,12 @@ export const Layout = () => {
         return entry.id;
     }
 
+    const collectorName = selectedCollector.split('\\').pop();
+
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/src/Module/Debug/Pages/Pages">
+                <Link underline="hover" color="inherit" href="/debug">
                     Debug
                 </Link>
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
@@ -170,7 +183,10 @@ export const Layout = () => {
                         {debugEntry &&
                             debugEntry.collectors.map((text, index) => (
                                 <ListItem key={index} disablePadding>
-                                    <ListItemButton onClick={() => navigate('?collector=' + text)}>
+                                    <ListItemButton
+                                        selected={text === selectedCollector}
+                                        onClick={() => navigate('?collector=' + text)}
+                                    >
                                         <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                                         <ListItemText>{parseCollectorName(text)}</ListItemText>
                                     </ListItemButton>
@@ -179,16 +195,18 @@ export const Layout = () => {
                     </List>
                 </Grid>
                 <Grid item xs={9}>
-                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname, selectedEntry]}>
+                    <ErrorBoundary
+                        FallbackComponent={ErrorFallback}
+                        resetKeys={[location.pathname, location.search, selectedEntry]}
+                    >
                         {collectorQueryInfo.isLoading && <>Loading...</>}
                         {collectorQueryInfo.isError && (
-                            <HttpRequestError error={(collectorQueryInfo.error as any)?.error} />
+                            <HttpRequestError
+                                error={(collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)}
+                            />
                         )}
                         {collectorQueryInfo.isSuccess && (
-                            <CollectorData
-                                selectedCollector={selectedCollector}
-                                collectorData={collectorQueryInfo.currentData}
-                            />
+                            <CollectorData selectedCollector={selectedCollector} collectorData={collectorData} />
                         )}
                     </ErrorBoundary>
                 </Grid>

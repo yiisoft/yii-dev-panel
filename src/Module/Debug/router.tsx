@@ -11,10 +11,6 @@ export const routes = [
                 element: <Pages.IndexPage />,
                 index: true,
             },
-            {
-                path: 'logger',
-                element: <Pages.LogPage />,
-            },
         ],
     },
     {
