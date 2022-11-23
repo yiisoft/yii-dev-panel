@@ -4,7 +4,7 @@ import * as Pages from './Pages';
 
 export const routes = [
     {
-        path: '/inspector',
+        path: 'inspector',
         children: [
             {
                 path: 'parameters',
@@ -29,6 +29,10 @@ export const routes = [
             {
                 path: 'files',
                 element: <Pages.FileExplorerPage />,
+            },
+            {
+                path: 'commands',
+                element: <Pages.CommandsPage />,
             },
             {
                 path: 'container',

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useLazyGetCommandQuery} from '../API/Inspector';
+import {useLazyRunCommandQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {Button, CircularProgress, IconButton, Tooltip} from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
@@ -50,7 +50,7 @@ const columns: GridColDef[] = [
 ];
 
 export const TestsPage = () => {
-    const [commandQuery, commandQueryInfo] = useLazyGetCommandQuery();
+    const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
     const [rows, setRows] = useState<any[]>([]);
 
     async function runCodeceptionHandler() {

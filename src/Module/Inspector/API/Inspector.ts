@@ -19,6 +19,13 @@ export type InspectorFileContent = {
     directory: string;
     content: string;
 } & InspectorFile;
+
+export type CommandType = {
+    name: string;
+    title: string;
+    group: string;
+    description: string;
+};
 type Response<T = any> = {
     data: T;
 };
@@ -44,9 +51,19 @@ export const inspectorApi = createApi({
             query: (classname) => `object?classname=${classname}`,
             transformResponse: (result: Response<ObjectType>) => result.data || [],
         }),
-        getCommand: builder.query<Response, string>({
-            query: (command) => `command?command=${command}`,
+        getCommands: builder.query<CommandType[], void>({
+            query: (command) => 'command',
+            transformResponse: (result: Response<CommandType[]>) => result.data || [],
+        }),
+        runCommand: builder.query<Response, string>({
+            query: (command) => ({
+                url: `command?command=${command}`,
+                method: 'POST',
+            }),
             transformResponse: (result: Response) => result.data || [],
+            // it's needed to be able to make multiple queries at the time and save theirs states
+            // TODO: save states without that hack
+            keepUnusedDataFor: 300,
         }),
         getFiles: builder.query<InspectorFile[], string>({
             query: (command) => `files?path=${command}`,
@@ -59,12 +76,10 @@ export const {
     useGetParametersQuery,
     useLazyGetParametersQuery,
     useGetConfigurationQuery,
-    useLazyGetConfigurationQuery,
     useGetObjectQuery,
     useGetClassesQuery,
     useLazyGetObjectQuery,
-    useGetCommandQuery,
-    useGetFilesQuery,
     useLazyGetFilesQuery,
-    useLazyGetCommandQuery,
+    useLazyGetCommandsQuery,
+    useLazyRunCommandQuery,
 } = inspectorApi;

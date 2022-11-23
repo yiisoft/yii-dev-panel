@@ -6,3 +6,4 @@ export {RoutesPage} from './RoutesPage';
 export {ContainerPage} from './ContainerPage';
 export {ContainerEntryPage} from './ContainerEntryPage';
 export {FileExplorerPage} from './FileExplorerPage';
+export {CommandsPage} from './CommandsPage';

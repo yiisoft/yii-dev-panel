@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useLazyGetCommandQuery} from '../API/Inspector';
+import {useLazyRunCommandQuery} from '../API/Inspector';
 import {
     Accordion,
     AccordionDetails,
@@ -60,7 +60,7 @@ function renderGrid(data: any) {
 }
 
 export const PsalmPage = () => {
-    const [commandQuery, commandQueryInfo] = useLazyGetCommandQuery();
+    const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
     const [errorRows, setErrorRows] = useState<any[]>([]);
     const [infoRows, setInfoRows] = useState<any[]>([]);
 

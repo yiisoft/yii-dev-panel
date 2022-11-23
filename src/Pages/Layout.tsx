@@ -29,6 +29,7 @@ const pages = [
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
             {name: 'File Explorer', link: '/inspector/files'},
+            {name: 'Commands', link: '/inspector/commands'},
         ],
     },
 ];
