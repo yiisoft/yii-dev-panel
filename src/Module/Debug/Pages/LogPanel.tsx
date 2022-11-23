@@ -19,7 +19,9 @@ type LogPanelProps = {
 export const LogPanel = ({data}: LogPanelProps) => {
     return (
         <>
-            {data &&
+            {!data || data.length === 0 ? (
+                <>Nothing here</>
+            ) : (
                 data.map((entry) => (
                     <Alert variant="outlined" severity="success" icon={false}>
                         <Box sx={{display: 'flex'}}>
@@ -37,7 +39,8 @@ export const LogPanel = ({data}: LogPanelProps) => {
                         </Box>
                         <Typography component="span">{entry.line}</Typography>
                     </Alert>
-                ))}
+                ))
+            )}
         </>
     );
 };

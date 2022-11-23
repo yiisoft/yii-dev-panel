@@ -5,6 +5,7 @@ import {useGetConfigurationQuery} from '../API/Inspector';
 import {DataTable} from '../../../Component/Grid';
 import {Typography} from '@mui/material';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 const groupsColumns: GridColDef[] = [
     {
@@ -118,7 +119,7 @@ export const RoutesPage = () => {
     }, [isSuccess, data]);
 
     if (isLoading) {
-        return <>Loading..</>;
+        return <FullScreenCircularProgress />;
     }
 
     return (

@@ -4,6 +4,7 @@ import {useSearchParams} from 'react-router-dom';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {IconButton, Tooltip} from '@mui/material';
 import {OpenInNew} from '@mui/icons-material';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const ContainerEntryPage = () => {
     const [searchParams] = useSearchParams();
@@ -11,7 +12,7 @@ export const ContainerEntryPage = () => {
     const {data, isLoading} = useGetObjectQuery(objectClass);
 
     if (isLoading) {
-        return <>Loading..</>;
+        return <FullScreenCircularProgress />;
     }
 
     return (
