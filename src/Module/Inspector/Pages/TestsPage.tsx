@@ -8,7 +8,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {DataTable} from '../../../Component/Grid';
 import Box from '@mui/material/Box';
-import {OpenInNew} from '@mui/icons-material';
+import {FilePresent} from '@mui/icons-material';
 import {parseFilePath} from '../../../Helper/filePathParser';
 
 const columns: GridColDef[] = [
@@ -19,13 +19,13 @@ const columns: GridColDef[] = [
         renderCell: (params: GridRenderCellParams) => (
             <span style={{wordBreak: 'break-all'}}>
                 {params.value}
-                <Tooltip title="Examine as a file">
+                <Tooltip title="Examine as a file in new window">
                     <IconButton
                         size="small"
                         target="_blank"
                         href={'/inspector/files?path=' + parseFilePath(params.value)}
                     >
-                        <OpenInNew fontSize="small" />
+                        <FilePresent fontSize="small" />
                     </IconButton>
                 </Tooltip>
             </span>

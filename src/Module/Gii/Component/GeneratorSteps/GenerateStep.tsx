@@ -28,13 +28,13 @@ function getStateLabel(state: FileStateEnum) {
     let result = 'Unknown state';
     switch (state) {
         case FileStateEnum.PRESENT_SAME:
-            result = 'Same';
+            result = 'Present same';
             break;
         case FileStateEnum.PRESENT_DIFFERENT:
-            result = 'Different';
+            result = 'Present different';
             break;
         case FileStateEnum.NOT_EXIST:
-            result = 'Not exist';
+            result = 'Does not exist';
             break;
     }
     return result;
@@ -48,8 +48,6 @@ function createValidationSchema(files: GiiFile[]) {
 
     return yup.object(rulesSet);
 }
-
-type HandleClickOpenParams = (state: boolean) => void;
 
 function FileAction({file, generator}: {file: GiiFile; generator: GiiGenerator}) {
     const context = useContext(Context);
@@ -166,8 +164,6 @@ export function GenerateStep({generator, onComplete}: StepProps) {
 
         onComplete();
     }
-
-    console.log(form);
 
     return (
         <>

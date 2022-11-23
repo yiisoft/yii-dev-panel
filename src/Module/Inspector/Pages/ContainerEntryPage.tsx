@@ -3,7 +3,7 @@ import {useGetObjectQuery} from '../API/Inspector';
 import {useSearchParams} from 'react-router-dom';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {IconButton, Tooltip} from '@mui/material';
-import {OpenInNew} from '@mui/icons-material';
+import {FilePresent} from '@mui/icons-material';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const ContainerEntryPage = () => {
@@ -20,8 +20,8 @@ export const ContainerEntryPage = () => {
             <h2>
                 {objectClass}{' '}
                 <Tooltip title="Examine as a file">
-                    <IconButton size="small" target="_blank" href={'/inspector/files?path=' + data?.path}>
-                        <OpenInNew fontSize="small" />
+                    <IconButton size="small" href={'/inspector/files?path=' + data?.path}>
+                        <FilePresent fontSize="small" />
                     </IconButton>
                 </Tooltip>
             </h2>

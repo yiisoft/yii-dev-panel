@@ -16,7 +16,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {DataTable} from '../../../Component/Grid';
 import {parseFilePath} from '../../../Helper/filePathParser';
-import {OpenInNew} from '@mui/icons-material';
+import {FilePresent} from '@mui/icons-material';
 
 const columns: GridColDef[] = [
     {
@@ -28,12 +28,8 @@ const columns: GridColDef[] = [
                 <span style={{wordBreak: 'break-all'}}>
                     {params.value}#{params.row.line_from}–{params.row.line_to}
                     <Tooltip title="Examine as a file">
-                        <IconButton
-                            size="small"
-                            target="_blank"
-                            href={'/inspector/files?path=' + parseFilePath(params.value)}
-                        >
-                            <OpenInNew fontSize="small" />
+                        <IconButton size="small" href={'/inspector/files?path=' + parseFilePath(params.value)}>
+                            <FilePresent fontSize="small" />
                         </IconButton>
                     </Tooltip>
                 </span>
