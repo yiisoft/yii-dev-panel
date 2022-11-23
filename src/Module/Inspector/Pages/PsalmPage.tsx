@@ -2,10 +2,21 @@ import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useLazyGetCommandQuery} from '../API/Inspector';
-import {Accordion, AccordionDetails, AccordionSummary, Button, Link} from '@mui/material';
+import {
+    Accordion,
+    AccordionDetails,
+    AccordionSummary,
+    Button,
+    CircularProgress,
+    IconButton,
+    Link,
+    Tooltip,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {DataTable} from '../../../Component/Grid';
+import {parseFilePath} from '../../../Helper/filePathParser';
+import {OpenInNew} from '@mui/icons-material';
 
 const columns: GridColDef[] = [
     {
@@ -16,6 +27,15 @@ const columns: GridColDef[] = [
             return (
                 <span style={{wordBreak: 'break-all'}}>
                     {params.value}#{params.row.line_from}–{params.row.line_to}
+                    <Tooltip title="Examine as a file">
+                        <IconButton
+                            size="small"
+                            target="_blank"
+                            href={'/inspector/files?path=' + parseFilePath(params.value)}
+                        >
+                            <OpenInNew fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                 </span>
             );
         },
@@ -32,7 +52,6 @@ const columns: GridColDef[] = [
                             {params.row.type}
                         </Link>
                     </b>
-                    :&nbsp;
                     {params.row.message}
                 </>
             );
@@ -98,7 +117,13 @@ export const PsalmPage = () => {
     return (
         <>
             <h2>{'Psalm'}</h2>
-            <Button onClick={runPsalmHandler}>Run Psalm</Button>
+            <Button
+                onClick={runPsalmHandler}
+                disabled={commandQueryInfo.isFetching}
+                endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
+            >
+                Run Psalm
+            </Button>
             {commandQueryInfo.isSuccess && (
                 <>
                     <Accordion key="panel1" expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>

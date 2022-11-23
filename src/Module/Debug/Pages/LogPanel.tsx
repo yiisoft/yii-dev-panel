@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Alert, AlertTitle, IconButton, Tooltip, Typography} from '@mui/material';
 import {FilePresent} from '@mui/icons-material';
 import Box from '@mui/material/Box';
+import {parseFilePath} from '../../../Helper/filePathParser';
 
 type Level = 'error' | 'info' | 'debug';
 type LogEntry = {
@@ -14,10 +15,6 @@ type LogEntry = {
 type LogPanelProps = {
     data: LogEntry[];
 };
-
-function parseFilePath(lineAndNumber: string) {
-    return lineAndNumber.replace(/(:[0-9]+)$/, '');
-}
 
 export const LogPanel = ({data}: LogPanelProps) => {
     return (

@@ -199,7 +199,7 @@ export const Layout = () => {
                         FallbackComponent={ErrorFallback}
                         resetKeys={[location.pathname, location.search, selectedEntry]}
                     >
-                        {collectorQueryInfo.isLoading && <>Loading...</>}
+                        {collectorQueryInfo.isFetching && <>Loading...</>}
                         {collectorQueryInfo.isError && (
                             <HttpRequestError
                                 error={(collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)}

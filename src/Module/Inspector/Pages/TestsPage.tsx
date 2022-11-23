@@ -3,17 +3,33 @@ import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useLazyGetCommandQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
-import {Button} from '@mui/material';
+import {Button, CircularProgress, IconButton, Tooltip} from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {DataTable} from '../../../Component/Grid';
+import Box from '@mui/material/Box';
+import {OpenInNew} from '@mui/icons-material';
+import {parseFilePath} from '../../../Helper/filePathParser';
 
 const columns: GridColDef[] = [
     {
         field: '0',
         headerName: 'Name',
         width: 200,
-        renderCell: (params: GridRenderCellParams) => <span style={{wordBreak: 'break-all'}}>{params.value}</span>,
+        renderCell: (params: GridRenderCellParams) => (
+            <span style={{wordBreak: 'break-all'}}>
+                {params.value}
+                <Tooltip title="Examine as a file">
+                    <IconButton
+                        size="small"
+                        target="_blank"
+                        href={'/inspector/files?path=' + parseFilePath(params.value)}
+                    >
+                        <OpenInNew fontSize="small" />
+                    </IconButton>
+                </Tooltip>
+            </span>
+        ),
     },
     {
         field: '1',
@@ -55,7 +71,16 @@ export const TestsPage = () => {
     return (
         <>
             <h2>{'Tests'}</h2>
-            <Button onClick={runCodeceptionHandler}>Run Codeception</Button>
+            <Box>
+                <Button
+                    onClick={runCodeceptionHandler}
+                    disabled={commandQueryInfo.isFetching}
+                    endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
+                >
+                    Run Codeception
+                </Button>
+            </Box>
+
             {commandQueryInfo.isSuccess && (
                 <DataTable
                     rows={rows as GridValidRowModel[]}
