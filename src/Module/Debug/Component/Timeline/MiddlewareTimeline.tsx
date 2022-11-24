@@ -9,7 +9,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import Typography from '@mui/material/Typography';
 import format from 'date-fns/format';
 import {IconButton, Tooltip} from '@mui/material';
-import {ArrowDownward, OpenInNew} from '@mui/icons-material';
+import {ArrowDownward, DataObject} from '@mui/icons-material';
 import {objectIdParser} from '../../../../Helper/objectIdParser';
 import {useDebugEntry} from '../../Context/Context';
 
@@ -29,13 +29,9 @@ function TimelineContentWrapper(props: TimelineContentWrapperProps) {
             <Tooltip title={name}>
                 <Typography component="span">{shortName}</Typography>
             </Tooltip>
-            <Tooltip title="Examine an object in new page">
-                <IconButton
-                    size="small"
-                    target="_blank"
-                    href={`/debug/object?debugEntry=${debugEntry!.id}&id=${objectId}`}
-                >
-                    <OpenInNew fontSize="small" />
+            <Tooltip title="Examine an object">
+                <IconButton size="small" href={`/debug/object?debugEntry=${debugEntry!.id}&id=${objectId}`}>
+                    <DataObject color="secondary" fontSize="small" />
                 </IconButton>
             </Tooltip>
         </TimelineContent>

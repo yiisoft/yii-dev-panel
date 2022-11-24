@@ -19,6 +19,7 @@ import {useSearchParams} from 'react-router-dom';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
 import {GiiGenerator, useGetGeneratorsQuery} from '../API/Gii';
 import {GeneratorStepper} from '../Component/GeneratorSteps/GeneratorStepper';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null);
@@ -36,7 +37,7 @@ export const Layout = () => {
     }, [selectedGeneratorId, data]);
 
     if (isLoading) {
-        return <>Loading..</>;
+        return <FullScreenCircularProgress />;
     }
 
     console.log(selectedGenerator);

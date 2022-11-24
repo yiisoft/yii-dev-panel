@@ -8,6 +8,7 @@ import {
     Box,
     Breadcrumbs,
     Grid,
+    LinearProgress,
     Link,
     List,
     ListItem,
@@ -30,6 +31,7 @@ import {LogPanel} from './LogPanel';
 import {DumpPage} from './DumpPage';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
 import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -96,11 +98,6 @@ export const Layout = () => {
 
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
 
-    // useEffect(() => {
-    //     const newCollector = searchParams.get('collector') || '';
-    //     setSelectedCollector(newCollector);
-    // }, [searchParams]);
-
     useEffect(() => {
         if (isSuccess && data && data.length && !selectedEntry) {
             const entry = data[0];
@@ -114,17 +111,25 @@ export const Layout = () => {
         if (collector.trim() === '') {
             return;
         }
+        if (!debugEntry) {
+            return;
+        }
         collectorInfo({
             id: debugEntry!.id,
             collector,
-        }).then(({data}) => {
-            setSelectedCollector(collector);
-            setCollectorData(data);
+        }).then(({data, isError}) => {
+            if (isError) {
+                setSelectedEntry(null);
+                dispatch(changeEntryAction(null));
+            } else {
+                setSelectedCollector(collector);
+                setCollectorData(data);
+            }
         });
     }, [searchParams, debugEntry]);
 
     if (isLoading) {
-        return <>Loading..</>;
+        return <FullScreenCircularProgress />;
     }
 
     function getOptions(entry: any) {
@@ -195,11 +200,11 @@ export const Layout = () => {
                     </List>
                 </Grid>
                 <Grid item xs={9}>
+                    {collectorQueryInfo.isFetching && <LinearProgress />}
                     <ErrorBoundary
                         FallbackComponent={ErrorFallback}
                         resetKeys={[location.pathname, location.search, selectedEntry]}
                     >
-                        {collectorQueryInfo.isLoading && <>Loading...</>}
                         {collectorQueryInfo.isError && (
                             <HttpRequestError
                                 error={(collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)}

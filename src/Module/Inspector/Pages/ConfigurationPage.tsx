@@ -7,7 +7,7 @@ import {Button, IconButton, Tooltip} from '@mui/material';
 import {DataTable} from '../../../Component/Grid';
 import {regexpQuote} from '../../../Helper/regexpQuote';
 import {FilterInput} from '../../../Component/Form/FilterInput';
-import {ContentCopy, OpenInNew} from '@mui/icons-material';
+import {ContentCopy, DataObject} from '@mui/icons-material';
 import clipboardCopy from 'clipboard-copy';
 
 export const ConfigurationPage = () => {
@@ -31,8 +31,8 @@ export const ConfigurationPage = () => {
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Examine as a container entry">
-                            <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
-                                <OpenInNew fontSize="small" />
+                            <IconButton size="small" href={'/inspector/container/view?class=' + value}>
+                                <DataObject fontSize="small" />
                             </IconButton>
                         </Tooltip>
                         {value}

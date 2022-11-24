@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Alert, AlertTitle, IconButton, Tooltip, Typography} from '@mui/material';
 import {FilePresent} from '@mui/icons-material';
 import Box from '@mui/material/Box';
+import {parseFilePath} from '../../../Helper/filePathParser';
 
 type Level = 'error' | 'info' | 'debug';
 type LogEntry = {
@@ -15,14 +16,12 @@ type LogPanelProps = {
     data: LogEntry[];
 };
 
-function parseFilePath(lineAndNumber: string) {
-    return lineAndNumber.replace(/(:[0-9]+)$/, '');
-}
-
 export const LogPanel = ({data}: LogPanelProps) => {
     return (
         <>
-            {data &&
+            {!data || data.length === 0 ? (
+                <>Nothing here</>
+            ) : (
                 data.map((entry) => (
                     <Alert variant="outlined" severity="success" icon={false}>
                         <Box sx={{display: 'flex'}}>
@@ -40,7 +39,8 @@ export const LogPanel = ({data}: LogPanelProps) => {
                         </Box>
                         <Typography component="span">{entry.line}</Typography>
                     </Alert>
-                ))}
+                ))
+            )}
         </>
     );
 };
