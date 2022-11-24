@@ -111,7 +111,7 @@ export const AnalysePage = () => {
             }
         }
         setCommandResponse({
-            isSuccessful: data.data.status !== 'ok',
+            isSuccessful: data.data.status === 'ok',
             errors: data.data.errors,
         });
         setInfoRows(resultInfoRows);

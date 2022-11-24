@@ -75,7 +75,7 @@ export const TestsPage = () => {
             resultRows.push([testName, event.status, event.stacktrace]);
         }
         setCommandResponse({
-            isSuccessful: data.data.status !== 'ok',
+            isSuccessful: data.data.status === 'ok',
             errors: data.data.errors,
         });
         setRows(resultRows);
