@@ -35,7 +35,7 @@ export const TranslationsPage = () => {
     }
     const rows = useMemo(() => {
         const isArray = Array.isArray(data);
-        let rows = Object.entries(data || ([] as any));
+        const rows = Object.entries(data || ([] as any));
         return rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
     }, [data]);
 
