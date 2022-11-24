@@ -1,13 +1,13 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetTranslationsQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
-import {Button} from '@mui/material';
 import {DataTable} from '../../../Component/Grid';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const TranslationsPage = () => {
-    const {data, isLoading} = useGetTranslationsQuery();
+    const {data, isFetching} = useGetTranslationsQuery();
     // const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
 
@@ -22,23 +22,7 @@ export const TranslationsPage = () => {
             field: '1',
             headerName: 'Value',
             flex: 1,
-            renderCell: (params: GridRenderCellParams) => {
-                if (typeof params.value === 'string') {
-                    if (params.value in objects) {
-                        return <JsonRenderer value={objects[params.value]} />;
-                    }
-                    if (!params.value.match(/^[\w\\]+$/i)) {
-                        return <JsonRenderer value={params.value} />;
-                    }
-                    return (
-                        <>
-                            {params.value}
-                            <Button onClick={() => handleLoadObject(params.value)}>Load</Button>
-                        </>
-                    );
-                }
-                return <JsonRenderer value={params.value} />;
-            },
+            renderCell: (params: GridRenderCellParams) => <JsonRenderer value={params.value} />,
         },
     ];
 
@@ -46,12 +30,14 @@ export const TranslationsPage = () => {
         // const result = await lazyLoadObject(id);
         // setObject((prev) => ({...prev, [id]: result.data}));
     };
-    if (isLoading) {
-        return <>Loading..</>;
+    if (isFetching) {
+        return <FullScreenCircularProgress />;
     }
-    const isArray = Array.isArray(data);
-    let rows = Object.entries(data || ([] as any));
-    rows = rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
+    const rows = useMemo(() => {
+        const isArray = Array.isArray(data);
+        let rows = Object.entries(data || ([] as any));
+        return rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
+    }, [data]);
 
     return (
         <>
