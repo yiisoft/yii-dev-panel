@@ -8,7 +8,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {DataTable} from '../../../Component/Grid';
 import Box from '@mui/material/Box';
-import {FilePresent} from '@mui/icons-material';
+import {Check, Error, FilePresent} from '@mui/icons-material';
 import {parseFilePath} from '../../../Helper/filePathParser';
 
 const columns: GridColDef[] = [
@@ -49,9 +49,14 @@ const columns: GridColDef[] = [
     },
 ];
 
+type CommandResponseType = {
+    isSuccessful: boolean | undefined;
+    errors: string[];
+};
 export const TestsPage = () => {
     const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
     const [rows, setRows] = useState<any[]>([]);
+    const [commandResponse, setCommandResponse] = useState<CommandResponseType | null>(null);
 
     async function runCodeceptionHandler() {
         const data = await commandQuery('test/codeception');
@@ -69,20 +74,31 @@ export const TestsPage = () => {
 
             resultRows.push([testName, event.status, event.stacktrace]);
         }
+        setCommandResponse({
+            isSuccessful: data.data.status !== 'ok',
+            errors: data.data.errors,
+        });
         setRows(resultRows);
     }
 
     return (
         <>
             <h2>{'Tests'}</h2>
-            <Box>
+            <Box display="flex" alignItems="center">
                 <Button
                     onClick={runCodeceptionHandler}
+                    color={commandResponse === null ? 'primary' : commandResponse.isSuccessful ? 'success' : 'error'}
                     disabled={commandQueryInfo.isFetching}
                     endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
                 >
                     Run Codeception
                 </Button>
+                {!commandQueryInfo.isFetching && commandResponse && (
+                    <>
+                        {commandResponse.isSuccessful === true && <Check color="success" />}
+                        {commandResponse.isSuccessful === false && <Error color="error" />}
+                    </>
+                )}
             </Box>
 
             {commandQueryInfo.isSuccess && (

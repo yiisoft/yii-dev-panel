@@ -16,7 +16,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {DataTable} from '../../../Component/Grid';
 import {parseFilePath} from '../../../Helper/filePathParser';
-import {FilePresent} from '@mui/icons-material';
+import {Check, Error, FilePresent} from '@mui/icons-material';
+import Box from '@mui/material/Box';
 
 const columns: GridColDef[] = [
     {
@@ -59,10 +60,15 @@ function renderGrid(data: any) {
     return <DataTable rows={data as GridValidRowModel[]} columns={columns as GridColumns} />;
 }
 
+type CommandResponseType = {
+    isSuccessful: boolean | undefined;
+    errors: string[];
+};
 export const AnalysePage = () => {
     const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
     const [errorRows, setErrorRows] = useState<any[]>([]);
     const [infoRows, setInfoRows] = useState<any[]>([]);
+    const [commandResponse, setCommandResponse] = useState<CommandResponseType | null>(null);
 
     async function runPsalmHandler() {
         const data = await commandQuery('analyse/psalm');
@@ -104,6 +110,10 @@ export const AnalysePage = () => {
                 resultErrorRows.push(tempObject);
             }
         }
+        setCommandResponse({
+            isSuccessful: data.data.status !== 'ok',
+            errors: data.data.errors,
+        });
         setInfoRows(resultInfoRows);
         setErrorRows(resultErrorRows);
     }
@@ -117,13 +127,22 @@ export const AnalysePage = () => {
     return (
         <>
             <h2>{'Psalm'}</h2>
-            <Button
-                onClick={runPsalmHandler}
-                disabled={commandQueryInfo.isFetching}
-                endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
-            >
-                Run Psalm
-            </Button>
+            <Box display="flex" alignItems="center">
+                <Button
+                    onClick={runPsalmHandler}
+                    color={commandResponse === null ? 'primary' : commandResponse.isSuccessful ? 'success' : 'error'}
+                    disabled={commandQueryInfo.isFetching}
+                    endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
+                >
+                    Run Psalm
+                </Button>
+                {!commandQueryInfo.isFetching && commandResponse && (
+                    <>
+                        {commandResponse.isSuccessful === true && <Check color="success" />}
+                        {commandResponse.isSuccessful === false && <Error color="error" />}
+                    </>
+                )}
+            </Box>
             {commandQueryInfo.isSuccess && (
                 <>
                     <Accordion key="panel1" expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
