@@ -31,6 +31,10 @@ export const routes = [
                 element: <Pages.FileExplorerPage />,
             },
             {
+                path: 'translations',
+                element: <Pages.TranslationsPage />,
+            },
+            {
                 path: 'commands',
                 element: <Pages.CommandsPage />,
             },
