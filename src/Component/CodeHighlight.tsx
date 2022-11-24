@@ -5,5 +5,9 @@ type CodeHighlightProps = {
     code: string;
 };
 export const CodeHighlight = ({language, code}: CodeHighlightProps) => {
-    return <Prism language={language}>{code}</Prism>;
+    return (
+        <Prism showLineNumbers language={language}>
+            {code}
+        </Prism>
+    );
 };
