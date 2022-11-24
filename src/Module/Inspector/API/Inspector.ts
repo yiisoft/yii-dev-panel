@@ -26,6 +26,11 @@ export type CommandType = {
     group: string;
     description: string;
 };
+export type CommandResponseType = {
+    status: string;
+    result: any;
+    errors: string[];
+};
 type Response<T = any> = {
     data: T;
 };
@@ -55,12 +60,12 @@ export const inspectorApi = createApi({
             query: (command) => 'command',
             transformResponse: (result: Response<CommandType[]>) => result.data || [],
         }),
-        runCommand: builder.query<Response, string>({
+        runCommand: builder.query<CommandResponseType, string>({
             query: (command) => ({
                 url: `command?command=${command}`,
                 method: 'POST',
             }),
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<CommandResponseType>) => result.data || [],
             // it's needed to be able to make multiple queries at the time and save theirs states
             // TODO: save states without that hack
             keepUnusedDataFor: 300,

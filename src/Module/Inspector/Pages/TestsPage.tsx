@@ -55,9 +55,13 @@ export const TestsPage = () => {
 
     async function runCodeceptionHandler() {
         const data = await commandQuery('test/codeception');
+        if (typeof data.data !== 'object') {
+            console.error(data);
+            return;
+        }
 
         const resultRows = [];
-        for (const event of data.data as any) {
+        for (const event of data.data.result) {
             const testName = [event.suite]
                 .concat(event.test)
                 .filter((v) => !!v)

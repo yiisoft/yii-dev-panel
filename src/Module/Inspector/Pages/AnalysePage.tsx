@@ -59,13 +59,17 @@ function renderGrid(data: any) {
     return <DataTable rows={data as GridValidRowModel[]} columns={columns as GridColumns} />;
 }
 
-export const PsalmPage = () => {
+export const AnalysePage = () => {
     const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
     const [errorRows, setErrorRows] = useState<any[]>([]);
     const [infoRows, setInfoRows] = useState<any[]>([]);
 
     async function runPsalmHandler() {
         const data = await commandQuery('analyse/psalm');
+        if (typeof data.data !== 'object') {
+            console.error(data);
+            return;
+        }
         const resultInfoRows: any = [];
         const resultErrorRows: any = [];
 
@@ -80,7 +84,7 @@ export const PsalmPage = () => {
             link: '',
         };
         let id = 0;
-        for (const event of data.data as any) {
+        for (const event of data.data.result) {
             id++;
             tempObject = {
                 id,

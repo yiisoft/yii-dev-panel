@@ -20,7 +20,7 @@ export const routes = [
             },
             {
                 path: 'analyse',
-                element: <Pages.PsalmPage />,
+                element: <Pages.AnalysePage />,
             },
             {
                 path: 'routes',
