@@ -1,20 +1,14 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {Outlet, useLocation, useNavigate} from 'react-router';
+import {useEffect, useMemo, useState} from 'react';
+import {Outlet, useLocation} from 'react-router';
 import {
     Alert,
     AlertTitle,
     Autocomplete,
     Box,
     Breadcrumbs,
-    Grid,
     LinearProgress,
     Link,
-    List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon,
-    ListItemText,
     TextField,
     Typography,
 } from '@mui/material';
@@ -32,6 +26,9 @@ import {DumpPage} from './DumpPage';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
 import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
+import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
+import {InfoBox} from '../../../Component/InfoBox';
+import {HelpOutline} from '@mui/icons-material';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -88,7 +85,6 @@ function HttpRequestError({error}: {error: any}) {
 export const Layout = () => {
     const dispatch = useDispatch();
     const location = useLocation();
-    const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const {data, isLoading, isSuccess} = useGetDebugQuery();
     const debugEntry = useDebugEntry();
@@ -109,6 +105,8 @@ export const Layout = () => {
     useEffect(() => {
         const collector = searchParams.get('collector') || '';
         if (collector.trim() === '') {
+            setSelectedCollector('');
+            setCollectorData(null);
             return;
         }
         if (!debugEntry) {
@@ -127,10 +125,6 @@ export const Layout = () => {
             }
         });
     }, [searchParams, debugEntry]);
-
-    if (isLoading) {
-        return <FullScreenCircularProgress />;
-    }
 
     function getOptions(entry: any) {
         if (isDebugEntryAboutConsole(entry)) {
@@ -153,6 +147,21 @@ export const Layout = () => {
 
     const collectorName = selectedCollector.split('\\').pop();
 
+    const links: LinkProps[] = useMemo(() => {
+        if (!debugEntry) {
+            return [];
+        }
+        return debugEntry.collectors.map((collector, index) => ({
+            text: parseCollectorName(collector),
+            href: '/debug/?collector=' + collector,
+            icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
+        }));
+    }, [debugEntry]);
+
+    if (isLoading) {
+        return <FullScreenCircularProgress />;
+    }
+
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
@@ -166,13 +175,11 @@ export const Layout = () => {
                 value={selectedEntry}
                 options={(data || []) as DebugEntry[]}
                 getOptionLabel={getOptions}
-                renderOption={(props, option) => {
-                    return (
-                        <li {...props} key={option.id}>
-                            {getOptions(option)}
-                        </li>
-                    );
-                }}
+                renderOption={(props, option) => (
+                    <li {...props} key={option.id}>
+                        {getOptions(option)}
+                    </li>
+                )}
                 renderInput={(params) => <TextField {...params} key={params.id} label="Record" />}
                 onChange={(event, value) => {
                     if (typeof value === 'object') {
@@ -182,40 +189,34 @@ export const Layout = () => {
                 }}
                 sx={{my: 1}}
             />
-            <Grid container>
-                <Grid item xs={3}>
-                    <List>
-                        {debugEntry &&
-                            debugEntry.collectors.map((text, index) => (
-                                <ListItem key={index} disablePadding>
-                                    <ListItemButton
-                                        selected={text === selectedCollector}
-                                        onClick={() => navigate('?collector=' + text)}
-                                    >
-                                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                        <ListItemText>{parseCollectorName(text)}</ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                    </List>
-                </Grid>
-                <Grid item xs={9}>
-                    {collectorQueryInfo.isFetching && <LinearProgress />}
-                    <ErrorBoundary
-                        FallbackComponent={ErrorFallback}
-                        resetKeys={[location.pathname, location.search, selectedEntry]}
-                    >
+
+            <MenuPanel links={links} open={!selectedCollector}>
+                {selectedCollector ? (
+                    <>
+                        {collectorQueryInfo.isFetching && <LinearProgress />}
                         {collectorQueryInfo.isError && (
                             <HttpRequestError
                                 error={(collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)}
                             />
                         )}
                         {collectorQueryInfo.isSuccess && (
-                            <CollectorData selectedCollector={selectedCollector} collectorData={collectorData} />
+                            <ErrorBoundary
+                                FallbackComponent={ErrorFallback}
+                                resetKeys={[location.pathname, location.search, selectedEntry]}
+                            >
+                                <CollectorData selectedCollector={selectedCollector} collectorData={collectorData} />
+                            </ErrorBoundary>
                         )}
-                    </ErrorBoundary>
-                </Grid>
-            </Grid>
+                    </>
+                ) : (
+                    <InfoBox
+                        title="No one collector is chosen"
+                        text="Select a collector from the left side panel to see more options"
+                        severity="info"
+                        icon={<HelpOutline />}
+                    />
+                )}
+            </MenuPanel>
         </>
     );
 };

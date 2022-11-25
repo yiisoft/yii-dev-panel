@@ -11,6 +11,8 @@ import {GiiGenerator, useGetGeneratorsQuery} from '../API/Gii';
 import {GeneratorStepper} from '../Component/GeneratorSteps/GeneratorStepper';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
+import {HelpOutline} from '@mui/icons-material';
+import {InfoBox} from '../../../Component/InfoBox';
 
 export const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null);
@@ -53,14 +55,19 @@ export const Layout = () => {
                     </Typography>
                 )}
             </Breadcrumbs>
-            <MenuPanel links={links}>
-                <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
-                    {selectedGenerator ? (
+            <MenuPanel links={links} open={!selectedGenerator}>
+                {selectedGenerator ? (
+                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
                         <GeneratorStepper generator={selectedGenerator} />
-                    ) : (
-                        <>Select a generator to see more options</>
-                    )}
-                </ErrorBoundary>
+                    </ErrorBoundary>
+                ) : (
+                    <InfoBox
+                        title="No one generator is chosen"
+                        text="Select a generator from the left side panel to see more options"
+                        severity="info"
+                        icon={<HelpOutline />}
+                    />
+                )}
             </MenuPanel>
         </>
     );

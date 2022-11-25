@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useRef} from 'react';
+import {useEffect, useRef} from 'react';
 import {CSSObject, styled, Theme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -13,6 +13,7 @@ import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {Link} from '@mui/material';
+import {jsx} from '@emotion/react';
 
 const drawerWidth = 240;
 
@@ -57,12 +58,17 @@ export type LinkProps = {
 };
 
 type MenuPanelProps = {
+    open?: boolean;
     links: LinkProps[];
-    children: React.ReactElement;
+    children: React.ReactNode;
 };
 
 export function MenuPanel(props: MenuPanelProps) {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(!!props.open);
+
+    useEffect(() => {
+        setOpen(!!props.open);
+    }, [props.open]);
 
     const {links, children} = props;
 
@@ -124,7 +130,7 @@ export function MenuPanel(props: MenuPanelProps) {
                                 >
                                     {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                                 </ListItemIcon>
-                                <ListItemText primary={link.text} sx={{opacity: open ? 1 : 0}} />
+                                <ListItemText primary={link.text} hidden={!open} />
                             </ListItemButton>
                         </ListItem>
                     ))}
