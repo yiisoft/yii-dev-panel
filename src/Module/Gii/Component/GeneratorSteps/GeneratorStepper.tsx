@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
@@ -37,7 +36,7 @@ export function GeneratorStepper({generator}: {generator: GiiGenerator}) {
     };
 
     return (
-        <Box sx={{width: '100%'}}>
+        <>
             <ContextProvider>
                 <Stepper activeStep={activeStepIndex} orientation="vertical">
                     {Object.values(steps).map((step, index) => (
@@ -58,6 +57,6 @@ export function GeneratorStepper({generator}: {generator: GiiGenerator}) {
                     ))}
                 </Stepper>
             </ContextProvider>
-        </Box>
+        </>
     );
 }
