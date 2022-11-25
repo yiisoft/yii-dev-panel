@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {useLocation} from 'react-router';
 import {Breadcrumbs, Link, Typography} from '@mui/material';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -19,30 +19,30 @@ export const Layout = () => {
     const [searchParams] = useSearchParams();
     const location = useLocation();
 
-    const selectedGeneratorId = searchParams.get('generator') || '';
     const {data, isLoading} = useGetGeneratorsQuery();
-    const generators = data || [];
 
     useEffect(() => {
-        const selectedGenerator = generators.find((v) => v.id === selectedGeneratorId) || null;
+        console.log('effect1');
+        const selectedGeneratorId = searchParams.get('generator') || '';
+        const selectedGenerator = (data || []).find((v) => v.id === selectedGeneratorId) || null;
         setSelectedGenerator(selectedGenerator);
-    }, [selectedGeneratorId, data]);
+    }, [searchParams, data]);
 
-    if (isLoading) {
-        return <FullScreenCircularProgress />;
-    }
-
-    console.log(selectedGenerator);
-
-    const links: LinkProps[] = [];
-    generators.map((generator, index) => {
-        links.push({
+    const links: LinkProps[] = useMemo(() => {
+        console.log('memo 1');
+        return (data || []).map((generator, index) => ({
             text: generator.name,
             href: '/gii?generator=' + generator.id,
             icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
-        });
-    });
+        }));
+    }, [data]);
 
+    if (isLoading) {
+        console.log('loading 1');
+        return <FullScreenCircularProgress />;
+    }
+
+    console.log('render');
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
@@ -55,7 +55,7 @@ export const Layout = () => {
                     </Typography>
                 )}
             </Breadcrumbs>
-            <MenuPanel links={links} open={!selectedGenerator}>
+            <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                 {selectedGenerator ? (
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
                         <GeneratorStepper generator={selectedGenerator} />

@@ -10,10 +10,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import {Link} from '@mui/material';
-import {jsx} from '@emotion/react';
+import {Avatar, Link} from '@mui/material';
 
 const drawerWidth = 240;
 
@@ -60,12 +57,14 @@ export type LinkProps = {
 type MenuPanelProps = {
     open?: boolean;
     links: LinkProps[];
+    activeLink?: string;
     children: React.ReactNode;
 };
 
 export function MenuPanel(props: MenuPanelProps) {
     const [open, setOpen] = React.useState(!!props.open);
 
+    console.log(props.activeLink, props.links);
     useEffect(() => {
         setOpen(!!props.open);
     }, [props.open]);
@@ -106,7 +105,7 @@ export function MenuPanel(props: MenuPanelProps) {
                                     justifyContent: 'center',
                                 }}
                             >
-                                {open ? <ChevronLeftIcon /> : <MenuIcon />}
+                                {open ? <ChevronLeftIcon/> : <MenuIcon/>}
                             </ListItemIcon>
                         </ListItemButton>
                     </ListItem>
@@ -128,9 +127,17 @@ export function MenuPanel(props: MenuPanelProps) {
                                         justifyContent: 'center',
                                     }}
                                 >
-                                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                    <Avatar
+                                        variant="rounded"
+                                        sx={{
+                                            bgcolor: props.activeLink === link.text ? 'secondary.main' : 'primary.main',
+                                            fontSize: 14,
+                                        }}
+                                    >
+                                        {link.text.substring(0, 3)}
+                                    </Avatar>
                                 </ListItemIcon>
-                                <ListItemText primary={link.text} hidden={!open} />
+                                <ListItemText primary={link.text} hidden={!open}/>
                             </ListItemButton>
                         </ListItem>
                     ))}

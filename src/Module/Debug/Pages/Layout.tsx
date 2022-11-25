@@ -159,6 +159,7 @@ export const Layout = () => {
     }, [debugEntry]);
 
     if (isLoading) {
+        console.log('loading');
         return <FullScreenCircularProgress />;
     }
 
@@ -190,7 +191,7 @@ export const Layout = () => {
                 sx={{my: 1}}
             />
 
-            <MenuPanel links={links} open={!selectedCollector}>
+            <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
                 {selectedCollector ? (
                     <>
                         {collectorQueryInfo.isFetching && <LinearProgress />}
