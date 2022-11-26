@@ -3,17 +3,25 @@ import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useLazyRunCommandQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
-import {Button, CircularProgress, IconButton, Tooltip} from '@mui/material';
+import {Button, CircularProgress, IconButton, styled, Tooltip} from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {DataTable} from '../../../Component/Grid';
 import Box from '@mui/material/Box';
 import {Check, Error, FilePresent} from '@mui/icons-material';
-import {parseFilePath} from '../../../Helper/filePathParser';
+import {parseFilePathWithLineAnchor} from '../../../Helper/filePathParser';
+
+const CenteredBox = styled(Box)({
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+});
 
 const columns: GridColDef[] = [
     {
-        field: '0',
+        field: 'name',
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) => (
@@ -23,7 +31,7 @@ const columns: GridColDef[] = [
                     <IconButton
                         size="small"
                         target="_blank"
-                        href={'/inspector/files?path=' + parseFilePath(params.value)}
+                        href={'/inspector/files?path=' + parseFilePathWithLineAnchor(params.row.path)}
                     >
                         <FilePresent fontSize="small" />
                     </IconButton>
@@ -32,15 +40,27 @@ const columns: GridColDef[] = [
         ),
     },
     {
-        field: '1',
+        field: 'status',
         headerName: 'Status',
-        width: 30,
+        width: 80,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value === 'ok' ? <CheckIcon color="success" /> : <CloseIcon color="error" />;
+            return (
+                <CenteredBox>
+                    {params.value === 'ok' ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
+                </CenteredBox>
+            );
         },
     },
     {
-        field: '2',
+        field: 'time',
+        headerName: 'Time (ms)',
+        width: 100,
+        renderCell: (params: GridRenderCellParams) => {
+            return <CenteredBox>{params.value?.toFixed(2)}</CenteredBox>;
+        },
+    },
+    {
+        field: 'stacktrace',
         headerName: 'Stacktrace',
         flex: 1,
         renderCell: (params: GridRenderCellParams) => {
@@ -72,7 +92,13 @@ export const TestsPage = () => {
                 .filter((v) => !!v)
                 .join('::');
 
-            resultRows.push([testName, event.status, event.stacktrace]);
+            resultRows.push({
+                name: testName,
+                status: event.status,
+                stacktrace: event.stacktrace,
+                path: event.file,
+                time: event.time,
+            });
         }
         setCommandResponse({
             isSuccessful: data.data.status === 'ok',
@@ -104,7 +130,7 @@ export const TestsPage = () => {
             {commandQueryInfo.isSuccess && (
                 <DataTable
                     rows={rows as GridValidRowModel[]}
-                    getRowId={(row) => row[0]}
+                    getRowId={() => Math.random() * 1000}
                     columns={columns as GridColumns}
                 />
             )}
