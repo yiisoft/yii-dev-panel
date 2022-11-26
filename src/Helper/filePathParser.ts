@@ -1,5 +1,5 @@
 export const parseFilePath = (path: string): string => {
-    return path.replace(/(:[0-9a-z_-]+)$/i, '');
+    return path.replace(/([#:][0-9a-z_-]+)$/i, '');
 };
 
 function parseTwoLineNumber(lineNumberMatches: RegExpMatchArray) {
@@ -8,7 +8,7 @@ function parseTwoLineNumber(lineNumberMatches: RegExpMatchArray) {
 
 export const parseFilePathWithLineAnchor = (path: string): string => {
     const filePath = parseFilePath(path);
-    const lineNumberMatches = path.match(/:([0-9]+)(?:-([0-9]+))?$/i);
+    const lineNumberMatches = path.match(/[#:]([0-9]+)(?:-([0-9]+))?$/i);
     if (lineNumberMatches && lineNumberMatches.length) {
         return filePath + '#L' + parseTwoLineNumber(lineNumberMatches).join('-');
     }
@@ -16,7 +16,7 @@ export const parseFilePathWithLineAnchor = (path: string): string => {
 };
 
 export const parsePathLineAnchor = (path: string): [number] | [number, number] | undefined => {
-    const lineNumberMatches = path.match(/L([0-9]+)(?:-([0-9]+))?$/);
+    const lineNumberMatches = path.match(/#?L([0-9]+)(?:-([0-9]+))?$/);
     if (lineNumberMatches && lineNumberMatches.length) {
         // @ts-ignore
         return parseTwoLineNumber(lineNumberMatches);
