@@ -60,8 +60,12 @@ export const CommandsPage = () => {
                 text={
                     <>
                         <Typography>
-                            Add a command to the "yiisoft/yii-debug-api" section into params.php on the backend to be
+                            Add a command to the "yiisoft/yii-debug-api" section into "params.php" on the backend to be
                             able to run the command from the Yii Dev Panel.
+                        </Typography>
+                        <Typography>
+                            You may inspect the section with{' '}
+                            <Link href="/inspector/parameters?filter=yiisoft/yii-debug-api">Inspector</Link>.
                         </Typography>
                         <Typography>
                             See more information on the link{' '}

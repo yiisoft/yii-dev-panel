@@ -7,7 +7,7 @@ import {DataTable} from '../../../Component/Grid';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const TranslationsPage = () => {
-    const {data, isFetching} = useGetTranslationsQuery();
+    const {data, isLoading} = useGetTranslationsQuery();
     // const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
 
@@ -36,7 +36,7 @@ export const TranslationsPage = () => {
         return rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
     }, [data]);
 
-    if (isFetching) {
+    if (isLoading) {
         return <FullScreenCircularProgress />;
     }
     return (

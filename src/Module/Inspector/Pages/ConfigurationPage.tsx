@@ -9,9 +9,10 @@ import {regexpQuote} from '../../../Helper/regexpQuote';
 import {FilterInput} from '../../../Component/Form/FilterInput';
 import {ContentCopy, DataObject} from '@mui/icons-material';
 import clipboardCopy from 'clipboard-copy';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const ConfigurationPage = () => {
-    const {data} = useGetConfigurationQuery('web');
+    const {data, isLoading} = useGetConfigurationQuery('web');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
     const [searchString, setSearchString] = useState<string>('');
@@ -81,6 +82,10 @@ export const ConfigurationPage = () => {
         const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
+
+    if (isLoading) {
+        return <FullScreenCircularProgress />;
+    }
 
     return (
         <>

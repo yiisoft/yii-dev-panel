@@ -1,11 +1,13 @@
 import * as React from 'react';
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetParametersQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {DataTable} from '../../../Component/Grid';
 import {FilterInput} from '../../../Component/Form/FilterInput';
 import {regexpQuote} from '../../../Helper/regexpQuote';
+import {useSearchParams} from 'react-router-dom';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},
@@ -19,8 +21,9 @@ const columns: GridColDef[] = [
 ];
 
 export const ParametersPage = () => {
-    const {data} = useGetParametersQuery();
-    const [searchString, setSearchString] = useState<string>('');
+    const {data, isLoading} = useGetParametersQuery();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchString = searchParams.get('filter') || '';
 
     const rows = useMemo(() => {
         const isArray = Array.isArray(data);
@@ -30,14 +33,22 @@ export const ParametersPage = () => {
     }, [data]);
 
     const filteredRows = useMemo(() => {
-        const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
+        const regExp = new RegExp(regexpQuote(searchParams.get('') || ''), 'i');
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
+
+    const onChangeHandler = useCallback(async (value: string) => {
+        setSearchParams({filter: value});
+    }, []);
+
+    if (isLoading) {
+        return <FullScreenCircularProgress />;
+    }
 
     return (
         <>
             <h2>{'Parameters'}</h2>
-            <FilterInput onChange={setSearchString} />
+            <FilterInput value={searchString} onChange={onChangeHandler} />
             <div style={{width: '100%'}}>
                 <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />
             </div>

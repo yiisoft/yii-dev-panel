@@ -9,9 +9,10 @@ import {FilterInput} from '../../../Component/Form/FilterInput';
 import {regexpQuote} from '../../../Helper/regexpQuote';
 import clipboardCopy from 'clipboard-copy';
 import {ContentCopy, OpenInNew} from '@mui/icons-material';
+import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 
 export const ContainerPage = () => {
-    const {data} = useGetClassesQuery('');
+    const {data, isLoading} = useGetClassesQuery('');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
     const [searchString, setSearchString] = useState<string>('');
@@ -71,6 +72,10 @@ export const ContainerPage = () => {
             },
         },
     ];
+
+    if (isLoading) {
+        return <FullScreenCircularProgress />;
+    }
 
     return (
         <>
