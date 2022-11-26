@@ -8,8 +8,9 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import {DataTable} from '../../../Component/Grid';
 import Box from '@mui/material/Box';
-import {Check, Error, FilePresent} from '@mui/icons-material';
+import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
 import {parseFilePathWithLineAnchor} from '../../../Helper/filePathParser';
+import clipboardCopy from 'clipboard-copy';
 
 const CenteredBox = styled(Box)({
     height: '100%',
@@ -26,7 +27,11 @@ const columns: GridColDef[] = [
         width: 200,
         renderCell: (params: GridRenderCellParams) => (
             <span style={{wordBreak: 'break-all'}}>
-                {params.value}
+                <Tooltip title="Copy">
+                    <IconButton size="small" onClick={() => clipboardCopy(params.row.path)}>
+                        <ContentCopy fontSize="small" />
+                    </IconButton>
+                </Tooltip>
                 <Tooltip title="Examine as a file in new window">
                     <IconButton
                         size="small"
@@ -36,6 +41,7 @@ const columns: GridColDef[] = [
                         <FilePresent fontSize="small" />
                     </IconButton>
                 </Tooltip>
+                {params.value}
             </span>
         ),
     },

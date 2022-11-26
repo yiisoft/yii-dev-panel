@@ -16,8 +16,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {DataTable} from '../../../Component/Grid';
 import {parseFilePathWithLineAnchor} from '../../../Helper/filePathParser';
-import {Check, Error, FilePresent} from '@mui/icons-material';
+import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
 import Box from '@mui/material/Box';
+import clipboardCopy from 'clipboard-copy';
 
 const columns: GridColDef[] = [
     {
@@ -33,15 +34,21 @@ const columns: GridColDef[] = [
 
             return (
                 <span style={{wordBreak: 'break-all'}}>
-                    {filePath}
+                    <Tooltip title="Copy">
+                        <IconButton size="small" onClick={() => clipboardCopy(filePath)}>
+                            <ContentCopy fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
                     <Tooltip title="Examine as a file">
                         <IconButton
                             size="small"
+                            target="_blank"
                             href={'/inspector/files?path=' + parseFilePathWithLineAnchor(filePath)}
                         >
                             <FilePresent fontSize="small" />
                         </IconButton>
                     </Tooltip>
+                    {filePath}
                 </span>
             );
         },
