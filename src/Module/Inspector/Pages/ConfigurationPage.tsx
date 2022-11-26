@@ -82,7 +82,6 @@ export const ConfigurationPage = () => {
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
 
-    console.log('render');
     return (
         <>
             <h2>Configuration</h2>

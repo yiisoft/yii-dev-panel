@@ -10,7 +10,7 @@ import format from 'date-fns/format';
 import {IconButton, Tooltip} from '@mui/material';
 import {ArrowDownward, OpenInNew} from '@mui/icons-material';
 import {TimelineContentWrapper} from './TimelineContentWrapper';
-import {parseFilePath} from '../../../../Helper/filePathParser';
+import {parseFilePathWithLineAnchor} from '../../../../Helper/filePathParser';
 
 type EventType = {
     event: string;
@@ -33,7 +33,11 @@ const Line = ({event}: {event: EventType}) => {
                 </Typography>
             </Tooltip>
             <Tooltip title="Open in File Explorer">
-                <IconButton size="small" target="_blank" href={`/inspector/files?path=${parseFilePath(event.line)}`}>
+                <IconButton
+                    size="small"
+                    target="_blank"
+                    href={`/inspector/files?path=${parseFilePathWithLineAnchor(event.line)}`}
+                >
                     <OpenInNew fontSize="small" />
                 </IconButton>
             </Tooltip>
