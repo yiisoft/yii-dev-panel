@@ -1,6 +1,6 @@
 import * as React from 'react';
-import {useEffect, useMemo, useState} from 'react';
-import {Outlet, useLocation} from 'react-router';
+import {useCallback, useEffect, useMemo, useState} from 'react';
+import {Outlet} from 'react-router';
 import {
     Alert,
     AlertTitle,
@@ -35,11 +35,11 @@ function formatDate(unixTimeStamp: number) {
 }
 
 function isDebugEntryAboutConsole(entry: any) {
-    return 'console' in entry;
+    return entry && 'console' in entry;
 }
 
 function isDebugEntryAboutWeb(entry: any) {
-    return 'web' in entry;
+    return entry && 'web' in entry;
 }
 
 function getEntryTarget(entry: any) {
@@ -82,25 +82,70 @@ function HttpRequestError({error}: {error: any}) {
     );
 }
 
-export const Layout = () => {
+function DebugEntryAutocomplete({data}: {data: DebugEntry[] | undefined}) {
     const dispatch = useDispatch();
-    const location = useLocation();
+    const debugEntry = useDebugEntry();
+
+    const getOptions = useCallback(
+        (entry: any) => {
+            if (isDebugEntryAboutConsole(entry)) {
+                return [
+                    '[' + getEntryTarget(debugEntry) + ']',
+                    formatDate(entry.console.request.startTime),
+                    entry.command.input,
+                ].join(' ');
+            }
+            if (isDebugEntryAboutWeb(entry)) {
+                return [
+                    '[' + getEntryTarget(debugEntry) + ']',
+                    formatDate(entry.web.request.startTime),
+                    entry.request.method,
+                    entry.request.path,
+                ].join(' ');
+            }
+            return entry.id;
+        },
+        [debugEntry],
+    );
+
+    return (
+        <Autocomplete
+            freeSolo
+            value={debugEntry}
+            options={(data || []) as DebugEntry[]}
+            getOptionLabel={getOptions}
+            renderOption={(props, option) => (
+                <li {...props} key={option.id}>
+                    {getOptions(option)}
+                </li>
+            )}
+            renderInput={(params) => <TextField {...params} key={params.id} label="Record" />}
+            onChange={(event, value) => {
+                if (typeof value === 'object') {
+                    dispatch(changeEntryAction(value));
+                }
+            }}
+            sx={{my: 1}}
+        />
+    );
+}
+
+const Layout = () => {
+    const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
     const {data, isLoading, isSuccess} = useGetDebugQuery();
     const debugEntry = useDebugEntry();
-    const [selectedEntry, setSelectedEntry] = useState<DebugEntry | null>(debugEntry);
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
 
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
 
     useEffect(() => {
-        if (isSuccess && data && data.length && !selectedEntry) {
+        if (isSuccess && data && data.length) {
             const entry = data[0];
-            setSelectedEntry(entry);
             dispatch(changeEntryAction(entry));
         }
-    }, [isSuccess, data, dispatch, selectedEntry]);
+    }, [isSuccess, data, dispatch]);
 
     useEffect(() => {
         const collector = searchParams.get('collector') || '';
@@ -112,54 +157,32 @@ export const Layout = () => {
         if (!debugEntry) {
             return;
         }
-        collectorInfo({
-            id: debugEntry!.id,
-            collector,
-        }).then(({data, isError}) => {
+        collectorInfo({id: debugEntry.id, collector}).then(({data, isError}) => {
             if (isError) {
-                setSelectedEntry(null);
                 dispatch(changeEntryAction(null));
-            } else {
-                setSelectedCollector(collector);
-                setCollectorData(data);
+                return;
             }
+            setSelectedCollector(collector);
+            setCollectorData(data);
         });
     }, [searchParams, debugEntry]);
 
-    function getOptions(entry: any) {
-        if (isDebugEntryAboutConsole(entry)) {
-            return [
-                '[' + getEntryTarget(debugEntry) + ']',
-                formatDate(entry.console.request.startTime),
-                entry.command.input,
-            ].join(' ');
-        }
-        if (isDebugEntryAboutWeb(entry)) {
-            return [
-                '[' + getEntryTarget(debugEntry) + ']',
-                formatDate(entry.web.request.startTime),
-                entry.request.method,
-                entry.request.path,
-            ].join(' ');
-        }
-        return entry.id;
-    }
+    const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);
 
-    const collectorName = selectedCollector.split('\\').pop();
-
-    const links: LinkProps[] = useMemo(() => {
-        if (!debugEntry) {
-            return [];
-        }
-        return debugEntry.collectors.map((collector, index) => ({
-            text: parseCollectorName(collector),
-            href: '/debug/?collector=' + collector,
-            icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
-        }));
-    }, [debugEntry]);
+    const links: LinkProps[] = useMemo(
+        () =>
+            !debugEntry
+                ? []
+                : debugEntry.collectors.map((collector, index) => ({
+                      text: parseCollectorName(collector),
+                      // href: '/debug/?collector=' + collector,
+                      href: '/debug',
+                      icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
+                  })),
+        [debugEntry],
+    );
 
     if (isLoading) {
-        console.log('loading');
         return <FullScreenCircularProgress />;
     }
 
@@ -171,25 +194,7 @@ export const Layout = () => {
                 </Link>
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
-            <Autocomplete
-                freeSolo
-                value={selectedEntry}
-                options={(data || []) as DebugEntry[]}
-                getOptionLabel={getOptions}
-                renderOption={(props, option) => (
-                    <li {...props} key={option.id}>
-                        {getOptions(option)}
-                    </li>
-                )}
-                renderInput={(params) => <TextField {...params} key={params.id} label="Record" />}
-                onChange={(event, value) => {
-                    if (typeof value === 'object') {
-                        setSelectedEntry(value);
-                        dispatch(changeEntryAction(value));
-                    }
-                }}
-                sx={{my: 1}}
-            />
+            <DebugEntryAutocomplete data={data} />
 
             <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
                 {selectedCollector ? (
@@ -203,7 +208,7 @@ export const Layout = () => {
                         {collectorQueryInfo.isSuccess && (
                             <ErrorBoundary
                                 FallbackComponent={ErrorFallback}
-                                resetKeys={[location.pathname, location.search, selectedEntry]}
+                                resetKeys={[window.location.pathname, window.location.search, debugEntry]}
                             >
                                 <CollectorData selectedCollector={selectedCollector} collectorData={collectorData} />
                             </ErrorBoundary>
@@ -221,3 +226,4 @@ export const Layout = () => {
         </>
     );
 };
+export {Layout};

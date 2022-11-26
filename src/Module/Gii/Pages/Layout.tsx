@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {useEffect, useMemo, useState} from 'react';
-import {useLocation} from 'react-router';
 import {Breadcrumbs, Link, Typography} from '@mui/material';
 import {ErrorBoundary} from 'react-error-boundary';
 import InboxIcon from '@mui/icons-material/Inbox';
@@ -14,35 +13,32 @@ import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
 import {HelpOutline} from '@mui/icons-material';
 import {InfoBox} from '../../../Component/InfoBox';
 
-export const Layout = () => {
+const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null);
     const [searchParams] = useSearchParams();
-    const location = useLocation();
 
     const {data, isLoading} = useGetGeneratorsQuery();
 
     useEffect(() => {
-        console.log('effect1');
         const selectedGeneratorId = searchParams.get('generator') || '';
         const selectedGenerator = (data || []).find((v) => v.id === selectedGeneratorId) || null;
         setSelectedGenerator(selectedGenerator);
-    }, [searchParams, data]);
+    }, [searchParams, isLoading]);
 
-    const links: LinkProps[] = useMemo(() => {
-        console.log('memo 1');
-        return (data || []).map((generator, index) => ({
-            text: generator.name,
-            href: '/gii?generator=' + generator.id,
-            icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
-        }));
-    }, [data]);
+    const links: LinkProps[] = useMemo(
+        () =>
+            (data || []).map((generator, index) => ({
+                text: generator.name,
+                href: '/gii?generator=' + generator.id,
+                icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
+            })),
+        [data],
+    );
 
     if (isLoading) {
-        console.log('loading 1');
         return <FullScreenCircularProgress />;
     }
 
-    console.log('render');
     return (
         <>
             <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
@@ -57,7 +53,7 @@ export const Layout = () => {
             </Breadcrumbs>
             <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                 {selectedGenerator ? (
-                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
+                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                         <GeneratorStepper generator={selectedGenerator} />
                     </ErrorBoundary>
                 ) : (
@@ -72,3 +68,6 @@ export const Layout = () => {
         </>
     );
 };
+Layout.whyDidYouRender = true;
+
+export {Layout};

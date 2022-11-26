@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import {IconButton, Link, LinkTypeMap, ListItemIcon, ListItemText, Menu, MenuItem, styled} from '@mui/material';
-import {Outlet, useLocation} from 'react-router';
+import {Outlet} from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary';
 import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
 import {ErrorFallback} from '../Component/ErrorFallback';
@@ -75,7 +75,6 @@ const buildVersion = 'REACT_APP_BUILD_ID' in process.env ? '#' + process.env.REA
 const repositoryUrl = 'https://github.com/xepozz/yii-dev-panel';
 
 export const Layout = () => {
-    const location = useLocation();
     const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
 
     const handleOpenUserMenu = (key: string, event: React.MouseEvent<HTMLElement>) => {
@@ -174,7 +173,7 @@ export const Layout = () => {
             </AppBar>
 
             <Container>
-                <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[location.pathname]}>
+                <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />
                 </ErrorBoundary>
             </Container>
