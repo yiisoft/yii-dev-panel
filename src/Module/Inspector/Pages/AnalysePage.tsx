@@ -15,7 +15,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Typography from '@mui/material/Typography';
 import {DataTable} from '../../../Component/Grid';
-import {parseFilePath} from '../../../Helper/filePathParser';
+import {parseFilePathWithLineAnchor} from '../../../Helper/filePathParser';
 import {Check, Error, FilePresent} from '@mui/icons-material';
 import Box from '@mui/material/Box';
 
@@ -25,11 +25,20 @@ const columns: GridColDef[] = [
         headerName: 'File',
         width: 200,
         renderCell: (params: GridRenderCellParams) => {
+            let filePath = params.value + ':' + params.row.line_from;
+
+            if (params.row.line_from !== params.row.line_to) {
+                filePath += '-' + params.row.line_to;
+            }
+
             return (
                 <span style={{wordBreak: 'break-all'}}>
-                    {params.value}#{params.row.line_from}–{params.row.line_to}
+                    {filePath}
                     <Tooltip title="Examine as a file">
-                        <IconButton size="small" href={'/inspector/files?path=' + parseFilePath(params.value)}>
+                        <IconButton
+                            size="small"
+                            href={'/inspector/files?path=' + parseFilePathWithLineAnchor(filePath)}
+                        >
                             <FilePresent fontSize="small" />
                         </IconButton>
                     </Tooltip>
@@ -76,6 +85,7 @@ export const AnalysePage = () => {
             console.error(data);
             return;
         }
+
         const resultInfoRows: any = [];
         const resultErrorRows: any = [];
 
