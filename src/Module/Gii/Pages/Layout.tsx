@@ -51,7 +51,7 @@ const Layout = () => {
                     </Typography>
                 )}
             </Breadcrumbs>
-            <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
+            <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.name}>
                 {selectedGenerator ? (
                     <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                         <GeneratorStepper generator={selectedGenerator} />
