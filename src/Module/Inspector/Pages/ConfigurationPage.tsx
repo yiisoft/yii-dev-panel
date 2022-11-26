@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetConfigurationQuery, useLazyGetObjectQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
@@ -10,12 +10,14 @@ import {FilterInput} from '../../../Component/Form/FilterInput';
 import {ContentCopy, DataObject} from '@mui/icons-material';
 import clipboardCopy from 'clipboard-copy';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
+import {useSearchParams} from 'react-router-dom';
 
 export const ConfigurationPage = () => {
     const {data, isLoading} = useGetConfigurationQuery('web');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
-    const [searchString, setSearchString] = useState<string>('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchString = searchParams.get('filter') || '';
 
     const columns: GridColDef[] = [
         {
@@ -72,16 +74,18 @@ export const ConfigurationPage = () => {
 
     const rows = useMemo(() => {
         const isArray = Array.isArray(data);
-        let rows = Object.entries(data || ([] as any));
-        rows = rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]})) as any;
-
-        return rows;
+        const rows = Object.entries(data || ([] as any));
+        return rows.map((el) => ({0: el[0], 1: isArray ? Object.assign({}, el[1]) : el[1]}));
     }, [data]);
 
     const filteredRows = useMemo(() => {
         const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
+
+    const onChangeHandler = useCallback(async (value: string) => {
+        setSearchParams({filter: value});
+    }, []);
 
     if (isLoading) {
         return <FullScreenCircularProgress />;
@@ -90,7 +94,7 @@ export const ConfigurationPage = () => {
     return (
         <>
             <h2>Configuration</h2>
-            <FilterInput onChange={setSearchString} />
+            <FilterInput value={searchString} onChange={onChangeHandler} />
             <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />
         </>
     );

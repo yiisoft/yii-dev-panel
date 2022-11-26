@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useMemo, useState} from 'react';
+import {useCallback, useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery} from '../API/Inspector';
 import {Button, IconButton, Tooltip} from '@mui/material';
@@ -10,12 +10,14 @@ import {regexpQuote} from '../../../Helper/regexpQuote';
 import clipboardCopy from 'clipboard-copy';
 import {ContentCopy, OpenInNew} from '@mui/icons-material';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
+import {useSearchParams} from 'react-router-dom';
 
 export const ContainerPage = () => {
     const {data, isLoading} = useGetClassesQuery('');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
-    const [searchString, setSearchString] = useState<string>('');
+    const [searchParams, setSearchParams] = useSearchParams();
+    const searchString = searchParams.get('filter') || '';
 
     const handleLoadObject = async (id: string) => {
         const result = await lazyLoadObject(id);
@@ -73,6 +75,10 @@ export const ContainerPage = () => {
         },
     ];
 
+    const onChangeHandler = useCallback(async (value: string) => {
+        setSearchParams({filter: value});
+    }, []);
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
@@ -80,7 +86,7 @@ export const ContainerPage = () => {
     return (
         <>
             <h2>{'Container'}</h2>
-            <FilterInput onChange={setSearchString} />
+            <FilterInput value={searchString} onChange={onChangeHandler} />
             <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={getColumns()} />
         </>
     );
