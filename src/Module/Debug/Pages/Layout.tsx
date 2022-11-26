@@ -29,6 +29,7 @@ import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularP
 import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
 import {InfoBox} from '../../../Component/InfoBox';
 import {HelpOutline} from '@mui/icons-material';
+import {EventTimeline} from '../Component/Timeline/EventTimeline';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -59,6 +60,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
         'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPanel data={data} />,
         'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewareTimeline {...data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\EventCollector': (data: any) => <EventTimeline events={data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
 

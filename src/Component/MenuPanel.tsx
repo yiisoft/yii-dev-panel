@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import {PropsWithChildren, useCallback, useEffect, useRef, useState} from 'react';
 import {CSSObject, styled, Theme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -60,7 +60,6 @@ type MenuPanelProps = {
     open?: boolean;
     links: LinkProps[];
     activeLink?: string;
-    children: React.ReactNode;
 };
 
 const drawerStyles = {
@@ -149,7 +148,7 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
     );
 });
 
-const MenuPanel = React.memo((props: MenuPanelProps) => {
+const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
     const {links, children, activeLink} = props;
 
     const [open, setOpen] = useState(!!props.open);
