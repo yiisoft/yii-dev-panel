@@ -1,8 +1,10 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {CommandType, useLazyGetCommandsQuery, useLazyRunCommandQuery} from '../API/Inspector';
-import {Button, CircularProgress} from '@mui/material';
+import {Button, CircularProgress, Link, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
+import {InfoBox} from '../../../Component/InfoBox';
+import {EmojiObjects} from '@mui/icons-material';
 
 type GroupedCommands = Record<string, CommandType[]>;
 type CommandStatusMap = Record<
@@ -49,29 +51,54 @@ export const CommandsPage = () => {
         setCommandStatus((prev) => ({...prev, [command.name]: {...prev[command.name], isLoading: false}}));
         console.log(response);
     };
+    const commandEntries = Object.entries(groupedCommands as GroupedCommands);
+
+    if (commandEntries.length === 0) {
+        return (
+            <InfoBox
+                title="No commands found"
+                text={
+                    <>
+                        <Typography>
+                            Add a command to the "yiisoft/yii-debug-api" section into params.php on the backend to be
+                            able to run the command from the Yii Dev Panel.
+                        </Typography>
+                        <Typography>
+                            See more information on the link{' '}
+                            <Link target="_blank" href="https://github.com/yiisoft/yii-debug-api">
+                                https://github.com/yiisoft/yii-debug-api
+                            </Link>
+                            .
+                        </Typography>
+                    </>
+                }
+                severity="info"
+                icon={<EmojiObjects />}
+            />
+        );
+    }
 
     return (
         <>
-            {groupedCommands &&
-                Object.entries(groupedCommands).map(([groupName, commands], index) => (
-                    <Box key={index}>
-                        <h2>{groupName}</h2>
-                        {commands.map((command, index) => (
-                            <Button
-                                key={index}
-                                onClick={() => runCommand(command)}
-                                disabled={commandStatus[command.name].isLoading}
-                                endIcon={
-                                    commandStatus[command.name].isLoading ? (
-                                        <CircularProgress size={24} color="info" />
-                                    ) : null
-                                }
-                            >
-                                Run {command.title}
-                            </Button>
-                        ))}
-                    </Box>
-                ))}
+            {commandEntries.map(([groupName, commands], index) => (
+                <Box key={index}>
+                    <h2>{groupName}</h2>
+                    {commands.map((command, index) => (
+                        <Button
+                            key={index}
+                            onClick={() => runCommand(command)}
+                            disabled={commandStatus[command.name].isLoading}
+                            endIcon={
+                                commandStatus[command.name].isLoading ? (
+                                    <CircularProgress size={24} color="info" />
+                                ) : null
+                            }
+                        >
+                            Run {command.title}
+                        </Button>
+                    ))}
+                </Box>
+            ))}
         </>
     );
 };

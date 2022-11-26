@@ -3,8 +3,8 @@ import React, {cloneElement} from 'react';
 import {Alert, Typography} from '@mui/material';
 
 type InfoBoxProps = {
-    text: string;
     title: string;
+    text?: string | React.ReactElement | React.ReactElement[];
     severity: 'error' | 'info';
     icon: React.ReactElement;
 };
@@ -22,7 +22,7 @@ export const InfoBox = ({text, title, icon, severity}: InfoBoxProps) => {
                 <Typography component="h5" variant="h5" my={3}>
                     {title}
                 </Typography>
-                <Alert severity={severity}>{text}</Alert>
+                {text && <Alert severity={severity}>{text}</Alert>}
             </>
         </Box>
     );
