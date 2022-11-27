@@ -21,7 +21,7 @@ const PathBreadcrumbs = ({path, onClick}: PathBreadcrumbsProps) => {
 
     return (
         <h2>
-            <Breadcrumbs aria-label="breadcrumb">
+            <Breadcrumbs>
                 <Link
                     underline="hover"
                     color="inherit"

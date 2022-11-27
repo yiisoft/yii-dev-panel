@@ -41,7 +41,7 @@ const Layout = () => {
 
     return (
         <>
-            <Breadcrumbs aria-label="breadcrumb" sx={{my: 2}}>
+            <Breadcrumbs sx={{my: 2}}>
                 <Link underline="hover" color="inherit" href="/gii">
                     Gii
                 </Link>
