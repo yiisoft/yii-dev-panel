@@ -33,6 +33,12 @@ export type CommandResponseType = {
     result: any;
     errors: string[];
 };
+export type PutTranslationArgumentType = {
+    category: string;
+    locale: string;
+    translation: string;
+    message: string;
+};
 type Response<T = any> = {
     data: T;
 };
@@ -80,6 +86,14 @@ export const inspectorApi = createApi({
             query: () => `translations`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        putTranslations: builder.mutation<Response, PutTranslationArgumentType>({
+            query: (body) => ({
+                method: 'PUT',
+                url: `translations`,
+                body: body,
+            }),
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -94,4 +108,5 @@ export const {
     useLazyGetCommandsQuery,
     useLazyRunCommandQuery,
     useGetTranslationsQuery,
+    usePutTranslationsMutation,
 } = inspectorApi;
