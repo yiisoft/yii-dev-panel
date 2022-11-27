@@ -31,6 +31,7 @@ const pages = [
             {name: 'File Explorer', link: '/inspector/files'},
             {name: 'Translations', link: '/inspector/translations'},
             {name: 'Commands', link: '/inspector/commands'},
+            {name: 'Database', link: '/inspector/database'},
         ],
     },
 ];

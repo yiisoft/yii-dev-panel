@@ -44,6 +44,19 @@ export const routes = [
                 element: <Pages.CommandsPage />,
             },
             {
+                path: 'database',
+                children: [
+                    {
+                        index: true,
+                        element: <Pages.DatabasePage />,
+                    },
+                    {
+                        path: ':table',
+                        element: <Pages.TablePage />,
+                    },
+                ],
+            },
+            {
                 path: 'container',
                 children: [
                     {
