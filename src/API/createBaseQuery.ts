@@ -7,7 +7,12 @@ export const createBaseQuery = (
     return async (args, WebApi, extraOptions) => {
         const baseUrl = (WebApi.getState() as any).application.baseUrl;
 
-        const rawBaseQuery = fetchBaseQuery({baseUrl: baseUrl + baseUrlAdditional});
+        const rawBaseQuery = fetchBaseQuery({
+            baseUrl: baseUrl + baseUrlAdditional,
+            headers: {
+                Accept: 'application/json',
+            },
+        });
         return rawBaseQuery(args, WebApi, extraOptions);
     };
 };
