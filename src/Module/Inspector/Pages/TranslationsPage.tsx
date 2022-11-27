@@ -1,13 +1,14 @@
 import * as React from 'react';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useContext, useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetTranslationsQuery} from '../API/Inspector';
+import {useGetTranslationsQuery, usePutTranslationsMutation} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
 import {DataTable} from '../../../Component/Grid';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {useSearchParams} from 'react-router-dom';
 import {FilterInput} from '../../../Component/Form/FilterInput';
 import {regexpQuote} from '../../../Helper/regexpQuote';
+import {TranslationUpdaterContext, TranslationUpdaterContextProvider} from '../Context/TranslationUpdaterContext';
 
 const columns: GridColDef[] = [
     {
@@ -20,12 +21,24 @@ const columns: GridColDef[] = [
         field: '1',
         headerName: 'Value',
         flex: 1,
-        renderCell: (params: GridRenderCellParams) => <JsonRenderer value={params.value} />,
+        renderCell: (params: GridRenderCellParams) => {
+            const {updater} = useContext(TranslationUpdaterContext);
+            return (
+                <JsonRenderer
+                    editable
+                    onChange={(path, oldValue, newValue) => {
+                        updater(params.row[0], String(path[0]), String(path[1]), String(newValue));
+                    }}
+                    value={params.value}
+                />
+            );
+        },
     },
 ];
 
 export const TranslationsPage = () => {
     const {data, isLoading} = useGetTranslationsQuery();
+    const [putTranslationsMutation] = usePutTranslationsMutation();
     // const [lazyLoadObject] = useLazyGetObjectQuery();
     const [objects, setObject] = useState<Record<string, any>>({});
     const [searchParams, setSearchParams] = useSearchParams();
@@ -50,6 +63,19 @@ export const TranslationsPage = () => {
         setSearchParams({filter: value});
     }, []);
 
+    const updateTranslationHandler = useCallback(
+        (category: string, locale: string, translation: string, message: string) => {
+            const object = {
+                category,
+                locale,
+                translation,
+                message,
+            };
+            console.log(object);
+            putTranslationsMutation(object);
+        },
+        [],
+    );
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
@@ -57,7 +83,9 @@ export const TranslationsPage = () => {
         <>
             <h2>{'Translations'}</h2>
             <FilterInput value={searchString} onChange={onChangeHandler} />
-            <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />
+            <TranslationUpdaterContextProvider updater={updateTranslationHandler}>
+                <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />
+            </TranslationUpdaterContextProvider>
         </>
     );
 };
