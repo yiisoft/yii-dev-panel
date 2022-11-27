@@ -1,6 +1,7 @@
 import {RouteObject} from 'react-router-dom';
 import React from 'react';
 import * as Pages from './Pages';
+import {DataContextProvider} from './Context/DataContext';
 
 export const routes = [
     {
@@ -12,7 +13,11 @@ export const routes = [
             },
             {
                 path: 'configuration',
-                element: <Pages.ConfigurationPage />,
+                element: (
+                    <DataContextProvider>
+                        <Pages.ConfigurationPage />
+                    </DataContextProvider>
+                ),
             },
             {
                 path: 'tests',
@@ -43,7 +48,11 @@ export const routes = [
                 children: [
                     {
                         index: true,
-                        element: <Pages.ContainerPage />,
+                        element: (
+                            <DataContextProvider>
+                                <Pages.ContainerPage />
+                            </DataContextProvider>
+                        ),
                     },
                     {
                         path: 'view',

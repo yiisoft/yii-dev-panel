@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useCallback, useMemo, useState} from 'react';
+import {useCallback, useContext, useEffect, useMemo} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetClassesQuery, useLazyGetObjectQuery} from '../API/Inspector';
 import {Button, IconButton, Tooltip} from '@mui/material';
@@ -11,69 +11,76 @@ import clipboardCopy from 'clipboard-copy';
 import {ContentCopy, OpenInNew} from '@mui/icons-material';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {useSearchParams} from 'react-router-dom';
+import {DataContext} from '../Context/DataContext';
+import {LoaderContext, LoaderContextProvider} from '../Context/LoaderContext';
+
+const columns: GridColDef[] = [
+    {
+        field: 'id',
+        headerName: 'Name',
+        width: 200,
+        renderCell: (params: GridRenderCellParams) => {
+            const value = params.value;
+            return (
+                <div style={{wordBreak: 'break-all'}}>
+                    <Tooltip title="Copy">
+                        <IconButton size="small" onClick={() => clipboardCopy(value)}>
+                            <ContentCopy fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Examine as a container entry">
+                        <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
+                            <OpenInNew fontSize="small" />
+                        </IconButton>
+                    </Tooltip>
+                    {value}
+                </div>
+            );
+        },
+    },
+    {
+        field: 'value',
+        headerName: 'Value',
+        flex: 1,
+        renderCell: (params: GridRenderCellParams) => {
+            const {loader} = useContext(LoaderContext);
+            if (params.row.value) {
+                return <JsonRenderer key={params.id} value={params.value} />;
+            }
+
+            return <Button onClick={() => loader(params.row.id)}>Load</Button>;
+        },
+    },
+];
 
 export const ContainerPage = () => {
     const {data, isLoading} = useGetClassesQuery('');
     const [lazyLoadObject] = useLazyGetObjectQuery();
-    const [objects, setObject] = useState<Record<string, any>>({});
     const [searchParams, setSearchParams] = useSearchParams();
     const searchString = searchParams.get('filter') || '';
 
-    const handleLoadObject = async (id: string) => {
+    const {objects, setObjects, insertObject} = useContext(DataContext);
+
+    const handleLoadObject = useCallback(async (id: string) => {
         const result = await lazyLoadObject(id);
-        setObject((prev) => ({...prev, [id]: result.data}));
-    };
+        insertObject(id, result.data);
+    }, []);
 
-    const rows = useMemo(() => {
-        return (data || ([] as any)).map((v: string) => ({0: v, 1: v in objects ? objects[v] : null}));
-    }, [data, objects]);
+    useEffect(() => {
+        if (!isLoading && data) {
+            setObjects(
+                data.map((row) => ({
+                    id: row,
+                    value: null,
+                })),
+            );
+        }
+    }, [isLoading]);
 
-    const filteredRows = useMemo(() => {
+    const filteredRows: any = useMemo(() => {
         const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
-        return rows.filter((object: any) => object[0].match(regExp));
-    }, [rows, searchString]);
-
-    const getColumns = (): GridColDef[] => [
-        {
-            field: '0',
-            headerName: 'Name',
-            width: 200,
-            renderCell: (params: GridRenderCellParams) => {
-                const value = params.value as string;
-                return (
-                    <div style={{wordBreak: 'break-all'}}>
-                        <Tooltip title="Copy">
-                            <IconButton size="small" onClick={() => clipboardCopy(value)}>
-                                <ContentCopy fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                        <Tooltip title="Examine as a container entry">
-                            <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
-                                <OpenInNew fontSize="small" />
-                            </IconButton>
-                        </Tooltip>
-                        {value}
-                    </div>
-                );
-            },
-        },
-        {
-            field: '1',
-            headerName: 'Value',
-            flex: 1,
-            renderCell: (params: GridRenderCellParams) => {
-                if (params.row[1]) {
-                    return <JsonRenderer key={params.id} value={params.row[1]} />;
-                }
-
-                return (
-                    <>
-                        <Button onClick={() => handleLoadObject(params.row[0])}>Load</Button>
-                    </>
-                );
-            },
-        },
-    ];
+        return objects.filter((object: any) => object.id.match(regExp));
+    }, [objects, searchString]);
 
     const onChangeHandler = useCallback(async (value: string) => {
         setSearchParams({filter: value});
@@ -87,7 +94,9 @@ export const ContainerPage = () => {
         <>
             <h2>{'Container'}</h2>
             <FilterInput value={searchString} onChange={onChangeHandler} />
-            <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={getColumns()} />
+            <LoaderContextProvider loader={handleLoadObject}>
+                <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row.id} columns={columns} />
+            </LoaderContextProvider>
         </>
     );
 };

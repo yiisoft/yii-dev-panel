@@ -20,6 +20,8 @@ export type InspectorFileContent = {
     content: string;
 } & InspectorFile;
 
+export type ConfigurationType = Record<string, object | string>;
+export type ClassesType = string[];
 export type CommandType = {
     name: string;
     title: string;
@@ -44,13 +46,13 @@ export const inspectorApi = createApi({
             query: () => `params`,
             transformResponse: (result: Response) => result.data || [],
         }),
-        getConfiguration: builder.query<Response, string>({
+        getConfiguration: builder.query<ConfigurationType, string>({
             query: (group = 'web') => `config?group=${group}`,
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<ConfigurationType>) => result.data || [],
         }),
-        getClasses: builder.query<Response, string>({
+        getClasses: builder.query<ClassesType, string>({
             query: () => `classes`,
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<ClassesType>) => result.data || [],
         }),
         getObject: builder.query<ObjectType, string>({
             query: (classname) => `object?classname=${classname}`,
