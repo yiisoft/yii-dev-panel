@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useLazyRunCommandQuery} from '../API/Inspector';
 import {JsonRenderer} from '../../../Component/JsonRenderer';
@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) => (
-            <span style={{wordBreak: 'break-all'}}>
+            <span key={params.id} style={{wordBreak: 'break-all'}}>
                 <Tooltip title="Copy">
                     <IconButton size="small" onClick={() => clipboardCopy(params.row.path)}>
                         <ContentCopy fontSize="small" />
@@ -49,29 +49,25 @@ const columns: GridColDef[] = [
         field: 'status',
         headerName: 'Status',
         width: 80,
-        renderCell: (params: GridRenderCellParams) => {
-            return (
-                <CenteredBox>
-                    {params.value === 'ok' ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
-                </CenteredBox>
-            );
-        },
+        renderCell: (params: GridRenderCellParams) => (
+            <CenteredBox key={params.id}>
+                {params.value === 'ok' ? <CheckIcon color="success" /> : <CloseIcon color="error" />}
+            </CenteredBox>
+        ),
     },
     {
         field: 'time',
         headerName: 'Time (ms)',
         width: 100,
-        renderCell: (params: GridRenderCellParams) => {
-            return <CenteredBox>{params.value?.toFixed(2)}</CenteredBox>;
-        },
+        renderCell: (params: GridRenderCellParams) => (
+            <CenteredBox key={params.id}>{params.value?.toFixed(2)}</CenteredBox>
+        ),
     },
     {
         field: 'stacktrace',
         headerName: 'Stacktrace',
         flex: 1,
-        renderCell: (params: GridRenderCellParams) => {
-            return params.value === 'ok' ? null : <JsonRenderer key={params.id} value={params.value} />;
-        },
+        renderCell: (params: GridRenderCellParams) => <JsonRenderer key={params.id} value={params.value} depth={0} />,
     },
 ];
 
@@ -91,6 +87,7 @@ export const TestsPage = () => {
             return;
         }
 
+        let id = 0;
         const resultRows = [];
         for (const event of data.data.result) {
             const testName = [event.suite]
@@ -98,7 +95,9 @@ export const TestsPage = () => {
                 .filter((v) => !!v)
                 .join('::');
 
+            id++;
             resultRows.push({
+                id,
                 name: testName,
                 status: event.status,
                 stacktrace: event.stacktrace,
@@ -112,6 +111,8 @@ export const TestsPage = () => {
         });
         setRows(resultRows);
     }
+
+    const getRowIdCallback = useCallback((row: any) => row.id, []);
 
     return (
         <>
@@ -136,7 +137,7 @@ export const TestsPage = () => {
             {commandQueryInfo.isSuccess && (
                 <DataTable
                     rows={rows as GridValidRowModel[]}
-                    getRowId={() => Math.random() * 1000}
+                    getRowId={getRowIdCallback}
                     columns={columns as GridColumns}
                 />
             )}
