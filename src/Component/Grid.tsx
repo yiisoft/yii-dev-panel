@@ -25,6 +25,14 @@ export function DataTable(props: GridProps) {
 
     return (
         <DataGrid
+            onCellClick={() => null}
+            onCellDoubleClick={() => null}
+            onCellFocusOut={() => null}
+            onRowClick={() => null}
+            onColumnHeaderClick={() => null}
+            disableDensitySelector
+            disableColumnSelector
+            disableSelectionOnClick
             rows={rows}
             getRowId={getRowId}
             columns={columns}

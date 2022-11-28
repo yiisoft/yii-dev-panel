@@ -7,7 +7,7 @@ import {useDebugEntry} from '../Context/Context';
 import {DataType} from '@textea/json-viewer';
 import {objectIdParser} from '../../../Helper/objectIdParser';
 
-export const JsonRenderer = (props: JsonRendererProps) => {
+export const JsonRenderer = React.memo((props: JsonRendererProps) => {
     const [objectQuery] = useLazyGetObjectQuery();
     const debugEntry = useDebugEntry();
     const [data, setData] = useState(props.value);
@@ -38,4 +38,4 @@ export const JsonRenderer = (props: JsonRendererProps) => {
         },
     ];
     return <OriginalJsonRenderer value={data} valueTypes={valueTypes} />;
-};
+});
