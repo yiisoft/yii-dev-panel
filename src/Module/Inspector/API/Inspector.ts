@@ -94,6 +94,13 @@ export const inspectorApi = createApi({
             }),
             transformResponse: (result: Response) => result.data || [],
         }),
+        doRequest: builder.mutation<Response, {id: string}>({
+            query: (args) => ({
+                method: 'PUT',
+                url: `request?debugEntryId=${args.id}`,
+            }),
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -109,4 +116,5 @@ export const {
     useLazyRunCommandQuery,
     useGetTranslationsQuery,
     usePutTranslationsMutation,
+    useDoRequestMutation,
 } = inspectorApi;

@@ -7,12 +7,15 @@ import {
     Autocomplete,
     Box,
     Breadcrumbs,
+    Button,
+    CircularProgress,
     LinearProgress,
     Link,
     TextField,
+    Tooltip,
     Typography,
 } from '@mui/material';
-import {DebugEntry, useGetDebugQuery, useLazyGetCollectorInfoQuery} from '../API/Debug';
+import {DebugEntry, useLazyGetCollectorInfoQuery, useLazyGetDebugQuery} from '../API/Debug';
 import format from 'date-fns/format';
 import {fromUnixTime} from 'date-fns';
 import {useDispatch} from 'react-redux';
@@ -28,8 +31,9 @@ import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
 import {InfoBox} from '../../../Component/InfoBox';
-import {EmojiObjects, HelpOutline} from '@mui/icons-material';
+import {Check, EmojiObjects, Error, HelpOutline} from '@mui/icons-material';
 import {EventTimeline} from '../Component/Timeline/EventTimeline';
+import {useDoRequestMutation} from '../../Inspector/API/Inspector';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -135,12 +139,16 @@ function DebugEntryAutocomplete({data}: {data: DebugEntry[] | undefined}) {
 const Layout = () => {
     const dispatch = useDispatch();
     const [searchParams] = useSearchParams();
-    const {data, isLoading, isSuccess} = useGetDebugQuery();
+    const [getDebugQuery, {data, isLoading, isSuccess}] = useLazyGetDebugQuery();
     const debugEntry = useDebugEntry();
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
 
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
+
+    useEffect(() => {
+        getDebugQuery();
+    }, []);
 
     useEffect(() => {
         if (isSuccess && data && data.length) {
@@ -183,6 +191,19 @@ const Layout = () => {
         [debugEntry],
     );
 
+    const [doRequest, doRequestInfo] = useDoRequestMutation();
+    const repeatRequestHandler = useCallback(async () => {
+        if (!debugEntry) {
+            return;
+        }
+        try {
+            await doRequest({id: debugEntry.id});
+        } catch (e) {
+            console.error(e);
+        }
+        getDebugQuery();
+    }, [debugEntry]);
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
@@ -221,6 +242,23 @@ const Layout = () => {
                 </Link>
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
+            <Tooltip title="Runs the request again">
+                <Button
+                    onClick={repeatRequestHandler}
+                    disabled={!debugEntry || doRequestInfo.isLoading}
+                    endIcon={
+                        doRequestInfo.isLoading ? (
+                            <CircularProgress size={24} color="info" />
+                        ) : doRequestInfo.isUninitialized ? null : doRequestInfo.isSuccess ? (
+                            <Check color="success" />
+                        ) : (
+                            <Error color="error" />
+                        )
+                    }
+                >
+                    Repeat Request
+                </Button>
+            </Tooltip>
             <DebugEntryAutocomplete data={data} />
 
             <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
