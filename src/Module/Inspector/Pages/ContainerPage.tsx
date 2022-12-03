@@ -63,7 +63,9 @@ export const ContainerPage = () => {
 
     const handleLoadObject = useCallback(async (id: string) => {
         const result = await lazyLoadObject(id);
-        insertObject(id, result.data);
+        if (result.data) {
+            insertObject(id, result.data.object);
+        }
     }, []);
 
     useEffect(() => {
