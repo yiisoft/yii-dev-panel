@@ -23,6 +23,7 @@ export const JsonRenderer = React.memo(
                 value={value}
                 editable={editable}
                 onChange={onChange}
+                displayDataTypes={false}
                 enableClipboard={true}
                 defaultInspectDepth={depth}
                 groupArraysAfterLength={50}
