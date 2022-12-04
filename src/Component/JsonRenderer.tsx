@@ -23,6 +23,7 @@ export const JsonRenderer = React.memo(
                 value={value}
                 editable={editable}
                 onChange={onChange}
+                displayDataTypes={false}
                 enableClipboard={true}
                 defaultInspectDepth={depth}
                 groupArraysAfterLength={50}
@@ -32,6 +33,12 @@ export const JsonRenderer = React.memo(
                         is: (value: any) => typeof value === 'string' && value.startsWith('@'),
                         Component: (props) => {
                             return <>alias: {props.value}</>;
+                        },
+                    },
+                    {
+                        is: (value: any) => Array.isArray(value) && value.length === 0,
+                        Component: (props) => {
+                            return <>[]</>;
                         },
                     },
                     ...valueTypes,

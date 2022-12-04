@@ -19,7 +19,7 @@ export const CommandsPage = () => {
     const [commandStatus, setCommandStatus] = useState<CommandStatusMap>({});
 
     const [getCommandsQuery] = useLazyGetCommandsQuery();
-    const [runCommandsQuery, runCommandsQueryInfo] = useLazyRunCommandQuery();
+    const [runCommandsQuery] = useLazyRunCommandQuery();
 
     useEffect(() => {
         void (async () => {

@@ -98,6 +98,17 @@ export const inspectorApi = createApi({
             query: (table) => (table ? `table/${table}` : `table`),
             transformResponse: (result: Response) => result.data || [],
         }),
+        doRequest: builder.mutation<Response, {id: string}>({
+            query: (args) => ({
+                method: 'PUT',
+                url: `request?debugEntryId=${args.id}`,
+            }),
+            transformResponse: (result: Response) => result.data || [],
+        }),
+        getRoutes: builder.query<Response, void>({
+            query: () => `routes`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -113,5 +124,7 @@ export const {
     useLazyRunCommandQuery,
     useGetTranslationsQuery,
     usePutTranslationsMutation,
+    useDoRequestMutation,
+    useGetRoutesQuery,
     useGetTableQuery,
 } = inspectorApi;
