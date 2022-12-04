@@ -101,6 +101,10 @@ export const inspectorApi = createApi({
             }),
             transformResponse: (result: Response) => result.data || [],
         }),
+        getRoutes: builder.query<Response, void>({
+            query: () => `routes`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -117,4 +121,5 @@ export const {
     useGetTranslationsQuery,
     usePutTranslationsMutation,
     useDoRequestMutation,
+    useGetRoutesQuery,
 } = inspectorApi;

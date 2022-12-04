@@ -35,6 +35,12 @@ export const JsonRenderer = React.memo(
                             return <>alias: {props.value}</>;
                         },
                     },
+                    {
+                        is: (value: any) => Array.isArray(value) && value.length === 0,
+                        Component: (props) => {
+                            return <>[]</>;
+                        },
+                    },
                     ...valueTypes,
                 ]}
             />
