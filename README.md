@@ -47,7 +47,15 @@ But here is workaround:
    For example, you can clone [`yiisoft/demo-api`](https://github.com/yiisoft/demo-api) and serve it.
 
    ```shell
-   git clone git@github.com:yiisoft/demo-api demo-api
+   git clone git@github.com:yiisoft/demo demo
+   ```
+
+   ```shell
+   cd demo/blog-api
+   ```
+
+   ```shell
+   composer install
    ```
 
    ```shell
