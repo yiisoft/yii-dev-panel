@@ -94,6 +94,10 @@ export const inspectorApi = createApi({
             }),
             transformResponse: (result: Response) => result.data || [],
         }),
+        getTable: builder.query<Response, string | void>({
+            query: (table) => (table ? `table/${table}` : `table`),
+            transformResponse: (result: Response) => result.data || [],
+        }),
         doRequest: builder.mutation<Response, {id: string}>({
             query: (args) => ({
                 method: 'PUT',
@@ -122,4 +126,5 @@ export const {
     usePutTranslationsMutation,
     useDoRequestMutation,
     useGetRoutesQuery,
+    useGetTableQuery,
 } = inspectorApi;
