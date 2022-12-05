@@ -1,6 +1,6 @@
 import {DataGrid, GridColumns, GridValidRowModel} from '@mui/x-data-grid';
 import * as React from 'react';
-import {useState} from 'react';
+import {useCallback, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {useSelector} from '../store';
@@ -12,16 +12,19 @@ type GridProps = {
     rowsPerPage?: number[];
     getRowId?: (row: any) => string | number;
     pageSize?: number;
+    rowHeight?: number | 'auto';
 };
 
 export function DataTable(props: GridProps) {
-    const {rows, columns, getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]} = props;
+    const {rows, columns, rowHeight = 'auto', getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]} = props;
 
     const dispatch = useDispatch();
     const preferredPageSize = useSelector((state) => state.application.preferredPageSize) as number;
 
     const [searchParams, setSearchParams] = useSearchParams({page: '0'});
     const [pageSize, setPageSize] = useState(preferredPageSize || Math.min(...rowsPerPage));
+
+    const getRowHeightCallback = useCallback(() => rowHeight, [rowHeight]);
 
     return (
         <DataGrid
@@ -56,7 +59,7 @@ export function DataTable(props: GridProps) {
                     flexDirection: 'column',
                 },
             }}
-            getRowHeight={() => 'auto'}
+            getRowHeight={getRowHeightCallback}
         />
     );
 }

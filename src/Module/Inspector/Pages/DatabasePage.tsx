@@ -4,21 +4,25 @@ import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-g
 import {useGetTableQuery} from '../API/Inspector';
 import {DataTable} from '../../../Component/Grid';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
-import {Breadcrumbs, Link, Typography} from '@mui/material';
+import {Breadcrumbs, Button, Typography} from '@mui/material';
 
 const columns: GridColDef[] = [
     {
         field: 'name',
         headerName: 'Name',
         width: 200,
-        renderCell: (params: GridRenderCellParams) => <span style={{wordBreak: 'break-all'}}>{params.value}</span>,
+        renderCell: (params: GridRenderCellParams) => (
+            <Typography my={1} sx={{wordBreak: 'break-all'}}>
+                {params.value}
+            </Typography>
+        ),
     },
     {
         field: 'columns',
         headerName: 'Columns count',
         flex: 1,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value;
+            return <Typography my={1}>{params.value}</Typography>;
         },
     },
     {
@@ -26,7 +30,7 @@ const columns: GridColDef[] = [
         headerName: 'Records count',
         flex: 1,
         renderCell: (params: GridRenderCellParams) => {
-            return params.value;
+            return <Typography my={1}>{params.value}</Typography>;
         },
     },
     {
@@ -34,7 +38,13 @@ const columns: GridColDef[] = [
         headerName: 'Actions',
         flex: 1,
         renderCell: (params: GridRenderCellParams) => {
-            return <Link href={`/inspector/database/${params.row.name}`}>View</Link>;
+            return (
+                <Typography my={1}>
+                    <Button variant="contained" href={`/inspector/database/${params.row.name}`}>
+                        View
+                    </Button>
+                </Typography>
+            );
         },
     },
 ];
@@ -68,7 +78,12 @@ export const DatabasePage = () => {
                     <Typography>Database</Typography>
                 </Breadcrumbs>
             </h2>
-            <DataTable rows={tables as GridValidRowModel[]} getRowId={(row) => row.name} columns={columns} />
+            <DataTable
+                rows={tables as GridValidRowModel[]}
+                getRowId={(row) => row.name}
+                columns={columns}
+                // rowHeight={30}
+            />
         </>
     );
 };
