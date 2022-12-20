@@ -9,6 +9,7 @@ export const createBaseQuery = (
 
         const rawBaseQuery = fetchBaseQuery({
             baseUrl: baseUrl + baseUrlAdditional,
+            referrerPolicy: 'no-referrer',
             headers: {
                 Accept: 'application/json',
             },
