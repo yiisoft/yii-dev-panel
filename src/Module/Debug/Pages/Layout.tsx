@@ -24,16 +24,16 @@ import {ErrorBoundary} from 'react-error-boundary';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
 import {useSearchParams} from 'react-router-dom';
-import {LogPanel} from './LogPanel';
 import {DumpPage} from './DumpPage';
 import {ErrorFallback} from '../../../Component/ErrorFallback';
-import {MiddlewareTimeline} from '../Component/Timeline/MiddlewareTimeline';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
 import {InfoBox} from '../../../Component/InfoBox';
 import {Check, EmojiObjects, Error, HelpOutline} from '@mui/icons-material';
-import {EventTimeline} from '../Component/Timeline/EventTimeline';
 import {useDoRequestMutation} from '../../Inspector/API/Inspector';
+import {MiddlewarePanel} from '../Component/Panel/MiddlewarePanel';
+import {EventPanel} from '../Component/Panel/EventPanel';
+import {LogPanel} from '../Component/Panel/LogPanel';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
@@ -63,8 +63,8 @@ type CollectorDataProps = {
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
         'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPanel data={data} />,
-        'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewareTimeline {...data} />,
-        'Yiisoft\\Yii\\Debug\\Collector\\EventCollector': (data: any) => <EventTimeline events={data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewarePanel {...data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\EventCollector': (data: any) => <EventPanel events={data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
 

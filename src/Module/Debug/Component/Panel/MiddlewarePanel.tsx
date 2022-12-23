@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import format from 'date-fns/format';
 import {Tooltip} from '@mui/material';
 import {ArrowDownward} from '@mui/icons-material';
-import {TimelineContentWrapper} from './TimelineContentWrapper';
+import {TimelineContentWrapper} from './../Timeline/TimelineContentWrapper';
 
 type MiddlewareType = {
     memory: number;
@@ -26,13 +26,13 @@ type ActionHandlerType = {
     startTime: number;
     endTime: number;
 };
-type MiddlewareTimelineProps = {
+type MiddlewarePanelProps = {
     beforeStack: BeforeMiddlewareType[];
     afterStack: AfterMiddlewareType[];
     actionHandler: ActionHandlerType;
 };
 
-export const MiddlewareTimeline = (props: MiddlewareTimelineProps) => {
+export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
     const {beforeStack, afterStack, actionHandler} = props;
 
     return (

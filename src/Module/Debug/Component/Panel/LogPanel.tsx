@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Alert, AlertTitle, IconButton, Tooltip, Typography} from '@mui/material';
 import {FilePresent} from '@mui/icons-material';
 import Box from '@mui/material/Box';
-import {parseFilePath} from '../../../Helper/filePathParser';
+import {parseFilePath} from '../../../../Helper/filePathParser';
 
 type Level = 'error' | 'info' | 'debug';
 type LogEntry = {
@@ -22,8 +22,8 @@ export const LogPanel = ({data}: LogPanelProps) => {
             {!data || data.length === 0 ? (
                 <>Nothing here</>
             ) : (
-                data.map((entry) => (
-                    <Alert variant="outlined" severity="success" icon={false}>
+                data.map((entry, index) => (
+                    <Alert key={index} variant="outlined" severity="success" icon={false}>
                         <Box sx={{display: 'flex'}}>
                             <AlertTitle sx={{display: 'flex', flexGrow: 1}}>{entry.message}</AlertTitle>
 

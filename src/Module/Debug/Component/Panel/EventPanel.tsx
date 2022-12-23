@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import format from 'date-fns/format';
 import {IconButton, Tooltip} from '@mui/material';
 import {ArrowDownward, OpenInNew} from '@mui/icons-material';
-import {TimelineContentWrapper} from './TimelineContentWrapper';
+import {TimelineContentWrapper} from './../Timeline/TimelineContentWrapper';
 import {parseFilePathWithLineAnchor} from '../../../../Helper/filePathParser';
 
 type EventType = {
@@ -45,7 +45,7 @@ const Line = ({event}: {event: EventType}) => {
     );
 };
 
-export const EventTimeline = (props: EventTimelineProps) => {
+export const EventPanel = (props: EventTimelineProps) => {
     const {events} = props;
 
     return (
