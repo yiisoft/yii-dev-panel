@@ -243,21 +243,23 @@ const Layout = () => {
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
             <Tooltip title="Runs the request again">
-                <Button
-                    onClick={repeatRequestHandler}
-                    disabled={!debugEntry || doRequestInfo.isLoading}
-                    endIcon={
-                        doRequestInfo.isLoading ? (
-                            <CircularProgress size={24} color="info" />
-                        ) : doRequestInfo.isUninitialized ? null : doRequestInfo.isSuccess ? (
-                            <Check color="success" />
-                        ) : (
-                            <Error color="error" />
-                        )
-                    }
-                >
-                    Repeat Request
-                </Button>
+                <span>
+                    <Button
+                        onClick={repeatRequestHandler}
+                        disabled={!debugEntry || doRequestInfo.isLoading}
+                        endIcon={
+                            doRequestInfo.isLoading ? (
+                                <CircularProgress size={24} color="info" />
+                            ) : doRequestInfo.isUninitialized ? null : doRequestInfo.isSuccess ? (
+                                <Check color="success" />
+                            ) : (
+                                <Error color="error" />
+                            )
+                        }
+                    >
+                        Repeat Request
+                    </Button>
+                </span>
             </Tooltip>
             <DebugEntryAutocomplete data={data} />
 
