@@ -33,7 +33,7 @@ export const ParametersPage = () => {
     }, [data]);
 
     const filteredRows = useMemo(() => {
-        const regExp = new RegExp(regexpQuote(searchParams.get('') || ''), 'i');
+        const regExp = new RegExp(regexpQuote(searchString), 'i');
         return rows.filter((object) => object[0].match(regExp));
     }, [rows, searchString]);
 
