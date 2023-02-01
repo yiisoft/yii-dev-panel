@@ -262,34 +262,47 @@ const Layout = () => {
                 </span>
             </Tooltip>
             <DebugEntryAutocomplete data={data} />
-
-            <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
-                {selectedCollector ? (
-                    <>
-                        {collectorQueryInfo.isFetching && <LinearProgress />}
-                        {collectorQueryInfo.isError && (
-                            <HttpRequestError
-                                error={(collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)}
-                            />
-                        )}
-                        {collectorQueryInfo.isSuccess && (
-                            <ErrorBoundary
-                                FallbackComponent={ErrorFallback}
-                                resetKeys={[window.location.pathname, window.location.search, debugEntry]}
-                            >
-                                <CollectorData selectedCollector={selectedCollector} collectorData={collectorData} />
-                            </ErrorBoundary>
-                        )}
-                    </>
-                ) : (
-                    <InfoBox
-                        title="No one collector is chosen"
-                        text="Select a collector from the left side panel to see more options"
-                        severity="info"
-                        icon={<HelpOutline />}
-                    />
-                )}
-            </MenuPanel>
+            {links.length === 0 ? (
+                <InfoBox
+                    title="Collectors are empty"
+                    text="Looks like debugger was inactive or it did not have any active collectors during the request"
+                    severity="info"
+                    icon={<HelpOutline />}
+                />
+            ) : (
+                <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
+                    {selectedCollector ? (
+                        <>
+                            {collectorQueryInfo.isFetching && <LinearProgress />}
+                            {collectorQueryInfo.isError && (
+                                <HttpRequestError
+                                    error={
+                                        (collectorQueryInfo.error as any)?.error || (collectorQueryInfo.error as any)
+                                    }
+                                />
+                            )}
+                            {collectorQueryInfo.isSuccess && (
+                                <ErrorBoundary
+                                    FallbackComponent={ErrorFallback}
+                                    resetKeys={[window.location.pathname, window.location.search, debugEntry]}
+                                >
+                                    <CollectorData
+                                        selectedCollector={selectedCollector}
+                                        collectorData={collectorData}
+                                    />
+                                </ErrorBoundary>
+                            )}
+                        </>
+                    ) : (
+                        <InfoBox
+                            title="No one collector is chosen"
+                            text="Select a collector from the left side panel to see more options"
+                            severity="info"
+                            icon={<HelpOutline />}
+                        />
+                    )}
+                </MenuPanel>
+            )}
         </>
     );
 };

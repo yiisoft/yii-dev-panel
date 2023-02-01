@@ -51,20 +51,37 @@ const Layout = () => {
                     </Typography>
                 )}
             </Breadcrumbs>
-            <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.name}>
-                {selectedGenerator ? (
-                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
-                        <GeneratorStepper generator={selectedGenerator} />
-                    </ErrorBoundary>
-                ) : (
-                    <InfoBox
-                        title="No one generator is chosen"
-                        text="Select a generator from the left side panel to see more options"
-                        severity="info"
-                        icon={<HelpOutline />}
-                    />
-                )}
-            </MenuPanel>
+            {links.length === 0 ? (
+                <InfoBox
+                    title="Gii generators are empty"
+                    text={
+                        <>
+                            <Typography>Gii is not configured or it does not have any generators.</Typography>
+                            <Typography>
+                                Make sure Gii is active and its configuration has at least one active generator.&nbsp;
+                                <Link href="/inspector/parameters?filter=yiisoft/yii-gii">Open parameters.</Link>
+                            </Typography>
+                        </>
+                    }
+                    severity="info"
+                    icon={<HelpOutline />}
+                />
+            ) : (
+                <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.name}>
+                    {selectedGenerator ? (
+                        <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
+                            <GeneratorStepper generator={selectedGenerator} />
+                        </ErrorBoundary>
+                    ) : (
+                        <InfoBox
+                            title="No one generator is chosen"
+                            text="Select a generator from the left side panel to see more options"
+                            severity="info"
+                            icon={<HelpOutline />}
+                        />
+                    )}
+                </MenuPanel>
+            )}
         </>
     );
 };
