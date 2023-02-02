@@ -1,17 +1,23 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {Button, CircularProgress, Divider, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useCheckoutMutation, useCommandMutation, useGetSummaryQuery} from '../API/GitApi';
-import {CodeHighlight} from '../../../Component/CodeHighlight';
-import {CheckoutDialog} from '../Component/Git/CheckoutDialog';
 import {GetApp, Refresh, Sync} from '@mui/icons-material';
+import {useCheckoutMutation, useCommandMutation, useGetSummaryQuery} from '../../API/GitApi';
+import {CheckoutDialog} from '../../Component/Git/CheckoutDialog';
+import {CodeHighlight} from '../../../../Component/CodeHighlight';
+import {BreadcrumbsContext} from '../../Context/BreadcrumbsContext';
 
 export const GitPage = () => {
+    const context = useContext(BreadcrumbsContext);
     const getSummaryQuery = useGetSummaryQuery();
     const [checkoutMutation, checkoutInfo] = useCheckoutMutation();
     const [commandMutation, commandInfo] = useCommandMutation();
+
+    useEffect(() => {
+        context.setItems([]);
+    }, []);
 
     const [open, setOpen] = React.useState(false);
 

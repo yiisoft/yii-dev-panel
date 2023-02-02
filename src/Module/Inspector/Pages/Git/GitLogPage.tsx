@@ -1,15 +1,20 @@
 import * as React from 'react';
-import {useCallback} from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 import {Button, CircularProgress, Divider, List, ListItem, ListItemText} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useCommandMutation, useGetLogQuery} from '../API/GitApi';
 import {GetApp, Refresh, Sync} from '@mui/icons-material';
+import {useCommandMutation, useGetLogQuery} from '../../API/GitApi';
+import {BreadcrumbsContext} from '../../Context/BreadcrumbsContext';
 
 export const GitLogPage = () => {
     const getLogQuery = useGetLogQuery();
     const [commandMutation, commandInfo] = useCommandMutation();
+    const context = useContext(BreadcrumbsContext);
 
+    useEffect(() => {
+        context.setItems([{title: 'Log', href: '/inspector/git/log'}]);
+    }, []);
     const onPullHandler = useCallback(() => commandMutation({command: 'pull'}), []);
     const onFetchHandler = useCallback(() => commandMutation({command: 'fetch'}), []);
     const onRefreshHandler = () => getLogQuery.refetch();
