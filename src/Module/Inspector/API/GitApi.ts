@@ -25,13 +25,25 @@ type SummaryResponse = {
 export const gitApi = createApi({
     reducerPath: 'api.inspector.git',
     keepUnusedDataFor: 0,
+    tagTypes: ['git/summary'],
     baseQuery: createBaseQuery('/inspect/api/git/'),
     endpoints: (builder) => ({
         getSummary: builder.query<SummaryResponse, void>({
             query: () => `summary`,
+            providesTags: ['git/summary'],
             transformResponse: (result: Response<SummaryResponse>) => result.data || [],
+        }),
+        checkout: builder.mutation<void, {branch: string}>({
+            query: ({branch}) => ({
+                url: `checkout`,
+                method: 'POST',
+                body: {
+                    branch,
+                },
+            }),
+            invalidatesTags: [{type: 'git/summary'}],
         }),
     }),
 });
 
-export const {useGetSummaryQuery} = gitApi;
+export const {useGetSummaryQuery, useCheckoutMutation} = gitApi;

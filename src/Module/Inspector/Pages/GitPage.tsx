@@ -1,24 +1,25 @@
 import * as React from 'react';
-import {useState} from 'react';
-import {useLazyRunCommandQuery} from '../API/Inspector';
+import {useCallback} from 'react';
 import {Button, CircularProgress, Divider, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useGetSummaryQuery} from '../API/GitApi';
+import {useCheckoutMutation, useGetSummaryQuery} from '../API/GitApi';
 import {CodeHighlight} from '../../../Component/CodeHighlight';
+import {CheckoutDialog} from '../Component/Git/CheckoutDialog';
 
-type CommandResponseType = {
-    isSuccessful: boolean | undefined;
-    errors: string[];
-};
 export const GitPage = () => {
     const getSummaryQuery = useGetSummaryQuery();
-    const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
-    const [commandResponse, setCommandResponse] = useState<CommandResponseType | null>(null);
+    const [checkoutMutation, checkoutInfo] = useCheckoutMutation();
 
-    const onRefreshHandler = () => {
-        getSummaryQuery.refetch();
-    };
+    const [open, setOpen] = React.useState(false);
+
+    const onOpenDialogHandler = () => setOpen(true);
+    const onCancelDialogHandler = () => setOpen(false);
+    const onCheckoutHandler = useCallback(async ({branch}: {branch: string}) => {
+        await checkoutMutation({branch});
+        setOpen(false);
+    }, []);
+    const onRefreshHandler = () => getSummaryQuery.refetch();
 
     return (
         <>
@@ -30,7 +31,9 @@ export const GitPage = () => {
                             <ListItem>
                                 <ListItemText primary="Branch" secondary={getSummaryQuery.data.currentBranch} />
                                 <ListItemSecondaryAction>
-                                    <Button color="primary">Checkout</Button>
+                                    <Button onClick={onOpenDialogHandler} color="primary">
+                                        Checkout
+                                    </Button>
                                 </ListItemSecondaryAction>
                             </ListItem>
                             <ListItem>
@@ -80,6 +83,15 @@ export const GitPage = () => {
                     Refresh
                 </Button>
             </Box>
+            {getSummaryQuery.isSuccess && (
+                <CheckoutDialog
+                    open={open}
+                    onCancel={onCancelDialogHandler}
+                    onCheckout={onCheckoutHandler}
+                    branches={getSummaryQuery.data.branches}
+                    currentBranch={getSummaryQuery.data.currentBranch}
+                />
+            )}
         </>
     );
 };
