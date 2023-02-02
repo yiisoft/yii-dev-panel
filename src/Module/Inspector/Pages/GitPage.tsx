@@ -85,7 +85,7 @@ export const GitPage = () => {
                             </ListItem>
                             <ListItem>
                                 <ListItemText
-                                    primary={'Last commit: ' + getSummaryQuery.data.lastCommit.ref}
+                                    primary={'Last commit: ' + getSummaryQuery.data.lastCommit.sha}
                                     secondary={
                                         <>
                                             {getSummaryQuery.data.lastCommit.message}&nbsp;
@@ -101,9 +101,11 @@ export const GitPage = () => {
                                         </>
                                     }
                                 />
-                                {/*<ListItemSecondaryAction>*/}
-                                {/*    <Button color="primary">Show log</Button>*/}
-                                {/*</ListItemSecondaryAction>*/}
+                                <ListItemSecondaryAction>
+                                    <Button color="primary" href="/inspector/git/log">
+                                        Show log
+                                    </Button>
+                                </ListItemSecondaryAction>
                             </ListItem>
                             {getSummaryQuery.data.remotes.length > 0 &&
                                 getSummaryQuery.data.remotes.map((remote, index) => (

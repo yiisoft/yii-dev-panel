@@ -80,6 +80,10 @@ export const routes = [
                         index: true,
                         element: <Pages.GitPage />,
                     },
+                    {
+                        path: 'log',
+                        element: <Pages.GitLogPage />,
+                    },
                 ],
             },
         ],

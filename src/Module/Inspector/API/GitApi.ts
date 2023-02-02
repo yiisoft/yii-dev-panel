@@ -11,7 +11,7 @@ type Remote = {
 };
 type Commit = {
     message: string;
-    ref: string;
+    sha: string;
     author: {name: string; email: string};
 };
 type SummaryResponse = {
@@ -21,17 +21,26 @@ type SummaryResponse = {
     remotes: Remote[];
     status: string[];
 };
+type LogResponse = {
+    currentBranch: string;
+    commits: Commit[];
+};
 
 export const gitApi = createApi({
     reducerPath: 'api.inspector.git',
     keepUnusedDataFor: 0,
-    tagTypes: ['git/summary'],
+    tagTypes: ['git/summary', 'git/log'],
     baseQuery: createBaseQuery('/inspect/api/git/'),
     endpoints: (builder) => ({
         getSummary: builder.query<SummaryResponse, void>({
             query: () => `summary`,
             providesTags: ['git/summary'],
             transformResponse: (result: Response<SummaryResponse>) => result.data || [],
+        }),
+        getLog: builder.query<LogResponse, void>({
+            query: () => `log`,
+            providesTags: ['git/log'],
+            transformResponse: (result: Response<LogResponse>) => result.data || [],
         }),
         checkout: builder.mutation<void, {branch: string}>({
             query: ({branch}) => ({
@@ -53,4 +62,4 @@ export const gitApi = createApi({
     }),
 });
 
-export const {useGetSummaryQuery, useCommandMutation, useCheckoutMutation} = gitApi;
+export const {useGetSummaryQuery, useGetLogQuery, useCommandMutation, useCheckoutMutation} = gitApi;
