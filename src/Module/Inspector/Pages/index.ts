@@ -10,3 +10,4 @@ export {TranslationsPage} from './TranslationsPage';
 export {CommandsPage} from './CommandsPage';
 export {DatabasePage} from './DatabasePage';
 export {TablePage} from './TablePage';
+export {GitPage} from './GitPage';

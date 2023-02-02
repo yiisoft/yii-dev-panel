@@ -73,6 +73,15 @@ export const routes = [
                     },
                 ],
             },
+            {
+                path: 'git',
+                children: [
+                    {
+                        index: true,
+                        element: <Pages.GitPage />,
+                    },
+                ],
+            },
         ],
     },
 ] as RouteObject[];
