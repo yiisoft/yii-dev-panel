@@ -43,7 +43,14 @@ export const gitApi = createApi({
             }),
             invalidatesTags: [{type: 'git/summary'}],
         }),
+        command: builder.mutation<void, {command: string}>({
+            query: ({command}) => ({
+                url: `command?command=${command}`,
+                method: 'POST',
+            }),
+            invalidatesTags: [{type: 'git/summary'}],
+        }),
     }),
 });
 
-export const {useGetSummaryQuery, useCheckoutMutation} = gitApi;
+export const {useGetSummaryQuery, useCommandMutation, useCheckoutMutation} = gitApi;

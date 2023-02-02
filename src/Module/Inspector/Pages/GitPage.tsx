@@ -3,13 +3,15 @@ import {useCallback} from 'react';
 import {Button, CircularProgress, Divider, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import {useCheckoutMutation, useGetSummaryQuery} from '../API/GitApi';
+import {useCheckoutMutation, useCommandMutation, useGetSummaryQuery} from '../API/GitApi';
 import {CodeHighlight} from '../../../Component/CodeHighlight';
 import {CheckoutDialog} from '../Component/Git/CheckoutDialog';
+import {GetApp, Refresh, Sync} from '@mui/icons-material';
 
 export const GitPage = () => {
     const getSummaryQuery = useGetSummaryQuery();
     const [checkoutMutation, checkoutInfo] = useCheckoutMutation();
+    const [commandMutation, commandInfo] = useCommandMutation();
 
     const [open, setOpen] = React.useState(false);
 
@@ -19,14 +21,59 @@ export const GitPage = () => {
         await checkoutMutation({branch});
         setOpen(false);
     }, []);
+    const onPullHandler = useCallback(() => commandMutation({command: 'pull'}), []);
+    const onFetchHandler = useCallback(() => commandMutation({command: 'fetch'}), []);
     const onRefreshHandler = () => getSummaryQuery.refetch();
 
     return (
         <>
             <h2>{'Git'}</h2>
-            <Box>
-                {getSummaryQuery.isSuccess && (
-                    <>
+            {getSummaryQuery.isSuccess && (
+                <>
+                    <Box>
+                        <Box display="flex">
+                            <Button
+                                variant="outlined"
+                                onClick={onRefreshHandler}
+                                color={getSummaryQuery.isSuccess ? 'primary' : 'error'}
+                                disabled={getSummaryQuery.isFetching}
+                                startIcon={<Refresh />}
+                                endIcon={
+                                    getSummaryQuery.isFetching ? <CircularProgress size={24} color="info" /> : null
+                                }
+                            >
+                                Refresh
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                sx={{marginLeft: 'auto'}}
+                                onClick={onPullHandler}
+                                color={commandInfo.isSuccess || commandInfo.isUninitialized ? 'primary' : 'error'}
+                                disabled={commandInfo.isLoading}
+                                startIcon={<GetApp />}
+                                endIcon={
+                                    commandInfo.isLoading && commandInfo.originalArgs?.command === 'pull' ? (
+                                        <CircularProgress size={24} color="info" />
+                                    ) : null
+                                }
+                            >
+                                Pull
+                            </Button>
+                            <Button
+                                variant="outlined"
+                                onClick={onFetchHandler}
+                                color={commandInfo.isSuccess || commandInfo.isUninitialized ? 'primary' : 'error'}
+                                disabled={commandInfo.isLoading}
+                                startIcon={<Sync />}
+                                endIcon={
+                                    commandInfo.isLoading && commandInfo.originalArgs?.command === 'fetch' ? (
+                                        <CircularProgress size={24} color="info" />
+                                    ) : null
+                                }
+                            >
+                                Fetch
+                            </Button>
+                        </Box>
                         <List>
                             <ListItem>
                                 <ListItemText primary="Branch" secondary={getSummaryQuery.data.currentBranch} />
@@ -71,26 +118,15 @@ export const GitPage = () => {
                             language="plain/text"
                             code={getSummaryQuery.data.status.join('\n')}
                         />
-                    </>
-                )}
-
-                <Button
-                    onClick={onRefreshHandler}
-                    color={getSummaryQuery.isSuccess ? 'primary' : 'error'}
-                    disabled={getSummaryQuery.isFetching}
-                    endIcon={getSummaryQuery.isFetching ? <CircularProgress size={24} color="info" /> : null}
-                >
-                    Refresh
-                </Button>
-            </Box>
-            {getSummaryQuery.isSuccess && (
-                <CheckoutDialog
-                    open={open}
-                    onCancel={onCancelDialogHandler}
-                    onCheckout={onCheckoutHandler}
-                    branches={getSummaryQuery.data.branches}
-                    currentBranch={getSummaryQuery.data.currentBranch}
-                />
+                    </Box>
+                    <CheckoutDialog
+                        open={open}
+                        onCancel={onCancelDialogHandler}
+                        onCheckout={onCheckoutHandler}
+                        branches={getSummaryQuery.data.branches}
+                        currentBranch={getSummaryQuery.data.currentBranch}
+                    />
+                </>
             )}
         </>
     );
