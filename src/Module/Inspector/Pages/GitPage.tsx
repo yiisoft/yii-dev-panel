@@ -54,9 +54,9 @@ export const GitPage = () => {
                                         </>
                                     }
                                 />
-                                <ListItemSecondaryAction>
-                                    <Button color="primary">Show log</Button>
-                                </ListItemSecondaryAction>
+                                {/*<ListItemSecondaryAction>*/}
+                                {/*    <Button color="primary">Show log</Button>*/}
+                                {/*</ListItemSecondaryAction>*/}
                             </ListItem>
                             {getSummaryQuery.data.remotes.length > 0 &&
                                 getSummaryQuery.data.remotes.map((remote, index) => (
