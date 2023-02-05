@@ -109,6 +109,10 @@ export const inspectorApi = createApi({
             query: () => `routes`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getPhpInfo: builder.query<string, void>({
+            query: () => `phpinfo`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
     }),
 });
 
@@ -127,4 +131,5 @@ export const {
     useDoRequestMutation,
     useGetRoutesQuery,
     useGetTableQuery,
+    useGetPhpInfoQuery,
 } = inspectorApi;
