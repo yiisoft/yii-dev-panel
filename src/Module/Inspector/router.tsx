@@ -59,6 +59,10 @@ export const routes = [
                 ],
             },
             {
+                path: 'phpinfo',
+                element: <Pages.PhpInfoPage />,
+            },
+            {
                 path: 'container',
                 children: [
                     {
