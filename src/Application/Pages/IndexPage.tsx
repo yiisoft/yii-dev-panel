@@ -72,16 +72,18 @@ export function IndexPage() {
                 <Typography>
                     Default backend url is: <b>{defaultBackendUrl}</b>
                 </Typography>
-                <Typography>API Statuses:</Typography>
+                <h3>API Statuses</h3>
                 {Object.entries(status).map((status, index) => (
                     <React.Fragment key={index}>
-                        <Typography>
-                            <span style={{textTransform: 'capitalize'}}>{status[0]}</span>:
-                        </Typography>
+                        <Typography></Typography>
                         {status[1] ? (
-                            <Alert severity="success">connected</Alert>
+                            <Alert severity="success">
+                                <span style={{textTransform: 'capitalize'}}>{status[0]}</span>: connected
+                            </Alert>
                         ) : (
-                            <Alert severity="error">not connected</Alert>
+                            <Alert severity="error">
+                                <span style={{textTransform: 'capitalize'}}>{status[0]}</span>: disconnected
+                            </Alert>
                         )}
                     </React.Fragment>
                 ))}
