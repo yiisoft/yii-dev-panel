@@ -33,6 +33,7 @@ const pages = [
             {name: 'Commands', link: '/inspector/commands'},
             {name: 'Database', link: '/inspector/database'},
             {name: 'PHP Info', link: '/inspector/phpinfo'},
+            {name: 'Composer', link: '/inspector/composer'},
         ],
     },
 ];

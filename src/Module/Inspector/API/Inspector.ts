@@ -39,6 +39,12 @@ export type PutTranslationArgumentType = {
     translation: string;
     message: string;
 };
+
+type ComposerResponse = {
+    json: {require: Record<string, string>; 'require-dev': Record<string, string>};
+    lock: object;
+};
+
 type Response<T = any> = {
     data: T;
 };
@@ -113,6 +119,10 @@ export const inspectorApi = createApi({
             query: () => `phpinfo`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getComposer: builder.query<ComposerResponse, void>({
+            query: () => `composer`,
+            transformResponse: (result: Response<ComposerResponse>) => result.data,
+        }),
     }),
 });
 
@@ -132,4 +142,5 @@ export const {
     useGetRoutesQuery,
     useGetTableQuery,
     useGetPhpInfoQuery,
+    useGetComposerQuery,
 } = inspectorApi;
