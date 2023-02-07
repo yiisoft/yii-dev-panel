@@ -1,10 +1,11 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {CommandType, useLazyGetCommandsQuery, useLazyRunCommandQuery} from '../API/Inspector';
+import {CommandType, useLazyGetCommandsQuery, useRunCommandMutation} from '../API/Inspector';
 import {Button, CircularProgress, Link, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {InfoBox} from '../../../Component/InfoBox';
 import {EmojiObjects} from '@mui/icons-material';
+import {ResultDialog} from '../Component/Command/ResultDialog';
 
 type GroupedCommands = Record<string, CommandType[]>;
 type CommandStatusMap = Record<
@@ -17,9 +18,10 @@ type CommandStatusMap = Record<
 export const CommandsPage = () => {
     const [groupedCommands, setGroupedCommands] = useState<GroupedCommands>({});
     const [commandStatus, setCommandStatus] = useState<CommandStatusMap>({});
+    const [showResultDialog, setShowResultDialog] = useState<boolean>(false);
 
     const [getCommandsQuery] = useLazyGetCommandsQuery();
-    const [runCommandsQuery] = useLazyRunCommandQuery();
+    const [runCommandQuery, runCommandQueryInfo] = useRunCommandMutation();
 
     useEffect(() => {
         void (async () => {
@@ -47,8 +49,9 @@ export const CommandsPage = () => {
 
     const runCommand = async (command: CommandType) => {
         setCommandStatus((prev) => ({...prev, [command.name]: {...prev[command.name], isLoading: true}}));
-        const response = await runCommandsQuery(command.name);
+        const response = await runCommandQuery(command.name);
         setCommandStatus((prev) => ({...prev, [command.name]: {...prev[command.name], isLoading: false}}));
+        setShowResultDialog(true);
         console.log(response);
     };
     const commandEntries = Object.entries(groupedCommands as GroupedCommands);
@@ -82,6 +85,7 @@ export const CommandsPage = () => {
         );
     }
 
+    console.log(runCommandQueryInfo.data?.result);
     return (
         <>
             {commandEntries.map(([groupName, commands], index) => (
@@ -103,6 +107,25 @@ export const CommandsPage = () => {
                     ))}
                 </Box>
             ))}
+            <ResultDialog
+                status={
+                    runCommandQueryInfo.isLoading
+                        ? 'loading'
+                        : runCommandQueryInfo.data
+                        ? runCommandQueryInfo.data.status
+                        : 'fail'
+                }
+                content={
+                    runCommandQueryInfo.isLoading
+                        ? 'loading'
+                        : runCommandQueryInfo.data
+                        ? runCommandQueryInfo.data.result
+                        : ''
+                }
+                open={showResultDialog}
+                onRerun={() => runCommandQuery(runCommandQueryInfo.originalArgs as string)}
+                onClose={() => setShowResultDialog(false)}
+            />
         </>
     );
 };
