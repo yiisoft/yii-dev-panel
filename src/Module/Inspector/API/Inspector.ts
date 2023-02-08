@@ -29,7 +29,7 @@ export type CommandType = {
     description: string;
 };
 export type CommandResponseType = {
-    status: string;
+    status: 'ok' | 'error' | 'fail';
     result: any;
     errors: string[];
 };
@@ -68,15 +68,12 @@ export const inspectorApi = createApi({
             query: (command) => 'command',
             transformResponse: (result: Response<CommandType[]>) => result.data || [],
         }),
-        runCommand: builder.query<CommandResponseType, string>({
+        runCommand: builder.mutation<CommandResponseType, string>({
             query: (command) => ({
                 url: `command?command=${command}`,
                 method: 'POST',
             }),
             transformResponse: (result: Response<CommandResponseType>) => result.data || [],
-            // it's needed to be able to make multiple queries at the time and save theirs states
-            // TODO: save states without that hack
-            keepUnusedDataFor: 300,
         }),
         getFiles: builder.query<InspectorFile[], string>({
             query: (command) => `files?path=${command}`,
@@ -125,7 +122,7 @@ export const {
     useLazyGetObjectQuery,
     useLazyGetFilesQuery,
     useLazyGetCommandsQuery,
-    useLazyRunCommandQuery,
+    useRunCommandMutation,
     useGetTranslationsQuery,
     usePutTranslationsMutation,
     useDoRequestMutation,
