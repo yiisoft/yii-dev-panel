@@ -2,6 +2,8 @@ import {RouteObject} from 'react-router-dom';
 import React from 'react';
 import * as Pages from './Pages';
 import {DataContextProvider} from './Context/DataContext';
+import {Layout} from './Component/Git/Layout';
+import {BreadcrumbsContextProvider} from './Context/BreadcrumbsContext';
 
 export const routes = [
     {
@@ -78,6 +80,24 @@ export const routes = [
                     {
                         path: 'view',
                         element: <Pages.ContainerEntryPage />,
+                    },
+                ],
+            },
+            {
+                path: 'git',
+                element: (
+                    <BreadcrumbsContextProvider>
+                        <Layout />
+                    </BreadcrumbsContextProvider>
+                ),
+                children: [
+                    {
+                        index: true,
+                        element: <Pages.GitPages.GitPage />,
+                    },
+                    {
+                        path: 'log',
+                        element: <Pages.GitPages.GitLogPage />,
                     },
                 ],
             },

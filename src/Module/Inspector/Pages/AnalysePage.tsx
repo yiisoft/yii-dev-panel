@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {useState} from 'react';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useLazyRunCommandQuery} from '../API/Inspector';
+import {useRunCommandMutation} from '../API/Inspector';
 import {
     Accordion,
     AccordionDetails,
@@ -81,14 +81,14 @@ type CommandResponseType = {
     errors: string[];
 };
 export const AnalysePage = () => {
-    const [commandQuery, commandQueryInfo] = useLazyRunCommandQuery();
+    const [commandQuery, commandQueryInfo] = useRunCommandMutation();
     const [errorRows, setErrorRows] = useState<any[]>([]);
     const [infoRows, setInfoRows] = useState<any[]>([]);
     const [commandResponse, setCommandResponse] = useState<CommandResponseType | null>(null);
 
     async function runPsalmHandler() {
         const data = await commandQuery('analyse/psalm');
-        if (typeof data.data !== 'object') {
+        if (!('data' in data) || typeof data.data !== 'object') {
             console.error(data);
             return;
         }
@@ -148,12 +148,12 @@ export const AnalysePage = () => {
                 <Button
                     onClick={runPsalmHandler}
                     color={commandResponse === null ? 'primary' : commandResponse.isSuccessful ? 'success' : 'error'}
-                    disabled={commandQueryInfo.isFetching}
-                    endIcon={commandQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
+                    disabled={commandQueryInfo.isLoading}
+                    endIcon={commandQueryInfo.isLoading ? <CircularProgress size={24} color="info" /> : null}
                 >
                     Run Psalm
                 </Button>
-                {!commandQueryInfo.isFetching && commandResponse && (
+                {!commandQueryInfo.isLoading && commandResponse && (
                     <>
                         {commandResponse.isSuccessful === true && <Check color="success" />}
                         {commandResponse.isSuccessful === false && <Error color="error" />}
