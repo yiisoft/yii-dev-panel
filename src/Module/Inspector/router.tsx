@@ -63,6 +63,10 @@ export const routes = [
                 element: <Pages.PhpInfoPage />,
             },
             {
+                path: 'composer',
+                element: <Pages.ComposerPage />,
+            },
+            {
                 path: 'container',
                 children: [
                     {

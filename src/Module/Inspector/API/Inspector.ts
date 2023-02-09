@@ -28,9 +28,9 @@ export type CommandType = {
     group: string;
     description: string;
 };
-export type CommandResponseType = {
+export type CommandResponseType<T = any> = {
     status: 'ok' | 'error' | 'fail';
-    result: any;
+    result: T;
     errors: string[];
 };
 export type PutTranslationArgumentType = {
@@ -39,6 +39,15 @@ export type PutTranslationArgumentType = {
     translation: string;
     message: string;
 };
+
+type ComposerResponse = {
+    json: {require: Record<string, string>; 'require-dev': Record<string, string>};
+    lock: {
+        packages: {name: string; version: string}[];
+        'packages-dev': {name: string; version: string}[];
+    };
+};
+
 type Response<T = any> = {
     data: T;
 };
@@ -46,6 +55,7 @@ type Response<T = any> = {
 export const inspectorApi = createApi({
     reducerPath: 'api.inspector',
     keepUnusedDataFor: 0,
+    tagTypes: ['inspector/composer'],
     baseQuery: createBaseQuery('/inspect/api/'),
     endpoints: (builder) => ({
         getParameters: builder.query<Response, void>({
@@ -110,6 +120,32 @@ export const inspectorApi = createApi({
             query: () => `phpinfo`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getComposer: builder.query<ComposerResponse, void>({
+            query: () => `composer`,
+            transformResponse: (result: Response<ComposerResponse>) => result.data,
+            providesTags: ['inspector/composer'],
+        }),
+        getComposerInspect: builder.query<CommandResponseType, string>({
+            query: (packageName) => `composer/inspect?package=${packageName}`,
+            transformResponse: (result: Response<CommandResponseType>) => result.data,
+            providesTags: ['inspector/composer'],
+        }),
+        postComposerRequirePackage: builder.mutation<
+            CommandResponseType,
+            {packageName: string; version: string | null; isDev: boolean}
+        >({
+            query: ({packageName, version, isDev}) => ({
+                url: `composer/require`,
+                method: 'POST',
+                body: {
+                    package: packageName,
+                    version,
+                    isDev,
+                },
+            }),
+            transformResponse: (result: Response<CommandResponseType>) => result.data,
+            invalidatesTags: ['inspector/composer'],
+        }),
     }),
 });
 
@@ -129,4 +165,8 @@ export const {
     useGetRoutesQuery,
     useGetTableQuery,
     useGetPhpInfoQuery,
+    useGetComposerQuery,
+    useLazyGetComposerInspectQuery,
+    useGetComposerInspectQuery,
+    usePostComposerRequirePackageMutation,
 } = inspectorApi;

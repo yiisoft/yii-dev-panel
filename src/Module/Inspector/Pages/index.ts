@@ -11,4 +11,5 @@ export {CommandsPage} from './CommandsPage';
 export {DatabasePage} from './DatabasePage';
 export {TablePage} from './TablePage';
 export {PhpInfoPage} from './PhpInfoPage';
+export {ComposerPage} from './ComposerPage';
 export * as GitPages from './Git';
