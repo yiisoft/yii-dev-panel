@@ -1,9 +1,74 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '../../../API/createBaseQuery';
 
+export type HTTPMethod = 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT';
+
 export type DebugEntry = {
     id: string;
     collectors: string[];
+    logger: {
+        total: number;
+    };
+    event: {
+        total: number;
+    };
+    service: {
+        total: number;
+    };
+    validator: {
+        total: number;
+        valid: number;
+        invalid: number;
+    };
+    queue: {
+        countPushes: number;
+        countStatuses: number;
+        countProcessingMessages: number;
+    };
+    http: {
+        count: number;
+        totalTime: number;
+    };
+    fs_stream: {
+        write: number;
+        mkdir: number;
+    };
+    http_stream: [];
+    web: {
+        php: {
+            version: string;
+        };
+        request: {
+            startTime: number;
+            processingTime: number;
+        };
+        memory: {
+            peakUsage: number;
+        };
+    };
+    request: {
+        url: string;
+        path: string;
+        query: string;
+        method: HTTPMethod;
+        isAjax: boolean;
+        userIp: string;
+    };
+    response: {
+        statusCode: number;
+    };
+    router: {
+        matchTime: number;
+        matchedRoute: string;
+    };
+    middleware: {
+        total: number;
+    };
+    asset: {
+        bundles: {
+            total: number;
+        };
+    };
     [name: string]: any;
 };
 type SummaryResponseType = {
@@ -30,6 +95,7 @@ export const debugApi = createApi({
             query: () => ``,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
         }),
+
         getObject: builder.query<DebugEntry[], GetObjectProps>({
             query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
