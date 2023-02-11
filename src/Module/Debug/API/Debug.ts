@@ -60,6 +60,13 @@ export type DebugEntry = {
     router: {
         matchTime: number;
         matchedRoute: string;
+        name: string;
+        pattern: string;
+        arguments: string;
+        host: string;
+        uri: string;
+        action: string | string[];
+        middlewares: any[];
     };
     middleware: {
         total: number;
