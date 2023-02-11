@@ -13,6 +13,7 @@ const EventsItem = forwardRef((props: EventsItemProps, ref: ForwardedRef<HTMLBut
         <Badge color="secondary" badgeContent={String(data.event.total)}>
             <Button
                 ref={ref}
+                href={`/debug/?collector=Yiisoft\\Yii\\Debug\\Collector\\EventCollector&debugEntry=${data.id}`}
                 startIcon={<ChatBubble fontSize="small" />}
                 color="info"
                 variant="contained"

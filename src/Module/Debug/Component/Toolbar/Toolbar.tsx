@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {ButtonGroup, IconButton, Paper, Portal} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useGetDebugQuery} from '../../API/Debug';
-import {ArrowRightSharp} from '@mui/icons-material';
 import {RequestItem} from './RequestItem';
 import {RequestTimeItem} from './RequestTimeItem';
 import {MemoryItem} from './MemoryItem';
@@ -10,6 +9,7 @@ import {LogsItem} from './LogsItem';
 import {EventsItem} from './EventsItem';
 import {RouterItem} from './RouterItem';
 import {ValidatorItem} from './ValidatorItem';
+import {YiiIcon} from '../../../../Component/SvgIcon/YiiIcon';
 
 export const Toolbar = () => {
     const [checked, setChecked] = useState(true);
@@ -60,12 +60,11 @@ export const Toolbar = () => {
                                 }}
                                 sx={{marginX: 1, background: 'white'}}
                             >
-                                <ArrowRightSharp
+                                <YiiIcon
                                     sx={{
-                                        transform: !checked ? 'rotate(-180deg)' : 'rotate(0deg)',
-                                        transition: 'transform 150ms ease-in-out',
+                                        transform: !checked ? 'rotate(360deg)' : 'rotate(0deg)',
+                                        transition: 'transform 400ms ease-in-out',
                                     }}
-                                    fontSize="medium"
                                 />
                             </IconButton>
                         </Box>

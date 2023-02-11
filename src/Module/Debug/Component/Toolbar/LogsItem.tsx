@@ -10,11 +10,11 @@ type LogsItemProps = {
 export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref) => {
     const {data, ...others} = props;
 
-    console.log(ref, others, 'MuiButtonBase');
     return (
         <Badge color="secondary" badgeContent={String(data.logger.total)}>
             <Button
-                // ref={ref}
+                ref={ref}
+                href={`/debug/?collector=Yiisoft\\Yii\\Debug\\Collector\\LogCollector&debugEntry=${data.id}`}
                 startIcon={<ChatBubble fontSize="small" />}
                 color="info"
                 variant="contained"
