@@ -65,7 +65,7 @@ type MenuPanelProps = {
 const drawerStyles = {
     flex: '1 1 auto',
     '&.drawer-opened .MuiListItemButton-root .MuiListItemIcon-root': {
-        mr: 3,
+        mr: 1,
     },
     '& .MuiListItemButton-root .MuiListItemText-root': {
         display: 'none',
@@ -79,6 +79,7 @@ const drawerStyles = {
     '&.drawer-opened .MuiListItemButton-root .menu-opener': {
         transform: 'rotate(180deg)',
     },
+    zIndex: 'auto',
 };
 
 type MenuPanelListProps = {
@@ -121,6 +122,7 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                             minHeight: 48,
                             justifyContent: 'center',
                             px: 2.5,
+                            overflowX: 'hidden',
                         }}
                     >
                         <ListItemIcon
@@ -170,7 +172,7 @@ const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
                 open={open}
                 container={containerRef.current}
                 PaperProps={{
-                    sx: {position: 'relative'},
+                    sx: {position: 'relative', zIndex: 'auto'},
                 }}
                 sx={drawerStyles}
             >

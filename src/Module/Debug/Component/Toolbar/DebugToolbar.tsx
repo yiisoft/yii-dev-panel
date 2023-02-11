@@ -36,7 +36,6 @@ export const DebugToolbar = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'space-between',
-                            zIndex: '1500',
                         }}
                     >
                         <Box

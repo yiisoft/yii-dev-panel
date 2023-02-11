@@ -13,6 +13,7 @@ import {ErrorFallback} from '../Component/ErrorFallback';
 import {ContentCut, GitHub} from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
 import {OverrideProps} from '@mui/material/OverridableComponent';
+import {DebugToolbar} from '../Module/Debug/Component/Toolbar/DebugToolbar';
 
 // TODO: replace with context and provider
 const pages = [
@@ -181,6 +182,7 @@ export const Layout = () => {
                     <Outlet />
                 </ErrorBoundary>
             </Container>
+            <DebugToolbar />
         </>
     );
 };
