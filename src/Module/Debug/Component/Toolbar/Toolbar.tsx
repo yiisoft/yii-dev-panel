@@ -14,7 +14,7 @@ import {YiiIcon} from '../../../../Component/SvgIcon/YiiIcon';
 export const Toolbar = () => {
     const [checked, setChecked] = useState(true);
     const getDebugQuery = useGetDebugQuery();
-    console.log(getDebugQuery.data && getDebugQuery.data[0]);
+
     return (
         <>
             <Portal>

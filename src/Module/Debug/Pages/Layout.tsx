@@ -88,22 +88,25 @@ function HttpRequestError({error}: {error: any}) {
     );
 }
 
-function DebugEntryAutocomplete({data}: {data: DebugEntry[] | undefined}) {
-    const dispatch = useDispatch();
+type DebugEntryAutocompleteProps = {
+    data: DebugEntry[] | undefined;
+    onChange: (data: DebugEntry | null) => void;
+};
+const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) => {
     const debugEntry = useDebugEntry();
 
     const getOptions = useCallback(
         (entry: any) => {
             if (isDebugEntryAboutConsole(entry)) {
                 return [
-                    '[' + getEntryTarget(debugEntry) + ']',
+                    '[' + getEntryTarget(entry) + ']',
                     formatDate(entry.console.request.startTime),
                     entry.command.input,
                 ].join(' ');
             }
             if (isDebugEntryAboutWeb(entry)) {
                 return [
-                    '[' + getEntryTarget(debugEntry) + ']',
+                    '[' + getEntryTarget(entry) + ']',
                     formatDate(entry.web.request.startTime),
                     entry.request.method,
                     entry.request.path,
@@ -128,22 +131,23 @@ function DebugEntryAutocomplete({data}: {data: DebugEntry[] | undefined}) {
             renderInput={(params) => <TextField {...params} key={params.id} label="Record" />}
             onChange={(event, value) => {
                 if (typeof value === 'object') {
-                    dispatch(changeEntryAction(value));
+                    onChange(value);
+                } else {
+                    onChange(null);
                 }
             }}
             sx={{my: 1}}
         />
     );
-}
+};
 
 const Layout = () => {
     const dispatch = useDispatch();
-    const [searchParams] = useSearchParams();
-    const [getDebugQuery, {data, isLoading, isSuccess}] = useLazyGetDebugQuery();
     const debugEntry = useDebugEntry();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [getDebugQuery, {data, isLoading, isSuccess}] = useLazyGetDebugQuery();
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
-
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
 
     useEffect(() => {
@@ -152,8 +156,11 @@ const Layout = () => {
 
     useEffect(() => {
         if (isSuccess && data && data.length) {
-            const entry = data[0];
-            dispatch(changeEntryAction(entry));
+            let entry;
+            if (searchParams.has('debugEntry')) {
+                entry = data.find((entry) => entry.id === searchParams.get('debugEntry'));
+            }
+            changeEntry(entry ?? data[0]);
         }
     }, [isSuccess, data, dispatch]);
 
@@ -169,14 +176,28 @@ const Layout = () => {
         }
         collectorInfo({id: debugEntry.id, collector}).then(({data, isError}) => {
             if (isError) {
-                dispatch(changeEntryAction(null));
+                changeEntry(null);
                 return;
             }
             setSelectedCollector(collector);
             setCollectorData(data);
         });
     }, [searchParams, debugEntry]);
-
+    const changeEntry = (entry: DebugEntry | null) => {
+        if (entry) {
+            dispatch(changeEntryAction(entry));
+            setSearchParams((prev) => {
+                prev.append('debugEntry', entry.id);
+                return prev;
+            });
+            return;
+        }
+        dispatch(changeEntryAction(null));
+        setSearchParams((prev) => {
+            prev.delete('debugEntry');
+            return prev;
+        });
+    };
     const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);
 
     const links: LinkProps[] = useMemo(
@@ -203,6 +224,7 @@ const Layout = () => {
         }
         getDebugQuery();
     }, [debugEntry]);
+    const onEntryChangeHandler = useCallback(changeEntry, []);
 
     if (isLoading) {
         return <FullScreenCircularProgress />;
@@ -261,7 +283,7 @@ const Layout = () => {
                     </Button>
                 </span>
             </Tooltip>
-            <DebugEntryAutocomplete data={data} />
+            <DebugEntryAutocomplete data={data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
                 <InfoBox
                     title="Collectors are empty"

@@ -59,7 +59,6 @@ export type DebugEntry = {
     };
     router: {
         matchTime: number;
-        matchedRoute: string;
         name: string;
         pattern: string;
         arguments: string;

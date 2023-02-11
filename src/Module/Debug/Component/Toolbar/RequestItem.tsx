@@ -99,7 +99,7 @@ export const RequestItem = ({data}: RequestItemProps) => {
                     </ListItemIcon>
                     <ListItemText>Route</ListItemText>
                     <Typography variant="body2" color="text.secondary" ml={2}>
-                        {data.router.matchedRoute}
+                        {data.router.name}
                     </Typography>
                 </MenuItem>
             </Menu>

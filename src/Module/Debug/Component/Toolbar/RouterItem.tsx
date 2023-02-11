@@ -8,7 +8,7 @@ type RouterItemProps = {
 };
 
 export const RouterItem = ({data}: RouterItemProps) => {
-    if (data.router.matchedRoute === null) {
+    if (data.router.name === null) {
         return null;
     }
     return (
@@ -22,7 +22,7 @@ export const RouterItem = ({data}: RouterItemProps) => {
                 borderRadius: 0,
             }}
         >
-            {data.router.matchedRoute}
+            {data.router.name}
         </Button>
     );
 };

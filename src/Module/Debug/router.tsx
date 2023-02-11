@@ -11,11 +11,6 @@ export const routes = [
                 element: <Pages.IndexPage />,
                 index: true,
             },
-        ],
-    },
-    {
-        path: 'debug',
-        children: [
             {
                 path: 'object',
                 element: <Pages.ObjectPage />,
