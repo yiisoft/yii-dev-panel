@@ -206,7 +206,7 @@ const Layout = () => {
                 ? []
                 : debugEntry.collectors.map((collector, index) => ({
                       text: parseCollectorName(collector),
-                      href: '/debug/?collector=' + collector,
+                      href: `/debug/?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
                   })),
         [debugEntry],

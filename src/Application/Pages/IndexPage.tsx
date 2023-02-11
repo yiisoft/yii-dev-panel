@@ -67,7 +67,7 @@ export function IndexPage() {
 
     return (
         <Grid container spacing={2}>
-            <Grid md={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 <h2>Yii Dev Panel</h2>
                 <Typography>
                     Default backend url is: <b>{defaultBackendUrl}</b>
@@ -106,7 +106,7 @@ export function IndexPage() {
                     </IconButton>
                 </Paper>
             </Grid>
-            <Grid md={6} xs={12}>
+            <Grid item md={6} xs={12}>
                 {favoriteUrls.length > 0 && (
                     <>
                         <h3>Favorites</h3>

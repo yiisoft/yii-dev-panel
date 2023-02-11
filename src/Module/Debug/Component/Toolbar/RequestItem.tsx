@@ -24,12 +24,8 @@ type RequestItemProps = {
 export const RequestItem = ({data}: RequestItemProps) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
 
     return (
         <>
@@ -58,50 +54,55 @@ export const RequestItem = ({data}: RequestItemProps) => {
                     </ListItemIcon>
                     Repeat
                 </MenuItem>
-                {/*<MenuItem >*/}
-                <NestedMenuItem
-                    onClick={handleClose}
-                    sx={{
-                        padding: '6px 16px',
-                    }}
-                    leftIcon={
-                        <DynamicFeed
-                            fontSize="small"
-                            sx={{
-                                color: 'text.secondary',
-                                mr: 1,
-                            }}
-                        />
-                    }
-                    label="Middlewares"
-                    parentMenuOpen={open}
-                >
-                    {data.router.middlewares.map((middleware, index) => (
-                        <MenuItem key={index} onClick={handleClose}>
-                            <ListItemText color="text.secondary">
-                                {index + 1}. {serializeCallable(middleware)}
-                            </ListItemText>
-                        </MenuItem>
-                    ))}
-                </NestedMenuItem>
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <DataObject fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Action</ListItemText>
-                    <Typography variant="body2" color="text.secondary" ml={2}>
-                        {serializeCallable(data.router.action)}
-                    </Typography>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <ListItemIcon>
-                        <Route fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText>Route</ListItemText>
-                    <Typography variant="body2" color="text.secondary" ml={2}>
-                        {data.router.name}
-                    </Typography>
-                </MenuItem>
+                {data.router?.middlewares && (
+                    <NestedMenuItem
+                        onClick={handleClose}
+                        sx={{
+                            padding: '6px 16px',
+                        }}
+                        leftIcon={
+                            <DynamicFeed
+                                fontSize="small"
+                                sx={{
+                                    color: 'text.secondary',
+                                    mr: 1,
+                                }}
+                            />
+                        }
+                        label="Middlewares"
+                        parentMenuOpen={open}
+                    >
+                        {data.router.middlewares.map((middleware, index) => (
+                            <MenuItem key={index} onClick={handleClose}>
+                                <ListItemText color="text.secondary">
+                                    {index + 1}. {serializeCallable(middleware)}
+                                </ListItemText>
+                            </MenuItem>
+                        ))}
+                    </NestedMenuItem>
+                )}
+                {data.router?.action && (
+                    <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                            <DataObject fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Action</ListItemText>
+                        <Typography variant="body2" color="text.secondary" ml={2}>
+                            {serializeCallable(data.router.action)}
+                        </Typography>
+                    </MenuItem>
+                )}
+                {data.router?.name && (
+                    <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                            <Route fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Route</ListItemText>
+                        <Typography variant="body2" color="text.secondary" ml={2}>
+                            {data.router.name}
+                        </Typography>
+                    </MenuItem>
+                )}
             </Menu>
         </>
     );

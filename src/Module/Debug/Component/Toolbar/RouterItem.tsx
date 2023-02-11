@@ -8,7 +8,7 @@ type RouterItemProps = {
 };
 
 export const RouterItem = ({data}: RouterItemProps) => {
-    if (data.router.name === null) {
+    if (!data.router) {
         return null;
     }
     return (

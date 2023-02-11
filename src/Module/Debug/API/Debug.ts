@@ -57,7 +57,7 @@ export type DebugEntry = {
     response: {
         statusCode: number;
     };
-    router: {
+    router: null | {
         matchTime: number;
         name: string;
         pattern: string;
