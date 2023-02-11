@@ -10,10 +10,12 @@ import {EventsItem} from './EventsItem';
 import {RouterItem} from './RouterItem';
 import {ValidatorItem} from './ValidatorItem';
 import {YiiIcon} from '../../../../Component/SvgIcon/YiiIcon';
+import {useDebugEntry} from '../../Context/Context';
 
 export const DebugToolbar = () => {
     const [checked, setChecked] = useState(true);
     const getDebugQuery = useGetDebugQuery();
+    const debugEntry = useDebugEntry();
 
     return (
         <>
@@ -44,13 +46,13 @@ export const DebugToolbar = () => {
                             }}
                         >
                             <ButtonGroup disableElevation>
-                                <RequestItem data={getDebugQuery.data[0]} />
-                                <RequestTimeItem data={getDebugQuery.data[0]} />
-                                <MemoryItem data={getDebugQuery.data[0]} />
-                                <RouterItem data={getDebugQuery.data[0]} />
-                                <LogsItem data={getDebugQuery.data[0]} />
-                                <EventsItem data={getDebugQuery.data[0]} />
-                                <ValidatorItem data={getDebugQuery.data[0]} />
+                                <RequestItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <RequestTimeItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <MemoryItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <RouterItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <LogsItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <EventsItem data={debugEntry ?? getDebugQuery.data[0]} />
+                                <ValidatorItem data={debugEntry ?? getDebugQuery.data[0]} />
                             </ButtonGroup>
                         </Box>
                         <Box>
