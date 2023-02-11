@@ -1,5 +1,5 @@
-import React from 'react';
-import {ButtonGroup, IconButton, Portal} from '@mui/material';
+import React, {useState} from 'react';
+import {ButtonGroup, IconButton, Paper, Portal} from '@mui/material';
 import Box from '@mui/material/Box';
 import {useGetDebugQuery} from '../../API/Debug';
 import {ArrowRightSharp} from '@mui/icons-material';
@@ -11,29 +11,35 @@ import {EventsItem} from './EventsItem';
 import {RouterItem} from './RouterItem';
 
 export const Toolbar = () => {
+    const [checked, setChecked] = useState(true);
     const getDebugQuery = useGetDebugQuery();
     console.log(getDebugQuery.data && getDebugQuery.data[0]);
     return (
         <>
             <Portal>
                 {!getDebugQuery.isLoading && getDebugQuery.data && (
-                    <Box
+                    <Paper
+                        component={Box}
+                        elevation={10}
                         sx={{
+                            position: 'fixed',
+                            bottom: 0,
+                            right: 0,
+                            width: !checked ? 'initial' : '100%',
+                            transition: 'width 350ms ease-in-out',
+                            py: 1,
+                            px: 0.5,
+                            boxSizing: 'border-box',
+                            backgroundColor: 'primary.main',
                             display: 'flex',
                             flexDirection: 'row',
                             alignItems: 'center',
-                            boxShadow: '0px -2px 4px 1px rgba(0,0,0,0.31);',
-                            position: 'fixed',
-                            bottom: 0,
-                            width: '100%',
-                            py: 1,
-                            px: 0.5,
-                            backgroundColor: 'primary.main',
+                            justifyContent: 'space-between',
                         }}
                     >
                         <Box
                             sx={{
-                                width: '100%',
+                                display: checked ? 'inline-block' : 'none',
                             }}
                         >
                             <ButtonGroup disableElevation>
@@ -45,12 +51,23 @@ export const Toolbar = () => {
                                 <EventsItem data={getDebugQuery.data[0]} />
                             </ButtonGroup>
                         </Box>
-                        <Box sx={{margin: '0 auto'}}>
-                            <IconButton sx={{marginX: 1, background: 'white'}}>
-                                <ArrowRightSharp fontSize="medium" />
+                        <Box>
+                            <IconButton
+                                onClick={() => {
+                                    setChecked((v) => !v);
+                                }}
+                                sx={{marginX: 1, background: 'white'}}
+                            >
+                                <ArrowRightSharp
+                                    sx={{
+                                        transform: !checked ? 'rotate(-180deg)' : 'rotate(0deg)',
+                                        transition: 'transform 150ms ease-in-out',
+                                    }}
+                                    fontSize="medium"
+                                />
                             </IconButton>
                         </Box>
-                    </Box>
+                    </Paper>
                 )}
             </Portal>
         </>
