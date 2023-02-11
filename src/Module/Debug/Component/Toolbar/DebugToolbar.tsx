@@ -11,7 +11,7 @@ import {RouterItem} from './RouterItem';
 import {ValidatorItem} from './ValidatorItem';
 import {YiiIcon} from '../../../../Component/SvgIcon/YiiIcon';
 
-export const Toolbar = () => {
+export const DebugToolbar = () => {
     const [checked, setChecked] = useState(true);
     const getDebugQuery = useGetDebugQuery();
 
@@ -23,7 +23,7 @@ export const Toolbar = () => {
                         component={Box}
                         elevation={10}
                         sx={{
-                            position: 'fixed',
+                            position: 'sticky',
                             bottom: 0,
                             right: 0,
                             width: !checked ? 'initial' : '100%',
@@ -36,6 +36,7 @@ export const Toolbar = () => {
                             flexDirection: 'row',
                             alignItems: 'center',
                             justifyContent: 'space-between',
+                            zIndex: '1500',
                         }}
                     >
                         <Box
