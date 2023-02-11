@@ -9,6 +9,7 @@ import {MemoryItem} from './MemoryItem';
 import {LogsItem} from './LogsItem';
 import {EventsItem} from './EventsItem';
 import {RouterItem} from './RouterItem';
+import {ValidatorItem} from './ValidatorItem';
 
 export const Toolbar = () => {
     const [checked, setChecked] = useState(true);
@@ -49,6 +50,7 @@ export const Toolbar = () => {
                                 <RouterItem data={getDebugQuery.data[0]} />
                                 <LogsItem data={getDebugQuery.data[0]} />
                                 <EventsItem data={getDebugQuery.data[0]} />
+                                <ValidatorItem data={getDebugQuery.data[0]} />
                             </ButtonGroup>
                         </Box>
                         <Box>
