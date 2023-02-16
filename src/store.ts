@@ -5,7 +5,7 @@ import {middlewares as InspectorMiddlewares, reducers as InspectorReducers} from
 import {middlewares as DebugMiddlewares, reducers as DebugReducers} from './Module/Debug/api';
 import {middlewares as GiiMiddlewares, reducers as GiiReducers} from './Module/Gii/api';
 import {FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
-import {useSelector} from 'react-redux';
+import {TypedUseSelectorHook, useSelector} from 'react-redux';
 
 // TODO: get reducers and middlewares from modules.ts
 const rootReducer = combineReducers({
@@ -34,6 +34,6 @@ export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
-const useAppSelector = useSelector<RootState>;
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export {useAppSelector as useSelector};

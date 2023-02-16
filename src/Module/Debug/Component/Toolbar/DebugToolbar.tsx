@@ -11,12 +11,23 @@ import {RouterItem} from './RouterItem';
 import {ValidatorItem} from './ValidatorItem';
 import {YiiIcon} from '../../../../Component/SvgIcon/YiiIcon';
 import {useDebugEntry} from '../../Context/Context';
+import {useSelector} from '../../../../store';
+import {useDispatch} from 'react-redux';
+import {setToolbarOpen} from '../../../../Application/Context/ApplicationContext';
 
 export const DebugToolbar = () => {
-    const [checked, setChecked] = useState(true);
+    const initialState = useSelector((state) => state.application.toolbarOpen);
+    const [checked, setChecked] = useState<boolean>(initialState);
     const getDebugQuery = useGetDebugQuery();
     const debugEntry = useDebugEntry();
+    const dispatch = useDispatch();
 
+    const onToolbarClickHandler = () => {
+        setChecked((v) => {
+            dispatch(setToolbarOpen(!v));
+            return !v;
+        });
+    };
     return (
         <>
             <Portal>
@@ -25,7 +36,7 @@ export const DebugToolbar = () => {
                         component={Box}
                         elevation={10}
                         sx={{
-                            position: 'sticky',
+                            position: !checked ? 'fixed' : 'sticky',
                             bottom: 0,
                             right: 0,
                             width: !checked ? 'initial' : '100%',
@@ -56,12 +67,7 @@ export const DebugToolbar = () => {
                             </ButtonGroup>
                         </Box>
                         <Box>
-                            <IconButton
-                                onClick={() => {
-                                    setChecked((v) => !v);
-                                }}
-                                sx={{marginX: 1, background: 'white'}}
-                            >
+                            <IconButton onClick={onToolbarClickHandler} sx={{marginX: 1, background: 'white'}}>
                                 <YiiIcon
                                     sx={{
                                         transform: !checked ? 'rotate(360deg)' : 'rotate(0deg)',
