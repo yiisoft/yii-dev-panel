@@ -11,6 +11,7 @@ import {
     CircularProgress,
     LinearProgress,
     Link,
+    Stack,
     TextField,
     Tooltip,
     Typography,
@@ -29,7 +30,7 @@ import {ErrorFallback} from '../../../Component/ErrorFallback';
 import {FullScreenCircularProgress} from '../../../Component/FullScreenCircularProgress';
 import {LinkProps, MenuPanel} from '../../../Component/MenuPanel';
 import {InfoBox} from '../../../Component/InfoBox';
-import {Check, EmojiObjects, Error, HelpOutline} from '@mui/icons-material';
+import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
 import {useDoRequestMutation} from '../../Inspector/API/Inspector';
 import {MiddlewarePanel} from '../Component/Panel/MiddlewarePanel';
 import {EventPanel} from '../Component/Panel/EventPanel';
@@ -145,7 +146,7 @@ const Layout = () => {
     const dispatch = useDispatch();
     const debugEntry = useDebugEntry();
     const [searchParams, setSearchParams] = useSearchParams();
-    const [getDebugQuery, {data, isLoading, isSuccess}] = useLazyGetDebugQuery();
+    const [getDebugQuery, getDebugQueryInfo] = useLazyGetDebugQuery();
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
@@ -155,14 +156,14 @@ const Layout = () => {
     }, []);
 
     useEffect(() => {
-        if (isSuccess && data && data.length) {
+        if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
             let entry;
             if (searchParams.has('debugEntry')) {
-                entry = data.find((entry) => entry.id === searchParams.get('debugEntry'));
+                entry = getDebugQueryInfo.data.find((entry) => entry.id === searchParams.get('debugEntry'));
             }
-            changeEntry(entry ?? data[0]);
+            changeEntry(entry ?? getDebugQueryInfo.data[0]);
         }
-    }, [isSuccess, data, dispatch]);
+    }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data, dispatch]);
 
     useEffect(() => {
         const collector = searchParams.get('collector') || '';
@@ -225,12 +226,15 @@ const Layout = () => {
         getDebugQuery();
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
+    const onRefreshHandler = useCallback(() => {
+        getDebugQuery();
+    }, []);
 
-    if (isLoading) {
+    if (getDebugQueryInfo.isLoading) {
         return <FullScreenCircularProgress />;
     }
 
-    if (data && data.length === 0) {
+    if (getDebugQueryInfo.data && getDebugQueryInfo.data.length === 0) {
         return (
             <InfoBox
                 title="No debug entries found"
@@ -264,26 +268,41 @@ const Layout = () => {
                 </Link>
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
-            <Tooltip title="Runs the request again">
-                <span>
-                    <Button
-                        onClick={repeatRequestHandler}
-                        disabled={!debugEntry || doRequestInfo.isLoading}
-                        endIcon={
-                            doRequestInfo.isLoading ? (
-                                <CircularProgress size={24} color="info" />
-                            ) : doRequestInfo.isUninitialized ? null : doRequestInfo.isSuccess ? (
-                                <Check color="success" />
-                            ) : (
-                                <Error color="error" />
-                            )
-                        }
-                    >
-                        Repeat Request
-                    </Button>
-                </span>
-            </Tooltip>
-            <DebugEntryAutocomplete data={data} onChange={onEntryChangeHandler} />
+            <Stack direction="row" spacing={2}>
+                <Tooltip title="Refresh the list" sx={{margin: '0 auto'}}>
+                    <span>
+                        <Button
+                            onClick={onRefreshHandler}
+                            disabled={getDebugQueryInfo.isFetching}
+                            startIcon={<Refresh />}
+                            endIcon={getDebugQueryInfo.isFetching ? <CircularProgress size={24} color="info" /> : null}
+                        >
+                            Refresh
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Runs the request again" sx={{flex: '1'}}>
+                    <span>
+                        <Button
+                            onClick={repeatRequestHandler}
+                            disabled={!debugEntry || doRequestInfo.isLoading || getDebugQueryInfo.isFetching}
+                            endIcon={
+                                doRequestInfo.isLoading ? (
+                                    <CircularProgress size={24} color="info" />
+                                ) : doRequestInfo.isUninitialized ? null : doRequestInfo.isSuccess ? (
+                                    <Check color="success" />
+                                ) : (
+                                    <Error color="error" />
+                                )
+                            }
+                        >
+                            Repeat Request
+                        </Button>
+                    </span>
+                </Tooltip>
+            </Stack>
+
+            <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
                 <InfoBox
                     title="Collectors are empty"
