@@ -53,7 +53,13 @@ function getEntryTarget(entry: any) {
 }
 
 function parseCollectorName(text: string) {
-    return text.replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
+    return text
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\Web\\', '')
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\Console\\', '')
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\Database\\', '')
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\Queue\\', '')
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\Stream\\', '')
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
 }
 
 type CollectorDataProps = {
@@ -64,7 +70,7 @@ type CollectorDataProps = {
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
         'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPanel data={data} />,
-        'Yiisoft\\Yii\\Debug\\Collector\\MiddlewareCollector': (data: any) => <MiddlewarePanel {...data} />,
+        'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector': (data: any) => <MiddlewarePanel {...data} />,
         'Yiisoft\\Yii\\Debug\\Collector\\EventCollector': (data: any) => <EventPanel events={data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
