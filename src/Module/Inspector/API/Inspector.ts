@@ -63,7 +63,7 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response) => result.data || [],
         }),
         getConfiguration: builder.query<ConfigurationType, string>({
-            query: (group = 'web') => `config?group=${group}`,
+            query: (group = 'di') => `config?group=${group}`,
             transformResponse: (result: Response<ConfigurationType>) => result.data || [],
         }),
         getClasses: builder.query<ClassesType, string>({

@@ -60,7 +60,7 @@ const columns: GridColDef[] = [
     },
 ];
 export const ConfigurationPage = () => {
-    const {data, isLoading} = useGetConfigurationQuery('web');
+    const {data, isLoading} = useGetConfigurationQuery('di');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [searchParams, setSearchParams] = useSearchParams();
     const searchString = searchParams.get('filter') || '';
