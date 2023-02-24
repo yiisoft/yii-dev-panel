@@ -1,13 +1,15 @@
 import * as React from 'react';
-import {useCallback, useEffect, useMemo, useState} from 'react';
+import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
 import {Outlet} from 'react-router';
 import {
     Alert,
+    AlertColor,
     AlertTitle,
     Autocomplete,
     Box,
     Breadcrumbs,
     Button,
+    Chip,
     CircularProgress,
     LinearProgress,
     Link,
@@ -35,21 +37,26 @@ import {useDoRequestMutation} from '../../Inspector/API/Inspector';
 import {MiddlewarePanel} from '../Component/Panel/MiddlewarePanel';
 import {EventPanel} from '../Component/Panel/EventPanel';
 import {LogPanel} from '../Component/Panel/LogPanel';
+import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
 
 function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
 }
 
-function isDebugEntryAboutConsole(entry: any) {
+function isDebugEntryAboutConsole(entry: DebugEntry) {
     return entry && 'console' in entry;
 }
 
-function isDebugEntryAboutWeb(entry: any) {
+function isDebugEntryAboutWeb(entry: DebugEntry) {
     return entry && 'web' in entry;
 }
 
-function getEntryTarget(entry: any) {
-    return isDebugEntryAboutWeb(entry) ? 'web' : isDebugEntryAboutConsole(entry) ? 'console' : 'unknown';
+function getEntryTarget(entry: DebugEntry) {
+    return isDebugEntryAboutWeb(entry)
+        ? entry.response.statusCode
+        : isDebugEntryAboutConsole(entry)
+        ? 'console'
+        : 'unknown';
 }
 
 function parseCollectorName(text: string) {
@@ -94,6 +101,17 @@ function HttpRequestError({error}: {error: any}) {
         </Box>
     );
 }
+const buttonColor = (status: number): AlertColor => {
+    switch (true) {
+        case status >= 400:
+            return 'error';
+        case status >= 300:
+            return 'warning';
+        case status >= 200:
+            return 'success';
+    }
+    return 'info';
+};
 
 type DebugEntryAutocompleteProps = {
     data: DebugEntry[] | undefined;
@@ -102,40 +120,64 @@ type DebugEntryAutocompleteProps = {
 const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) => {
     const debugEntry = useDebugEntry();
 
-    const getOptions = useCallback(
-        (entry: any) => {
-            if (isDebugEntryAboutConsole(entry)) {
-                return [
-                    '[' + getEntryTarget(entry) + ']',
-                    formatDate(entry.console.request.startTime),
-                    entry.command.input,
-                ].join(' ');
-            }
-            if (isDebugEntryAboutWeb(entry)) {
-                return [
-                    '[' + getEntryTarget(entry) + ']',
-                    formatDate(entry.web.request.startTime),
-                    entry.request.method,
-                    entry.request.path,
-                ].join(' ');
-            }
-            return entry.id;
-        },
-        [debugEntry],
+    const renderLabel = useCallback((entry: DebugEntry): string => {
+        if (isDebugEntryAboutConsole(entry)) {
+            return ['[' + getEntryTarget(entry) + ']', entry.command.input].join(' ');
+        }
+        if (isDebugEntryAboutWeb(entry)) {
+            return ['[' + getEntryTarget(entry) + ']', entry.request.method, entry.request.path].join(' ');
+        }
+        return entry.id;
+    }, []);
+    const renderOptions = useCallback(
+        (props: HTMLAttributes<HTMLElement>, entry: DebugEntry): ReactJSXElement => (
+            <Stack
+                {...props}
+                key={entry.id}
+                component="li"
+                direction="row"
+                spacing={2}
+                sx={{'& > img': {mr: 2, flexShrink: 0}}}
+            >
+                {isDebugEntryAboutWeb(entry) && (
+                    <>
+                        <Typography component="span" sx={{flex: 1}}>
+                            <Chip
+                                sx={{borderRadius: '5px 5px', margin: '0 2px'}}
+                                label={`${entry.response.statusCode} ${entry.request.method}`}
+                                color={buttonColor(entry.response.statusCode)}
+                            />
+                            <span style={{margin: '0 2px'}}>{entry.request.path}</span>
+                        </Typography>
+                        <Typography component="span" sx={{margin: '0 auto'}}>
+                            <span>{formatDate(entry.web.request.startTime)}</span>
+                        </Typography>
+                    </>
+                )}
+                {isDebugEntryAboutConsole(entry) && (
+                    <>
+                        <Typography component="span" sx={{flex: 1}}>
+                            <span style={{margin: '0 2px'}}>[{getEntryTarget(entry)}]</span>
+                            <span style={{margin: '0 2px'}}>{entry.command.input}</span>
+                        </Typography>
+                        <Typography component="span" sx={{margin: '0 auto'}}>
+                            <span>{formatDate(entry.console.request.startTime)}</span>
+                        </Typography>
+                    </>
+                )}
+            </Stack>
+        ),
+        [],
     );
 
     return (
         <Autocomplete
-            freeSolo
             value={debugEntry}
             options={(data || []) as DebugEntry[]}
-            getOptionLabel={getOptions}
-            renderOption={(props, option) => (
-                <li {...props} key={option.id}>
-                    {getOptions(option)}
-                </li>
-            )}
-            renderInput={(params) => <TextField {...params} key={params.id} label="Record" />}
+            getOptionLabel={renderLabel}
+            renderOption={renderOptions}
+            isOptionEqualToValue={(option, value) => option.id === value.id}
+            renderInput={(params) => <TextField {...params} label="Record" />}
             onChange={(event, value) => {
                 if (typeof value === 'object') {
                     onChange(value);
@@ -275,7 +317,7 @@ const Layout = () => {
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
             <Stack direction="row" spacing={2}>
-                <Tooltip title="Refresh the list" sx={{margin: '0 auto'}}>
+                <Tooltip title="Refresh the list">
                     <span>
                         <Button
                             onClick={onRefreshHandler}
@@ -287,7 +329,7 @@ const Layout = () => {
                         </Button>
                     </span>
                 </Tooltip>
-                <Tooltip title="Runs the request again" sx={{flex: '1'}}>
+                <Tooltip title="Runs the request again">
                     <span>
                         <Button
                             onClick={repeatRequestHandler}
