@@ -17,7 +17,11 @@ const EventsItem = forwardRef((props: EventsItemProps, ref: ForwardedRef<HTMLBut
                 startIcon={<ChatBubble fontSize="small" />}
                 color="info"
                 variant="contained"
-                sx={{textTransform: 'none', borderRadius: 0}}
+                sx={{
+                    whiteSpace: 'nowrap',
+                    textTransform: 'none',
+                    borderRadius: 0,
+                }}
             >
                 Events
             </Button>

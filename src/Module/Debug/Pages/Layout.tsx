@@ -38,26 +38,8 @@ import {MiddlewarePanel} from '../Component/Panel/MiddlewarePanel';
 import {EventPanel} from '../Component/Panel/EventPanel';
 import {LogPanel} from '../Component/Panel/LogPanel';
 import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
-
-function formatDate(unixTimeStamp: number) {
-    return format(fromUnixTime(unixTimeStamp), 'do MMM hh:mm:ss');
-}
-
-function isDebugEntryAboutConsole(entry: DebugEntry) {
-    return entry && 'console' in entry;
-}
-
-function isDebugEntryAboutWeb(entry: DebugEntry) {
-    return entry && 'web' in entry;
-}
-
-function getEntryTarget(entry: DebugEntry) {
-    return isDebugEntryAboutWeb(entry)
-        ? entry.response.statusCode
-        : isDebugEntryAboutConsole(entry)
-        ? 'console'
-        : 'unknown';
-}
+import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '../Helper/debugEntry';
+import {formatDate} from '../Helper/formatDate';
 
 function parseCollectorName(text: string) {
     return text
@@ -122,10 +104,10 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
     const renderLabel = useCallback((entry: DebugEntry): string => {
         if (isDebugEntryAboutConsole(entry)) {
-            return ['[' + getEntryTarget(entry) + ']', entry.command.input].join(' ');
+            return [entry.command.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command.input].join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
-            return ['[' + getEntryTarget(entry) + ']', entry.request.method, entry.request.path].join(' ');
+            return ['[' + entry.response.statusCode + ']', entry.request.method, entry.request.path].join(' ');
         }
         return entry.id;
     }, []);
@@ -157,7 +139,15 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                 {isDebugEntryAboutConsole(entry) && (
                     <>
                         <Typography component="span" sx={{flex: 1}}>
-                            <span style={{margin: '0 2px'}}>[{getEntryTarget(entry)}]</span>
+                            {entry.command.exitCode === 0 ? (
+                                <Chip label="OK" color={'success'} sx={{borderRadius: '5px 5px', margin: '0 2px'}} />
+                            ) : (
+                                <Chip
+                                    label={`CODE: ${entry.command.exitCode}`}
+                                    color={'error'}
+                                    sx={{borderRadius: '5px 5px', margin: '0 2px'}}
+                                />
+                            )}
                             <span style={{margin: '0 2px'}}>{entry.command.input}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
@@ -213,30 +203,38 @@ const Layout = () => {
         }
     }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data, dispatch]);
 
+    const clearCollectorAndData = () => {
+        searchParams.delete('collector');
+        setSelectedCollector('');
+        setCollectorData(null);
+    };
+
     useEffect(() => {
         const collector = searchParams.get('collector') || '';
         if (collector.trim() === '') {
-            setSelectedCollector('');
-            setCollectorData(null);
+            clearCollectorAndData();
             return;
         }
         if (!debugEntry) {
             return;
         }
-        collectorInfo({id: debugEntry.id, collector}).then(({data, isError}) => {
-            if (isError) {
-                changeEntry(null);
-                return;
-            }
-            setSelectedCollector(collector);
-            setCollectorData(data);
-        });
+        collectorInfo({id: debugEntry.id, collector})
+            .then(({data, isError}) => {
+                if (isError) {
+                    clearCollectorAndData();
+                    changeEntry(null);
+                    return;
+                }
+                setSelectedCollector(collector);
+                setCollectorData(data);
+            })
+            .catch(clearCollectorAndData);
     }, [searchParams, debugEntry]);
     const changeEntry = (entry: DebugEntry | null) => {
         if (entry) {
             dispatch(changeEntryAction(entry));
             setSearchParams((prev) => {
-                prev.append('debugEntry', entry.id);
+                prev.set('debugEntry', entry.id);
                 return prev;
             });
             return;

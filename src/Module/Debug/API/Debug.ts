@@ -30,11 +30,24 @@ export type DebugEntry = {
         totalTime: number;
     };
     fs_stream: {
-        write: number;
-        mkdir: number;
+        read?: number;
+        write?: number;
+        mkdir?: number;
     };
     http_stream: [];
     web: {
+        php: {
+            version: string;
+        };
+        request: {
+            startTime: number;
+            processingTime: number;
+        };
+        memory: {
+            peakUsage: number;
+        };
+    };
+    console: {
         php: {
             version: string;
         };
@@ -53,6 +66,12 @@ export type DebugEntry = {
         method: HTTPMethod;
         isAjax: boolean;
         userIp: string;
+    };
+    command: {
+        exitCode: number;
+        class: string;
+        input: string;
+        name: string;
     };
     response: {
         statusCode: number;

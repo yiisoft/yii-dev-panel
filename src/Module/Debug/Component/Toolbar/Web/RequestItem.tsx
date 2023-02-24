@@ -1,10 +1,10 @@
 import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
 import React, {useState} from 'react';
-import {DebugEntry} from '../../API/Debug';
+import {DebugEntry} from '../../../API/Debug';
 import {DataObject, DynamicFeed, Repeat, Route} from '@mui/icons-material';
 import {NestedMenuItem} from 'mui-nested-menu';
-import {serializeCallable} from '../../../../Helper/callableSerializer';
-import {MuiColor} from '../../../../Adapter/mui/types';
+import {serializeCallable} from '../../../../../Helper/callableSerializer';
+import {MuiColor} from '../../../../../Adapter/mui/types';
 
 const buttonColor = (status: number): MuiColor => {
     switch (true) {
@@ -34,7 +34,11 @@ export const RequestItem = ({data}: RequestItemProps) => {
                     color={buttonColor(data.response.statusCode)}
                     variant="contained"
                     onClick={handleClick}
-                    sx={{textTransform: 'none', borderRadius: 0}}
+                    sx={{
+                        whiteSpace: 'nowrap',
+                        textTransform: 'none',
+                        borderRadius: 0,
+                    }}
                 >
                     {data.request.method}&nbsp;
                     {data.request.path}&nbsp;

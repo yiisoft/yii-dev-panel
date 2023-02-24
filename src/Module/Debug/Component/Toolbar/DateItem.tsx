@@ -1,21 +1,20 @@
 import {Badge, Button} from '@mui/material';
-import React, {forwardRef} from 'react';
+import React, {ForwardedRef, forwardRef} from 'react';
 import {DebugEntry} from '../../API/Debug';
 import {ChatBubble} from '@mui/icons-material';
+import format from 'date-fns/format';
+import {fromUnixTime} from 'date-fns';
 
-type LogsItemProps = {
+type DateItemProps = {
     data: DebugEntry;
 };
 
-export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref) => {
+const DateItem = forwardRef((props: DateItemProps, ref: ForwardedRef<HTMLButtonElement>) => {
     const {data, ...others} = props;
-
     return (
-        <Badge color="secondary" badgeContent={String(data.logger.total)}>
+        <Badge color="secondary" badgeContent={String(data.event.total)}>
             <Button
                 ref={ref}
-                href={`/debug/?collector=Yiisoft\\Yii\\Debug\\Collector\\LogCollector&debugEntry=${data.id}`}
-                startIcon={<ChatBubble fontSize="small" />}
                 color="info"
                 variant="contained"
                 sx={{
@@ -24,8 +23,10 @@ export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref
                     borderRadius: 0,
                 }}
             >
-                Logs
+                {format(fromUnixTime((data.web || data.console).request.startTime), 'do MMM hh:mm:ss')}
             </Button>
         </Badge>
     );
 });
+DateItem.displayName = Button.name;
+export {DateItem};

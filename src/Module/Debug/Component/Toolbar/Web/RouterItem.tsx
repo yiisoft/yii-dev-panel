@@ -1,6 +1,6 @@
 import {Button} from '@mui/material';
 import React from 'react';
-import {DebugEntry} from '../../API/Debug';
+import {DebugEntry} from '../../../API/Debug';
 import {Route} from '@mui/icons-material';
 
 type RouterItemProps = {
@@ -17,6 +17,7 @@ export const RouterItem = ({data}: RouterItemProps) => {
             color="info"
             variant="contained"
             sx={{
+                whiteSpace: 'nowrap',
                 height: '100%',
                 textTransform: 'none',
                 borderRadius: 0,

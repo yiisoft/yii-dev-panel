@@ -9,9 +9,17 @@ type MemoryItemProps = {
 
 export const MemoryItem = ({data}: MemoryItemProps) => {
     return (
-        <Tooltip title={`${data.web.memory.peakUsage.toLocaleString(undefined)} bytes`} arrow>
-            <Button color="info" variant="contained" sx={{textTransform: 'none', borderRadius: 0}}>
-                {formatBytes(data.web.memory.peakUsage)}
+        <Tooltip title={`${(data.web || data.console).memory.peakUsage.toLocaleString(undefined)} bytes`} arrow>
+            <Button
+                color="info"
+                variant="contained"
+                sx={{
+                    whiteSpace: 'nowrap',
+                    textTransform: 'none',
+                    borderRadius: 0,
+                }}
+            >
+                {formatBytes((data.web || data.console).memory.peakUsage)}
             </Button>
         </Tooltip>
     );

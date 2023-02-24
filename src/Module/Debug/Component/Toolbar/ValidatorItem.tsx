@@ -17,7 +17,11 @@ export const ValidatorItem = ({data}: ValidatorItemProps) => {
                 startIcon={<ChatBubble fontSize="small" />}
                 color={data.validator.invalid === 0 ? 'info' : 'warning'}
                 variant="contained"
-                sx={{textTransform: 'none', borderRadius: 0}}
+                sx={{
+                    whiteSpace: 'nowrap',
+                    textTransform: 'none',
+                    borderRadius: 0,
+                }}
             >
                 Validator
             </Button>
