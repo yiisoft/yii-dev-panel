@@ -8,8 +8,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {Avatar, Link} from '@mui/material';
+import {Avatar, Badge, Link} from '@mui/material';
 import {ChevronRight} from '@mui/icons-material';
+import {DebugEntry} from '../Module/Debug/API/Debug';
 
 const drawerWidth = 240;
 
@@ -54,12 +55,7 @@ export type LinkProps = {
     text: string;
     icon: React.ReactElement;
     href: string;
-};
-
-type MenuPanelProps = {
-    open?: boolean;
-    links: LinkProps[];
-    activeLink?: string;
+    badge?: string | number;
 };
 
 const drawerStyles = {
@@ -132,15 +128,17 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                                 justifyContent: 'center',
                             }}
                         >
-                            <Avatar
-                                variant="rounded"
-                                sx={{
-                                    bgcolor: activeLink === link.text ? 'secondary.main' : 'primary.main',
-                                    fontSize: 14,
-                                }}
-                            >
-                                {link.text.substring(0, 3)}
-                            </Avatar>
+                            <Badge color="info" badgeContent={link.badge || undefined}>
+                                <Avatar
+                                    variant="rounded"
+                                    sx={{
+                                        bgcolor: activeLink === link.text ? 'secondary.main' : 'primary.main',
+                                        fontSize: 14,
+                                    }}
+                                >
+                                    {link.text.substring(0, 3)}
+                                </Avatar>
+                            </Badge>
                         </ListItemIcon>
                         <ListItemText primary={link.text} />
                     </ListItemButton>
@@ -150,6 +148,11 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
     );
 });
 
+type MenuPanelProps = {
+    open?: boolean;
+    links: LinkProps[];
+    activeLink?: string;
+};
 const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
     const {links, children, activeLink} = props;
 

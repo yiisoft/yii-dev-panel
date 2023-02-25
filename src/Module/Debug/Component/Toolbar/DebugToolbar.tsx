@@ -32,7 +32,6 @@ export const DebugToolbar = () => {
         });
     };
     const selectedEntry = debugEntry ?? (getDebugQuery.data ? getDebugQuery.data[0] : null);
-
     return (
         <>
             <Portal>

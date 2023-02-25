@@ -40,6 +40,8 @@ import {LogPanel} from '../Component/Panel/LogPanel';
 import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '../Helper/debugEntry';
 import {formatDate} from '../Helper/formatDate';
+import {CollectorsMap} from '../Helper/collectors';
+import {getCollectedCountByCollector} from '../Helper/collectorsTotal';
 
 function parseCollectorName(text: string) {
     return text
@@ -58,9 +60,9 @@ type CollectorDataProps = {
 
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages = {
-        'Yiisoft\\Yii\\Debug\\Collector\\LogCollector': (data: any) => <LogPanel data={data} />,
-        'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector': (data: any) => <MiddlewarePanel {...data} />,
-        'Yiisoft\\Yii\\Debug\\Collector\\EventCollector': (data: any) => <EventPanel events={data} />,
+        [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
+        [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
+        [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
 
@@ -255,6 +257,7 @@ const Layout = () => {
                       text: parseCollectorName(collector),
                       href: `/debug/?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
+                      badge: getCollectedCountByCollector(collector as CollectorsMap, debugEntry),
                   })),
         [debugEntry],
     );
