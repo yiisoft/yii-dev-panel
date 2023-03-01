@@ -1,7 +1,7 @@
 import {Link as RouterLink, LinkProps as RouterLinkProps} from 'react-router-dom';
 import {LinkProps} from '@mui/material/Link';
-import {createTheme} from '@mui/material';
-import React from 'react';
+import {createTheme, PaletteMode, ThemeProvider, useMediaQuery} from '@mui/material';
+import React, {PropsWithChildren, useEffect} from 'react';
 
 const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'> & {href: RouterLinkProps['to']}>(
     (props, ref) => {
@@ -20,25 +20,33 @@ const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, '
     },
 );
 
-export const theme = createTheme({
-    palette: {
-        primary: {
-            main: '#00617B',
-        },
-        secondary: {
-            main: '#873C00',
-        },
-    },
-    components: {
-        MuiLink: {
-            defaultProps: {
-                component: LinkBehavior,
-            } as LinkProps,
-        },
-        MuiButtonBase: {
-            defaultProps: {
-                LinkComponent: LinkBehavior,
+export const DefaultThemeProvider = ({children}: PropsWithChildren) => {
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+    const mode: PaletteMode = prefersDarkMode ? 'dark' : 'light';
+
+    const theme = createTheme({
+        palette: {
+            mode: mode,
+            primary: {
+                main: '#00617B',
+            },
+            secondary: {
+                main: '#873C00',
             },
         },
-    },
-});
+        components: {
+            MuiLink: {
+                defaultProps: {
+                    component: LinkBehavior,
+                } as LinkProps,
+            },
+            MuiButtonBase: {
+                defaultProps: {
+                    LinkComponent: LinkBehavior,
+                },
+            },
+        },
+    });
+
+    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+};

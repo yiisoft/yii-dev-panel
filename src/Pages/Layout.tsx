@@ -5,7 +5,17 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {IconButton, Link, LinkTypeMap, ListItemIcon, ListItemText, Menu, MenuItem, styled} from '@mui/material';
+import {
+    CssBaseline,
+    IconButton,
+    Link,
+    LinkTypeMap,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    styled,
+} from '@mui/material';
 import {Outlet} from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary';
 import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
@@ -104,6 +114,7 @@ export const Layout = () => {
 
     return (
         <>
+            <CssBaseline />
             <AppBar position="static" color="primary">
                 <Container>
                     <Toolbar disableGutters>
