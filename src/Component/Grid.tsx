@@ -35,6 +35,7 @@ export function DataTable(props: GridProps) {
             onColumnHeaderClick={() => null}
             disableDensitySelector
             disableColumnSelector
+            disableVirtualization
             disableSelectionOnClick
             rows={rows}
             getRowId={getRowId}

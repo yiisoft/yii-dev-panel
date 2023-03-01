@@ -1,5 +1,6 @@
-import {DataType, JsonViewer, JsonViewerOnChange} from '@textea/json-viewer';
+import {DataType, JsonViewer, JsonViewerOnChange, JsonViewerTheme} from '@textea/json-viewer';
 import * as React from 'react';
+import {PaletteMode, useMediaQuery} from '@mui/material';
 
 const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
 
@@ -12,6 +13,9 @@ export type JsonRendererProps = {
 };
 export const JsonRenderer = React.memo(
     ({value, depth = 5, editable = false, onChange = undefined, valueTypes = []}: JsonRendererProps) => {
+        const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+        const mode: JsonViewerTheme = prefersDarkMode ? 'dark' : 'light';
+
         if (typeof value == 'string' && value.match(REGEXP_PHP_FUNCTION)?.length) {
             const html = value.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp');
             return <div dangerouslySetInnerHTML={{__html: html}} />;
@@ -24,9 +28,15 @@ export const JsonRenderer = React.memo(
                 editable={editable}
                 onChange={onChange}
                 displayDataTypes={false}
+                quotesOnKeys={false}
                 enableClipboard={true}
                 defaultInspectDepth={depth}
                 groupArraysAfterLength={50}
+                theme={mode}
+                style={{
+                    height: '100%',
+                    width: '100%',
+                }}
                 collapseStringsAfterLength={50}
                 valueTypes={[
                     {
