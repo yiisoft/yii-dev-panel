@@ -8,6 +8,7 @@ import {
     Http,
     Image,
     Javascript,
+    Link,
     Php,
     PictureAsPdf,
     Terminal,
@@ -65,27 +66,28 @@ function findByExtension(extension: string) {
 }
 
 export function fileExtensionIcon(row: InspectorFile) {
-    return useMemo(() => {
-        if (row.type == 'dir') {
-            return Folder;
-        }
-        const icon = findByExtension(row.extension);
+    if (row.type == 'dir') {
+        return Folder;
+    }
+    if (row.type == 'link') {
+        return Link;
+    }
+    const icon = findByExtension(row.extension);
 
-        if (icon) {
-            return icon;
-        }
-        const dotsNumber = row.baseName.match(/\./g)?.length || 0;
-        if (dotsNumber > 1) {
-            const strings = row.baseName.split('.');
-            const secondExtension = strings.at(-2);
-            if (secondExtension) {
-                const icon = findByExtension(secondExtension);
-                if (icon) {
-                    return icon;
-                }
+    if (icon) {
+        return icon;
+    }
+    const dotsNumber = row.baseName.match(/\./g)?.length || 0;
+    if (dotsNumber > 1) {
+        const strings = row.baseName.split('.');
+        const secondExtension = strings.at(-2);
+        if (secondExtension) {
+            const icon = findByExtension(secondExtension);
+            if (icon) {
+                return icon;
             }
         }
+    }
 
-        return FilePresent;
-    }, [row]);
+    return FilePresent;
 }
