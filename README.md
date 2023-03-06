@@ -58,13 +58,6 @@ Yii Development Panel – it is an application that aggregates such different mo
   - Generators
     - Controller generator
 
-> **Note:** this project is like a Proof of Concept and not officially supported by @yiisoft organization 
-> even if I am a core developer.
-> 
-> Someday it would be moved to `yiisoft` organization if it has satisfied the following requirements:
-> 1. It's easy to create custom panels at least for Debug module.
-> 2. It's unnecessary to download and build JS packages with NPM or any other tools.
-
 ## Installation
 
 ```shell
