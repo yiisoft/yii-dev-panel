@@ -87,7 +87,7 @@ const NavLink = (props: NavLinkType) => {
 };
 
 const buildVersion = 'REACT_APP_BUILD_ID' in process.env ? '#' + process.env.REACT_APP_BUILD_ID : 'development';
-const repositoryUrl = 'https://github.com/xepozz/yii-dev-panel';
+const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
 
 export const Layout = () => {
     const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});

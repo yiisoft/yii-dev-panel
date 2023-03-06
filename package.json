@@ -93,6 +93,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/xepozz/yii-dev-panel"
+    "url": "https://github.com/yiisoft/yii-dev-panel"
   }
 }

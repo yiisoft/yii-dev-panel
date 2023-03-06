@@ -86,7 +86,7 @@ Connect the apps and serve the built app any way you want: nginx, apache, node, 
 
 Online-mode or as standalone application. 
 
-Open https://xepozz.github.io/yii-dev-panel
+Open https://yiisoft.github.io/yii-dev-panel
 1. Online-mode
    1. There is an app. Specify the PHP app URL and use Yii dev panel.
 2. Standalone app
@@ -126,7 +126,7 @@ Both options also work with mobile phones.
 1. Clone the project
 
    ```shell
-   git clone git@github.com:xepozz/yii-dev-panel yii-dev-panel
+   git clone git@github.com:yiisoft/yii-dev-panel yii-dev-panel
    ```
 
 2. Install dependencies
