@@ -48,6 +48,7 @@ const pages = [
             {name: 'Composer', link: '/inspector/composer'},
         ],
     },
+    {name: 'Shared', link: '/shared'},
 ];
 const StyledLink = styled(Link)(({theme}) => {
     return {
