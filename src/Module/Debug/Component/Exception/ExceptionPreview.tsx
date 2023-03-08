@@ -65,7 +65,7 @@ export const ExceptionPreview = (props: ExceptionPreview) => {
     return (
         <>
             <Accordion defaultExpanded={true}>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{backgroundColor: '#ffcccc'}}>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography sx={{flex: '1 1 50%'}}>
                         {props.class}: {props.message}
                     </Typography>
