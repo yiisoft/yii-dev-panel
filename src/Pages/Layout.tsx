@@ -20,7 +20,7 @@ import {Outlet} from 'react-router';
 import {ErrorBoundary} from 'react-error-boundary';
 import {YiiIcon} from '../Component/SvgIcon/YiiIcon';
 import {ErrorFallback} from '../Component/ErrorFallback';
-import {ContentCut, GitHub} from '@mui/icons-material';
+import {ContentCut, GitHub, Refresh} from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
 import {OverrideProps} from '@mui/material/OverridableComponent';
 import {DebugToolbar} from '../Module/Debug/Component/Toolbar/DebugToolbar';
@@ -113,6 +113,12 @@ export const Layout = () => {
         setAnchorEl(null);
     };
 
+    const onRefreshHandler = () => {
+        if ('location' in window) {
+            window.location.reload();
+        }
+    };
+
     return (
         <>
             <CssBaseline />
@@ -174,6 +180,12 @@ export const Layout = () => {
                                         <GitHub fontSize="small" />
                                     </ListItemIcon>
                                     <ListItemText>Open Github</ListItemText>
+                                </MenuItem>
+                                <MenuItem component={Link} onClick={onRefreshHandler}>
+                                    <ListItemIcon>
+                                        <Refresh fontSize="small" />
+                                    </ListItemIcon>
+                                    <ListItemText>Refresh page</ListItemText>
                                 </MenuItem>
                                 <MenuItem component="span" disableTouchRipple disableRipple>
                                     <ListItemIcon>
