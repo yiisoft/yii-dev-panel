@@ -89,6 +89,10 @@ export const inspectorApi = createApi({
             query: (command) => `files?path=${command}`,
             transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
+        getClass: builder.query<InspectorFile[], string>({
+            query: (command) => `files?class=${command}`,
+            transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
+        }),
         getTranslations: builder.query<Response, void>({
             query: () => `translations`,
             transformResponse: (result: Response) => result.data || [],
@@ -157,6 +161,7 @@ export const {
     useGetClassesQuery,
     useLazyGetObjectQuery,
     useLazyGetFilesQuery,
+    useLazyGetClassQuery,
     useLazyGetCommandsQuery,
     useRunCommandMutation,
     useGetTranslationsQuery,

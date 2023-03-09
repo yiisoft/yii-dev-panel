@@ -23,3 +23,7 @@ export const parsePathLineAnchor = (path: string): [number] | [number, number] |
     }
     return undefined;
 };
+
+export const parseFilename = (path: string): string => {
+    return path.split('/').pop() ?? path;
+};

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {useEffect, useLayoutEffect, useState} from 'react';
-import {InspectorFile, InspectorFileContent, useLazyGetFilesQuery} from '../API/Inspector';
+import {InspectorFile, InspectorFileContent, useLazyGetClassQuery, useLazyGetFilesQuery} from '../API/Inspector';
 import {CodeHighlight} from '../../../Component/CodeHighlight';
 import {Box, Breadcrumbs, Button, Link, Typography} from '@mui/material';
 import {useSearchParams} from 'react-router-dom';
@@ -78,14 +78,17 @@ function sortTree(data: InspectorFile[]) {
 export const FileExplorerPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const path = searchParams.get('path') || '/';
+    const className = searchParams.get('class') || '';
 
-    const [lazyGetFilesQuery] = useLazyGetFilesQuery();
+    const [lazyGetFilesQuery, getFilesQueryInfo] = useLazyGetFilesQuery();
+    const [lazyGetClassQuery, getClassQueryInfo] = useLazyGetClassQuery();
     const [tree, setTree] = useState<InspectorFile[]>([]);
     const [file, setFile] = useState<InspectorFileContent | null>(null);
 
     useEffect(() => {
         (async () => {
-            const response = await lazyGetFilesQuery(parseFilePath(path));
+            const response =
+                className !== '' ? await lazyGetClassQuery(className) : await lazyGetFilesQuery(parseFilePath(path));
 
             if (Array.isArray(response.data)) {
                 const rows = sortTree(response.data);
@@ -94,7 +97,7 @@ export const FileExplorerPage = () => {
                 setFile(response.data as any);
             }
         })();
-    }, [path]);
+    }, [path, className]);
 
     useLayoutEffect(() => {
         if (file) {
@@ -142,6 +145,10 @@ export const FileExplorerPage = () => {
                     <TreeView tree={tree} onSelect={changePath} />
                 </>
             )}
+
+            {getClassQueryInfo.error &&
+                'status' in getClassQueryInfo.error &&
+                getClassQueryInfo.error.status === 404 && <Typography>File not found</Typography>}
         </>
     );
 };

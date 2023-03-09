@@ -10,7 +10,7 @@ import format from 'date-fns/format';
 import {IconButton, Tooltip} from '@mui/material';
 import {ArrowDownward, OpenInNew} from '@mui/icons-material';
 import {TimelineContentWrapper} from './../Timeline/TimelineContentWrapper';
-import {parseFilePathWithLineAnchor} from '../../../../Helper/filePathParser';
+import {parseFilename, parseFilePathWithLineAnchor} from '../../../../Helper/filePathParser';
 
 type EventType = {
     event: string;
@@ -19,12 +19,9 @@ type EventType = {
     name: string;
     time: number;
 };
-type EventTimelineProps = {
-    events: EventType[];
-};
 
 const Line = ({event}: {event: EventType}) => {
-    const line = event.line.split('/').pop();
+    const line = parseFilename(event.line);
     return (
         <Typography sx={{whiteSpace: 'nowrap'}}>
             <Tooltip title={event.line}>
@@ -45,6 +42,9 @@ const Line = ({event}: {event: EventType}) => {
     );
 };
 
+type EventTimelineProps = {
+    events: EventType[];
+};
 export const EventPanel = (props: EventTimelineProps) => {
     const {events} = props;
 
