@@ -181,7 +181,8 @@ const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
             >
                 <MenuPanelList onClick={toggleHandler} linkProps={links} activeLink={activeLink} />
             </Drawer>
-            <Box sx={{flex: '1 1 100%', p: 1}}>{children}</Box>
+            {/*TODO: rewrite max-width*/}
+            <Box sx={{flex: '1 0 100%', p: 1, maxWidth: '95%'}}>{children}</Box>
         </Box>
     );
 });

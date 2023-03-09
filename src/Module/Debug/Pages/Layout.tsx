@@ -42,6 +42,7 @@ import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '../Helper/debugEnt
 import {formatDate} from '../Helper/formatDate';
 import {CollectorsMap} from '../Helper/collectors';
 import {getCollectedCountByCollector} from '../Helper/collectorsTotal';
+import {ExceptionPanel} from '../Component/Panel/ExceptionPanel';
 
 function parseCollectorName(text: string) {
     return text
@@ -63,6 +64,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
+        [CollectorsMap.ExceptionCollector]: (data: any) => <ExceptionPanel exceptions={data} />,
         default: (data: any) => <DumpPage data={data} />,
     };
 

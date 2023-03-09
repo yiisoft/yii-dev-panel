@@ -65,7 +65,7 @@ const StyledTreeItem = (props: StyledTreeItemProps) => {
     );
 };
 
-const Tree = ({row}: {row: InspectorFile}) => {
+const Tree = React.memo(({row}: {row: InspectorFile}) => {
     const fileSize = useMemo(() => formatBytes(row.size), [row]);
     return (
         <StyledTreeItem
@@ -75,7 +75,7 @@ const Tree = ({row}: {row: InspectorFile}) => {
             fileSize={fileSize}
         />
     );
-};
+});
 
 export type TreeViewProps = {
     onSelect: (nodeId: string) => void;

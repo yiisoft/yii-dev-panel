@@ -94,6 +94,13 @@ export type DebugEntry = {
             total: number;
         };
     };
+    exception: {
+        class: string;
+        message: string;
+        line: string;
+        file: string;
+        code: string;
+    };
     [name: string]: any;
 };
 type SummaryResponseType = {
