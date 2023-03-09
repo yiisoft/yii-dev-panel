@@ -4,6 +4,7 @@ import {middlewares as ApplicationMiddlewares, reducers as ApplicationReducers} 
 import {middlewares as InspectorMiddlewares, reducers as InspectorReducers} from './Module/Inspector/api';
 import {middlewares as DebugMiddlewares, reducers as DebugReducers} from './Module/Debug/api';
 import {middlewares as GiiMiddlewares, reducers as GiiReducers} from './Module/Gii/api';
+import {middlewares as OpenApiMiddlewares, reducers as OpenApiReducers} from './Module/OpenApi/api';
 import {FLUSH, PAUSE, PERSIST, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     ...InspectorReducers,
     ...DebugReducers,
     ...GiiReducers,
+    ...OpenApiReducers,
 });
 
 export const store = configureStore({
@@ -22,7 +24,13 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat([...ApplicationMiddlewares, ...InspectorMiddlewares, ...DebugMiddlewares, ...GiiMiddlewares]),
+        }).concat([
+            ...ApplicationMiddlewares,
+            ...InspectorMiddlewares,
+            ...DebugMiddlewares,
+            ...GiiMiddlewares,
+            ...OpenApiMiddlewares,
+        ]),
     devTools: process.env.NODE_ENV !== 'production',
 });
 
