@@ -33,6 +33,7 @@ export type CommandResponseType<T = any> = {
     result: T;
     errors: string[];
 };
+export type CacheResponseType = any;
 export type PutTranslationArgumentType = {
     category: string;
     locale: string;
@@ -134,6 +135,10 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response<CommandResponseType>) => result.data,
             providesTags: ['inspector/composer'],
         }),
+        getCache: builder.query<CacheResponseType, string>({
+            query: (key) => `cache/view?key=${key}`,
+            transformResponse: (result: Response<CacheResponseType>) => result.data,
+        }),
         postComposerRequirePackage: builder.mutation<
             CommandResponseType,
             {packageName: string; version: string | null; isDev: boolean}
@@ -171,6 +176,7 @@ export const {
     useGetTableQuery,
     useGetPhpInfoQuery,
     useGetComposerQuery,
+    useLazyGetCacheQuery,
     useLazyGetComposerInspectQuery,
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
