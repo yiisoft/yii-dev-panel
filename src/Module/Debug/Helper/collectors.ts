@@ -5,6 +5,7 @@ export enum CollectorsMap {
     ExceptionCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ExceptionCollector',
     ServiceCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ServiceCollector',
     ValidatorCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ValidatorCollector',
+    DatabaseCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Database\\DatabaseCollector',
     QueueCollector = 'Yiisoft\\Yii\\Debug\\Collector\\QueueCollector',
     HttpClientCollector = 'Yiisoft\\Yii\\Debug\\Collector\\HttpClientCollector',
     FilesystemStreamCollector = 'Yiisoft\\Yii\\Debug\\Collector\\FilesystemStreamCollector',
