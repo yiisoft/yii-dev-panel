@@ -136,7 +136,21 @@ export const inspectorApi = createApi({
             providesTags: ['inspector/composer'],
         }),
         getCache: builder.query<CacheResponseType, string>({
-            query: (key) => `cache/view?key=${key}`,
+            query: (key) => `cache?key=${key}`,
+            transformResponse: (result: Response<CacheResponseType>) => result.data,
+        }),
+        deleteCache: builder.mutation<CacheResponseType, string>({
+            query: (key) => ({
+                url: `cache?key=${key}`,
+                method: 'DELETE',
+            }),
+            transformResponse: (result: Response<CacheResponseType>) => result.data,
+        }),
+        clearCache: builder.mutation<CacheResponseType, void>({
+            query: () => ({
+                url: `cache/clear`,
+                method: 'POST',
+            }),
             transformResponse: (result: Response<CacheResponseType>) => result.data,
         }),
         postComposerRequirePackage: builder.mutation<
@@ -176,7 +190,10 @@ export const {
     useGetTableQuery,
     useGetPhpInfoQuery,
     useGetComposerQuery,
+    useGetCacheQuery,
+    useDeleteCacheMutation,
     useLazyGetCacheQuery,
+    useClearCacheMutation,
     useLazyGetComposerInspectQuery,
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
