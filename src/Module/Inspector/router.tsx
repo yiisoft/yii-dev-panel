@@ -4,6 +4,7 @@ import * as Pages from './Pages';
 import {DataContextProvider} from './Context/DataContext';
 import {Layout} from './Component/Git/Layout';
 import {BreadcrumbsContextProvider} from './Context/BreadcrumbsContext';
+import {CachePage} from './Pages';
 
 export const routes = [
     {
@@ -100,6 +101,10 @@ export const routes = [
                         element: <Pages.GitPages.GitLogPage />,
                     },
                 ],
+            },
+            {
+                path: 'cache',
+                element: <Pages.CachePage />,
             },
         ],
     },

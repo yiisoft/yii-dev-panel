@@ -5,6 +5,8 @@ export const getCollectedCountByCollector = (collector: CollectorsMap, data: Deb
     switch (collector) {
         case CollectorsMap.AssetCollector:
             return data.asset.bundles.total;
+        case CollectorsMap.DatabaseCollector:
+            return data.db.queries.total + data.db.transactions.total;
         case CollectorsMap.ExceptionCollector:
             return Object.values(data.exception).length > 0 ? 1 : 0;
         case CollectorsMap.EventCollector:
