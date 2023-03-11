@@ -101,6 +101,16 @@ export type DebugEntry = {
         file: string;
         code: string;
     };
+    db: {
+        queries: {
+            error: number;
+            total: number;
+        };
+        transactions: {
+            error: number;
+            total: number;
+        };
+    };
     [name: string]: any;
 };
 type SummaryResponseType = {
