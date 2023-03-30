@@ -65,7 +65,14 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
         [CollectorsMap.ExceptionCollector]: (data: any) => <ExceptionPanel exceptions={data} />,
-        default: (data: any) => <DumpPage data={data} />,
+        default: (data: any) => {
+            try {
+                JSON.parse(data);
+            } catch (e) {
+                return <Box dangerouslySetInnerHTML={{__html: data}} />;
+            }
+            return <DumpPage data={data} />;
+        },
     };
 
     if (selectedCollector === '') {
