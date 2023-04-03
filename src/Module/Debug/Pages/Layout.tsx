@@ -264,7 +264,7 @@ const Layout = () => {
                 ? []
                 : debugEntry.collectors.map((collector, index) => ({
                       text: parseCollectorName(collector),
-                      href: `/debug/?collector=${collector}&debugEntry=${debugEntry.id}`,
+                      href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
                       badge: getCollectedCountByCollector(collector as CollectorsMap, debugEntry),
                   })),
