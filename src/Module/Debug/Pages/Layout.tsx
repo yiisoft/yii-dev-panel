@@ -43,6 +43,7 @@ import {formatDate} from '../Helper/formatDate';
 import {CollectorsMap} from '../Helper/collectors';
 import {getCollectedCountByCollector} from '../Helper/collectorsTotal';
 import {ExceptionPanel} from '../Component/Panel/ExceptionPanel';
+import ModuleLoader from '../../../Application/Pages/RemoteComponent';
 
 function parseCollectorName(text: string) {
     return text
@@ -58,18 +59,35 @@ type CollectorDataProps = {
     collectorData: any;
     selectedCollector: string;
 };
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
-    const pages = {
+    const pages: {[name: string]: (data: any) => JSX.Element} = {
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
         [CollectorsMap.ExceptionCollector]: (data: any) => <ExceptionPanel exceptions={data} />,
         default: (data: any) => {
-            try {
-                JSON.parse(data);
-            } catch (e) {
-                return <Box dangerouslySetInnerHTML={{__html: data}} />;
+            if (typeof data === 'object' && data.__isPanelRemote__) {
+                return (
+                    <React.Suspense fallback={`Loading`}>
+                        <ModuleLoader
+                            url={backendUrl + data.url}
+                            module={data.module}
+                            scope={data.scope}
+                            props={{data}}
+                        />
+                    </React.Suspense>
+                );
+            }
+            if (typeof data === 'string') {
+                try {
+                    JSON.parse(data);
+                } catch (e) {
+                    // TODO: filter non-parse errors
+                    console.error(e);
+                    return <Box dangerouslySetInnerHTML={{__html: data}} />;
+                }
             }
             return <DumpPage data={data} />;
         },
@@ -79,8 +97,9 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
         return <Outlet />;
     }
 
-    // @ts-ignore
-    return (pages[selectedCollector] ?? pages['default'])(collectorData);
+    const renderPage = selectedCollector in pages ? pages[selectedCollector] : pages.default;
+
+    return renderPage(collectorData);
 }
 
 function HttpRequestError({error}: {error: any}) {
