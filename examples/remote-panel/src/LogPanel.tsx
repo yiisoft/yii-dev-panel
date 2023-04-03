@@ -19,6 +19,7 @@ export const LogPanel = ({data}: LogPanelProps) => {
             setLogs([]);
         }, 1000);
     }, []);
+
     return (
         <>
             {!logs || logs.length === 0 ? (
