@@ -7,4 +7,8 @@ export const routes = [
         index: true,
         element: <Pages.IndexPage />,
     },
+    {
+        path: 'shared',
+        element: <Pages.SharedPage />,
+    },
 ] as RouteObject[];
