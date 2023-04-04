@@ -1,12 +1,13 @@
 const {dependencies} = require('./package.json');
 
+const sharedModules = Object.keys(dependencies).map((dependency) => ({
+    [dependency]: {
+        singleton: true,
+    },
+}));
+
 module.exports = {
     name: 'host',
     remotes: {},
-    shared: Object.keys(dependencies).map((dependency) => ({
-        [dependency]: {
-            singleton: true,
-            requiredVersion: dependencies[dependency],
-        },
-    })),
+    shared: sharedModules,
 };
