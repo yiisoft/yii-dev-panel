@@ -49,7 +49,6 @@ const useDynamicScript = ({url}: UseDynamicScriptProps) => {
 };
 
 const loadComponent = (scope: string, module: string) => async () => {
-    console.log('scope', scope, 'module', module);
     /**
      * Initializes the shared scope. This fills it with known provided modules from this build and all remotes
      */
@@ -76,7 +75,6 @@ type ModuleLoaderProps = {
 };
 
 const ModuleLoader = ({module, props, scope, url}: ModuleLoaderProps) => {
-    console.log('module && url', module, url);
     const dynamicScript = useDynamicScript({
         url: module && url,
     });
