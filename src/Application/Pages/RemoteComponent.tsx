@@ -1,27 +1,22 @@
 import React, {Suspense} from 'react';
+import {FullScreenCircularProgress} from '../../Component/FullScreenCircularProgress';
+import {Alert} from '@mui/material';
 
-// const url = process.env.REACT_APP_BACKEND_URL;
-const url = 'remote';
-
-// export const loadAsync = (name: string): React.LazyExoticComponent<any> => {
-//     // @ts-ignore
-//     // return React.lazy(() => import('remote/LogPanel'));
-//     // @ts-ignore
-//     // return React.lazy(() => import(`remote/${name}`) as Promise<{default: React.ComponentType}>);
-// };
-
-const useDynamicScript = (args: {url: string}) => {
+type UseDynamicScriptProps = {
+    url: string | undefined;
+};
+const useDynamicScript = ({url}: UseDynamicScriptProps) => {
     const [ready, setReady] = React.useState(false);
     const [failed, setFailed] = React.useState(false);
 
     React.useEffect(() => {
-        if (!args.url) {
+        if (!url) {
             return;
         }
 
         const element = document.createElement('script');
 
-        element.src = args.url;
+        element.src = url;
         element.type = 'text/javascript';
         element.async = true;
 
@@ -29,12 +24,12 @@ const useDynamicScript = (args: {url: string}) => {
         setFailed(false);
 
         element.onload = () => {
-            console.log(`Dynamic Script Loaded: ${args.url}`);
+            console.debug(`Dynamic Script Loaded: ${url}`);
             setReady(true);
         };
 
         element.onerror = () => {
-            console.error(`Dynamic Script Error: ${args.url}`);
+            console.error(`Dynamic Script Error: ${url}`);
             setReady(false);
             setFailed(true);
         };
@@ -42,60 +37,69 @@ const useDynamicScript = (args: {url: string}) => {
         document.head.appendChild(element);
 
         return () => {
-            console.log(`Dynamic Script Removed: ${args.url}`);
+            console.debug(`Dynamic Script Unloaded: ${url}`);
             document.head.removeChild(element);
         };
-    }, [args.url]);
+    }, [url]);
 
     return {
         ready,
         failed,
     };
 };
-function loadComponent(scope: string, module: string) {
-    return async () => {
-        // Initializes the share scope. This fills it with known provided modules from this build and all remotes
-        // @ts-ignore
-        await __webpack_init_sharing__('default');
-        // @ts-ignore
-        const container = window[scope]; // or get the container somewhere else
-        // Initialize the container, it may provide shared modules
-        // @ts-ignore
-        await container.init(__webpack_share_scopes__.default);
-        // @ts-ignore
-        const factory = await window[scope].get(module);
-        const Module = factory();
-        return Module;
-    };
-}
 
-function ModuleLoader(props: {module: string; url: string; scope: string; props: any}) {
-    const {ready, failed} = useDynamicScript({
-        url: props.module && props.url,
+const loadComponent = (scope: string, module: string) => async () => {
+    console.log('scope', scope, 'module', module);
+    /**
+     * Initializes the shared scope. This fills it with known provided modules from this build and all remotes
+     */
+    // @ts-ignore
+    await __webpack_init_sharing__('default');
+    // @ts-ignore
+    const container = window[scope];
+    /**
+     * Initialize the container, it may provide shared modules
+     */
+    // @ts-ignore
+    await container.init(__webpack_share_scopes__.default);
+    // @ts-ignore
+    const factory = await window[scope].get(module);
+    const Module = factory();
+    return Module;
+};
+
+type ModuleLoaderProps = {
+    module: string;
+    url: string;
+    scope: string;
+    props: any;
+};
+
+const ModuleLoader = ({module, props, scope, url}: ModuleLoaderProps) => {
+    console.log('module && url', module, url);
+    const dynamicScript = useDynamicScript({
+        url: module && url,
     });
 
-    if (!props.module) {
-        return <h2>Not system specified</h2>;
+    if (!module) {
+        return <Alert severity="error">Module name cannot be empty</Alert>;
     }
 
-    if (!ready) {
-        return <h2>Loading dynamic script: {props.url}</h2>;
+    if (!dynamicScript.ready) {
+        return <FullScreenCircularProgress />;
     }
 
-    if (failed) {
-        return <h2>Failed to load dynamic script: {props.url}</h2>;
+    if (dynamicScript.failed) {
+        return <Alert severity="error">Failed to load dynamic script: {url}</Alert>;
     }
 
-    const Component = React.lazy(loadComponent(props.scope, props.module));
+    const Component = React.lazy(loadComponent(scope, module));
 
     return (
-        <Suspense fallback="Loading Module">
-            <Component {...props.props} />
+        <Suspense fallback={<FullScreenCircularProgress />}>
+            <Component {...props} />
         </Suspense>
     );
-}
+};
 
 export default ModuleLoader;
-// function __webpack_init_sharing__(arg0: string) {
-//     throw new Error('Function not implemented.');
-// }
