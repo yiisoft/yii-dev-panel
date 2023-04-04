@@ -75,7 +75,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
                             url={backendUrl + data.url}
                             module={data.module}
                             scope={data.scope}
-                            props={{data}}
+                            props={{data: data.data}}
                         />
                     </React.Suspense>
                 );
@@ -84,9 +84,10 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
                 try {
                     JSON.parse(data);
                 } catch (e) {
-                    // TODO: filter non-parse errors
+                    if (e instanceof SyntaxError) {
+                        return <Box dangerouslySetInnerHTML={{__html: data}} />;
+                    }
                     console.error(e);
-                    return <Box dangerouslySetInnerHTML={{__html: data}} />;
                 }
             }
             return <DumpPage data={data} />;
