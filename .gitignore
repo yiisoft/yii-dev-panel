@@ -1,8 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules
 /.pnp
+build
 .pnp.js
 .idea
 
@@ -18,7 +19,9 @@
 .env.development.local
 .env.test.local
 .env.production.local
+*.tsbuildinfo
 
 npm-debug.log*
+lerna-debug.log*
 yarn-debug.log*
 yarn-error.log*

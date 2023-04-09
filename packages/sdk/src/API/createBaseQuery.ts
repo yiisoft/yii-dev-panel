@@ -1,0 +1,20 @@
+import {BaseQueryFn, FetchArgs, FetchBaseQueryError} from '@reduxjs/toolkit/query';
+import {fetchBaseQuery} from '@reduxjs/toolkit/query/react';
+
+export const createBaseQuery = (
+    baseUrlAdditional: string,
+): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
+    return async (args, WebApi, extraOptions) => {
+        console.log('WebApi.getState()', WebApi.getState());
+        const baseUrl = (WebApi.getState() as any).application?.baseUrl || '';
+
+        const rawBaseQuery = fetchBaseQuery({
+            baseUrl: baseUrl + baseUrlAdditional,
+            referrerPolicy: 'no-referrer',
+            headers: {
+                Accept: 'application/json',
+            },
+        });
+        return rawBaseQuery(args, WebApi, extraOptions);
+    };
+};

@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "noErrorTruncation": false,
     "allowJs": true,
-    "skipLibCheck": true,
+    "checkJs": false,
+    "removeComments": true,
     "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
     "module": "esnext",
@@ -18,9 +16,28 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "incremental": false,
+    "baseUrl": ".",
+    "paths": {
+      "@yii-dev-panel/app/*": [
+        "packages/app/src/*"
+      ],
+      "@yii-dev-panel/sdk/*": [
+        "packages/sdk/src/*"
+      ],
+      "@yii-dev-panel/toolbar/*": [
+        "packages/toolbar/src/*"
+      ]
+    },
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ]
   },
-  "include": [
-    "src"
+  "exclude": [
+    "**/.*/",
+    "**/build",
+    "**/node_modules"
   ]
 }
