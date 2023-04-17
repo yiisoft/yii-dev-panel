@@ -15,7 +15,7 @@ export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref
         <Badge color="secondary" badgeContent={String(data.logger.total)}>
             <Button
                 ref={ref}
-                href={`/debug/?collector=${CollectorsMap.LogCollector}&debugEntry=${data.id}`}
+                href={`/debug?collector=${CollectorsMap.LogCollector}&debugEntry=${data.id}`}
                 startIcon={<ChatBubble fontSize="small" />}
                 color="info"
                 variant="contained"

@@ -1,6 +1,5 @@
 {
   "name": "yii-dev-panel",
-  "homepage": ".",
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
@@ -61,12 +60,13 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "start": "react-scripts start",
-    "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-scripts build",
+    "start": "node ./scripts/start.js",
+    "stop": "node ./scripts/start.js",
+    "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github node ./scripts/build.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -96,5 +96,6 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/yiisoft/yii-dev-panel"
-  }
+  },
+  "homepage": "."
 }
