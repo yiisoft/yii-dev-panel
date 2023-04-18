@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkyii_dev_panel=self.webpackChunkyii_dev_panel||[]).push([[7462],{87462:function(n,e,t){function r(){return r=Object.assign?Object.assign.bind():function(n){for(var e=1;e<arguments.length;e++){var t=arguments[e];for(var r in t)Object.prototype.hasOwnProperty.call(t,r)&&(n[r]=t[r])}return n},r.apply(this,arguments)}t.d(e,{Z:function(){return r}})}}]);
-//# sourceMappingURL=7462.791a0a0e.chunk.js.map
