@@ -15,8 +15,6 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/swagger-ui-react": "^4.11.0",
-    "gh-pages": "^5.0.0",
-    "prettier": "^2.8.4",
     "typescript": "^4.9.5",
     "web-vitals": "^3.1.1",
     "workbox-background-sync": "^6.5.4",
@@ -34,13 +32,8 @@
   },
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
-    "stop": "node scripts/start.js",
     "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-app-rewired build",
-    "build2": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github node scripts/build.js",
-    "test": "node_modules/.bin/react-scripts test",
-    "eject": "node_modules/.bin/react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "node_modules/.bin/gh-pages -d build"
+    "test": "node_modules/.bin/react-scripts test"
   },
   "browserslist": {
     "production": [
