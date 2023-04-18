@@ -43,8 +43,6 @@ export function PreviewStep({generator, onComplete}: StepProps) {
         onComplete();
     }
 
-    // console.log(form)
-
     return (
         <>
             <FormProvider {...form}>

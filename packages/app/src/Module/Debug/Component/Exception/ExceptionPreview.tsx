@@ -46,11 +46,9 @@ export const ExceptionPreview = (props: ExceptionPreview) => {
     const [lazyGetFilesQuery] = useLazyGetFilesQuery();
     const [file, setFile] = useState<InspectorFileContent | null>(null);
 
-    console.log('props', props);
     useEffect(() => {
         (async () => {
             const response = await lazyGetFilesQuery(parseFilePath(props.file));
-            console.log('response', response);
 
             setFile(response.data as any);
         })();

@@ -11,7 +11,6 @@ import {modules} from '@yii-dev-panel/toolbar/modules';
 const router = createRouter(modules);
 
 export default function App() {
-    console.log('app, router', router);
     return (
         <Provider store={store}>
             {/*<PersistGate loading={<>Loading</>} persistor={persistor}>*/}

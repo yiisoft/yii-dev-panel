@@ -5,7 +5,6 @@ export const createBaseQuery = (
     baseUrlAdditional: string,
 ): BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> => {
     return async (args, WebApi, extraOptions) => {
-        console.log('WebApi.getState()', WebApi.getState());
         const baseUrl = (WebApi.getState() as any).application?.baseUrl || '';
 
         const rawBaseQuery = fetchBaseQuery({
