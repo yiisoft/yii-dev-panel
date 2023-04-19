@@ -1,5 +1,6 @@
 {
   "name": "@yii-dev-panel/app",
+  "version": "0.0.1",
   "main": "src/index.tsx",
   "dependencies": {
     "@yii-dev-panel/sdk": "*",

@@ -1,6 +1,6 @@
 {
   "name": "@yii-dev-panel/sdk",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "types": "build/index.d.ts",
   "main": "build/index.js",
   "dependencies": {
