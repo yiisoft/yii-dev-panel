@@ -1,4 +1,4 @@
-const {dependencies} = require('./package.json');
+const {dependencies} = require('../sdk/package.json');
 
 const sharedModules = Object.keys(dependencies).map((dependency) => ({
     [dependency]: {
