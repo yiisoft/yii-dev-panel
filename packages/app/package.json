@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.tsx",
   "dependencies": {
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "@yii-dev-panel/sdk": "*",
     "@yii-dev-panel/toolbar": "*",
     "swagger-ui-react": "^4.17.1"
