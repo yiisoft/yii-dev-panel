@@ -4,6 +4,7 @@
 node_modules
 /.pnp
 build
+dist
 .pnp.js
 .idea
 

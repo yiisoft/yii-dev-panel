@@ -1,8 +1,8 @@
-import Box from "@mui/material/Box";
-import React, { cloneElement } from "react";
-import { Alert, Typography } from "@mui/material";
+import Box from '@mui/material/Box';
+import React, {cloneElement} from 'react';
+import {Alert, Typography} from '@mui/material';
 
-type InfoBoxProps = {
+export type InfoBoxProps = {
     title: string;
     text?: string | React.ReactElement | React.ReactElement[];
     severity: 'error' | 'info';
