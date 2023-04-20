@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "skipLibCheck": true,
+    "declaration": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
@@ -16,7 +17,6 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "incremental": false,
     "baseUrl": ".",
     "paths": {
       "@yii-dev-panel/app/*": [

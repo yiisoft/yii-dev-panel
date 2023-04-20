@@ -1,9 +1,22 @@
 {
   "name": "@yii-dev-panel/sdk",
-  "version": "0.0.12",
-  "main": "dist/cjs/index.ts",
-  "module": "dist/esm/index.ts",
+  "version": "0.0.197",
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": "./dist/index.js",
+    "./*": "./dist/*"
+  },
+  "typesVersions": {
+    "*": {
+      "*": [
+        "./dist/*",
+        "./src/*",
+        "./dist/index.d.ts",
+        "./src/index.d.ts"
+      ]
+    }
+  },
   "repository": {
     "url": "https://github.com/yiisoft/yii-dev-panel",
     "type": "git",
@@ -11,6 +24,7 @@
   },
   "files": [
     "dist",
+    "!dist/**/*.map",
     "README.md",
     "package.json"
   ],
@@ -54,10 +68,8 @@
     "typescript": "^4.9.5"
   },
   "scripts": {
-    "build": "rm -rf dist; npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc --build tsconfig.build.esm.json",
-    "build:cjs": "tsc --build tsconfig.build.cjs.json",
-    "build:copy-files": "cp package.json dist/ && cp README.md dist/"
+    "build": "rm -rf dist; npm run build:esm",
+    "build:esm": "tsc --build tsconfig.build.esm.json"
   },
   "keywords": [
     "yiisoft",
