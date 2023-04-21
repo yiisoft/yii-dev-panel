@@ -31,6 +31,6 @@ Add the following code to the page to display the toolbar:
 ```html
 <div id="yii-dev-toolbar" style="flex: 1"></div>
 <script src="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.js"></script>
-<script src="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.css"></script>
+<link rel="stylesheet" href="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.css" />
 ```
 
