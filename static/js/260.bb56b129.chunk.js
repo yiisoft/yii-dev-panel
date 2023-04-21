@@ -1,1 +1,0 @@
-(self.webpackChunk_yii_dev_panel_app=self.webpackChunk_yii_dev_panel_app||[]).push([[260,826],{53260:function(){}}]);
