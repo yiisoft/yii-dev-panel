@@ -1,7 +1,9 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-import {Alert, Typography} from '@mui/material';
+import { Alert, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
+import { YiiIcon } from "@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon";
+import { JsonRenderer } from "@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer";
 
 type Level = 'success' | 'error';
 type LogEntry = {
@@ -12,7 +14,7 @@ type LogPanelProps = {
     data: LogEntry[];
 };
 
-export const LogPanel = ({data}: LogPanelProps) => {
+const LogPanel = ({data}: LogPanelProps) => {
     const [logs, setLogs] = useState(data);
     useEffect(() => {
         setTimeout(() => {
@@ -25,6 +27,7 @@ export const LogPanel = ({data}: LogPanelProps) => {
         <>
             {!logs || logs.length === 0 ? (
                 <>
+                    <YiiIcon />
                     <Typography>Nothing here</Typography>
                     <Button variant="contained" color="primary" onClick={() => setLogs(data)}>
                         Restore
@@ -37,6 +40,7 @@ export const LogPanel = ({data}: LogPanelProps) => {
                     </Alert>
                 ))
             )}
+            <JsonRenderer value={data} />
         </>
     );
 };
