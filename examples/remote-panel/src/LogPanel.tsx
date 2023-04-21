@@ -2,8 +2,8 @@ import * as React from 'react';
 import {useEffect, useState} from 'react';
 import { Alert, Typography } from "@mui/material";
 import Button from '@mui/material/Button';
-import { YiiIcon } from "@yii-dev-panel/sdk/Component/SvgIcon/YiiIcon";
-import { JsonRenderer } from "@yii-dev-panel/sdk/Component/JsonRenderer";
+import { YiiIcon } from "@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon";
+import { JsonRenderer } from "@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer";
 
 type Level = 'success' | 'error';
 type LogEntry = {

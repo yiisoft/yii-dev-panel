@@ -1,4 +1,4 @@
-const sdkPackageJson = require("@yii-dev-panel/sdk/package.json");
+const sdkPackageJson = require("@yiisoft/yii-dev-panel-sdk/package.json");
 
 module.exports = {
   name: "remote",

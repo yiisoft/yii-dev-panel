@@ -19,14 +19,14 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@yii-dev-panel/app/*": [
-        "packages/app/src/*"
+      "@yiisoft/yii-dev-panel/*": [
+        "packages/yii-dev-panel/src/*"
       ],
-      "@yii-dev-panel/sdk/*": [
-        "packages/sdk/src/*"
+      "@yiisoft/yii-dev-panel-sdk/*": [
+        "packages/yii-dev-panel-sdk/src/*"
       ],
-      "@yii-dev-panel/toolbar/*": [
-        "packages/toolbar/src/*"
+      "@yiisoft/yii-dev-toolbar/*": [
+        "packages/yii-dev-toolbar/src/*"
       ]
     },
     "lib": [

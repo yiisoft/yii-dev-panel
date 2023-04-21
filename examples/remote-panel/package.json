@@ -21,7 +21,7 @@
     "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
     "@mui/material": "^5.11.12",
-    "@yii-dev-panel/sdk": "*",
+    "@yiisoft/yii-dev-panel-sdk": "*",
     "react": "^18.0",
     "react-dom": "^18.0",
     "react-scripts": "5.0.1"

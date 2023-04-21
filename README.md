@@ -94,11 +94,11 @@ Both options also work with mobile phones.
 
 The project follows monorepository patterns. The project consists of several packages:
 
-### `@yii-dev-panel/sdk`
+### `@yiisoft/yii-dev-panel-sdk`
 
 The SDK package. It is used to simplify creating applications or custom panels.
 
-### `@yii-dev-panel/toolbar` - the toolbar application
+### `@yiisoft/yii-dev-toolbar` - the toolbar application
 
 The `toolbar` application. It is used to display the toolbar on the page.
 
@@ -114,7 +114,7 @@ Add the following code to the page to display the toolbar:
 
 The `toolbar` application requires only `sdk` package.
 
-### `@yii-dev-panel/app`
+### `@yiisoft/yii-dev-panel`
 
 The main application.
 

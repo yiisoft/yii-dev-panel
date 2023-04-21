@@ -19,10 +19,10 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d packages/app/build",
+    "deploy": "gh-pages -d packages/yii-dev-panel/build",
     "start": "lerna run start --parallel --verbose",
     "build": "lerna run build --parallel --verbose && npm run copy-toolbar",
-    "copy-toolbar": "mkdir packages/app/build/toolbar && cp -r packages/toolbar/build/* packages/app/build/toolbar"
+    "copy-toolbar": "mkdir packages/yii-dev-panel/build/toolbar && cp -r packages/yii-dev-toolbar/build/* packages/yii-dev-panel/build/toolbar"
   },
   "eslintConfig": {
     "extends": [
