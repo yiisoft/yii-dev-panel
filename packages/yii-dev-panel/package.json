@@ -18,8 +18,7 @@
     "directory": "packages/yii-dev-panel-sdk"
   },
   "publishConfig": {
-    "access": "public",
-    "registry": "https://npm.pkg.github.com"
+    "access": "public"
   },
   "dependencies": {
     "@welldone-software/why-did-you-render": "^7.0.1",

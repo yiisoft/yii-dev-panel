@@ -42,6 +42,9 @@ flowchart LR
     B[yii-dev-toolbar] --> C
 ```
 
+## Additional docs:
+
+- [How to use Local registry (`verdaccio`)](docs/local_registry.md)
 
 ## Contributing
 
