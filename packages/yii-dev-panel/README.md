@@ -1,8 +1,30 @@
 # Yii Development Panel
 
-### About
+Yii Development Panel – it is an application that aggregates a few different modules to help you develop and debug applications written with Yii 3.
 
-Yii Development Panel – it is an application that aggregates such different modules as:
+## Installation
+
+### NPM package (npmjs.com)
+
+```shell
+npm i @yiisoft/yii-dev-panel
+```
+
+### NPM package (GitHub Packages)
+
+First you need to tell `npm` to use GitHub Packages registry for @yiisoft scope.
+Add `@yiisoft:registry=https://npm.pkg.github.com` to `.npmrc` file or run the following command:
+```shell
+echo "\n@yiisoft:registry=https://npm.pkg.github.com" >> .npmrc
+```
+
+Then you can install the package:
+
+```shell
+npm i @yiisoft/yii-dev-panel
+```
+
+### Modules
 
 - Debug
     - Repeating request by the only click
@@ -57,12 +79,6 @@ Yii Development Panel – it is an application that aggregates such different mo
     - Generators
         - Controller generator
 
-## Installation
-
-```shell
-npm install
-```
-
 ## Usage
 
 The application use HTTP API to work with the modules.
@@ -90,88 +106,6 @@ Open https://yiisoft.github.io/yii-dev-panel
 
 Both options also work with mobile phones.
 
-## Architecture
-
-The project follows monorepository patterns. The project consists of several packages:
-
-### `@yiisoft/yii-dev-panel-sdk`
-
-The SDK package. It is used to simplify creating applications or custom panels.
-
-### `@yiisoft/yii-dev-toolbar` - the toolbar application
-
-The `toolbar` application. It is used to display the toolbar on the page.
-
-The package is used to display the toolbar on the page. It can be used separately from the `app` application.
-
-Add the following code to the page to display the toolbar:
-
-```html
-<div id="yii-dev-toolbar" style="flex: 1"></div>
-<script src="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.js"></script>
-<script src="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.css"></script>
-```
-
-The `toolbar` application requires only `sdk` package.
-
-### `@yiisoft/yii-dev-panel`
-
-The main application.
-
-The `app` application requires both `sdk` and `toolbar` packages.
-
-Dependency graph:
-
-```mermaid
-flowchart LR
-
-    A[app] --> C(sdk)
-    A[app] --> B
-    B[toolbar] --> C
-```
-
 ## Screenshot
 
-![Screenshot](../../docs/screenshot.png)
-
-## Contributing
-
-0. First thing that you need is `yiisoft/yii-debug-api` running somewhere.
-
-   For example, you can clone [`yiisoft/demo`](https://github.com/yiisoft/demo) and serve `blog-api` or `blog`.
-
-   ```shell
-   git clone git@github.com:yiisoft/demo demo
-   ```
-
-   ```shell
-   cd demo/blog-api
-   ```
-
-   ```shell
-   composer install
-   ```
-
-   ```shell
-   ./yii serve
-   ```
-
-1. Clone the project
-
-   ```shell
-   git clone git@github.com:yiisoft/yii-dev-panel yii-dev-panel
-   ```
-
-2. Install dependencies
-
-   ```shell
-   npm install
-   ```
-
-3. Run dev server
-
-   ```shell
-   npm start
-   ```
-
-4. Feel free to make Pull Request
+![Screenshot](docs/screenshot.png)

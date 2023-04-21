@@ -20,7 +20,8 @@
     "directory": "packages/yii-dev-panel-sdk"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "exports": {
     ".": "./dist/index.js",

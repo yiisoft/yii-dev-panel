@@ -19,7 +19,8 @@
     "directory": "packages/yii-dev-toolbar"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://npm.pkg.github.com"
   },
   "dependencies": {
     "@welldone-software/why-did-you-render": "^7.0.1",
