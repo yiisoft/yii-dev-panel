@@ -2,6 +2,25 @@
   "name": "@yiisoft/yii-dev-toolbar",
   "version": "0.0.1",
   "main": "src/index.tsx",
+  "homepage": ".",
+  "keywords": [
+    "yiisoft",
+    "yii",
+    "debug",
+    "gii",
+    "yii-dev-panel",
+    "toolbar"
+  ],
+  "author": "Dmitrii Derepko <xepozzd@gmail.com> (https://github.com/xepozz)",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yiisoft/yii-dev-panel",
+    "directory": "packages/yii-dev-toolbar"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@welldone-software/why-did-you-render": "^7.0.1",
     "@yiisoft/yii-dev-panel-sdk": "*",
@@ -32,21 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "keywords": [
-    "yiisoft",
-    "yii",
-    "debug",
-    "gii",
-    "yii-dev-panel",
-    "toolbar"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/yiisoft/yii-dev-panel"
-  },
-  "homepage": ".",
-  "publishConfig": {
-    "access": "public"
   }
 }

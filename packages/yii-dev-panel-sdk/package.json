@@ -3,6 +3,25 @@
   "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "keywords": [
+    "yiisoft",
+    "yii",
+    "debug",
+    "gii",
+    "yii-dev-panel",
+    "yii-dev-panel-sdk",
+    "sdk"
+  ],
+  "author": "Dmitrii Derepko <xepozzd@gmail.com> (https://github.com/xepozz)",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yiisoft/yii-dev-panel",
+    "directory": "packages/yii-dev-panel-sdk"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json",
@@ -17,11 +36,6 @@
         "./src/index.d.ts"
       ]
     }
-  },
-  "repository": {
-    "url": "https://github.com/yiisoft/yii-dev-panel",
-    "type": "git",
-    "directory": "packages/yii-dev-panel-sdk"
   },
   "files": [
     "dist",
@@ -71,15 +85,5 @@
   "scripts": {
     "build": "rm -rf dist; npm run build:esm",
     "build:esm": "tsc --build tsconfig.build.esm.json"
-  },
-  "keywords": [
-    "yiisoft",
-    "yii",
-    "debug",
-    "gii",
-    "yii-dev-panel"
-  ],
-  "publishConfig": {
-    "access": "public"
   }
 }

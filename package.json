@@ -1,6 +1,20 @@
 {
   "name": "root",
   "private": true,
+  "homepage": "https://github.com/yiisoft/yii-dev-panel",
+  "keywords": [
+    "yiisoft",
+    "yii",
+    "debug",
+    "gii",
+    "yii-dev-panel"
+  ],
+  "author": "Dmitrii Derepko <xepozzd@gmail.com> (https://github.com/xepozz)",
+  "license": "BSD-3-Clause",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yiisoft/yii-dev-panel"
+  },
   "workspaces": [
     "packages/*"
   ],
