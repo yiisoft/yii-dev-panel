@@ -1,0 +1,16 @@
+export {ParametersPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ParametersPage';
+export {ConfigurationPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ConfigurationPage';
+export {TestsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TestsPage';
+export {AnalysePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/AnalysePage';
+export {RoutesPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/RoutesPage';
+export {ContainerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerPage';
+export {ContainerEntryPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerEntryPage';
+export {FileExplorerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/FileExplorerPage';
+export {TranslationsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TranslationsPage';
+export {CommandsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CommandsPage';
+export {DatabasePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DatabasePage';
+export {TablePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TablePage';
+export {PhpInfoPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/PhpInfoPage';
+export {ComposerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ComposerPage';
+export {CachePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CachePage';
+export * as GitPages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Git';
