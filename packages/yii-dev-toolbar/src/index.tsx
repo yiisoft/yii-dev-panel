@@ -8,8 +8,8 @@ import App from "@yiisoft/yii-dev-toolbar/App";
 
 (function ToolbarWidget(scope) {
   scope["ToolbarWidget"] = {
-    init: function(selector, options) {
-      const container = document.querySelector(selector);
+    init: function(containerId, options) {
+      const container = document.getElementById(containerId);
 
       const root = ReactDOM.createRoot(container);
       root.render(
