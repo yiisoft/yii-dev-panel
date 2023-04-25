@@ -1,5 +1,5 @@
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
-const {ModuleFederationPlugin} = require('webpack').container;
+const webpack = require('webpack');
 
 module.exports = (config) => {
     config.resolve.plugins.pop();
@@ -22,7 +22,10 @@ module.exports = (config) => {
     }
 
     // Enable Module Federation.
-    config.plugins.push(new ModuleFederationPlugin(require('./modulefederation.config.js')));
+    config.plugins.push(new webpack.container.ModuleFederationPlugin(require('./modulefederation.config.js')));
+
+    // Limit chunks to one.
+    config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
 
     return config;
 };
