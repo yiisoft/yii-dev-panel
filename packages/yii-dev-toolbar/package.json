@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build && gulp",
+    "build": "REACT_APP_ENV=github react-app-rewired build && gulp",
     "test": "react-app-rewired test"
   },
   "browserslist": {
