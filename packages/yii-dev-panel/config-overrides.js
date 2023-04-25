@@ -24,8 +24,10 @@ module.exports = (config) => {
     // Enable Module Federation.
     config.plugins.push(new webpack.container.ModuleFederationPlugin(require('./modulefederation.config.js')));
 
-    // Limit chunks to one.
-    config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
+    if (config.mode === 'production') {
+        // Limit chunks to one in production mode.
+        config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
+    }
 
     return config;
 };
