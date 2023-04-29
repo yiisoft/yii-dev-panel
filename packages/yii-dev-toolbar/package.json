@@ -44,6 +44,7 @@
     "start": "react-app-rewired start",
     "build": "REACT_APP_ENV=github react-app-rewired build && gulp",
     "test": "react-app-rewired test",
+    "serve": "npm run build && serve build",
     "prettier": "prettier -l src"
   },
   "browserslist": {
