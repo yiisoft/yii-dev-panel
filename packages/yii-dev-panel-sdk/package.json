@@ -68,7 +68,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "redux-persist": "^6.0.0",
     "swagger-ui-react": "^4.17.1",
-    "yup": "^1.0.2"
+    "yup": "^1.1.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
