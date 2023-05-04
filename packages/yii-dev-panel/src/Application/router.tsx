@@ -5,6 +5,7 @@ import React from 'react';
 export const routes = [
     {
         index: true,
+        path: '*',
         element: <Pages.IndexPage />,
     },
     {
