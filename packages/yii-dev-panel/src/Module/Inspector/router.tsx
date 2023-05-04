@@ -1,9 +1,9 @@
-import { RouteObject } from "react-router-dom";
-import React from "react";
-import * as Pages from "@yiisoft/yii-dev-panel/Module/Inspector/Pages";
-import { DataContextProvider } from "@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext";
-import { Layout } from "@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layout";
-import { BreadcrumbsContextProvider } from "@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext";
+import {RouteObject} from 'react-router-dom';
+import React from 'react';
+import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
+import {DataContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
+import {Layout} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layout';
+import {BreadcrumbsContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
 
 export const routes = [
     {
@@ -107,4 +107,4 @@ export const routes = [
             },
         ],
     },
-] as RouteObject[];
+] satisfies RouteObject[];

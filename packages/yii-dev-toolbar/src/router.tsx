@@ -7,7 +7,7 @@ export function createRouter(modules: ModuleInterface[]) {
     const standaloneModules = modules.filter((module) => module.standaloneModule);
 
     const routes: RouteObject[] = [
-        ...([] as RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
+        ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
     ];
     return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes);
 }
