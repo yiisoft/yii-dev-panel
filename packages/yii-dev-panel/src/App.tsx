@@ -7,6 +7,9 @@ import {persistor, store} from '@yiisoft/yii-dev-panel/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {createRouter} from '@yiisoft/yii-dev-panel/router';
 import {modules} from '@yiisoft/yii-dev-panel/modules';
+import {ErrorBoundary} from 'react-error-boundary';
+import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
+import {GeneratorStepper} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GeneratorStepper';
 
 const router = createRouter(modules);
 
@@ -15,7 +18,9 @@ export default function App() {
         <Provider store={store}>
             <PersistGate persistor={persistor}>
                 <DefaultThemeProvider>
-                    <RouterProvider router={router} />
+                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
+                        <RouterProvider router={router} />
+                    </ErrorBoundary>
                 </DefaultThemeProvider>
             </PersistGate>
         </Provider>
@@ -51,7 +56,7 @@ const sse = () => {
     // };
 };
 try {
-    // sse();
+    sse();
 } catch (e) {
     console.log(e);
 }
