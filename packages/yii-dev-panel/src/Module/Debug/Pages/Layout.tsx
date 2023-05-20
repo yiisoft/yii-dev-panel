@@ -18,7 +18,11 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import {DebugEntry, useLazyGetCollectorInfoQuery, useLazyGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {
+    DebugEntry,
+    useLazyGetCollectorInfoQuery,
+    useLazyGetDebugQuery,
+} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {useDispatch} from 'react-redux';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -31,7 +35,7 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
-import {useDoRequestMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
 import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
@@ -218,6 +222,7 @@ const Layout = () => {
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
+    const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
 
     useEffect(() => {
         getDebugQuery();
@@ -302,6 +307,17 @@ const Layout = () => {
         }
         getDebugQuery();
     }, [debugEntry]);
+    const copyCurlHandler = useCallback(async () => {
+        if (!debugEntry) {
+            return;
+        }
+        try {
+            const result = await postCurlBuildInfo(debugEntry.id);
+            console.log(result.data);
+        } catch (e) {
+            console.error(e);
+        }
+    }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
@@ -374,6 +390,25 @@ const Layout = () => {
                             }
                         >
                             Repeat Request
+                        </Button>
+                    </span>
+                </Tooltip>
+                <Tooltip title="Copies the request cURL interpretation">
+                    <span>
+                        <Button
+                            onClick={copyCurlHandler}
+                            disabled={!debugEntry || postCurlBuildQueryInfo.isLoading}
+                            endIcon={
+                                postCurlBuildQueryInfo.isLoading ? (
+                                    <CircularProgress size={24} color="info" />
+                                ) : postCurlBuildQueryInfo.isUninitialized ? null : postCurlBuildQueryInfo.isSuccess ? (
+                                    <Check color="success" />
+                                ) : (
+                                    <Error color="error" />
+                                )
+                            }
+                        >
+                            Copy cURL
                         </Button>
                     </span>
                 </Tooltip>

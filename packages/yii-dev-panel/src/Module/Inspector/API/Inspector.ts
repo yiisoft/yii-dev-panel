@@ -117,6 +117,13 @@ export const inspectorApi = createApi({
             }),
             transformResponse: (result: Response) => result.data || [],
         }),
+        postCurlBuild: builder.mutation<Response, string>({
+            query: (debugEntryId) => ({
+                method: 'POST',
+                url: `curl/build?debugEntryId=${debugEntryId}`,
+            }),
+            transformResponse: (result: Response) => result.data || [],
+        }),
         getRoutes: builder.query<Response, void>({
             query: () => `routes`,
             transformResponse: (result: Response) => result.data || [],
@@ -197,4 +204,5 @@ export const {
     useLazyGetComposerInspectQuery,
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
+    usePostCurlBuildMutation,
 } = inspectorApi;
