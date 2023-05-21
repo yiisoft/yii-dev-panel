@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useGetRoutesQuery, useLazyGetCheckRouteQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {Alert, AlertTitle, IconButton, InputBase, Paper, TextField, Tooltip, Typography} from '@mui/material';
+import {Alert, AlertTitle, FormHelperText, IconButton, InputBase, Paper, Tooltip, Typography} from '@mui/material';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import clipboardCopy from 'clipboard-copy';
@@ -170,7 +170,7 @@ export const RoutesPage = () => {
             >
                 <InputBase
                     sx={{ml: 1, flex: 1}}
-                    placeholder={'/site/index'}
+                    placeholder={'/site/index, POST /auth/login, DELETE /user/1'}
                     value={url}
                     onChange={(event) => setUrl(event.target.value)}
                 />
@@ -178,6 +178,12 @@ export const RoutesPage = () => {
                     <CheckIcon />
                 </IconButton>
             </Paper>
+            <FormHelperText variant="outlined">
+                Add an HTTP verb in the beginning of the path such as GET, POST, PUT, PATCH and etc. to check different
+                methods. <br />
+                Default method is GET and it can be omitted.
+            </FormHelperText>
+
             {checkRouteQueryInfo.data && (
                 <Alert severity={checkRouteQueryInfo.data.result ? 'success' : 'error'}>
                     {checkRouteQueryInfo.data.result ? (
