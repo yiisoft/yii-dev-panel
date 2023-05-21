@@ -47,6 +47,7 @@ import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/co
 import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import clipboardCopy from 'clipboard-copy';
 
 function parseCollectorName(text: string) {
     return text
@@ -311,12 +312,13 @@ const Layout = () => {
         if (!debugEntry) {
             return;
         }
-        try {
-            const result = await postCurlBuildInfo(debugEntry.id);
-            console.log(result.data);
-        } catch (e) {
-            console.error(e);
+        const result = await postCurlBuildInfo(debugEntry.id);
+        if ('error' in result) {
+            console.error(result.error);
+            return;
         }
+        console.log(result.data.command);
+        clipboardCopy(result.data.command);
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
     const onRefreshHandler = useCallback(() => {

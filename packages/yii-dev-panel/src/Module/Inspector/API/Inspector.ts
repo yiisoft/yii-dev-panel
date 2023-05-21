@@ -49,6 +49,10 @@ type ComposerResponse = {
     };
 };
 
+type CurlBuilderResponse = {
+    command: string;
+};
+
 type Response<T = any> = {
     data: T;
 };
@@ -117,12 +121,12 @@ export const inspectorApi = createApi({
             }),
             transformResponse: (result: Response) => result.data || [],
         }),
-        postCurlBuild: builder.mutation<Response, string>({
+        postCurlBuild: builder.mutation<CurlBuilderResponse, string>({
             query: (debugEntryId) => ({
                 method: 'POST',
                 url: `curl/build?debugEntryId=${debugEntryId}`,
             }),
-            transformResponse: (result: Response) => result.data || [],
+            transformResponse: (result: Response<CurlBuilderResponse>) => result.data,
         }),
         getRoutes: builder.query<Response, void>({
             query: () => `routes`,
