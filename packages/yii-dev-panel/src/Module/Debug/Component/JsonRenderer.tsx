@@ -1,4 +1,7 @@
-import {JsonRenderer as OriginalJsonRenderer, JsonRendererProps} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {
+    JsonRenderer as OriginalJsonRenderer,
+    JsonRendererProps,
+} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {deepUpdate} from 'immupdate';
 import * as React from 'react';
 import {useState} from 'react';
@@ -6,6 +9,8 @@ import {useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug'
 import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {DataType} from '@textea/json-viewer';
 import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
+import {Button, IconButton, Tooltip} from '@mui/material';
+import {DataObject, Download, GetApp, Refresh} from '@mui/icons-material';
 
 export const JsonRenderer = React.memo((props: JsonRendererProps) => {
     const [objectQuery] = useLazyGetObjectQuery();
@@ -28,10 +33,15 @@ export const JsonRenderer = React.memo((props: JsonRendererProps) => {
             Component: (props) => {
                 return (
                     <>
-                        {props.value}
-                        <button key={props.path.join(',')} onClick={(e) => objectLoader(props.value, props.path)}>
-                            Load
-                        </button>
+                        {props.value.replace('object@', '')}
+                        <Tooltip title="Load object state">
+                            <IconButton
+                                key={props.path.join(',')}
+                                onClick={(e) => objectLoader(props.value, props.path)}
+                            >
+                                <DataObject />
+                            </IconButton>
+                        </Tooltip>
                     </>
                 );
             },

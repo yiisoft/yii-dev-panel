@@ -288,6 +288,7 @@ const Layout = () => {
             !debugEntry
                 ? []
                 : debugEntry.collectors.map((collector, index) => ({
+                      name: collector,
                       text: parseCollectorName(collector),
                       href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
@@ -425,7 +426,7 @@ const Layout = () => {
                     icon={<HelpOutline />}
                 />
             ) : (
-                <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
+                <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
                         <>
                             {collectorQueryInfo.isFetching && <LinearProgress />}
