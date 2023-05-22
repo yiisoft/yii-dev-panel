@@ -49,6 +49,11 @@ type ComposerResponse = {
     };
 };
 
+type CheckRouteResponse = {
+    result: boolean;
+    action: string[];
+};
+
 type Response<T = any> = {
     data: T;
 };
@@ -121,6 +126,10 @@ export const inspectorApi = createApi({
             query: () => `routes`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getCheckRoute: builder.query<CheckRouteResponse, string>({
+            query: (route) => `route/check?route=${route}`,
+            transformResponse: (result: Response<CheckRouteResponse>) => result.data,
+        }),
         getPhpInfo: builder.query<string, void>({
             query: () => `phpinfo`,
             transformResponse: (result: Response) => result.data || [],
@@ -187,6 +196,7 @@ export const {
     usePutTranslationsMutation,
     useDoRequestMutation,
     useGetRoutesQuery,
+    useLazyGetCheckRouteQuery,
     useGetTableQuery,
     useGetPhpInfoQuery,
     useGetComposerQuery,

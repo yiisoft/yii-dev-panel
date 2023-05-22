@@ -18,7 +18,11 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import {DebugEntry, useLazyGetCollectorInfoQuery, useLazyGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {
+    DebugEntry,
+    useLazyGetCollectorInfoQuery,
+    useLazyGetDebugQuery,
+} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {useDispatch} from 'react-redux';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -282,6 +286,7 @@ const Layout = () => {
             !debugEntry
                 ? []
                 : debugEntry.collectors.map((collector, index) => ({
+                      name: collector,
                       text: parseCollectorName(collector),
                       href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
@@ -388,7 +393,7 @@ const Layout = () => {
                     icon={<HelpOutline />}
                 />
             ) : (
-                <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
+                <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
                         <>
                             {collectorQueryInfo.isFetching && <LinearProgress />}

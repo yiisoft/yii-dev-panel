@@ -1,8 +1,9 @@
 import {yup} from '@yiisoft/yii-dev-panel-sdk/Adapter/yup';
 import {GiiGeneratorAttribute, GiiGeneratorAttributeRule} from '@yiisoft/yii-dev-panel-sdk/Types/Gii';
+import {Schema} from 'yup';
 
 function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {
-    const currentSet: any[] = [];
+    const currentSet: Schema[] = [];
 
     for (const rule of rules) {
         switch (rule[0]) {
@@ -34,7 +35,7 @@ function createYupValidationRules(rules: GiiGeneratorAttributeRule[]) {
 }
 
 export function createYupValidationSchema(attributes: Record<string, GiiGeneratorAttribute>) {
-    const rulesSet: Record<string, any> = {};
+    const rulesSet: any = {};
     Object.entries(attributes).map(([attributeName, attribute], index) => {
         rulesSet[attributeName] = createYupValidationRules(attribute.rules);
     });

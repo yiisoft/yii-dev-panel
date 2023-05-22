@@ -28,6 +28,7 @@ const Layout = () => {
     const links: LinkProps[] = useMemo(
         () =>
             (data || []).map((generator, index) => ({
+                name: generator.id,
                 text: generator.name,
                 href: '/gii?generator=' + generator.id,
                 icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
@@ -67,7 +68,7 @@ const Layout = () => {
                     icon={<HelpOutline />}
                 />
             ) : (
-                <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.name}>
+                <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                     {selectedGenerator ? (
                         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                             <GeneratorStepper generator={selectedGenerator} />

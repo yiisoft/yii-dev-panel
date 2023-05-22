@@ -1,14 +1,17 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetRoutesQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useGetRoutesQuery, useLazyGetCheckRouteQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {IconButton, Tooltip, Typography} from '@mui/material';
+import {Alert, AlertTitle, FormHelperText, IconButton, InputBase, Paper, Tooltip, Typography} from '@mui/material';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import clipboardCopy from 'clipboard-copy';
-import {ContentCopy, OpenInNew} from '@mui/icons-material';
+import {ContentCopy, OpenInNew, StarOutline} from '@mui/icons-material';
 import {concatClassMethod} from '@yiisoft/yii-dev-panel-sdk/Helper/classMethodConcater';
+import {addFavoriteUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
+import CheckIcon from '@mui/icons-material/Check';
+import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
 
 const columns: GridColDef[] = [
     {
@@ -132,7 +135,9 @@ type RouteType = {
 
 export const RoutesPage = () => {
     const {data, isLoading, isSuccess} = useGetRoutesQuery();
+    const [checkRouteQuery, checkRouteQueryInfo] = useLazyGetCheckRouteQuery();
     const [routes, setRoutes] = useState<RouteType[]>([]);
+    const [url, setUrl] = useState<string>('');
 
     useEffect(() => {
         if (!isSuccess) {
@@ -143,12 +148,51 @@ export const RoutesPage = () => {
         setRoutes(routes);
     }, [isSuccess, data]);
 
+    const onSubmitHandler = async (event: {preventDefault: () => void}) => {
+        event.preventDefault();
+        console.log('route', url);
+
+        const result = await checkRouteQuery(url);
+        console.log(result.data);
+    };
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
 
     return (
         <>
+            <h2>{'Check route'}</h2>
+            <Paper
+                component="form"
+                onSubmit={onSubmitHandler}
+                sx={{p: [0.5, 1], my: 2, display: 'flex', alignItems: 'center'}}
+            >
+                <InputBase
+                    sx={{ml: 1, flex: 1}}
+                    placeholder={'/site/index, POST /auth/login, DELETE /user/1'}
+                    value={url}
+                    onChange={(event) => setUrl(event.target.value)}
+                />
+                <IconButton type="submit" sx={{p: 2}}>
+                    <CheckIcon />
+                </IconButton>
+            </Paper>
+            <FormHelperText variant="outlined">
+                Add an HTTP verb in the beginning of the path such as GET, POST, PUT, PATCH and etc. to check different
+                methods. <br />
+                Default method is GET and it can be omitted.
+            </FormHelperText>
+
+            {checkRouteQueryInfo.data && (
+                <Alert severity={checkRouteQueryInfo.data.result ? 'success' : 'error'}>
+                    {checkRouteQueryInfo.data.result ? (
+                        <AlertTitle>{serializeCallable(checkRouteQueryInfo.data.action)}</AlertTitle>
+                    ) : (
+                        <AlertTitle>{'Route is invalid'}</AlertTitle>
+                    )}
+                </Alert>
+            )}
             <h2>{'Routes'}</h2>
             <DataTable rows={routes as GridValidRowModel[]} getRowId={(row) => row.id} columns={columns} />
         </>

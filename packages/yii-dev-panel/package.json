@@ -35,6 +35,11 @@
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/swagger-ui-react": "^4.11.0",
+    "@typescript-eslint/eslint-plugin": "^5.54.1",
+    "@typescript-eslint/parser": "^5.54.1",
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "prettier": "^2.8.4",
     "typescript": "^4.9.5",
     "web-vitals": "^3.1.1",
     "workbox-background-sync": "^6.5.4",
@@ -52,8 +57,8 @@
   },
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
-    "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-app-rewired build",
-    "test": "node_modules/.bin/react-scripts test"
+    "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-app-rewired build && gulp",
+    "test": "react-app-rewired test"
   },
   "browserslist": {
     "production": [

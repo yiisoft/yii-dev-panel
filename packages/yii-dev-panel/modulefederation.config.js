@@ -1,3 +1,4 @@
+// @ts-ignore
 const {dependencies} = require('../yii-dev-panel-sdk/package.json');
 
 const sharedModules = Object.entries(dependencies).map(([name, version]) => ({
