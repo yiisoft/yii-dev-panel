@@ -1,14 +1,14 @@
+import {EmojiObjects, Settings} from '@mui/icons-material';
+import {TabContext, TabPanel} from '@mui/lab';
+import {IconButton, Stack, Tab, Tabs, TextField, Typography, useTheme} from '@mui/material';
+import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
+import {SettingsDialog} from '@yiisoft/yii-dev-panel/Module/OpenApi/Component/SettingsDialog';
+import {useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
+import '@yiisoft/yii-dev-panel/Module/OpenApi/Pages/dark.css';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
-import '@yiisoft/yii-dev-panel/Module/OpenApi/Pages/dark.css';
-import {IconButton, Stack, Tab, Tabs, TextField, Typography, useTheme} from '@mui/material';
-import {TabContext, TabPanel} from '@mui/lab';
-import {EmojiObjects, Settings} from '@mui/icons-material';
-import {SettingsDialog} from '@yiisoft/yii-dev-panel/Module/OpenApi/Component/SettingsDialog';
-import {useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
-import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 
 const NoEntries = React.memo(() => {
     return (

@@ -1,17 +1,17 @@
-import * as React from 'react';
-import {useCallback, useContext, useEffect} from 'react';
-import {Button, CircularProgress, Divider, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
 import {GetApp, Refresh, Sync} from '@mui/icons-material';
+import {Button, CircularProgress, Divider, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {
     useCheckoutMutation,
     useCommandMutation,
     useGetSummaryQuery,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/GitApi';
 import {CheckoutDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/CheckoutDialog';
-import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {BreadcrumbsContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
+import * as React from 'react';
+import {useCallback, useContext, useEffect} from 'react';
 
 export const GitPage = () => {
     const context = useContext(BreadcrumbsContext);

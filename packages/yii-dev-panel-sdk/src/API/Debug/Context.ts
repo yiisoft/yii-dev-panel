@@ -1,6 +1,6 @@
-import {createSlice, SliceCaseReducers} from '@reduxjs/toolkit';
-import {useSelector} from 'react-redux';
+import {createSlice} from '@reduxjs/toolkit';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {useSelector} from 'react-redux';
 
 type StateType = {
     entry: DebugEntry;

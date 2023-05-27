@@ -1,13 +1,13 @@
-import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
-import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {DataObject, OpenInNew} from '@mui/icons-material';
 import TimelineContent from '@mui/lab/TimelineContent';
 import {IconButton, Tooltip} from '@mui/material';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import {DataObject, OpenInNew} from '@mui/icons-material';
+import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
-import Box from '@mui/material/Box';
-import {parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 
 type TimelineContentWrapperProps = {
     name: string;

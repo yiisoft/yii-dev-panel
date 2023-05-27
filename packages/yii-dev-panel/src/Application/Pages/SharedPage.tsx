@@ -1,6 +1,6 @@
-import React from 'react';
-import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
+import React from 'react';
 
 const cacheData = {
     cache: {

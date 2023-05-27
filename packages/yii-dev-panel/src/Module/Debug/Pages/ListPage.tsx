@@ -1,8 +1,6 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {Refresh} from '@mui/icons-material';
+import ListIcon from '@mui/icons-material/List';
+import LoginIcon from '@mui/icons-material/Login';
 import {
     AlertColor,
     Breadcrumbs,
@@ -15,11 +13,13 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import format from 'date-fns/format';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {fromUnixTime} from 'date-fns';
-import {Refresh} from '@mui/icons-material';
-import ListIcon from '@mui/icons-material/List';
-import LoginIcon from '@mui/icons-material/Login';
+import format from 'date-fns/format';
+import * as React from 'react';
+import {useEffect, useState} from 'react';
 
 const buttonColor = (status: number): AlertColor => {
     switch (true) {

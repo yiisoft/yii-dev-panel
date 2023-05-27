@@ -1,6 +1,5 @@
-import { RouteObject } from "react-router-dom";
-import * as Pages from "@yiisoft/yii-dev-panel/Module/Gii/Pages";
-import React from "react";
+import * as Pages from '@yiisoft/yii-dev-panel/Module/Gii/Pages';
+import {RouteObject} from 'react-router-dom';
 
 export const routes = [
     {

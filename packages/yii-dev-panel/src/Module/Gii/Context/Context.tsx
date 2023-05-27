@@ -1,7 +1,7 @@
-import React, { createContext } from "react";
-import { createAction, createReducer } from "@reduxjs/toolkit";
-import { GiiFile } from "@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types";
-import { GiiResult } from "@yiisoft/yii-dev-panel/Module/Gii/Types/Result.types";
+import {createAction, createReducer} from '@reduxjs/toolkit';
+import {GiiFile} from '@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types';
+import {GiiResult} from '@yiisoft/yii-dev-panel/Module/Gii/Types/Result.types';
+import React, {createContext} from 'react';
 
 type State = {
     files: GiiFile[];

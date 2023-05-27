@@ -1,17 +1,19 @@
-import * as React from 'react';
-import {useCallback, useContext, useMemo, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetTranslationsQuery, usePutTranslationsMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {useSearchParams} from 'react-router-dom';
 import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
+import {
+    useGetTranslationsQuery,
+    usePutTranslationsMutation,
+} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {
     TranslationUpdaterContext,
     TranslationUpdaterContextProvider,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/Context/TranslationUpdaterContext';
+import {useCallback, useContext, useMemo, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {updater} = useContext(TranslationUpdaterContext);

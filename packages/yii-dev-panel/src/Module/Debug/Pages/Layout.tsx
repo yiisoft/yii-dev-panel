@@ -1,6 +1,9 @@
-import * as React from 'react';
-import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
-import {Outlet} from 'react-router';
+import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
+import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
+import InboxIcon from '@mui/icons-material/Inbox';
+import ListIcon from '@mui/icons-material/List';
+import MailIcon from '@mui/icons-material/Mail';
+import ReplayIcon from '@mui/icons-material/Replay';
 import {
     Alert,
     AlertColor,
@@ -18,37 +21,34 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
+import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {
     DebugEntry,
     useLazyGetCollectorInfoQuery,
     useLazyGetDebugQuery,
 } from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {useDispatch} from 'react-redux';
-import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {ErrorBoundary} from 'react-error-boundary';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
-import ListIcon from '@mui/icons-material/List';
-import ReplayIcon from '@mui/icons-material/Replay';
-import {useSearchParams} from 'react-router-dom';
-import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
-import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
-import {useDoRequestMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
-import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
-import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
-import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
-import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
-import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
+import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
-import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
+import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
+import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
+import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
+import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
+import {useDoRequestMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import * as React from 'react';
+import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
+import {ErrorBoundary} from 'react-error-boundary';
+import {useDispatch} from 'react-redux';
+import {Outlet} from 'react-router';
+import {useSearchParams} from 'react-router-dom';
 
 function parseCollectorName(text: string) {
     return text

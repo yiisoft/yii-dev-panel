@@ -1,8 +1,8 @@
-import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
-import React, {useState} from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DataObject, Input, Repeat, Terminal} from '@mui/icons-material';
+import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {MuiColor} from '@yiisoft/yii-dev-panel-sdk/Adapter/mui/types';
+import React, {useState} from 'react';
 
 const buttonColor = (exitCode: number): MuiColor => {
     return exitCode === 0 ? 'success' : 'error';

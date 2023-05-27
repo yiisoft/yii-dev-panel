@@ -1,5 +1,4 @@
 import {Button, Tooltip} from '@mui/material';
-import React from 'react';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
 

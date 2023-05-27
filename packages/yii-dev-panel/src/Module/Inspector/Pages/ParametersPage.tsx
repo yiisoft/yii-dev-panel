@@ -1,13 +1,12 @@
-import * as React from 'react';
-import {useCallback, useMemo} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetParametersQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
-import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
-import {useSearchParams} from 'react-router-dom';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
+import {useGetParametersQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useCallback, useMemo} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},

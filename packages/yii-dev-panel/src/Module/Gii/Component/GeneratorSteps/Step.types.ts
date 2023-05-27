@@ -1,4 +1,4 @@
-import { GiiGenerator } from "@yiisoft/yii-dev-panel/Module/Gii/API/Gii";
+import {GiiGenerator} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 
 export type StepProps = {
     generator: GiiGenerator;
