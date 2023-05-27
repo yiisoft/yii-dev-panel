@@ -22,8 +22,8 @@
   },
   "dependencies": {
     "@welldone-software/why-did-you-render": "^7.0.1",
-    "@yiisoft/yii-dev-panel-sdk": "*",
-    "@yiisoft/yii-dev-toolbar": "*",
+    "@yiisoft/yii-dev-panel-sdk": "^0.0.1",
+    "@yiisoft/yii-dev-toolbar": "^0.0.1",
     "swagger-ui-react": "^4.19.0"
   },
   "devDependencies": {
@@ -40,6 +40,7 @@
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.2",
     "typescript": "^5.0.4",
     "web-vitals": "^3.3.1",
     "workbox-background-sync": "^6.5.4",
