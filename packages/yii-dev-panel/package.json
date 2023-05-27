@@ -22,26 +22,27 @@
   },
   "dependencies": {
     "@welldone-software/why-did-you-render": "^7.0.1",
-    "@yiisoft/yii-dev-panel-sdk": "*",
-    "@yiisoft/yii-dev-toolbar": "*",
-    "swagger-ui-react": "^4.17.1"
+    "@yiisoft/yii-dev-panel-sdk": "^0.0.1",
+    "@yiisoft/yii-dev-toolbar": "^0.0.1",
+    "swagger-ui-react": "^4.19.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.4.0",
+    "@types/jest": "^29.5.1",
     "@types/node": "^18.14.6",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@types/swagger-ui-react": "^4.11.0",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
-    "prettier": "^2.8.4",
-    "typescript": "^4.9.5",
-    "web-vitals": "^3.1.1",
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "@types/swagger-ui-react": "^4.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
+    "prettier": "^2.8.8",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "typescript": "^5.0.4",
+    "web-vitals": "^3.3.1",
     "workbox-background-sync": "^6.5.4",
     "workbox-broadcast-update": "^6.5.4",
     "workbox-cacheable-response": "^6.5.4",
@@ -54,6 +55,11 @@
     "workbox-routing": "^6.5.4",
     "workbox-strategies": "^6.5.4",
     "workbox-streams": "^6.5.4"
+  },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5"
+    }
   },
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
