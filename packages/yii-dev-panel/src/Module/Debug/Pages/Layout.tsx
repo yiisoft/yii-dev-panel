@@ -351,6 +351,13 @@ const Layout = () => {
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
             <Stack direction="row" spacing={2}>
+                <Tooltip title="List">
+                    <span>
+                        <Button href="/debug/list" startIcon={<Refresh />}>
+                            List
+                        </Button>
+                    </span>
+                </Tooltip>
                 <Tooltip title="Refresh the list">
                     <span>
                         <Button

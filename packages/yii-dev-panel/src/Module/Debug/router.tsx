@@ -1,6 +1,7 @@
-import { RouteObject } from "react-router-dom";
-import * as Pages from "@yiisoft/yii-dev-panel/Module/Debug/Pages";
-import React from "react";
+import {RouteObject} from 'react-router-dom';
+import * as Pages from '@yiisoft/yii-dev-panel/Module/Debug/Pages';
+import React from 'react';
+import {ListPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages';
 
 export const routes = [
     {
@@ -11,10 +12,14 @@ export const routes = [
                 element: <Pages.IndexPage />,
                 index: true,
             },
-            {
-                path: 'object',
-                element: <Pages.ObjectPage />,
-            },
         ],
+    },
+    {
+        path: 'debug/object',
+        element: <Pages.ObjectPage />,
+    },
+    {
+        path: 'debug/list',
+        element: <Pages.ListPage />,
     },
 ] as RouteObject[];
