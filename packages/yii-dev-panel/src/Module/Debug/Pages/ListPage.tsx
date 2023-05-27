@@ -3,11 +3,23 @@ import {useEffect, useState} from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {AlertColor, Breadcrumbs, Button, Chip, CircularProgress, Link, Stack, Tooltip, Typography} from '@mui/material';
+import {
+    AlertColor,
+    Breadcrumbs,
+    Button,
+    Chip,
+    CircularProgress,
+    IconButton,
+    Link,
+    Stack,
+    Tooltip,
+    Typography,
+} from '@mui/material';
 import format from 'date-fns/format';
 import {fromUnixTime} from 'date-fns';
 import {Refresh} from '@mui/icons-material';
 import ListIcon from '@mui/icons-material/List';
+import LoginIcon from '@mui/icons-material/Login';
 
 const buttonColor = (status: number): AlertColor => {
     switch (true) {
@@ -58,7 +70,13 @@ const columns: GridColDef<DebugEntry>[] = [
         renderCell: ({row}) => (
             <>
                 <Stack direction="row" spacing={2}>
-                    <Button href={`/debug?debugEntry=${row.id}`}>Debug</Button>
+                    <Tooltip title="Debug the entry">
+                        <span>
+                            <IconButton href={`/debug?debugEntry=${row.id}`}>
+                                <LoginIcon />
+                            </IconButton>
+                        </span>
+                    </Tooltip>
                 </Stack>
             </>
         ),
@@ -70,8 +88,6 @@ export const ListPage = () => {
     const [rows, setRows] = useState<DebugEntry[]>([]);
 
     useEffect(() => {
-        console.log('eff', getDebugQuery.data);
-
         if (!getDebugQuery.isFetching) {
             setRows(getDebugQuery.data || []);
         }
