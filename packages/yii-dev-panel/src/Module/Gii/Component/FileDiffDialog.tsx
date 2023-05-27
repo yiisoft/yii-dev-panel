@@ -1,6 +1,5 @@
-import * as React from 'react';
-import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {GiiFile} from '@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types';
 

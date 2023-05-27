@@ -1,6 +1,6 @@
-import {routes} from '@yiisoft/yii-dev-panel/Module/OpenApi/router';
-import {middlewares, reducers} from '@yiisoft/yii-dev-panel/Module/OpenApi/api';
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
+import {middlewares, reducers} from '@yiisoft/yii-dev-panel/Module/OpenApi/api';
+import {routes} from '@yiisoft/yii-dev-panel/Module/OpenApi/router';
 
 export const OpenApiModule: ModuleInterface = {
     routes: routes,

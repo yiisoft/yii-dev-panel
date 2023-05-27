@@ -1,5 +1,5 @@
-import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 
 export const getCollectedCountByCollector = (collector: CollectorsMap, data: DebugEntry): number => {
     switch (collector) {

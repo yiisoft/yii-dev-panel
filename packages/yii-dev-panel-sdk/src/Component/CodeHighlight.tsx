@@ -1,7 +1,7 @@
-import {Prism} from 'react-syntax-highlighter';
-import React from 'react';
-import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism';
 import {useTheme} from '@mui/material';
+import React from 'react';
+import {Prism} from 'react-syntax-highlighter';
+import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type CodeHighlightProps = {
     language: string;

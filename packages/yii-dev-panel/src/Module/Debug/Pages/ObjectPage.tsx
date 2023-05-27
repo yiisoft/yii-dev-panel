@@ -1,9 +1,8 @@
-import * as React from 'react';
+import {Typography} from '@mui/material';
+import Box from '@mui/material/Box';
+import {useGetObjectQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {JsonRenderer as OriginalJsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {useSearchParams} from 'react-router-dom';
-import {useGetObjectQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import Box from '@mui/material/Box';
-import {Typography} from '@mui/material';
 
 export const ObjectPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();

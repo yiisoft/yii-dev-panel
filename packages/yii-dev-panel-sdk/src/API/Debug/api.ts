@@ -1,5 +1,5 @@
-import {debugApi} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {debugSlice} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {debugApi} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 

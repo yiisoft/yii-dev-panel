@@ -1,8 +1,7 @@
-import * as React from 'react';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},

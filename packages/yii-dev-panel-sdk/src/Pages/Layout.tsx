@@ -1,10 +1,5 @@
-import * as React from 'react';
-import {Fragment} from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import {ContentCut, GitHub, Refresh} from '@mui/icons-material';
+import AdbIcon from '@mui/icons-material/Adb';
 import {
     CssBaseline,
     IconButton,
@@ -16,14 +11,19 @@ import {
     MenuItem,
     styled,
 } from '@mui/material';
-import {Outlet} from 'react-router';
-import {ErrorBoundary} from 'react-error-boundary';
-import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
-import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
-import {ContentCut, GitHub, Refresh} from '@mui/icons-material';
-import AdbIcon from '@mui/icons-material/Adb';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
 import {OverrideProps} from '@mui/material/OverridableComponent';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
+import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import * as React from 'react';
+import {Fragment} from 'react';
+import {ErrorBoundary} from 'react-error-boundary';
+import {Outlet} from 'react-router';
 
 // TODO: replace with context and provider
 const pages = [

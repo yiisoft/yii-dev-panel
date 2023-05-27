@@ -1,8 +1,7 @@
-import { Breadcrumbs, Link, Typography } from "@mui/material";
-import * as React from "react";
-import { useContext } from "react";
-import { Outlet } from "react-router";
-import { BreadcrumbsContext } from "@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext";
+import {Breadcrumbs, Link, Typography} from '@mui/material';
+import {BreadcrumbsContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
+import {useContext} from 'react';
+import {Outlet} from 'react-router';
 
 export const Layout = () => {
     const context = useContext(BreadcrumbsContext);

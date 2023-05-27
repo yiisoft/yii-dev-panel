@@ -1,4 +1,4 @@
-import { giiApi } from "@yiisoft/yii-dev-panel/Module/Gii/API/Gii";
+import {giiApi} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 
 export const reducers = {
     [giiApi.reducerPath]: giiApi.reducer,

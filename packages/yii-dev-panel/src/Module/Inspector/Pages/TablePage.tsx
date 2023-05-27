@@ -1,11 +1,10 @@
-import * as React from 'react';
-import {useCallback, useEffect, useState} from 'react';
-import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {useParams} from 'react-router-dom';
 import {Breadcrumbs, Link, Typography} from '@mui/material';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useCallback, useEffect, useState} from 'react';
+import {useParams} from 'react-router-dom';
 
 export const TablePage = () => {
     const {table} = useParams();

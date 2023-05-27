@@ -1,6 +1,5 @@
-import * as React from 'react';
-import {PropsWithChildren, useCallback, useEffect, useRef, useState} from 'react';
-import {CSSObject, styled, Theme} from '@mui/material/styles';
+import {ChevronRight} from '@mui/icons-material';
+import {Avatar, Badge, Link} from '@mui/material';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -8,8 +7,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {Avatar, Badge, Link} from '@mui/material';
-import {ChevronRight} from '@mui/icons-material';
+import {CSSObject, Theme, styled} from '@mui/material/styles';
+import * as React from 'react';
+import {PropsWithChildren, useCallback, useEffect, useRef, useState} from 'react';
 
 const drawerWidth = 240;
 

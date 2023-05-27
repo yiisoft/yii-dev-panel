@@ -1,10 +1,10 @@
-import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
-import React, {useState} from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DataObject, DynamicFeed, Repeat, Route} from '@mui/icons-material';
-import {NestedMenuItem} from 'mui-nested-menu';
-import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
+import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {MuiColor} from '@yiisoft/yii-dev-panel-sdk/Adapter/mui/types';
+import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
+import {NestedMenuItem} from 'mui-nested-menu';
+import React, {useState} from 'react';
 
 const buttonColor = (status: number): MuiColor => {
     switch (true) {

@@ -1,4 +1,4 @@
-import { UseFormReturn } from "react-hook-form";
+import {UseFormReturn} from 'react-hook-form';
 
 export function mapErrorsToForm(response: any, form: UseFormReturn) {
     if ('error' in response) {

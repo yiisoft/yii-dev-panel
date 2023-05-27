@@ -1,8 +1,7 @@
-import * as React from 'react';
-import {Alert, AlertTitle, IconButton, Link, Tooltip, Typography} from '@mui/material';
 import {FilePresent} from '@mui/icons-material';
+import {Alert, AlertTitle, Link} from '@mui/material';
 import Box from '@mui/material/Box';
-import {parseFilePath, parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
 
 type Level = 'error' | 'info' | 'debug';

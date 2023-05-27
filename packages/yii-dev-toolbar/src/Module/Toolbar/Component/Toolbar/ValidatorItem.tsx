@@ -1,7 +1,6 @@
-import {Badge, Button} from '@mui/material';
-import React from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {ChatBubble} from '@mui/icons-material';
+import {Badge, Button} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 
 type ValidatorItemProps = {
     data: DebugEntry;

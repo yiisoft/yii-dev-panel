@@ -1,13 +1,13 @@
-import * as React from "react";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import { StepContent } from "@mui/material";
-import { GiiGenerator } from "@yiisoft/yii-dev-panel/Module/Gii/API/Gii";
-import { PreviewStep } from "@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/PreviewStep";
-import { ResultStep } from "@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/ResultStep";
-import { GenerateStep } from "@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GenerateStep";
-import { ContextProvider } from "@yiisoft/yii-dev-panel/Module/Gii/Context/Context";
+import {StepContent} from '@mui/material';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
+import Stepper from '@mui/material/Stepper';
+import {GiiGenerator} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
+import {GenerateStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GenerateStep';
+import {PreviewStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/PreviewStep';
+import {ResultStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/ResultStep';
+import {ContextProvider} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
+import * as React from 'react';
 
 const steps = [
     {
