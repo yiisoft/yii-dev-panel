@@ -28,17 +28,22 @@
   },
   "devDependencies": {
     "@types/node": "^18.14.6",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.54.1",
-    "@typescript-eslint/parser": "^5.54.1",
-    "eslint": "^8.35.0",
-    "eslint-config-prettier": "^8.7.0",
+    "@types/react": "^18.2.7",
+    "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "^5.59.7",
+    "@typescript-eslint/parser": "^5.59.7",
+    "eslint": "^8.41.0",
+    "eslint-config-prettier": "^8.8.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "prettier": "^2.8.4",
+    "prettier": "^2.8.8",
     "typescript": "^5.0.4",
-    "web-vitals": "^3.1.1"
+    "web-vitals": "^3.3.1"
+  },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^5"
+    }
   },
   "scripts": {
     "start": "react-app-rewired start",
