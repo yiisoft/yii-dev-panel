@@ -28,6 +28,8 @@ import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/D
 import {ErrorBoundary} from 'react-error-boundary';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
+import ListIcon from '@mui/icons-material/List';
+import ReplayIcon from '@mui/icons-material/Replay';
 import {useSearchParams} from 'react-router-dom';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
@@ -353,7 +355,7 @@ const Layout = () => {
             <Stack direction="row" spacing={2}>
                 <Tooltip title="List">
                     <span>
-                        <Button href="/debug/list" startIcon={<Refresh />}>
+                        <Button href="/debug/list" startIcon={<ListIcon />}>
                             List
                         </Button>
                     </span>
@@ -375,6 +377,7 @@ const Layout = () => {
                         <Button
                             onClick={repeatRequestHandler}
                             disabled={!debugEntry || doRequestInfo.isLoading || getDebugQueryInfo.isFetching}
+                            startIcon={<ReplayIcon />}
                             endIcon={
                                 doRequestInfo.isLoading ? (
                                     <CircularProgress size={24} color="info" />
