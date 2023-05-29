@@ -30,17 +30,20 @@ import {
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
-import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
-import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
-import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
-import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
-import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
+import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
+import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
+import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
+import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
 import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
+import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
+import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import clipboardCopy from 'clipboard-copy';
 import * as React from 'react';
 import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -138,7 +141,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
     const renderLabel = useCallback((entry: DebugEntry): string => {
         if (isDebugEntryAboutConsole(entry)) {
-            return [entry.command.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command.input].join(' ');
+            return [entry.command?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command?.input].filter(Boolean).join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
             return ['[' + entry.response.statusCode + ']', entry.request.method, entry.request.path].join(' ');
@@ -173,16 +176,16 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                 {isDebugEntryAboutConsole(entry) && (
                     <>
                         <Typography component="span" sx={{flex: 1}}>
-                            {entry.command.exitCode === 0 ? (
+                            {entry.command?.exitCode === 0 ? (
                                 <Chip label="OK" color={'success'} sx={{borderRadius: '5px 5px', margin: '0 2px'}} />
                             ) : (
                                 <Chip
-                                    label={`CODE: ${entry.command.exitCode}`}
+                                    label={`CODE: ${entry.command?.exitCode ?? 'Unknown'}`}
                                     color={'error'}
                                     sx={{borderRadius: '5px 5px', margin: '0 2px'}}
                                 />
                             )}
-                            <span style={{margin: '0 2px'}}>{entry.command.input}</span>
+                            <span style={{margin: '0 2px'}}>{entry.command?.input ?? 'Unknown'}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
                             <span>{formatDate(entry.console.request.startTime)}</span>
@@ -403,25 +406,27 @@ const Layout = () => {
                         </Button>
                     </span>
                 </Tooltip>
-                <Tooltip title="Copies the request cURL interpretation">
-                    <span>
-                        <Button
-                            onClick={copyCurlHandler}
-                            disabled={!debugEntry || postCurlBuildQueryInfo.isLoading}
-                            endIcon={
-                                postCurlBuildQueryInfo.isLoading ? (
-                                    <CircularProgress size={24} color="info" />
-                                ) : postCurlBuildQueryInfo.isUninitialized ? null : postCurlBuildQueryInfo.isSuccess ? (
-                                    <Check color="success" />
-                                ) : (
-                                    <Error color="error" />
-                                )
-                            }
-                        >
-                            Copy cURL
-                        </Button>
-                    </span>
-                </Tooltip>
+                {debugEntry && isDebugEntryAboutWeb(debugEntry) && (
+                    <Tooltip title="Copies the request cURL interpretation">
+                        <span>
+                            <Button
+                                onClick={copyCurlHandler}
+                                disabled={!debugEntry || postCurlBuildQueryInfo.isLoading}
+                                endIcon={
+                                    postCurlBuildQueryInfo.isLoading ? (
+                                        <CircularProgress size={24} color="info" />
+                                    ) : postCurlBuildQueryInfo.isUninitialized ? null : postCurlBuildQueryInfo.isSuccess ? (
+                                        <Check color="success" />
+                                    ) : (
+                                        <Error color="error" />
+                                    )
+                                }
+                            >
+                                Copy cURL
+                            </Button>
+                        </span>
+                    </Tooltip>
+                )}
             </Stack>
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
