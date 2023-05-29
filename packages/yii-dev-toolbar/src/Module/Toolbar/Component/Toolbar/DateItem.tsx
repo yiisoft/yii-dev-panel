@@ -22,7 +22,7 @@ const DateItem = forwardRef((props: DateItemProps, ref: ForwardedRef<HTMLButtonE
                     borderRadius: 0,
                 }}
             >
-                {format(fromUnixTime((data.web || data.console).request.startTime), 'do MMM hh:mm:ss')}
+                {format(fromUnixTime((data.web || data.console).request.startTime), 'do MMM HH:mm:ss')}
             </Button>
         </Badge>
     );

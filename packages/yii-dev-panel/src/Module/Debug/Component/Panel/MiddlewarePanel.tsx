@@ -41,7 +41,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'hh:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{format(middleware.time, 'HH:mm:ss.SSSS')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -58,7 +58,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} align="right" color="text.primary">
                             <Tooltip title={middleware.startTime}>
-                                <Typography>{format(middleware.startTime, 'hh:mm:ss')}</Typography>
+                                <Typography>{format(middleware.startTime, 'HH:mm:ss')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -74,7 +74,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'hh:mm:ss')}</Typography>
+                                <Typography component="span">{format(middleware.time, 'HH:mm:ss')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>

@@ -54,7 +54,7 @@ export const EventPanel = (props: EventTimelineProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={event.time}>
-                                <Typography component="span">{format(event.time, 'hh:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{format(event.time, 'HH:mm:ss.SSSS')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
