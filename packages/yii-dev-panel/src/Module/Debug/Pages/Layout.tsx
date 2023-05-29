@@ -163,8 +163,8 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                         <Typography component="span" sx={{flex: 1}}>
                             <Chip
                                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                                label={`${entry.response.statusCode} ${entry.request.method}`}
-                                color={buttonColor(entry.response.statusCode)}
+                                label={`${entry.response?.statusCode} ${entry.request.method}`}
+                                color={buttonColor(entry.response?.statusCode)}
                             />
                             <span style={{margin: '0 2px'}}>{entry.request.path}</span>
                         </Typography>
