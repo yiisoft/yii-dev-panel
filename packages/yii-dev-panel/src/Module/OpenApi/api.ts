@@ -1,6 +1,6 @@
-import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
-import { openApiSlice } from "@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context";
+import {openApiSlice} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
+import {persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const openApiSliceConfig = {
     key: openApiSlice.reducer.name,

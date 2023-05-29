@@ -1,14 +1,14 @@
-import {usePostPreviewMutation} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
-import {createYupValidationSchema} from '@yiisoft/yii-dev-panel-sdk/Adapter/yup/yii.validator';
-import {FieldValues, FormProvider, useForm} from 'react-hook-form';
 import {yupResolver} from '@hookform/resolvers/yup/dist/yup';
 import {Box, Button, ButtonGroup} from '@mui/material';
-import * as React from 'react';
-import {useContext} from 'react';
+import {createYupValidationSchema} from '@yiisoft/yii-dev-panel-sdk/Adapter/yup/yii.validator';
+import {usePostPreviewMutation} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 import {FormInput} from '@yiisoft/yii-dev-panel/Module/Gii/Component/FormInput';
 import {StepProps} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/Step.types';
 import {mapErrorsToForm} from '@yiisoft/yii-dev-panel/Module/Gii/Component/errorMapper';
 import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
+import * as React from 'react';
+import {useContext} from 'react';
+import {FieldValues, FormProvider, useForm} from 'react-hook-form';
 
 export function PreviewStep({generator, onComplete}: StepProps) {
     const attributes = generator.attributes;

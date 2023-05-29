@@ -1,6 +1,6 @@
-import React, {Suspense} from 'react';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {Alert} from '@mui/material';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import React, {Suspense} from 'react';
 
 type UseDynamicScriptProps = {
     url: string | undefined;

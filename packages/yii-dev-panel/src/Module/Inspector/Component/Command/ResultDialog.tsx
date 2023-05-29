@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {Refresh} from '@mui/icons-material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Dialog, {DialogProps} from '@mui/material/Dialog';
@@ -6,7 +6,6 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
-import {Refresh} from '@mui/icons-material';
 
 type ResultDialog = {
     status: 'ok' | 'error' | 'fail' | 'loading';

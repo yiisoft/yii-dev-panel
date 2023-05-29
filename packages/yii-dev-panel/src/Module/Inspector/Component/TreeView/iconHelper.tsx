@@ -1,4 +1,3 @@
-import React from "react";
 import {
     Css,
     DataObject,
@@ -12,9 +11,9 @@ import {
     Php,
     PictureAsPdf,
     Terminal,
-    TextSnippet
-} from "@mui/icons-material";
-import { InspectorFile } from "@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector";
+    TextSnippet,
+} from '@mui/icons-material';
+import {InspectorFile} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 
 function findByExtension(extension: string) {
     switch (extension) {

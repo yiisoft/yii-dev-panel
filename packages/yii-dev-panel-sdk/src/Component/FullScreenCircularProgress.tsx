@@ -1,5 +1,4 @@
 import {CircularProgress} from '@mui/material';
-import * as React from 'react';
 
 export const FullScreenCircularProgress = ({indicatorSize = 40}: {indicatorSize?: number}) => {
     return (

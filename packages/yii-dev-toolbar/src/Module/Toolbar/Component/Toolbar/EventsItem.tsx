@@ -1,8 +1,8 @@
-import {Badge, Button} from '@mui/material';
-import React, {ForwardedRef, forwardRef} from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {ChatBubble} from '@mui/icons-material';
+import {Badge, Button} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
+import {ForwardedRef, forwardRef} from 'react';
 
 type EventsItemProps = {
     data: DebugEntry;

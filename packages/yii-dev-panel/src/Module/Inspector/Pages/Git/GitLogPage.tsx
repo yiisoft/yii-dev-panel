@@ -1,11 +1,10 @@
-import * as React from "react";
-import { useCallback, useContext, useEffect } from "react";
-import { Button, CircularProgress, Divider, List, ListItem, ListItemText } from "@mui/material";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import { GetApp, Refresh, Sync } from "@mui/icons-material";
-import { useCommandMutation, useGetLogQuery } from "@yiisoft/yii-dev-panel/Module/Inspector/API/GitApi";
-import { BreadcrumbsContext } from "@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext";
+import {GetApp, Refresh, Sync} from '@mui/icons-material';
+import {Button, CircularProgress, Divider, List, ListItem, ListItemText} from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import {useCommandMutation, useGetLogQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/GitApi';
+import {BreadcrumbsContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
+import {useCallback, useContext, useEffect} from 'react';
 
 export const GitLogPage = () => {
     const getLogQuery = useGetLogQuery();

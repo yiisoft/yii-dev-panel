@@ -1,9 +1,8 @@
-import * as React from "react";
-import { useContext } from "react";
-import { StepProps } from "@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/Step.types";
-import { Context } from "@yiisoft/yii-dev-panel/Module/Gii/Context/Context";
-import { Alert, AlertTitle, Box, Button, ButtonGroup } from "@mui/material";
-import { matchSeverityByResultStatus } from "@yiisoft/yii-dev-panel/Module/Gii/Component/matchSeverity";
+import {Alert, AlertTitle, Box, Button, ButtonGroup} from '@mui/material';
+import {StepProps} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/Step.types';
+import {matchSeverityByResultStatus} from '@yiisoft/yii-dev-panel/Module/Gii/Component/matchSeverity';
+import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
+import {useContext} from 'react';
 
 export function ResultStep({generator, onComplete}: StepProps) {
     const context = useContext(Context);

@@ -1,5 +1,5 @@
-import { AlertColor } from "@mui/material";
-import { FileStateEnum } from "@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types";
+import {AlertColor} from '@mui/material';
+import {FileStateEnum} from '@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types';
 
 export function matchSeverityByResultStatus(status: string): AlertColor {
     let result: AlertColor = 'error';

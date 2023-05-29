@@ -1,15 +1,14 @@
-import * as React from "react";
-import Timeline from "@mui/lab/Timeline";
-import TimelineItem from "@mui/lab/TimelineItem";
-import TimelineSeparator from "@mui/lab/TimelineSeparator";
-import TimelineConnector from "@mui/lab/TimelineConnector";
-import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
-import TimelineDot from "@mui/lab/TimelineDot";
-import Typography from "@mui/material/Typography";
-import format from "date-fns/format";
-import { Tooltip } from "@mui/material";
-import { ArrowDownward } from "@mui/icons-material";
-import { TimelineContentWrapper } from "@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper";
+import {ArrowDownward} from '@mui/icons-material';
+import Timeline from '@mui/lab/Timeline';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import {Tooltip} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
+import format from 'date-fns/format';
 
 type MiddlewareType = {
     memory: number;
@@ -42,7 +41,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'hh:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{format(middleware.time, 'HH:mm:ss.SSSS')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -59,7 +58,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} align="right" color="text.primary">
                             <Tooltip title={middleware.startTime}>
-                                <Typography>{format(middleware.startTime, 'hh:mm:ss')}</Typography>
+                                <Typography>{format(middleware.startTime, 'HH:mm:ss')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -75,7 +74,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'hh:mm:ss')}</Typography>
+                                <Typography component="span">{format(middleware.time, 'HH:mm:ss')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>

@@ -1,16 +1,15 @@
-import * as React from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import Typography from '@mui/material/Typography';
-import format from 'date-fns/format';
-import {IconButton, Tooltip} from '@mui/material';
 import {ArrowDownward, OpenInNew} from '@mui/icons-material';
+import Timeline from '@mui/lab/Timeline';
+import TimelineConnector from '@mui/lab/TimelineConnector';
+import TimelineDot from '@mui/lab/TimelineDot';
+import TimelineItem from '@mui/lab/TimelineItem';
+import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineSeparator from '@mui/lab/TimelineSeparator';
+import {IconButton, Tooltip} from '@mui/material';
+import Typography from '@mui/material/Typography';
+import {parseFilePathWithLineAnchor, parseFilename} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
-import {parseFilename, parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import format from 'date-fns/format';
 
 type EventType = {
     event: string;
@@ -55,7 +54,7 @@ export const EventPanel = (props: EventTimelineProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={event.time}>
-                                <Typography component="span">{format(event.time, 'hh:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{format(event.time, 'HH:mm:ss.SSSS')}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>

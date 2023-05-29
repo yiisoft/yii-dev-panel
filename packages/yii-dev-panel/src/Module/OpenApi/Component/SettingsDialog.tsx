@@ -1,12 +1,5 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import {addApiEntry, deleteApiEntry, useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
+import {Remove} from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 import {
     IconButton,
     InputBase,
@@ -16,10 +9,17 @@ import {
     ListItemSecondaryAction,
     ListItemText,
 } from '@mui/material';
-import {Remove} from '@mui/icons-material';
-import CheckIcon from '@mui/icons-material/Check';
-import {useDispatch} from 'react-redux';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {addApiEntry, deleteApiEntry, useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
+import * as React from 'react';
+import {useDispatch} from 'react-redux';
 
 // TODO: split saving and cancelling
 type SettingsDialogProps = {

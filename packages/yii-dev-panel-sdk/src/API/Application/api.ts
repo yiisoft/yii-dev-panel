@@ -1,6 +1,6 @@
 import {ApplicationSlice} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
-import storage from 'redux-persist/lib/storage';
 import {persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 const applicationSliceConfig = {
     key: ApplicationSlice.reducer.name,

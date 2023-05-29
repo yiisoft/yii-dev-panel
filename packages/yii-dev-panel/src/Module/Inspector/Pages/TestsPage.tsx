@@ -1,16 +1,15 @@
-import * as React from 'react';
-import {useCallback, useState} from 'react';
-import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {Button, CircularProgress, IconButton, styled, Tooltip} from '@mui/material';
+import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {Button, CircularProgress, IconButton, Tooltip, styled} from '@mui/material';
 import Box from '@mui/material/Box';
-import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
+import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import clipboardCopy from 'clipboard-copy';
 import {useRunCommandMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import clipboardCopy from 'clipboard-copy';
+import {useCallback, useState} from 'react';
 
 const CenteredBox = styled(Box)({
     height: '100%',

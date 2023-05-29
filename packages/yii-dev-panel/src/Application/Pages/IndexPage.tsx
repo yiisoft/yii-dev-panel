@@ -1,3 +1,5 @@
+import {OpenInNew, Star, StarOutline} from '@mui/icons-material';
+import CheckIcon from '@mui/icons-material/Check';
 import {
     Alert,
     Grid,
@@ -10,16 +12,18 @@ import {
     Paper,
     Typography,
 } from '@mui/material';
-import React, {useEffect, useState} from 'react';
-import CheckIcon from '@mui/icons-material/Check';
-import {addFavoriteUrl, changeBaseUrl, removeFavoriteUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
-import {useDispatch} from 'react-redux';
-import {useSelector} from '@yiisoft/yii-dev-panel/store';
+import {
+    addFavoriteUrl,
+    changeBaseUrl,
+    removeFavoriteUrl,
+} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {useLazyGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {useLazyGetGeneratorsQuery} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 import {useLazyGetParametersQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {OpenInNew, Star, StarOutline} from '@mui/icons-material';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {useSelector} from '@yiisoft/yii-dev-panel/store';
+import React, {useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 const defaultBackendUrl = Config.backendUrl;
 

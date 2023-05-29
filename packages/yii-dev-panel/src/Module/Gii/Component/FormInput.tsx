@@ -1,8 +1,7 @@
-import {Controller, useFormContext} from 'react-hook-form';
 import {Autocomplete, FormHelperText, TextField} from '@mui/material';
-import * as React from 'react';
 import {matchInputType} from '@yiisoft/yii-dev-panel-sdk/Adapter/yii/inputTypeMatcher';
 import {GiiGeneratorAttribute} from '@yiisoft/yii-dev-panel-sdk/Types/Gii';
+import {Controller, useFormContext} from 'react-hook-form';
 
 type FormInputProps = {
     attributeName: string;
