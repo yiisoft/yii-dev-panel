@@ -16,12 +16,14 @@ import {
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {fromUnixTime} from 'date-fns';
 import format from 'date-fns/format';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 
-const buttonColor = (status: number): AlertColor => {
+const buttonColorConsole = (code: number): AlertColor => (code === 0 ? 'success' : 'error');
+const buttonColorHttp = (status: number): AlertColor => {
     switch (true) {
         case status >= 400:
             return 'error';
@@ -39,12 +41,29 @@ const columns: GridColDef<DebugEntry>[] = [
         renderCell: ({row}: GridRenderCellParams) => (
             <Chip
                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                label={`${row.response.statusCode} ${row.request.method}`}
-                color={buttonColor(row.response.statusCode)}
+                label={`${
+                    isDebugEntryAboutConsole(row)
+                        ? [row.command?.exitCode].join(' ')
+                        : isDebugEntryAboutWeb(row)
+                        ? [row.response?.statusCode, row.request.method].join(' ')
+                        : 'Unknown entry'
+                }`}
+                color={
+                    isDebugEntryAboutConsole(row)
+                        ? buttonColorConsole(Number(row.command?.exitCode))
+                        : isDebugEntryAboutWeb(row)
+                        ? buttonColorHttp(row.response?.statusCode)
+                        : 'info'
+                }
             />
         ),
     },
-    {field: 'url', flex: 1, headerName: 'URL / Command', valueGetter: ({row}) => row.request.path},
+    {
+        field: 'url',
+        flex: 1,
+        headerName: 'URL / Command',
+        valueGetter: ({row}) => row.request?.path ?? row.command?.input,
+    },
     // {
     //     field: 'env',
     //     headerName: 'ENV',
@@ -60,10 +79,10 @@ const columns: GridColDef<DebugEntry>[] = [
         headerName: 'Time at',
         renderCell: ({row}) => <>{format(fromUnixTime((row.web || row.console).request.startTime), 'HH:mm:ss')}</>,
     },
-    {field: 'logs', headerName: 'Logs', valueGetter: ({row}) => row.logger.total},
-    {field: 'events', headerName: 'Events', valueGetter: ({row}) => row.event.total},
-    // {field: 'middlewares', headerName: 'Middlewares', valueGetter: ({row}) => row.middleware.total},
-    {field: 'services', headerName: 'Services', valueGetter: ({row}) => row.service.total},
+    {field: 'logs', headerName: 'Logs', valueGetter: ({row}) => row.logger?.total ?? '–'},
+    {field: 'events', headerName: 'Events', valueGetter: ({row}) => row.event?.total ?? '–'},
+    // {field: 'middlewares', headerName: 'Middlewares', valueGetter: ({row}) => row.middleware?.total ?? '–'},
+    {field: 'services', headerName: 'Services', valueGetter: ({row}) => row.service?.total ?? '–'},
     {
         field: 'actions',
         headerName: 'Actions',
