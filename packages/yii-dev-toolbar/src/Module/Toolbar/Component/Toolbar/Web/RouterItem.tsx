@@ -1,7 +1,6 @@
-import {Button} from '@mui/material';
-import React from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {Route} from '@mui/icons-material';
+import {Button} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 
 type RouterItemProps = {
     data: DebugEntry;

@@ -1,5 +1,5 @@
-import { ExceptionPreview } from "@yiisoft/yii-dev-panel/Module/Debug/Component/Exception/ExceptionPreview";
-import { Box, Typography } from "@mui/material";
+import {Box, Typography} from '@mui/material';
+import {ExceptionPreview} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Exception/ExceptionPreview';
 
 type ExceptionPanelProps = {
     exceptions: {

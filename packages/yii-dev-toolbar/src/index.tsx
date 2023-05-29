@@ -1,10 +1,10 @@
 import '@yiisoft/yii-dev-toolbar/wdyr';
 
+import App from '@yiisoft/yii-dev-toolbar/App';
+import '@yiisoft/yii-dev-toolbar/index.css';
 import reportWebVitals from '@yiisoft/yii-dev-toolbar/reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import '@yiisoft/yii-dev-toolbar/index.css';
-import App from '@yiisoft/yii-dev-toolbar/App';
 
 (function ToolbarWidget(scope) {
     scope['ToolbarWidget'] = {

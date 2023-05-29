@@ -1,4 +1,4 @@
-import React, { createContext, PropsWithChildren } from "react";
+import {createContext, PropsWithChildren} from 'react';
 
 type State = {
     loader: (objectId: string) => void;

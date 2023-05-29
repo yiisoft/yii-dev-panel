@@ -1,7 +1,7 @@
-import * as React from "react";
-import { useRef } from "react";
-import { FormControl, IconButton, Input, InputAdornment, InputLabel } from "@mui/material";
-import { Clear } from "@mui/icons-material";
+import {Clear} from '@mui/icons-material';
+import {FormControl, IconButton, Input, InputAdornment, InputLabel} from '@mui/material';
+import * as React from 'react';
+import {useRef} from 'react';
 
 export type FilterInputProps = {
     value?: string;

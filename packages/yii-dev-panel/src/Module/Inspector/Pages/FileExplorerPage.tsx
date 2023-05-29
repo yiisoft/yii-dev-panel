@@ -1,19 +1,18 @@
-import * as React from 'react';
-import {useEffect, useLayoutEffect, useState} from 'react';
+import {Undo} from '@mui/icons-material';
+import {Box, Breadcrumbs, Button, Link, Typography} from '@mui/material';
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
+import {parseFilePath, parsePathLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
+import {scrollToAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/scrollToAnchor';
 import {
     InspectorFile,
     InspectorFileContent,
     useLazyGetClassQuery,
     useLazyGetFilesQuery,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
-import {Box, Breadcrumbs, Button, Link, Typography} from '@mui/material';
-import {useSearchParams} from 'react-router-dom';
 import {TreeView} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/TreeView/TreeView';
-import {Undo} from '@mui/icons-material';
-import {parseFilePath, parsePathLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import {scrollToAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/scrollToAnchor';
-import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
+import {useEffect, useLayoutEffect, useState} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 type PathBreadcrumbsProps = {
     onClick: (nodeId: string) => void;

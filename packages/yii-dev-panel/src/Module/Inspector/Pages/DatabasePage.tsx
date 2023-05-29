@@ -1,10 +1,9 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {Breadcrumbs, Button, Typography} from '@mui/material';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useEffect, useState} from 'react';
 
 const columns: GridColDef[] = [
     {

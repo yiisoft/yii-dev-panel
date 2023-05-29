@@ -1,14 +1,13 @@
-import * as React from 'react';
-import {useCallback} from 'react';
+import {Button, CircularProgress, LinearProgress, Stack} from '@mui/material';
+import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {
     useClearCacheMutation,
     useDeleteCacheMutation,
     useGetCacheQuery,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {useCallback} from 'react';
 import {useSearchParams} from 'react-router-dom';
-import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
-import {Button, CircularProgress, LinearProgress, Stack} from '@mui/material';
 
 type CacheViewProps = {
     data: any;

@@ -1,7 +1,6 @@
-import {FallbackProps} from 'react-error-boundary';
-import Box from '@mui/material/Box';
 import {Accordion, AccordionDetails, Alert, AlertTitle, Button} from '@mui/material';
-import * as React from 'react';
+import Box from '@mui/material/Box';
+import {FallbackProps} from 'react-error-boundary';
 
 export const ErrorFallback = ({error, resetErrorBoundary}: FallbackProps) => {
     return (

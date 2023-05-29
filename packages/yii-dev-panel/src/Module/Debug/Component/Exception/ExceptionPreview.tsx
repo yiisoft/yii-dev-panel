@@ -1,12 +1,5 @@
-import {parseFilename, parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {
-    InspectorFile,
-    InspectorFileContent,
-    useLazyGetFilesQuery,
-} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {OpenInNew} from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Accordion,
     AccordionDetails,
@@ -18,20 +11,10 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import {OpenInNew} from '@mui/icons-material';
-
-function sortTree(data: InspectorFile[]) {
-    return data.slice().sort((file1, file2) => {
-        if (file1.path.endsWith('/') && !file2.path.endsWith('/')) {
-            return file2.path.endsWith('/..') ? 1 : -1;
-        }
-        if (file2.path.endsWith('/') && !file1.path.endsWith('/')) {
-            return file1.path.endsWith('/..') ? -1 : 1;
-        }
-        return file1.path.localeCompare(file2.path);
-    });
-}
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
+import {parseFilename, parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {InspectorFileContent, useLazyGetFilesQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useEffect, useState} from 'react';
 
 type ExceptionPreview = {
     class: string;

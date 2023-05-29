@@ -1,6 +1,6 @@
+import {Alert, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import React, {cloneElement} from 'react';
-import {Alert, Typography} from '@mui/material';
 
 export type InfoBoxProps = {
     title: string;

@@ -1,17 +1,15 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetRoutesQuery, useLazyGetCheckRouteQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {Alert, AlertTitle, FormHelperText, IconButton, InputBase, Paper, Tooltip, Typography} from '@mui/material';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import clipboardCopy from 'clipboard-copy';
-import {ContentCopy, OpenInNew, StarOutline} from '@mui/icons-material';
-import {concatClassMethod} from '@yiisoft/yii-dev-panel-sdk/Helper/classMethodConcater';
-import {addFavoriteUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
+import {ContentCopy, OpenInNew} from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
+import {Alert, AlertTitle, FormHelperText, IconButton, InputBase, Paper, Tooltip, Typography} from '@mui/material';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
+import {concatClassMethod} from '@yiisoft/yii-dev-panel-sdk/Helper/classMethodConcater';
+import {useGetRoutesQuery, useLazyGetCheckRouteQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import clipboardCopy from 'clipboard-copy';
+import {useEffect, useState} from 'react';
 
 const columns: GridColDef[] = [
     {

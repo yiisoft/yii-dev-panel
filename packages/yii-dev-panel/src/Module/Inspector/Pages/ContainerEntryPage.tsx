@@ -1,10 +1,9 @@
-import * as React from 'react';
+import {FilePresent} from '@mui/icons-material';
+import {IconButton, Tooltip} from '@mui/material';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {useGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useSearchParams} from 'react-router-dom';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {IconButton, Tooltip} from '@mui/material';
-import {FilePresent} from '@mui/icons-material';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 
 export const ContainerEntryPage = () => {
     const [searchParams] = useSearchParams();

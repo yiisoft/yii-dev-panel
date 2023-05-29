@@ -1,6 +1,6 @@
+import {useMediaQuery} from '@mui/material';
 import {DataType, JsonViewer, JsonViewerOnChange, JsonViewerTheme} from '@textea/json-viewer';
 import * as React from 'react';
-import {useMediaQuery} from '@mui/material';
 
 const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
 

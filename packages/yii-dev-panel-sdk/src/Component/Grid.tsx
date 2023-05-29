@@ -1,9 +1,8 @@
 import {DataGrid, GridColumns, GridValidRowModel} from '@mui/x-data-grid';
-import * as React from 'react';
-import {useCallback, useState} from 'react';
-import {useSearchParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
 import {setPreferredPageSize} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
+import {useCallback, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useSearchParams} from 'react-router-dom';
 
 type GridProps = {
     rows: GridValidRowModel[];

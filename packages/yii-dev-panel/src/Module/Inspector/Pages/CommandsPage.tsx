@@ -1,15 +1,14 @@
-import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {EmojiObjects} from '@mui/icons-material';
+import {Button, CircularProgress, Link, Typography} from '@mui/material';
+import Box from '@mui/material/Box';
+import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {
     CommandType,
     useLazyGetCommandsQuery,
     useRunCommandMutation,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {Button, CircularProgress, Link, Typography} from '@mui/material';
-import Box from '@mui/material/Box';
-import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
-import {EmojiObjects} from '@mui/icons-material';
 import {ResultDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Command/ResultDialog';
+import {useEffect, useState} from 'react';
 
 type GroupedCommands = Record<string, CommandType[]>;
 type CommandStatusMap = Record<
