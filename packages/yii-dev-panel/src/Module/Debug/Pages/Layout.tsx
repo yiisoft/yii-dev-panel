@@ -42,7 +42,8 @@ import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Pane
 import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
-import {useDoRequestMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import clipboardCopy from 'clipboard-copy';
 import * as React from 'react';
 import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -140,7 +141,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
     const renderLabel = useCallback((entry: DebugEntry): string => {
         if (isDebugEntryAboutConsole(entry)) {
-            return [entry.command.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command.input].join(' ');
+            return [entry.command?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command?.input].filter(Boolean).join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
             return ['[' + entry.response.statusCode + ']', entry.request.method, entry.request.path].join(' ');
@@ -175,16 +176,16 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                 {isDebugEntryAboutConsole(entry) && (
                     <>
                         <Typography component="span" sx={{flex: 1}}>
-                            {entry.command.exitCode === 0 ? (
+                            {entry.command?.exitCode === 0 ? (
                                 <Chip label="OK" color={'success'} sx={{borderRadius: '5px 5px', margin: '0 2px'}} />
                             ) : (
                                 <Chip
-                                    label={`CODE: ${entry.command.exitCode}`}
+                                    label={`CODE: ${entry.command?.exitCode ?? 'Unknown'}`}
                                     color={'error'}
                                     sx={{borderRadius: '5px 5px', margin: '0 2px'}}
                                 />
                             )}
-                            <span style={{margin: '0 2px'}}>{entry.command.input}</span>
+                            <span style={{margin: '0 2px'}}>{entry.command?.input ?? 'Unknown'}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
                             <span>{formatDate(entry.console.request.startTime)}</span>
@@ -224,6 +225,7 @@ const Layout = () => {
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
+    const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
 
     useEffect(() => {
         getDebugQuery();
@@ -309,6 +311,18 @@ const Layout = () => {
         }
         getDebugQuery();
     }, [debugEntry]);
+    const copyCurlHandler = useCallback(async () => {
+        if (!debugEntry) {
+            return;
+        }
+        const result = await postCurlBuildInfo(debugEntry.id);
+        if ('error' in result) {
+            console.error(result.error);
+            return;
+        }
+        console.log(result.data.command);
+        clipboardCopy(result.data.command);
+    }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
@@ -392,6 +406,27 @@ const Layout = () => {
                         </Button>
                     </span>
                 </Tooltip>
+                {debugEntry && isDebugEntryAboutWeb(debugEntry) && (
+                    <Tooltip title="Copies the request cURL interpretation">
+                        <span>
+                            <Button
+                                onClick={copyCurlHandler}
+                                disabled={!debugEntry || postCurlBuildQueryInfo.isLoading}
+                                endIcon={
+                                    postCurlBuildQueryInfo.isLoading ? (
+                                        <CircularProgress size={24} color="info" />
+                                    ) : postCurlBuildQueryInfo.isUninitialized ? null : postCurlBuildQueryInfo.isSuccess ? (
+                                        <Check color="success" />
+                                    ) : (
+                                        <Error color="error" />
+                                    )
+                                }
+                            >
+                                Copy cURL
+                            </Button>
+                        </span>
+                    </Tooltip>
+                )}
             </Stack>
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />

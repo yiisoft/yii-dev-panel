@@ -49,6 +49,11 @@ type ComposerResponse = {
     };
 };
 
+
+type CurlBuilderResponse = {
+    command: string;
+};
+
 type CheckRouteResponse = {
     result: boolean;
     action: string[];
@@ -121,6 +126,13 @@ export const inspectorApi = createApi({
                 url: `request?debugEntryId=${args.id}`,
             }),
             transformResponse: (result: Response) => result.data || [],
+        }),
+        postCurlBuild: builder.mutation<CurlBuilderResponse, string>({
+            query: (debugEntryId) => ({
+                method: 'POST',
+                url: `curl/build?debugEntryId=${debugEntryId}`,
+            }),
+            transformResponse: (result: Response<CurlBuilderResponse>) => result.data,
         }),
         getRoutes: builder.query<Response, void>({
             query: () => `routes`,
@@ -207,4 +219,5 @@ export const {
     useLazyGetComposerInspectQuery,
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
+    usePostCurlBuildMutation,
 } = inspectorApi;
