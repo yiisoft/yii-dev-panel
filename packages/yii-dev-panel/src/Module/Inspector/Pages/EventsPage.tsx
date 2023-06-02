@@ -1,5 +1,5 @@
 import {OpenInNew} from '@mui/icons-material';
-import {Button, List, ListItem, Tooltip} from '@mui/material';
+import {Button, IconButton, List, ListItem, Tooltip, Typography} from '@mui/material';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
@@ -62,11 +62,18 @@ export const EventsPage = () => {
 
             {events.map((event) => (
                 <>
-                    <h3>{event[0]}</h3>
+                    <Typography variant="subtitle2" component="h3">
+                        {event[0]}
+                        <Tooltip title="Open in File Explorer">
+                            <IconButton size="small" target="_blank" href={`/inspector/files?class=${event[0]}`}>
+                                <OpenInNew fontSize="small" />
+                            </IconButton>
+                        </Tooltip>
+                    </Typography>
+
                     <List>
                         {event[1].map((item: any) => (
                             <>
-                                {/*<Stack>*/}
                                 {Array.isArray(item) && (
                                     <Tooltip title="Open in File Explorer">
                                         <Button
@@ -75,11 +82,10 @@ export const EventsPage = () => {
                                             href={`/inspector/files?class=${item[0]}&method=${item[1]}`}
                                             endIcon={<OpenInNew fontSize="small" />}
                                         >
-                                            Class method
+                                            Inspect method
                                         </Button>
                                     </Tooltip>
                                 )}
-                                {/*</Stack>*/}
                                 <ListItem>
                                     <CodeHighlight
                                         language={'php'}
