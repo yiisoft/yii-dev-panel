@@ -100,8 +100,8 @@ export const inspectorApi = createApi({
             query: (command) => `files?path=${command}`,
             transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
-        getClass: builder.query<InspectorFile[], string>({
-            query: (command) => `files?class=${command}`,
+        getClass: builder.query<InspectorFile[], {className: string; methodName: string}>({
+            query: ({className, methodName = ''}) => `files?class=${className}&method=${methodName}`,
             transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
         getTranslations: builder.query<Response, void>({
