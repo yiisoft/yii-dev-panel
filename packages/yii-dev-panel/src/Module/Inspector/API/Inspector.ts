@@ -18,6 +18,8 @@ export type InspectorFile = {
 export type InspectorFileContent = {
     directory: string;
     content: string;
+    startLine?: number;
+    endLine?: number;
 } & InspectorFile;
 
 export type ConfigurationType = Record<string, object | string>;
@@ -49,7 +51,6 @@ type ComposerResponse = {
     };
 };
 
-
 type CurlBuilderResponse = {
     command: string;
 };
@@ -57,6 +58,14 @@ type CurlBuilderResponse = {
 type CheckRouteResponse = {
     result: boolean;
     action: string[];
+};
+
+export type ListenerType = {
+    event: [string, string] | string;
+};
+type EventsResponse = {
+    console: ListenerType[];
+    web: ListenerType[];
 };
 
 type Response<T = any> = {
@@ -142,6 +151,10 @@ export const inspectorApi = createApi({
             query: (route) => `route/check?route=${route}`,
             transformResponse: (result: Response<CheckRouteResponse>) => result.data,
         }),
+        getEvents: builder.query<EventsResponse, void>({
+            query: () => `events`,
+            transformResponse: (result: Response<EventsResponse>) => result.data,
+        }),
         getPhpInfo: builder.query<string, void>({
             query: () => `phpinfo`,
             transformResponse: (result: Response) => result.data || [],
@@ -220,4 +233,5 @@ export const {
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
     usePostCurlBuildMutation,
+    useGetEventsQuery,
 } = inspectorApi;
