@@ -60,12 +60,16 @@ type CheckRouteResponse = {
     action: string[];
 };
 
-export type ListenerType = {
+export type EventListenerType = {
     event: [string, string] | string;
 };
-type EventsResponse = {
-    console: ListenerType[];
-    web: ListenerType[];
+
+export type EventListenersType = Record<string, EventListenerType[]>;
+
+export type EventsResponse = {
+    common: EventListenersType;
+    console: EventListenersType;
+    web: EventListenersType;
 };
 
 type Response<T = any> = {
