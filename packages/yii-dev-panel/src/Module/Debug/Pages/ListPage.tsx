@@ -1,12 +1,11 @@
 import {Refresh} from '@mui/icons-material';
 import ListIcon from '@mui/icons-material/List';
 import LoginIcon from '@mui/icons-material/Login';
-import {Breadcrumbs, Button, Chip, CircularProgress, IconButton, Link, Stack, Tooltip, Typography} from '@mui/material';
+import {Breadcrumbs, Button, CircularProgress, IconButton, Link, Stack, Tooltip, Typography} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {DebugChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugChip';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {buttonColorConsole, buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
-import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {fromUnixTime} from 'date-fns';
 import format from 'date-fns/format';
 import * as React from 'react';
@@ -16,25 +15,7 @@ const columns: GridColDef<DebugEntry>[] = [
     {
         field: 'status',
         headerName: 'Status',
-        renderCell: ({row}: GridRenderCellParams) => (
-            <Chip
-                sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                label={`${
-                    isDebugEntryAboutConsole(row)
-                        ? [row.command?.exitCode].join(' ')
-                        : isDebugEntryAboutWeb(row)
-                        ? [row.response?.statusCode, row.request.method].join(' ')
-                        : 'Unknown entry'
-                }`}
-                color={
-                    isDebugEntryAboutConsole(row)
-                        ? buttonColorConsole(Number(row.command?.exitCode))
-                        : isDebugEntryAboutWeb(row)
-                        ? buttonColorHttp(row.response?.statusCode)
-                        : 'info'
-                }
-            />
-        ),
+        renderCell: ({row}: GridRenderCellParams) => <DebugChip entry={row} />,
     },
     {
         field: 'url',
