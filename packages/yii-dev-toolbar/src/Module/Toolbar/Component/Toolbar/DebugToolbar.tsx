@@ -1,7 +1,6 @@
 import {
     Badge,
     ButtonGroup,
-    Chip,
     IconButton,
     ListItemIcon,
     ListItemText,
@@ -16,9 +15,9 @@ import {TooltipProps, tooltipClasses} from '@mui/material/Tooltip';
 import {styled} from '@mui/material/styles';
 import {setToolbarOpen} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {DebugEntry, debugApi, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {DebugChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugChip';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
-import {buttonColorConsole, buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel-sdk/serviceWorkerRegistration';
 import {CommandItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/Console/CommandItem';
@@ -47,42 +46,26 @@ const HtmlTooltip = styled(({className, ...props}: TooltipProps) => (
 }));
 
 type EntriesListProps = {
-    rows: DebugEntry[];
+    entries: DebugEntry[];
     onClick: (entry: DebugEntry) => void;
 };
-const EntriesList = ({rows = [], onClick}: EntriesListProps) => {
+const EntriesList = ({entries = [], onClick}: EntriesListProps) => {
     const currentEntry = useDebugEntry();
-    if (rows.length === 0) {
+    if (entries.length === 0) {
         return null;
     }
     return (
         <>
-            {rows.map((row) => (
+            {entries.map((entry) => (
                 <MenuItem
-                    key={row.id}
-                    onClick={() => onClick(row)}
-                    selected={currentEntry && row.id === currentEntry.id}
+                    key={entry.id}
+                    onClick={() => onClick(entry)}
+                    selected={currentEntry && entry.id === currentEntry.id}
                 >
                     <ListItemIcon>
-                        <Chip
-                            sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                            label={`${
-                                isDebugEntryAboutConsole(row)
-                                    ? [row.command?.exitCode].join(' ')
-                                    : isDebugEntryAboutWeb(row)
-                                    ? [row.response?.statusCode, row.request.method].join(' ')
-                                    : 'Unknown entry'
-                            }`}
-                            color={
-                                isDebugEntryAboutConsole(row)
-                                    ? buttonColorConsole(Number(row.command?.exitCode))
-                                    : isDebugEntryAboutWeb(row)
-                                    ? buttonColorHttp(row.response?.statusCode)
-                                    : 'info'
-                            }
-                        />
+                        <DebugChip entry={entry} />
                     </ListItemIcon>
-                    <ListItemText primary={row.request?.path ?? row.command?.input} />
+                    <ListItemText primary={entry.request?.path ?? entry.command?.input} />
                 </MenuItem>
             ))}
         </>
@@ -110,6 +93,7 @@ export const DebugToolbar = () => {
         console.log('[START] Listen to message');
         const onMessageHandler = (event) => {
             console.log('[EVENT] Listen to message', event.data);
+            debugApi.util.invalidateTags(['debug/list']);
         };
         serviceWorker?.addEventListener('message', onMessageHandler);
         return () => {
@@ -126,11 +110,11 @@ export const DebugToolbar = () => {
     const dispatch = useDispatch();
 
     const [selectedEntry, setSelectedEntry] = useState(debugEntry);
-    const [rows, setRows] = useState<DebugEntry[]>([]);
+    const [entries, setEntries] = useState<DebugEntry[]>([]);
 
     useEffect(() => {
         if (!getDebugQuery.isFetching && getDebugQuery.data && getDebugQuery.data.length > 0) {
-            setRows(getDebugQuery.data.slice(0, 50));
+            setEntries(getDebugQuery.data.slice(0, 50));
             setSelectedEntry(getDebugQuery.data[0]);
         }
     }, [getDebugQuery.isFetching]);
@@ -216,7 +200,7 @@ export const DebugToolbar = () => {
                             onClick={onToolbarClickHandler}
                             sx={{marginX: 1, background: 'white'}}
                         >
-                            <Badge badgeContent={rows.length} color="info">
+                            <Badge badgeContent={entries.length} color="info">
                                 <YiiIcon
                                     sx={{
                                         transform: !checked ? 'rotate(360deg)' : 'rotate(0deg)',
@@ -240,7 +224,7 @@ export const DebugToolbar = () => {
                     },
                 }}
             >
-                <EntriesList rows={rows} onClick={onChangeHandler} />
+                <EntriesList entries={entries} onClick={onChangeHandler} />
             </Menu>
         </Portal>
     );
