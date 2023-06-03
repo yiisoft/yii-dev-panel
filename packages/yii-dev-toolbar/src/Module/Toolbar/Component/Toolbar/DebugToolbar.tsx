@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 import {TooltipProps, tooltipClasses} from '@mui/material/Tooltip';
 import {styled} from '@mui/material/styles';
 import {setToolbarOpen} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
-import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {buttonColorConsole, buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
@@ -51,13 +51,18 @@ type EntriesListProps = {
     onClick: (entry: DebugEntry) => void;
 };
 const EntriesList = ({rows = [], onClick}: EntriesListProps) => {
+    const currentEntry = useDebugEntry();
     if (rows.length === 0) {
         return null;
     }
     return (
         <>
             {rows.map((row) => (
-                <MenuItem key={row.id} onClick={() => onClick(row)}>
+                <MenuItem
+                    key={row.id}
+                    onClick={() => onClick(row)}
+                    selected={currentEntry && row.id === currentEntry.id}
+                >
                     <ListItemIcon>
                         <Chip
                             sx={{borderRadius: '5px 5px', margin: '0 2px'}}
@@ -151,6 +156,7 @@ export const DebugToolbar = () => {
 
     const onChangeHandler = useCallback((entry: DebugEntry) => {
         setSelectedEntry(entry);
+        dispatch(changeEntryAction(entry));
     }, []);
 
     return (

@@ -131,13 +131,14 @@ type CollectorResponseType = any;
 
 export const debugApi = createApi({
     reducerPath: 'api.debug',
+    tagTypes: ['debug/list'],
     baseQuery: createBaseQuery('/debug/api/'),
     endpoints: (builder) => ({
         getDebug: builder.query<DebugEntry[], void>({
             query: () => ``,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
+            providesTags: ['debug/list'],
         }),
-
         getObject: builder.query<DebugEntry[], GetObjectProps>({
             query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
