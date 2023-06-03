@@ -64,7 +64,8 @@
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
     "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-app-rewired build && gulp",
-    "test": "react-app-rewired test"
+    "test": "react-app-rewired test",
+    "generate-service-worker": "react-app-rewired build && yes | cp -rf build/service-worker.js* build/static public"
   },
   "browserslist": {
     "production": [
