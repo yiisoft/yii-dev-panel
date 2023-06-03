@@ -1,39 +1,17 @@
 import {Refresh} from '@mui/icons-material';
 import ListIcon from '@mui/icons-material/List';
 import LoginIcon from '@mui/icons-material/Login';
-import {
-    AlertColor,
-    Breadcrumbs,
-    Button,
-    Chip,
-    CircularProgress,
-    IconButton,
-    Link,
-    Stack,
-    Tooltip,
-    Typography,
-} from '@mui/material';
+import {Breadcrumbs, Button, Chip, CircularProgress, IconButton, Link, Stack, Tooltip, Typography} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {buttonColorConsole, buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {fromUnixTime} from 'date-fns';
 import format from 'date-fns/format';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 
-const buttonColorConsole = (code: number): AlertColor => (code === 0 ? 'success' : 'error');
-const buttonColorHttp = (status: number): AlertColor => {
-    switch (true) {
-        case status >= 400:
-            return 'error';
-        case status >= 300:
-            return 'warning';
-        case status >= 200:
-            return 'success';
-    }
-    return 'info';
-};
 const columns: GridColDef<DebugEntry>[] = [
     {
         field: 'status',
