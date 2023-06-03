@@ -1,6 +1,6 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel-sdk/serviceWorkerRegistration';
 import reportWebVitals from '@yiisoft/yii-dev-panel/reportWebVitals';
-import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel/serviceWorkerRegistration';
 import * as process from 'process';
 
 Config.backendUrl = process.env.REACT_APP_BACKEND_URL;
