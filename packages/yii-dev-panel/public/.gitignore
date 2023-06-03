@@ -1,0 +1,3 @@
+# ignore files for the service worker
+/static/
+service-worker.*
