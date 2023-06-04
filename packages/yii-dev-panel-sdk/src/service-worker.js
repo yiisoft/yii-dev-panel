@@ -122,32 +122,33 @@ self.addEventListener('fetch', (event) => {
 
     event.respondWith(
         fetch(event.request).then((response) => {
-            notify(request, response);
+            notify(event.clientId, request, response);
 
             return response;
         }),
     );
 });
 
-function notify(request, response) {
-    // TODO: remove after debugging
-    console.log('notify', request, response);
+function notify(clientId, request, response) {
+    // console.log('notify', request, response);
     const events = [
         {
             type: 'FETCH',
             payload: {
-                headers: Object.fromEntries(response.headers.entries()),
+                headers: Object.fromEntries(response.headers),
                 url: request.url,
                 method: request.method,
                 status: request.status,
             },
         },
     ];
-    events.map((eventToSend) => {
-        self.clients.matchAll().then((all) =>
-            all.map((client) => {
-                client.postMessage(eventToSend);
-            }),
-        );
+    events.map((event) => {
+        self.clients.get(clientId).then((client) => {
+            // console.log('client', client);
+            client.postMessage(event);
+        });
+        // self.clients.matchAll().then((all) => {
+        //     all.map((client) => client.postMessage(eventToSend));
+        // });
     });
 }
