@@ -4,9 +4,11 @@ import {useSelector} from 'react-redux';
 
 type StateType = {
     entry: DebugEntry;
+    currentPageRequestIds: string[];
 };
 const initialState: StateType = {
     entry: null,
+    currentPageRequestIds: [],
 };
 export const debugSlice = createSlice({
     name: 'store.debug',
@@ -15,10 +17,15 @@ export const debugSlice = createSlice({
         changeEntryAction: (state, action) => {
             state.entry = action.payload;
         },
+        addCurrentPageRequestId: (state, action) => {
+            state.currentPageRequestIds = [...state.currentPageRequestIds, action.payload].slice(0, 100);
+        },
     },
 });
 
-export const {changeEntryAction} = debugSlice.actions;
+export const {changeEntryAction, addCurrentPageRequestId} = debugSlice.actions;
 
 type State = {[debugSlice.name]: ReturnType<typeof debugSlice.getInitialState>};
 export const useDebugEntry = (): DebugEntry | null => useSelector((state: State) => state[debugSlice.name]?.entry);
+export const useCurrentPageRequestIds = (): string[] =>
+    useSelector((state: State) => state[debugSlice.name]?.currentPageRequestIds);
