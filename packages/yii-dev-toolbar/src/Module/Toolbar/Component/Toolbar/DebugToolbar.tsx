@@ -22,7 +22,7 @@ import {useSelector} from '@yiisoft/yii-dev-toolbar/store';
 import {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-let serviceWorker = navigator?.serviceWorker;
+const serviceWorker = navigator?.serviceWorker;
 
 export const DebugToolbar = () => {
     useEffect(() => {
