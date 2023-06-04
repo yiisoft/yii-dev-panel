@@ -71,8 +71,6 @@ export const DebugEntriesListModal = ({onClick, onClose, open}: DebugEntriesList
     const [filters, setFilters] = useState(() => ['web', 'console', 'current']);
     const currentPageRequestIds = useCurrentPageRequestIds();
 
-    console.log('currentPageRequestIds', currentPageRequestIds);
-
     const handleFormat = (event: MouseEvent<HTMLElement>, newFormats: string[]) => {
         setFilters(newFormats);
     };

@@ -8,7 +8,6 @@ import {addCurrentPageRequestId, changeEntryAction, useDebugEntry} from '@yiisof
 import {DebugEntry, debugApi, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
-import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel-sdk/serviceWorkerRegistration';
 import {DebugEntriesListModal} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/DebugEntriesListModal';
 import {CommandItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/Console/CommandItem';
 import {DateItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DateItem';
@@ -27,33 +26,19 @@ let serviceWorker = navigator?.serviceWorker;
 
 export const DebugToolbar = () => {
     useEffect(() => {
-        const config = {
-            onSuccess: (registration: ServiceWorkerRegistration) => {
-                console.log('onSuccess', registration);
-            },
-            onUpdate: (registration) => {
-                console.log('onUpdate', registration);
-                // if (registration && registration.waiting) {
-                //     registration.waiting.postMessage({type: 'SKIP_WAITING'});
-                // }
-            },
-        };
-
-        serviceWorkerRegistration.register(config);
-
-        console.debug('[START] Listen to message');
+        // console.debug('[START] Listen to message');
         const onMessageHandler = (event) => {
             if (!event.data.payload || !('x-debug-id' in event.data.payload.headers)) {
                 return;
             }
-            console.debug('[EVENT] Listen to message', event.data);
+            // console.debug('[EVENT] Listen to message', event.data);
             dispatch(debugApi.util.invalidateTags(['debug/list']));
             dispatch(addCurrentPageRequestId(event.data.payload.headers['x-debug-id']));
         };
         serviceWorker?.addEventListener('message', onMessageHandler);
+
         return () => {
-            console.debug('[STOP] Listen to message');
-            // serviceWorkerRegistration.unregister();
+            // console.debug('[STOP] Listen to message');
             serviceWorker?.removeEventListener('message', onMessageHandler);
         };
     }, []);
