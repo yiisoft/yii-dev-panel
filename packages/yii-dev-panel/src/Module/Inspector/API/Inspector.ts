@@ -18,6 +18,8 @@ export type InspectorFile = {
 export type InspectorFileContent = {
     directory: string;
     content: string;
+    startLine?: number;
+    endLine?: number;
 } & InspectorFile;
 
 export type ConfigurationType = Record<string, object | string>;
@@ -49,7 +51,6 @@ type ComposerResponse = {
     };
 };
 
-
 type CurlBuilderResponse = {
     command: string;
 };
@@ -57,6 +58,18 @@ type CurlBuilderResponse = {
 type CheckRouteResponse = {
     result: boolean;
     action: string[];
+};
+
+export type EventListenerType = {
+    event: [string, string] | string;
+};
+
+export type EventListenersType = Record<string, EventListenerType[]>;
+
+export type EventsResponse = {
+    common: EventListenersType;
+    console: EventListenersType;
+    web: EventListenersType;
 };
 
 type Response<T = any> = {
@@ -100,8 +113,8 @@ export const inspectorApi = createApi({
             query: (command) => `files?path=${command}`,
             transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
-        getClass: builder.query<InspectorFile[], string>({
-            query: (command) => `files?class=${command}`,
+        getClass: builder.query<InspectorFile[], {className: string; methodName: string}>({
+            query: ({className, methodName = ''}) => `files?class=${className}&method=${methodName}`,
             transformResponse: (result: Response<InspectorFile[]>) => result.data || [],
         }),
         getTranslations: builder.query<Response, void>({
@@ -141,6 +154,10 @@ export const inspectorApi = createApi({
         getCheckRoute: builder.query<CheckRouteResponse, string>({
             query: (route) => `route/check?route=${route}`,
             transformResponse: (result: Response<CheckRouteResponse>) => result.data,
+        }),
+        getEvents: builder.query<EventsResponse, void>({
+            query: () => `events`,
+            transformResponse: (result: Response<EventsResponse>) => result.data,
         }),
         getPhpInfo: builder.query<string, void>({
             query: () => `phpinfo`,
@@ -220,4 +237,5 @@ export const {
     useGetComposerInspectQuery,
     usePostComposerRequirePackageMutation,
     usePostCurlBuildMutation,
+    useGetEventsQuery,
 } = inspectorApi;

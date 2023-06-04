@@ -34,6 +34,7 @@ const pages = [
         link: '#',
         items: [
             {name: 'Routes', link: '/inspector/routes'},
+            {name: 'Events', link: '/inspector/events'},
             {name: 'Parameters', link: '/inspector/parameters'},
             {name: 'Configuration', link: '/inspector/configuration'},
             {name: 'Container', link: '/inspector/container'},

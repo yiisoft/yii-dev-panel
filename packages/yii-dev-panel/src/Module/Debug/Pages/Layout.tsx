@@ -6,7 +6,6 @@ import MailIcon from '@mui/icons-material/Mail';
 import ReplayIcon from '@mui/icons-material/Replay';
 import {
     Alert,
-    AlertColor,
     AlertTitle,
     Autocomplete,
     Box,
@@ -32,6 +31,7 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
@@ -120,17 +120,6 @@ function HttpRequestError({error}: {error: any}) {
         </Box>
     );
 }
-const buttonColor = (status: number): AlertColor => {
-    switch (true) {
-        case status >= 400:
-            return 'error';
-        case status >= 300:
-            return 'warning';
-        case status >= 200:
-            return 'success';
-    }
-    return 'info';
-};
 
 type DebugEntryAutocompleteProps = {
     data: DebugEntry[] | undefined;
@@ -164,7 +153,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                             <Chip
                                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
                                 label={`${entry.response?.statusCode} ${entry.request.method}`}
-                                color={buttonColor(entry.response?.statusCode)}
+                                color={buttonColorHttp(entry.response?.statusCode)}
                             />
                             <span style={{margin: '0 2px'}}>{entry.request.path}</span>
                         </Typography>

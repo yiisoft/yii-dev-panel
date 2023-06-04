@@ -83,6 +83,7 @@ export const FileExplorerPage = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const path = searchParams.get('path') || '/';
     const className = searchParams.get('class') || '';
+    const methodName = searchParams.get('method') || '';
 
     const [lazyGetFilesQuery, getFilesQueryInfo] = useLazyGetFilesQuery();
     const [lazyGetClassQuery, getClassQueryInfo] = useLazyGetClassQuery();
@@ -92,7 +93,9 @@ export const FileExplorerPage = () => {
     useEffect(() => {
         (async () => {
             const response =
-                className !== '' ? await lazyGetClassQuery(className) : await lazyGetFilesQuery(parseFilePath(path));
+                className !== ''
+                    ? await lazyGetClassQuery({className, methodName})
+                    : await lazyGetFilesQuery(parseFilePath(path));
 
             if (Array.isArray(response.data)) {
                 const rows = sortTree(response.data);
@@ -105,6 +108,10 @@ export const FileExplorerPage = () => {
 
     useLayoutEffect(() => {
         if (file) {
+            if (file.startLine) {
+                scrollToAnchor(25, `L${file.startLine}`);
+                return;
+            }
             const lines = parsePathLineAnchor(window.location.hash);
             scrollToAnchor(25, lines && `L${lines[0]}`);
         }

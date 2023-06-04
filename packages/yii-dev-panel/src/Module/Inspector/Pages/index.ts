@@ -6,6 +6,7 @@ export {ConfigurationPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/C
 export {ContainerEntryPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerEntryPage';
 export {ContainerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerPage';
 export {DatabasePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DatabasePage';
+export {EventsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/EventsPage';
 export {FileExplorerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/FileExplorerPage';
 export * as GitPages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Git';
 export {ParametersPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ParametersPage';
