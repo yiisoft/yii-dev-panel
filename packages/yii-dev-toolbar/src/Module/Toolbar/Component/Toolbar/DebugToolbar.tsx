@@ -1,25 +1,15 @@
-import {
-    Badge,
-    ButtonGroup,
-    IconButton,
-    ListItemIcon,
-    ListItemText,
-    Menu,
-    MenuItem,
-    Paper,
-    Portal,
-    Tooltip,
-} from '@mui/material';
+import ListIcon from '@mui/icons-material/List';
+import {ButtonGroup, Paper, Portal} from '@mui/material';
 import Box from '@mui/material/Box';
-import {TooltipProps, tooltipClasses} from '@mui/material/Tooltip';
-import {styled} from '@mui/material/styles';
+import SpeedDial from '@mui/material/SpeedDial';
+import SpeedDialAction from '@mui/material/SpeedDialAction';
 import {setToolbarOpen} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
-import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {addCurrentPageRequestId, changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {DebugEntry, debugApi, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {DebugChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugChip';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel-sdk/serviceWorkerRegistration';
+import {DebugEntriesListModal} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/DebugEntriesListModal';
 import {CommandItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/Console/CommandItem';
 import {DateItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DateItem';
 import {EventsItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/EventsItem';
@@ -33,45 +23,6 @@ import {useSelector} from '@yiisoft/yii-dev-toolbar/store';
 import {useCallback, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-const HtmlTooltip = styled(({className, ...props}: TooltipProps) => (
-    <Tooltip {...props} classes={{popper: className}} />
-))(({theme}) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-        backgroundColor: '#f5f5f9',
-        color: 'rgba(0, 0, 0, 0.87)',
-        maxWidth: '100%',
-        fontSize: theme.typography.pxToRem(12),
-        border: '1px solid #dadde9',
-    },
-}));
-
-type EntriesListProps = {
-    entries: DebugEntry[];
-    onClick: (entry: DebugEntry) => void;
-};
-const EntriesList = ({entries = [], onClick}: EntriesListProps) => {
-    const currentEntry = useDebugEntry();
-    if (entries.length === 0) {
-        return null;
-    }
-    return (
-        <>
-            {entries.map((entry) => (
-                <MenuItem
-                    key={entry.id}
-                    onClick={() => onClick(entry)}
-                    selected={currentEntry && entry.id === currentEntry.id}
-                >
-                    <ListItemIcon>
-                        <DebugChip entry={entry} />
-                    </ListItemIcon>
-                    <ListItemText primary={entry.request?.path ?? entry.command?.input} />
-                </MenuItem>
-            ))}
-        </>
-    );
-};
-
 let serviceWorker = navigator?.serviceWorker;
 
 export const DebugToolbar = () => {
@@ -82,65 +33,68 @@ export const DebugToolbar = () => {
             },
             onUpdate: (registration) => {
                 console.log('onUpdate', registration);
-                if (registration && registration.waiting) {
-                    registration.waiting.postMessage({type: 'SKIP_WAITING'});
-                }
+                // if (registration && registration.waiting) {
+                //     registration.waiting.postMessage({type: 'SKIP_WAITING'});
+                // }
             },
         };
 
         serviceWorkerRegistration.register(config);
 
-        console.log('[START] Listen to message');
+        console.debug('[START] Listen to message');
         const onMessageHandler = (event) => {
-            console.log('[EVENT] Listen to message', event.data);
-            debugApi.util.invalidateTags(['debug/list']);
+            if (!event.data.payload || !('x-debug-id' in event.data.payload.headers)) {
+                return;
+            }
+            console.debug('[EVENT] Listen to message', event.data);
+            dispatch(debugApi.util.invalidateTags(['debug/list']));
+            dispatch(addCurrentPageRequestId(event.data.payload.headers['x-debug-id']));
         };
         serviceWorker?.addEventListener('message', onMessageHandler);
         return () => {
-            console.log('[STOP] Listen to message');
+            console.debug('[STOP] Listen to message');
             // serviceWorkerRegistration.unregister();
             serviceWorker?.removeEventListener('message', onMessageHandler);
         };
     }, []);
 
-    const initialState = useSelector((state) => state.application.toolbarOpen);
-    const [checked, setChecked] = useState<boolean>(initialState);
+    const [isToolbarOpened, setIsToolbarOpened] = useState<boolean>(
+        useSelector((state) => state.application.toolbarOpen),
+    );
     const getDebugQuery = useGetDebugQuery();
     const debugEntry = useDebugEntry();
     const dispatch = useDispatch();
 
     const [selectedEntry, setSelectedEntry] = useState(debugEntry);
-    const [entries, setEntries] = useState<DebugEntry[]>([]);
 
     useEffect(() => {
         if (!getDebugQuery.isFetching && getDebugQuery.data && getDebugQuery.data.length > 0) {
-            setEntries(getDebugQuery.data.slice(0, 50));
             setSelectedEntry(getDebugQuery.data[0]);
         }
     }, [getDebugQuery.isFetching]);
 
     const onToolbarClickHandler = () => {
-        setChecked((v) => {
+        setIsToolbarOpened((v) => {
             dispatch(setToolbarOpen(!v));
             return !v;
         });
     };
 
-    const [anchorEl, setAnchorEl] = useState(null);
-
-    const onMouseEnterHandler = useCallback((event) => {
-        if (anchorEl !== event.currentTarget) {
-            setAnchorEl(event.currentTarget);
-        }
-    }, []);
-
-    const onMouseLeaveHandler = useCallback(() => {
-        setAnchorEl(null);
-    }, []);
-
     const onChangeHandler = useCallback((entry: DebugEntry) => {
         setSelectedEntry(entry);
+        setIsToolbarOpened(true);
+        dispatch(setToolbarOpen(true));
         dispatch(changeEntryAction(entry));
+    }, []);
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = useCallback(() => {
+        setOpen(true);
+    }, []);
+
+    const handleClose = useCallback(() => {
+        setOpen(false);
     }, []);
 
     return (
@@ -150,10 +104,10 @@ export const DebugToolbar = () => {
                     component={Box}
                     elevation={10}
                     sx={{
-                        position: !checked ? 'fixed' : 'sticky',
+                        position: !isToolbarOpened ? 'fixed' : 'sticky',
                         bottom: 0,
                         right: 0,
-                        width: !checked ? 'initial' : '100%',
+                        width: !isToolbarOpened ? 'initial' : '100%',
                         transition: 'width 350ms ease-in-out',
                         py: 1,
                         px: 0.5,
@@ -167,7 +121,7 @@ export const DebugToolbar = () => {
                 >
                     <Box
                         sx={{
-                            display: checked ? 'inline-block' : 'none',
+                            display: isToolbarOpened ? 'inline-block' : 'none',
                         }}
                     >
                         <ButtonGroup disableElevation>
@@ -195,37 +149,44 @@ export const DebugToolbar = () => {
                     </Box>
 
                     <Box>
-                        <IconButton
-                            onMouseOver={onMouseEnterHandler}
-                            onClick={onToolbarClickHandler}
-                            sx={{marginX: 1, background: 'white'}}
-                        >
-                            <Badge badgeContent={entries.length} color="info">
+                        <SpeedDial
+                            ariaLabel=""
+                            sx={{
+                                bottom: 0,
+                                right: 0,
+                                marginX: 1,
+                                '& .MuiSpeedDial-actions': {
+                                    position: 'absolute',
+                                    bottom: 32,
+                                    marginX: 1,
+                                },
+                            }}
+                            FabProps={{
+                                onClick: onToolbarClickHandler,
+                                size: 'small',
+                                sx: {
+                                    background: 'white',
+                                },
+                            }}
+                            icon={
                                 <YiiIcon
                                     sx={{
-                                        transform: !checked ? 'rotate(360deg)' : 'rotate(0deg)',
+                                        transform: !isToolbarOpened ? 'rotate(360deg)' : 'rotate(0deg)',
                                         transition: 'transform 400ms ease-in-out',
                                     }}
                                 />
-                            </Badge>
-                        </IconButton>
+                            }
+                        >
+                            <SpeedDialAction
+                                onClick={handleClickOpen}
+                                icon={<ListIcon />}
+                                tooltipTitle="List all debug entries"
+                            />
+                        </SpeedDial>
                     </Box>
                 </Paper>
             )}
-            <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={onMouseLeaveHandler}
-                MenuListProps={{onMouseLeave: onMouseLeaveHandler}}
-                PaperProps={{
-                    style: {
-                        maxHeight: 120 * 4.5,
-                        width: '40%',
-                    },
-                }}
-            >
-                <EntriesList entries={entries} onClick={onChangeHandler} />
-            </Menu>
+            <DebugEntriesListModal open={open} onClick={onChangeHandler} onClose={handleClose} />
         </Portal>
     );
 };
