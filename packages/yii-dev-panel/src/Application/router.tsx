@@ -11,8 +11,4 @@ export const routes = [
         path: 'shared',
         element: <Pages.SharedPage />,
     },
-    {
-        path: 'stream',
-        element: <Pages.StreamPage />,
-    },
 ] satisfies RouteObject[];
