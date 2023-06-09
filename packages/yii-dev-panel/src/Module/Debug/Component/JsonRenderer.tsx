@@ -1,11 +1,16 @@
-import {JsonRenderer as OriginalJsonRenderer, JsonRendererProps} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {DataObject} from '@mui/icons-material';
+import {IconButton, Tooltip} from '@mui/material';
+import {DataType} from '@textea/json-viewer';
+import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
+import {useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {
+    JsonRendererProps,
+    JsonRenderer as OriginalJsonRenderer,
+} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
 import {deepUpdate} from 'immupdate';
 import * as React from 'react';
 import {useState} from 'react';
-import {useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {DataType} from '@textea/json-viewer';
-import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
 
 export const JsonRenderer = React.memo((props: JsonRendererProps) => {
     const [objectQuery] = useLazyGetObjectQuery();
@@ -28,10 +33,15 @@ export const JsonRenderer = React.memo((props: JsonRendererProps) => {
             Component: (props) => {
                 return (
                     <>
-                        {props.value}
-                        <button key={props.path.join(',')} onClick={(e) => objectLoader(props.value, props.path)}>
-                            Load
-                        </button>
+                        {props.value.replace('object@', '')}
+                        <Tooltip title="Load object state">
+                            <IconButton
+                                key={props.path.join(',')}
+                                onClick={(e) => objectLoader(props.value, props.path)}
+                            >
+                                <DataObject />
+                            </IconButton>
+                        </Tooltip>
                     </>
                 );
             },

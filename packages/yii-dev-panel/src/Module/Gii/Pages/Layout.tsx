@@ -1,17 +1,16 @@
-import * as React from 'react';
-import {useEffect, useMemo, useState} from 'react';
-import {Breadcrumbs, Link, Typography} from '@mui/material';
-import {ErrorBoundary} from 'react-error-boundary';
+import {HelpOutline} from '@mui/icons-material';
 import InboxIcon from '@mui/icons-material/Inbox';
 import MailIcon from '@mui/icons-material/Mail';
-import {useSearchParams} from 'react-router-dom';
+import {Breadcrumbs, Link, Typography} from '@mui/material';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
+import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
+import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
+import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {GiiGenerator, useGetGeneratorsQuery} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 import {GeneratorStepper} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GeneratorStepper';
-import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
-import {HelpOutline} from '@mui/icons-material';
-import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
+import {useEffect, useMemo, useState} from 'react';
+import {ErrorBoundary} from 'react-error-boundary';
+import {useSearchParams} from 'react-router-dom';
 
 const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null);
@@ -28,6 +27,7 @@ const Layout = () => {
     const links: LinkProps[] = useMemo(
         () =>
             (data || []).map((generator, index) => ({
+                name: generator.id,
                 text: generator.name,
                 href: '/gii?generator=' + generator.id,
                 icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
@@ -67,7 +67,7 @@ const Layout = () => {
                     icon={<HelpOutline />}
                 />
             ) : (
-                <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.name}>
+                <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                     {selectedGenerator ? (
                         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                             <GeneratorStepper generator={selectedGenerator} />

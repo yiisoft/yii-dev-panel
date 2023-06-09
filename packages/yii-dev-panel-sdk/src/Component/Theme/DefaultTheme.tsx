@@ -1,7 +1,7 @@
-import { Link as RouterLink, LinkProps as RouterLinkProps } from "react-router-dom";
-import { LinkProps } from "@mui/material/Link";
-import { createTheme, PaletteMode, ThemeProvider, useMediaQuery } from "@mui/material";
-import React, { PropsWithChildren } from "react";
+import {PaletteMode, ThemeProvider, createTheme, useMediaQuery} from '@mui/material';
+import {LinkProps} from '@mui/material/Link';
+import React, {PropsWithChildren} from 'react';
+import {Link as RouterLink, LinkProps as RouterLinkProps} from 'react-router-dom';
 
 const LinkBehavior = React.forwardRef<HTMLAnchorElement, Omit<RouterLinkProps, 'to'> & {href: RouterLinkProps['to']}>(
     (props, ref) => {

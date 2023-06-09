@@ -1,22 +1,10 @@
-import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
-import React, {useState} from 'react';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DataObject, DynamicFeed, Repeat, Route} from '@mui/icons-material';
-import {NestedMenuItem} from 'mui-nested-menu';
+import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography} from '@mui/material';
+import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
-import {MuiColor} from '@yiisoft/yii-dev-panel-sdk/Adapter/mui/types';
-
-const buttonColor = (status: number): MuiColor => {
-    switch (true) {
-        case status >= 400:
-            return 'error';
-        case status >= 300:
-            return 'warning';
-        case status >= 200:
-            return 'success';
-    }
-    return 'info';
-};
+import {NestedMenuItem} from 'mui-nested-menu';
+import React, {useState} from 'react';
 
 type RequestItemProps = {
     data: DebugEntry;
@@ -31,7 +19,7 @@ export const RequestItem = ({data}: RequestItemProps) => {
         <>
             <Tooltip title="Click to see more options" arrow>
                 <Button
-                    color={buttonColor(data.response.statusCode)}
+                    color={buttonColorHttp(data.response.statusCode)}
                     variant="contained"
                     onClick={handleClick}
                     sx={{

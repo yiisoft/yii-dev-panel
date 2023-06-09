@@ -1,11 +1,11 @@
+import {Button, Divider, List, ListItem, ListItemSecondaryAction, Tab, Tabs} from '@mui/material';
+import Box from '@mui/material/Box';
+import ListItemText from '@mui/material/ListItemText';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {useGetComposerQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {SwitchDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Composer/SwitchDialog';
 import * as React from 'react';
 import {SyntheticEvent, useMemo, useState} from 'react';
-import {useGetComposerQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {Button, Divider, List, ListItem, ListItemSecondaryAction, Tab, Tabs, Typography} from '@mui/material';
-import Box from '@mui/material/Box';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import ListItemText from '@mui/material/ListItemText';
-import {SwitchDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Composer/SwitchDialog';
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -18,11 +18,7 @@ function TabPanel(props: TabPanelProps) {
 
     return (
         <div role="tabpanel" hidden={value !== index} {...other}>
-            {value === index && (
-                <Box sx={{p: 3}}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
+            {value === index && <Box sx={{p: 3}}>{children}</Box>}
         </div>
     );
 }

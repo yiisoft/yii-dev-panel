@@ -1,7 +1,5 @@
-import * as React from 'react';
-import {useState} from 'react';
-import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useRunCommandMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {
     Accordion,
     AccordionDetails,
@@ -12,13 +10,15 @@ import {
     Link,
     Tooltip,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
-import Box from '@mui/material/Box';
+import {useRunCommandMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import clipboardCopy from 'clipboard-copy';
+import * as React from 'react';
+import {useState} from 'react';
 
 const columns: GridColDef[] = [
     {

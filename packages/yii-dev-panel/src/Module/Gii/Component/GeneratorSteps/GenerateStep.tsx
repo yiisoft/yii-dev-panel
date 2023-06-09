@@ -11,18 +11,18 @@ import {
     ToggleButtonGroup,
     Typography,
 } from '@mui/material';
+import {yup} from '@yiisoft/yii-dev-panel-sdk/Adapter/yup';
+import {GiiGenerator, usePostDiffMutation, usePostGenerateMutation} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
+import {FileDiffDialog} from '@yiisoft/yii-dev-panel/Module/Gii/Component/FileDiffDialog';
+import {FilePreviewDialog} from '@yiisoft/yii-dev-panel/Module/Gii/Component/FilePreviewDialog';
+import {StepProps} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/Step.types';
+import {mapErrorsToForm} from '@yiisoft/yii-dev-panel/Module/Gii/Component/errorMapper';
+import {matchSeverityByFileState} from '@yiisoft/yii-dev-panel/Module/Gii/Component/matchSeverity';
+import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
+import {FileOperationEnum, FileStateEnum, GiiFile} from '@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
-import {StepProps} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/Step.types';
-import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
 import {FieldValues, FormProvider, useForm, useFormContext} from 'react-hook-form';
-import {mapErrorsToForm} from '@yiisoft/yii-dev-panel/Module/Gii/Component/errorMapper';
-import {GiiGenerator, usePostDiffMutation, usePostGenerateMutation} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
-import {yup} from '@yiisoft/yii-dev-panel-sdk/Adapter/yup';
-import {FilePreviewDialog} from '@yiisoft/yii-dev-panel/Module/Gii/Component/FilePreviewDialog';
-import {FileOperationEnum, FileStateEnum, GiiFile} from '@yiisoft/yii-dev-panel/Module/Gii/Types/FIle.types';
-import {matchSeverityByFileState} from '@yiisoft/yii-dev-panel/Module/Gii/Component/matchSeverity';
-import {FileDiffDialog} from '@yiisoft/yii-dev-panel/Module/Gii/Component/FileDiffDialog';
 
 function getStateLabel(state: FileStateEnum) {
     let result = 'Unknown state';

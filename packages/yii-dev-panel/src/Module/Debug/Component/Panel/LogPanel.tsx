@@ -1,8 +1,8 @@
-import * as React from 'react';
-import {Alert, AlertTitle, IconButton, Tooltip, Typography} from '@mui/material';
 import {FilePresent} from '@mui/icons-material';
+import {Alert, AlertTitle, Link} from '@mui/material';
 import Box from '@mui/material/Box';
-import {parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
 
 type Level = 'error' | 'info' | 'debug';
 type LogEntry = {
@@ -24,20 +24,17 @@ export const LogPanel = ({data}: LogPanelProps) => {
             ) : (
                 data.map((entry, index) => (
                     <Alert key={index} variant="outlined" severity="success" icon={false}>
-                        <Box sx={{display: 'flex'}}>
-                            <AlertTitle sx={{display: 'flex', flexGrow: 1}}>{entry.message}</AlertTitle>
-
-                            <Tooltip title="Open in File Explorer">
-                                <IconButton
-                                    sx={{display: 'flex'}}
-                                    size="small"
-                                    href={`/inspector/files?path=${parseFilePath(entry.line)}`}
-                                >
-                                    <FilePresent fontSize="small" />
-                                </IconButton>
-                            </Tooltip>
+                        <AlertTitle>{entry.message}</AlertTitle>
+                        <Box>
+                            <JsonRenderer value={entry.context} depth={2} />
+                            <Link
+                                href={`/inspector/files?path=${parseFilePathWithLineAnchor(entry.line)}`}
+                                target="_blank"
+                            >
+                                {entry.line}
+                                <FilePresent fontSize="small" />
+                            </Link>
                         </Box>
-                        <Typography component="span">{entry.line}</Typography>
                     </Alert>
                 ))
             )}

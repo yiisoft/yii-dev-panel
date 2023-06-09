@@ -1,5 +1,7 @@
-import {Prism} from 'react-syntax-highlighter';
+import {useTheme} from '@mui/material';
 import React from 'react';
+import {Prism} from 'react-syntax-highlighter';
+import {darcula} from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type CodeHighlightProps = {
     language: string;
@@ -27,6 +29,8 @@ export const CodeHighlight = React.memo((props: CodeHighlightProps) => {
         wrappedLines = [1, 0],
     } = props;
 
+    const theme = useTheme();
+
     const startLine = Math.max(wrappedLines[0], 1);
     const endLine = Math.max(wrappedLines[1], 0);
     let wrappedCode = code;
@@ -39,6 +43,7 @@ export const CodeHighlight = React.memo((props: CodeHighlightProps) => {
 
     return (
         <Prism
+            style={theme.palette.mode === 'dark' ? darcula : undefined}
             startingLineNumber={startLine}
             showLineNumbers={showLineNumbers}
             wrapLines

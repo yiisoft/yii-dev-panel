@@ -1,9 +1,8 @@
-import {RouteObject} from 'react-router-dom';
-import React from 'react';
-import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
-import {DataContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
 import {Layout} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layout';
 import {BreadcrumbsContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
+import {DataContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
+import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
+import {RouteObject} from 'react-router-dom';
 
 export const routes = [
     {
@@ -32,6 +31,10 @@ export const routes = [
             {
                 path: 'routes',
                 element: <Pages.RoutesPage />,
+            },
+            {
+                path: 'events',
+                element: <Pages.EventsPage />,
             },
             {
                 path: 'files',

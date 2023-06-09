@@ -1,15 +1,13 @@
-import React from 'react';
-import '@yiisoft/yii-dev-panel/App.css';
-import {RouterProvider} from 'react-router-dom';
 import {DefaultThemeProvider} from '@yiisoft/yii-dev-panel-sdk/Component/Theme/DefaultTheme';
-import {Provider} from 'react-redux';
-import {persistor, store} from '@yiisoft/yii-dev-panel/store';
-import {PersistGate} from 'redux-persist/integration/react';
-import {createRouter} from '@yiisoft/yii-dev-panel/router';
+import '@yiisoft/yii-dev-panel/App.css';
 import {modules} from '@yiisoft/yii-dev-panel/modules';
+import {createRouter} from '@yiisoft/yii-dev-panel/router';
+import {persistor, store} from '@yiisoft/yii-dev-panel/store';
+import {Provider} from 'react-redux';
+import {RouterProvider} from 'react-router-dom';
+import {PersistGate} from 'redux-persist/integration/react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
-import {GeneratorStepper} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GeneratorStepper';
 
 const router = createRouter(modules);
 

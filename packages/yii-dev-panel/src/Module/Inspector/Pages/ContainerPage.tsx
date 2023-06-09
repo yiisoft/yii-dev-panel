@@ -1,18 +1,17 @@
-import * as React from 'react';
-import {useCallback, useContext, useEffect, useMemo} from 'react';
-import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
-import {useGetClassesQuery, useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {Button, IconButton, Tooltip} from '@mui/material';
-import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
-import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
-import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
-import clipboardCopy from 'clipboard-copy';
 import {ContentCopy, OpenInNew} from '@mui/icons-material';
+import {Button, IconButton, Tooltip} from '@mui/material';
+import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
+import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {useSearchParams} from 'react-router-dom';
+import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
+import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
+import {useGetClassesQuery, useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {DataContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
 import {LoaderContext, LoaderContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/LoaderContext';
+import clipboardCopy from 'clipboard-copy';
+import {useCallback, useContext, useEffect, useMemo} from 'react';
+import {useSearchParams} from 'react-router-dom';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {loader} = useContext(LoaderContext);

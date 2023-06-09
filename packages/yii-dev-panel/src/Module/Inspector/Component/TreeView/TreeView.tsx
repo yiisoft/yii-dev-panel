@@ -1,12 +1,12 @@
+import {TreeView as MuiTreeView, treeItemClasses} from '@mui/lab';
 import TreeItem, {TreeItemProps} from '@mui/lab/TreeItem';
-import * as React from 'react';
-import {useMemo} from 'react';
 import {styled, SvgIconProps, Typography} from '@mui/material';
-import {treeItemClasses, TreeView as MuiTreeView} from '@mui/lab';
 import Box from '@mui/material/Box';
+import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
 import {InspectorFile} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {fileExtensionIcon} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/TreeView/iconHelper';
-import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
+import * as React from 'react';
+import {useMemo} from 'react';
 
 type StyledTreeItemProps = TreeItemProps & {
     fileIcon: React.ElementType<SvgIconProps>;

@@ -1,9 +1,11 @@
-import * as React from 'react';
-import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
-import {Outlet} from 'react-router';
+import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
+import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
+import InboxIcon from '@mui/icons-material/Inbox';
+import ListIcon from '@mui/icons-material/List';
+import MailIcon from '@mui/icons-material/Mail';
+import ReplayIcon from '@mui/icons-material/Replay';
 import {
     Alert,
-    AlertColor,
     AlertTitle,
     Autocomplete,
     Box,
@@ -18,31 +20,36 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
-import {DebugEntry, useLazyGetCollectorInfoQuery, useLazyGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {useDispatch} from 'react-redux';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {ErrorBoundary} from 'react-error-boundary';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
-import {useSearchParams} from 'react-router-dom';
-import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
+import {
+    DebugEntry,
+    useLazyGetCollectorInfoQuery,
+    useLazyGetDebugQuery,
+} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
-import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
-import {Check, EmojiObjects, Error, HelpOutline, Refresh} from '@mui/icons-material';
-import {useDoRequestMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
-import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
-import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
-import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
-import {ReactJSXElement} from '@emotion/react/types/jsx-namespace';
-import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
-import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
+import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
-import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
+import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
+import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
+import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
+import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
+import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import clipboardCopy from 'clipboard-copy';
+import * as React from 'react';
+import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
+import {ErrorBoundary} from 'react-error-boundary';
+import {useDispatch} from 'react-redux';
+import {Outlet} from 'react-router';
+import {useSearchParams} from 'react-router-dom';
 
 function parseCollectorName(text: string) {
     return text
@@ -113,17 +120,6 @@ function HttpRequestError({error}: {error: any}) {
         </Box>
     );
 }
-const buttonColor = (status: number): AlertColor => {
-    switch (true) {
-        case status >= 400:
-            return 'error';
-        case status >= 300:
-            return 'warning';
-        case status >= 200:
-            return 'success';
-    }
-    return 'info';
-};
 
 type DebugEntryAutocompleteProps = {
     data: DebugEntry[] | undefined;
@@ -134,7 +130,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
     const renderLabel = useCallback((entry: DebugEntry): string => {
         if (isDebugEntryAboutConsole(entry)) {
-            return [entry.command.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command.input].join(' ');
+            return [entry.command?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command?.input].filter(Boolean).join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
             return ['[' + entry.response.statusCode + ']', entry.request.method, entry.request.path].join(' ');
@@ -156,8 +152,8 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                         <Typography component="span" sx={{flex: 1}}>
                             <Chip
                                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                                label={`${entry.response.statusCode} ${entry.request.method}`}
-                                color={buttonColor(entry.response.statusCode)}
+                                label={`${entry.response?.statusCode} ${entry.request.method}`}
+                                color={buttonColorHttp(entry.response?.statusCode)}
                             />
                             <span style={{margin: '0 2px'}}>{entry.request.path}</span>
                         </Typography>
@@ -169,16 +165,16 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                 {isDebugEntryAboutConsole(entry) && (
                     <>
                         <Typography component="span" sx={{flex: 1}}>
-                            {entry.command.exitCode === 0 ? (
+                            {entry.command?.exitCode === 0 ? (
                                 <Chip label="OK" color={'success'} sx={{borderRadius: '5px 5px', margin: '0 2px'}} />
                             ) : (
                                 <Chip
-                                    label={`CODE: ${entry.command.exitCode}`}
+                                    label={`CODE: ${entry.command?.exitCode ?? 'Unknown'}`}
                                     color={'error'}
                                     sx={{borderRadius: '5px 5px', margin: '0 2px'}}
                                 />
                             )}
-                            <span style={{margin: '0 2px'}}>{entry.command.input}</span>
+                            <span style={{margin: '0 2px'}}>{entry.command?.input ?? 'Unknown'}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
                             <span>{formatDate(entry.console.request.startTime)}</span>
@@ -218,6 +214,7 @@ const Layout = () => {
     const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
+    const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
 
     useEffect(() => {
         getDebugQuery();
@@ -282,6 +279,7 @@ const Layout = () => {
             !debugEntry
                 ? []
                 : debugEntry.collectors.map((collector, index) => ({
+                      name: collector,
                       text: parseCollectorName(collector),
                       href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
                       icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
@@ -301,6 +299,18 @@ const Layout = () => {
             console.error(e);
         }
         getDebugQuery();
+    }, [debugEntry]);
+    const copyCurlHandler = useCallback(async () => {
+        if (!debugEntry) {
+            return;
+        }
+        const result = await postCurlBuildInfo(debugEntry.id);
+        if ('error' in result) {
+            console.error(result.error);
+            return;
+        }
+        console.log(result.data.command);
+        clipboardCopy(result.data.command);
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
     const onRefreshHandler = useCallback(() => {
@@ -346,6 +356,13 @@ const Layout = () => {
                 {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
             </Breadcrumbs>
             <Stack direction="row" spacing={2}>
+                <Tooltip title="List">
+                    <span>
+                        <Button href="/debug/list" startIcon={<ListIcon />}>
+                            List
+                        </Button>
+                    </span>
+                </Tooltip>
                 <Tooltip title="Refresh the list">
                     <span>
                         <Button
@@ -363,6 +380,7 @@ const Layout = () => {
                         <Button
                             onClick={repeatRequestHandler}
                             disabled={!debugEntry || doRequestInfo.isLoading || getDebugQueryInfo.isFetching}
+                            startIcon={<ReplayIcon />}
                             endIcon={
                                 doRequestInfo.isLoading ? (
                                     <CircularProgress size={24} color="info" />
@@ -377,6 +395,27 @@ const Layout = () => {
                         </Button>
                     </span>
                 </Tooltip>
+                {debugEntry && isDebugEntryAboutWeb(debugEntry) && (
+                    <Tooltip title="Copies the request cURL interpretation">
+                        <span>
+                            <Button
+                                onClick={copyCurlHandler}
+                                disabled={!debugEntry || postCurlBuildQueryInfo.isLoading}
+                                endIcon={
+                                    postCurlBuildQueryInfo.isLoading ? (
+                                        <CircularProgress size={24} color="info" />
+                                    ) : postCurlBuildQueryInfo.isUninitialized ? null : postCurlBuildQueryInfo.isSuccess ? (
+                                        <Check color="success" />
+                                    ) : (
+                                        <Error color="error" />
+                                    )
+                                }
+                            >
+                                Copy cURL
+                            </Button>
+                        </span>
+                    </Tooltip>
+                )}
             </Stack>
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
@@ -388,7 +427,7 @@ const Layout = () => {
                     icon={<HelpOutline />}
                 />
             ) : (
-                <MenuPanel links={links} open={!selectedCollector} activeLink={collectorName}>
+                <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
                         <>
                             {collectorQueryInfo.isFetching && <LinearProgress />}

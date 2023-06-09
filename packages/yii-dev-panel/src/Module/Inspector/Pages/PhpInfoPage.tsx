@@ -1,7 +1,6 @@
-import * as React from "react";
-import { useEffect, useRef } from "react";
-import { useGetPhpInfoQuery } from "@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector";
-import { Box } from "@mui/material";
+import {Box} from '@mui/material';
+import {useGetPhpInfoQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useEffect, useRef} from 'react';
 
 export const PhpInfoPage = () => {
     const getPhpInfoQuery = useGetPhpInfoQuery();

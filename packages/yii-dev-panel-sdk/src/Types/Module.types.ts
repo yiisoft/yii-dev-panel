@@ -1,5 +1,5 @@
-import { RouteObject } from "react-router-dom";
-import { Middleware, Reducer } from "@reduxjs/toolkit";
+import {Middleware, Reducer} from '@reduxjs/toolkit';
+import {RouteObject} from 'react-router-dom';
 
 export interface ModuleInterface {
     routes: RouteObject[];
