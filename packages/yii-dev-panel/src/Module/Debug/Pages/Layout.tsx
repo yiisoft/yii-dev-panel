@@ -20,6 +20,8 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {
     DebugEntry,
@@ -30,6 +32,7 @@ import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback'
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
+import {EventTypesEnum, useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useServerSentEvents';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
@@ -216,9 +219,10 @@ const Layout = () => {
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
 
-    useEffect(() => {
+    const onRefreshHandler = useCallback(() => {
         getDebugQuery();
     }, []);
+    useEffect(onRefreshHandler, [onRefreshHandler]);
 
     useEffect(() => {
         if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
@@ -228,7 +232,7 @@ const Layout = () => {
             }
             changeEntry(entry ?? getDebugQueryInfo.data[0]);
         }
-    }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data, dispatch]);
+    }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data]);
 
     const clearCollectorAndData = () => {
         searchParams.delete('collector');
@@ -313,9 +317,23 @@ const Layout = () => {
         clipboardCopy(result.data.command);
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
-    const onRefreshHandler = useCallback(() => {
-        getDebugQuery();
+
+    const [autoLatest, setAutoLatest] = useState<boolean>(true);
+
+    const onUpdatesHandler = useCallback(async (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        if (data.type && data.type === EventTypesEnum.DebugUpdated) {
+            const result = await getDebugQuery();
+            if ('data' in result && result.data.length > 0) {
+                changeEntry(result.data[0]);
+            }
+        }
     }, []);
+    useServerSentEvents(onUpdatesHandler, autoLatest);
+
+    const autoLatestHandler = () => {
+        setAutoLatest((prev) => !prev);
+    };
 
     if (getDebugQueryInfo.isLoading) {
         return <FullScreenCircularProgress />;
@@ -346,7 +364,6 @@ const Layout = () => {
             />
         );
     }
-
     return (
         <>
             <Breadcrumbs sx={{my: 2}}>
@@ -416,6 +433,15 @@ const Layout = () => {
                         </span>
                     </Tooltip>
                 )}
+                {/*TODO add documentation and description how it work and how add it to php-fpm / road-runner*/}
+                <Tooltip title="Switches to the latest debug entry automatically (delay 1s). Needs server-sent events suppport.">
+                    <span>
+                        <FormControlLabel
+                            control={<Switch value={autoLatest} onChange={autoLatestHandler} />}
+                            label="Latest auto"
+                        />
+                    </span>
+                </Tooltip>
             </Stack>
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
