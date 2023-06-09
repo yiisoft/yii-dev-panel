@@ -1,5 +1,6 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
+// TODO support custom events and decode payload to object
 class ServerSentEvents {
     private eventSource: EventSource;
     constructor(url: string) {
