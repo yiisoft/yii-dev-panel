@@ -7,7 +7,7 @@ type ValidatorItemProps = {
 };
 
 export const ValidatorItem = ({data}: ValidatorItemProps) => {
-    if (data.validator.total === 0) {
+    if (!data.validator || data.validator.total === 0) {
         return null;
     }
     return (
