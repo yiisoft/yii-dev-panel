@@ -1,6 +1,7 @@
 import {Remove} from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import {
+    FormHelperText,
     IconButton,
     InputBase,
     List,
@@ -92,6 +93,10 @@ export const SettingsDialog = (props: SettingsDialogProps) => {
                         <CheckIcon />
                     </IconButton>
                 </Box>
+                <FormHelperText variant="outlined">
+                    Please make sure you entered the full path to the Open API json schema. For example:
+                    http://localhost/docs/openapi.json
+                </FormHelperText>
             </DialogContent>
             <DialogActions>
                 {/*<Button onClick={handleSave} color="success">*/}
