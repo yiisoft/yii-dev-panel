@@ -1,5 +1,6 @@
 import {useMediaQuery} from '@mui/material';
 import {DataType, JsonViewer, JsonViewerOnChange, JsonViewerTheme} from '@textea/json-viewer';
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import * as React from 'react';
 
 const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
@@ -18,7 +19,7 @@ export const JsonRenderer = React.memo(
 
         if (typeof value == 'string' && value.match(REGEXP_PHP_FUNCTION)?.length) {
             const html = value.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp');
-            return <div dangerouslySetInnerHTML={{__html: html}} />;
+            return <CodeHighlight language={'php'} code={value} showLineNumbers={false} fontSize={10} />;
         }
 
         return (
