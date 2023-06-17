@@ -2,6 +2,7 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = (config) => {
+    // Remove https://github.com/facebook/create-react-app/blob/main/packages/react-dev-utils/ModuleScopePlugin.js
     config.resolve.plugins.pop();
 
     // Resolve the path aliases.
@@ -26,7 +27,7 @@ module.exports = (config) => {
 
     if (config.mode === 'production') {
         // Limit chunks to one in production mode.
-        config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }));
+        config.plugins.push(new webpack.optimize.LimitChunkCountPlugin({maxChunks: 1}));
     }
 
     return config;
