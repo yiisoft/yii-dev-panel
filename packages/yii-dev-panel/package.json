@@ -21,6 +21,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@originjs/vite-plugin-federation": "^1.2.3",
     "@welldone-software/why-did-you-render": "^7.0.1",
     "@yiisoft/yii-dev-panel-sdk": "^0.0.1",
     "@yiisoft/yii-dev-toolbar": "^0.0.1",
@@ -37,6 +38,7 @@
     "@types/swagger-ui-react": "^4.18.0",
     "@typescript-eslint/eslint-plugin": "^5.59.7",
     "@typescript-eslint/parser": "^5.59.7",
+    "@vitejs/plugin-react": "^4.0.1",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "prettier": "^2.8.8",
@@ -56,16 +58,13 @@
     "workbox-strategies": "^6.5.4",
     "workbox-streams": "^6.5.4"
   },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5"
-    }
-  },
   "scripts": {
-    "start": "BROWSER=none react-app-rewired start",
-    "build": "REACT_APP_BUILD_ID=`git rev-parse --short HEAD` REACT_APP_ENV=github react-app-rewired build && gulp",
-    "test": "react-app-rewired test",
-    "generate-service-worker": "react-app-rewired build && yes | cp -rf build/service-worker.js* build/static public"
+    "start": "BROWSER=none vite",
+    "build": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build && gulp",
+    "build-dev": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build",
+    "test": "vite test",
+    "serve": "vite preview build",
+    "generate-service-worker": "tsc && vite build && yes | cp -rf build/service-worker.js* build/static public"
   },
   "browserslist": {
     "production": [

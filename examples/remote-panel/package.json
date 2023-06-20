@@ -23,8 +23,7 @@
     "@mui/material": "^5.11.12",
     "@yiisoft/yii-dev-panel-sdk": "*",
     "react": "^18.0",
-    "react-dom": "^18.0",
-    "react-scripts": "5.0.1"
+    "react-dom": "^18.0"
   },
   "scripts": {
     "start": "PORT=3002 BROWSER=none node ./scripts/start.js",

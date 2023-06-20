@@ -1,10 +1,9 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel-sdk/serviceWorkerRegistration';
 import reportWebVitals from '@yiisoft/yii-dev-panel/reportWebVitals';
-import * as process from 'process';
 
-Config.backendUrl = process.env.REACT_APP_BACKEND_URL;
-Config.appEnv = process.env.REACT_APP_ENV;
+Config.backendUrl = import.meta.env.VITE_BACKEND_URL;
+Config.appEnv = import.meta.env.VITE_ENV;
 
 import('@yiisoft/yii-dev-panel/bootstrap');
 
