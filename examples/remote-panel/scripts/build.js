@@ -1,3 +1,3 @@
-import.meta.env.NODE_ENV = 'production';
+import.meta.env.PROD = true;
 require('./overrides/webpack-config');
 require('react-scripts/scripts/build');

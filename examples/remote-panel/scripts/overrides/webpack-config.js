@@ -6,7 +6,7 @@ const webpackConfig = require(webpackConfigPath);
 const override = (config) => {
     config.plugins.push(new ModuleFederationPlugin(require('../../modulefederation.config.js')));
 
-    config.output.publicPath = import.meta.env.NODE_ENV === 'development' ? 'auto' : '.';
+    config.output.publicPath = import.meta.env.DEV ? 'auto' : '.';
 
     return config;
 };

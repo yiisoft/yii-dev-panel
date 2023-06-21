@@ -27,7 +27,7 @@ export const store = configureStore({
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
         }).concat([...ToolbarApiMiddlewares, ...DebugMiddlewares, ...ApplicationMiddlewares]),
-    devTools: import.meta.env.NODE_ENV !== 'production',
+    devTools: import.meta.env.DEV,
 });
 
 setupListeners(store.dispatch);

@@ -1,3 +1,3 @@
-import.meta.env.NODE_ENV = import.meta.env.NODE_ENV || 'development';
+import.meta.env.DEV = true;
 require('./overrides/webpack-config');
 require('react-scripts/scripts/start');
