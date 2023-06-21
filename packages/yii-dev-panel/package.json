@@ -63,7 +63,7 @@
     "build": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build && gulp",
     "build-dev": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build",
     "test": "vite test",
-    "serve": "vite preview build",
+    "serve": "vite preview",
     "generate-service-worker": "tsc && vite build && yes | cp -rf build/service-worker.js* build/static public"
   },
   "browserslist": {
