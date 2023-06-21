@@ -32,7 +32,10 @@ export default defineConfig(async ({command}) => ({
             shared: sharedModules,
         }),
     ],
+    base: './',
     build: {
-        outDir: 'build2',
+        minify: 'terser',
+        outDir: 'dist',
+        target: 'esnext',
     },
 }));
