@@ -1,1 +1,1 @@
-../../yii-dev-panel-sdk/src/service-worker.js
+../../yii-dev-panel-sdk/src/service-worker.ts
