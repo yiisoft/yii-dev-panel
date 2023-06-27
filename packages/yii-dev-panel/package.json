@@ -44,6 +44,7 @@
     "prettier": "^2.8.8",
     "prettier-plugin-organize-imports": "^3.2.2",
     "typescript": "^5.0.4",
+    "vite-plugin-pwa": "^0.16.4",
     "web-vitals": "^3.3.1",
     "workbox-background-sync": "^6.5.4",
     "workbox-broadcast-update": "^6.5.4",
@@ -60,10 +61,12 @@
   },
   "scripts": {
     "start": "BROWSER=none vite",
-    "build": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build && gulp",
-    "build-dev": "VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github tsc && vite build",
+    "build": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build && gulp",
+    "build:dev": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
+    "build:prod": "rm -r dist; tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build",
     "test": "vite test",
-    "serve": "vite preview",
+    "serve:dev": "vite preview",
+    "serve:prod": "VITE_ENV=github vite preview",
     "generate-service-worker": "tsc && vite build && yes | cp -rf build/service-worker.js* build/static public"
   },
   "browserslist": {
