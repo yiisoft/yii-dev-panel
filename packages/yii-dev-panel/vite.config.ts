@@ -52,23 +52,6 @@ export default defineConfig(async ({command}) => {
             minify: 'terser',
             outDir: 'dist',
             target: 'esnext',
-            // rollupOptions: {
-            //     input: {
-            //         // the default entry point
-            //         app: './index.html',
-            //
-            //         // 1️⃣
-            //         'service-worker': './src/service-worker.js',
-            //     },
-            //     output: {
-            //         // 2️⃣
-            //         entryFileNames: (assetInfo) => {
-            //             return assetInfo.name === 'service-worker'
-            //                 ? '[name].js' // put service worker in root
-            //                 : 'assets/js/[name]-[hash].js'; // others in `assets/js/`
-            //         },
-            //     },
-            // },
         },
     };
 });
