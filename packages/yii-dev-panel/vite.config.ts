@@ -32,10 +32,11 @@ export default defineConfig(async ({command}) => {
                 injectRegister: 'script',
                 strategies: 'injectManifest',
                 srcDir: 'src',
-                filename: 'service-worker.js',
+                filename: 'service-worker.ts',
                 devOptions: {
                     enabled: process.env.NODE_ENV === 'development',
                     type: 'module',
+                    navigateFallback: '/index.html',
                 },
             }),
             viteTsconfigPaths(),
@@ -46,7 +47,7 @@ export default defineConfig(async ({command}) => {
                 shared: sharedModules,
             }),
         ],
-        base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : '/',
+        base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : './',
         build: {
             minify: 'terser',
             outDir: 'dist',

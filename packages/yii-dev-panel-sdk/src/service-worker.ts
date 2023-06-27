@@ -1,4 +1,5 @@
-/* eslint-disable no-restricted-globals */
+/// <reference lib="webworker" />
+declare const self: ServiceWorkerGlobalScope;
 
 // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
@@ -15,6 +16,10 @@ import {registerRoute} from 'workbox-routing';
 import {StaleWhileRevalidate} from 'workbox-strategies';
 
 clientsClaim();
+
+/**
+ * TODO: add prompt update https://vite-pwa-org.netlify.app/frameworks/react.html
+ */
 
 /**
  * We are not wrapping it in a 'message' event as per the new update.
@@ -34,8 +39,32 @@ registerRoute(
     ({url}) => url.origin === 'https://fonts.googleapis.com',
     new StaleWhileRevalidate({
         cacheName: 'google-fonts-stylesheets',
+        plugins: [
+            new CacheableResponsePlugin({
+                statuses: [0, 200],
+            }),
+        ],
     }),
 );
+
+/**
+ * Cache the underlying javascript files with a cache-first strategy for 30 days.
+ * Uncomment the following condition to enable caching in dev mode. In makes a huge load on the CPU because of Vite.
+ */
+if (import.meta.env.PROD) {
+    registerRoute(
+        ({request: {destination}}) => destination === 'script',
+        new StaleWhileRevalidate({
+            cacheName: 'javascript-files',
+            plugins: [
+                new CacheableResponsePlugin({
+                    statuses: [0, 200],
+                }),
+                new ExpirationPlugin({purgeOnQuotaError: true, maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30}),
+            ],
+        }),
+    );
+}
 
 // Cache the underlying font files with a cache-first strategy for 1 year.
 // @see https://developers.google.com/web/tools/workbox/guides/common-recipes#google_fonts
@@ -75,7 +104,8 @@ registerRoute(
         // Return true to signal that we want to use the handler.
         return true;
     },
-    createHandlerBoundToURL(import.meta.env.BASE_URL === '/' ? 'index.html' : import.meta.env.BASE_URL + 'index.html'),
+    // createHandlerBoundToURL(import.meta.env.BASE_URL === '/' ? 'index.html' : import.meta.env.BASE_URL + 'index.html'),
+    createHandlerBoundToURL(import.meta.env.BASE_URL + 'index.html'),
 );
 
 registerRoute(
@@ -92,7 +122,7 @@ registerRoute(
         plugins: [
             // Ensure that once this runtime cache reaches a maximum size the
             // least-recently used images are removed.
-            new ExpirationPlugin({maxEntries: 250}),
+            new ExpirationPlugin({purgeOnQuotaError: true, maxEntries: 1000}),
         ],
     }),
 );
@@ -105,7 +135,7 @@ registerRoute(
 //     }
 // });
 
-const debugOrInspectorRegexp = /\/debug|inspect\//i;
+const debuggerApiRoutesRegExp = /\/debug|gii|inspect\//i;
 self.addEventListener('fetch', (event) => {
     const request = event.request;
     if (request.mode === 'navigate') {
@@ -116,16 +146,22 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    if (request.url.match(debugOrInspectorRegexp)) {
+    if (request.url.match(debuggerApiRoutesRegExp)) {
         return;
     }
+    console.log('sw fetch', request);
 
     event.respondWith(
-        fetch(event.request).then((response) => {
-            notify(event.clientId, request, response);
+        fetch(event.request)
+            .then((response) => {
+                notify(event.clientId, request, response);
 
-            return response;
-        }),
+                return response;
+            })
+            .catch((error) => {
+                console.log('sw fetch error', error);
+                throw error;
+            }),
     );
 });
 
