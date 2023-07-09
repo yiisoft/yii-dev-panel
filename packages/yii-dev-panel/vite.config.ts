@@ -29,7 +29,7 @@ export default defineConfig(async ({command}) => {
                 jsxImportSource: '@welldone-software/why-did-you-render',
             }),
             VitePWA({
-                injectRegister: 'script',
+                // injectRegister: 'script',
                 strategies: 'injectManifest',
                 srcDir: 'src',
                 filename: 'service-worker.ts',
