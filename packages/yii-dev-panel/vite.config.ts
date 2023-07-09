@@ -29,7 +29,7 @@ export default defineConfig(async ({command}) => {
                 jsxImportSource: '@welldone-software/why-did-you-render',
             }),
             VitePWA({
-                injectRegister: 'script',
+                // injectRegister: 'script',
                 strategies: 'injectManifest',
                 srcDir: 'src',
                 filename: 'service-worker.ts',
@@ -37,6 +37,10 @@ export default defineConfig(async ({command}) => {
                     enabled: process.env.NODE_ENV === 'development',
                     type: 'module',
                     navigateFallback: '/index.html',
+                },
+                registerType: 'autoUpdate',
+                workbox: {
+                    sourcemap: true,
                 },
             }),
             viteTsconfigPaths(),

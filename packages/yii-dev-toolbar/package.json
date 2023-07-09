@@ -43,7 +43,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "VITE_ENV=github tsc --build tsconfig.build.json && vite build && gulp",
+    "build": "VITE_ENV=github tsc --build tsconfig.build.json && vite build",
     "test": "vite test",
     "serve": "vite preview",
     "prettier": "prettier -l src"
