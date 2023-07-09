@@ -32,9 +32,9 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d packages/yii-dev-panel/build",
+    "deploy": "gh-pages -t true -d packages/yii-dev-panel/dist",
     "start": "lerna run start --parallel --verbose",
-    "build": "lerna run build --parallel --verbose && npm run copy-toolbar",
+    "build": "lerna run build --parallel --verbose",
     "copy-toolbar": "mkdir packages/yii-dev-panel/build/toolbar && cp -r packages/yii-dev-toolbar/build/* packages/yii-dev-panel/build/toolbar"
   },
   "eslintConfig": {
