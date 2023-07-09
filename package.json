@@ -19,23 +19,22 @@
     "packages/*"
   ],
   "dependencies": {
+    "@originjs/vite-plugin-federation": "^1.2.3",
+    "@vitejs/plugin-react": "^4.0.1",
     "gh-pages": "^5.0.0",
     "lerna": "^6.6.2",
-    "react-app-rewired": "^2.2.1",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^5.0.4",
-    "verdaccio": "^5.24.1"
-  },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5"
-    }
+    "verdaccio": "^5.24.1",
+    "vite": "^4.3.9",
+    "vite-plugin-svgr": "^3.2.0",
+    "vite-tsconfig-paths": "^4.2.0"
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d packages/yii-dev-panel/build",
+    "deploy": "gh-pages -t true -d packages/yii-dev-panel/dist",
     "start": "lerna run start --parallel --verbose",
-    "build": "lerna run build --parallel --verbose && npm run copy-toolbar",
+    "build": "lerna run build --parallel --verbose",
     "copy-toolbar": "mkdir packages/yii-dev-panel/build/toolbar && cp -r packages/yii-dev-toolbar/build/* packages/yii-dev-panel/build/toolbar"
   },
   "eslintConfig": {

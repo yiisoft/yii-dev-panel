@@ -5,6 +5,7 @@ node_modules
 /.pnp
 build
 dist
+dev-dist
 .pnp.js
 .idea
 .npmrc

@@ -3,7 +3,7 @@ import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const openApiSliceConfig = {
-    key: openApiSlice.reducer.name,
+    key: openApiSlice.name,
     version: 1,
     storage,
 };

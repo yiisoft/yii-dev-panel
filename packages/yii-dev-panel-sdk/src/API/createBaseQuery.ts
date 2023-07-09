@@ -12,6 +12,7 @@ export const createBaseQuery = (
             referrerPolicy: 'no-referrer',
             headers: {
                 Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
         });
         return rawBaseQuery(args, WebApi, extraOptions);

@@ -1,5 +1,5 @@
 export enum CollectorsMap {
-    AssetCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\AssetCollector',
+    AssetCollector = 'Yiisoft\\Assets\\Debug\\AssetCollector',
     LogCollector = 'Yiisoft\\Yii\\Debug\\Collector\\LogCollector',
     EventCollector = 'Yiisoft\\Yii\\Debug\\Collector\\EventCollector',
     ExceptionCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ExceptionCollector',

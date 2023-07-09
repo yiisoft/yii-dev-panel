@@ -1,5 +1,8 @@
-import {useMediaQuery} from '@mui/material';
+import {OpenInNew} from '@mui/icons-material';
+import {IconButton, Tooltip, useMediaQuery} from '@mui/material';
 import {DataType, JsonViewer, JsonViewerOnChange, JsonViewerTheme} from '@textea/json-viewer';
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
+import {isClassString} from '@yiisoft/yii-dev-panel-sdk/Helper/classMatcher';
 import * as React from 'react';
 
 const REGEXP_PHP_FUNCTION = /(static )?(function |fn )\(.*\).*((\{.*})|(=>.*))/s;
@@ -18,7 +21,7 @@ export const JsonRenderer = React.memo(
 
         if (typeof value == 'string' && value.match(REGEXP_PHP_FUNCTION)?.length) {
             const html = value.replaceAll('\n', '<br/>').replaceAll(' ', '&nbsp');
-            return <div dangerouslySetInnerHTML={{__html: html}} />;
+            return <CodeHighlight language={'php'} code={value} showLineNumbers={false} fontSize={10} />;
         }
 
         return (
@@ -49,6 +52,25 @@ export const JsonRenderer = React.memo(
                         is: (value: any) => Array.isArray(value) && value.length === 0,
                         Component: (props) => {
                             return <>[]</>;
+                        },
+                    },
+                    {
+                        is: (value: any) => typeof value === 'string' && isClassString(value),
+                        Component: (props) => {
+                            return (
+                                <>
+                                    {props.value}
+                                    <Tooltip title="Examine as a container entry">
+                                        <IconButton
+                                            size="small"
+                                            target="_blank"
+                                            href={'/inspector/container/view?class=' + props.value}
+                                        >
+                                            <OpenInNew fontSize="small" />
+                                        </IconButton>
+                                    </Tooltip>
+                                </>
+                            );
                         },
                     },
                     ...valueTypes,

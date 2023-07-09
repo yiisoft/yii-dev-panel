@@ -1,1 +1,0 @@
-../../yii-dev-panel-sdk/src/serviceWorkerRegistration.ts
