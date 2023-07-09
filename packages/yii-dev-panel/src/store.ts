@@ -43,7 +43,7 @@ export const store = configureStore({
             ...OpenApiMiddlewares,
             // ...ToolbarApiMiddlewares,
         ]),
-    devTools: process.env.NODE_ENV !== 'production',
+    devTools: import.meta.env.DEV,
 });
 
 setupListeners(store.dispatch);

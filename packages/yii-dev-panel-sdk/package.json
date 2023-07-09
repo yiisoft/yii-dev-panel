@@ -64,7 +64,6 @@
     "react-redux": "^8.0.5",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.11.2",
-    "react-scripts": "^5.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "redux-persist": "^6.0.0",
     "swagger-ui-react": "^4.19.0",
@@ -87,11 +86,6 @@
     "prettier": "^2.8.8",
     "prettier-plugin-organize-imports": "^3.2.2",
     "typescript": "^5.0.4"
-  },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5"
-    }
   },
   "scripts": {
     "build": "rm -rf dist; npm run build:esm",

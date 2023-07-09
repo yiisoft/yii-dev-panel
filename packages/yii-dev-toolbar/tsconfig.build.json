@@ -2,6 +2,7 @@
   "extends": "./tsconfig",
   "compilerOptions": {
     "rootDir": "./src",
+    "outDir": "./build",
     "declaration": true,
     "noEmit": false,
     "sourceMap": true,

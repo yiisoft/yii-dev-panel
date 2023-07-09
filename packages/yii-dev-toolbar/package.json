@@ -41,16 +41,11 @@
     "typescript": "^5.0.4",
     "web-vitals": "^3.3.1"
   },
-  "overrides": {
-    "react-scripts": {
-      "typescript": "^5"
-    }
-  },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "REACT_APP_ENV=github react-app-rewired build && gulp",
-    "test": "react-app-rewired test",
-    "serve": "npm run build && serve build",
+    "start": "vite",
+    "build": "VITE_ENV=github tsc --build tsconfig.build.json && vite build && gulp",
+    "test": "vite test",
+    "serve": "vite preview",
     "prettier": "prettier -l src"
   },
   "browserslist": {
