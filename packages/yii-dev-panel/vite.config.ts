@@ -38,6 +38,10 @@ export default defineConfig(async ({command}) => {
                     type: 'module',
                     navigateFallback: '/index.html',
                 },
+                registerType: 'autoUpdate',
+                workbox: {
+                    sourcemap: true,
+                },
             }),
             viteTsconfigPaths(),
             svgrPlugin(),
