@@ -33,6 +33,10 @@ export const routes = [
                 element: <Pages.RoutesPage />,
             },
             {
+                path: 'events',
+                element: <Pages.EventsPage />,
+            },
+            {
                 path: 'files',
                 element: <Pages.FileExplorerPage />,
             },

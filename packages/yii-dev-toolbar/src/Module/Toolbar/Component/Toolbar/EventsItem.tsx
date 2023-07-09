@@ -11,7 +11,7 @@ type EventsItemProps = {
 const EventsItem = forwardRef((props: EventsItemProps, ref: ForwardedRef<HTMLButtonElement>) => {
     const {data, ...others} = props;
     return (
-        <Badge color="secondary" badgeContent={String(data.event.total)}>
+        <Badge color="secondary" badgeContent={String(data.event?.total)}>
             <Button
                 ref={ref}
                 href={`/debug?collector=${CollectorsMap.EventCollector}&debugEntry=${data.id}`}

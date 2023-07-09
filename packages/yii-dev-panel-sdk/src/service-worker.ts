@@ -1,4 +1,5 @@
-/* eslint-disable no-restricted-globals */
+/// <reference lib="webworker" />
+declare const self: ServiceWorkerGlobalScope;
 
 // This service worker can be customized!
 // See https://developers.google.com/web/tools/workbox/modules
@@ -15,6 +16,10 @@ import {registerRoute} from 'workbox-routing';
 import {StaleWhileRevalidate} from 'workbox-strategies';
 
 clientsClaim();
+
+/**
+ * TODO: add prompt update https://vite-pwa-org.netlify.app/frameworks/react.html
+ */
 
 /**
  * We are not wrapping it in a 'message' event as per the new update.
@@ -34,8 +39,32 @@ registerRoute(
     ({url}) => url.origin === 'https://fonts.googleapis.com',
     new StaleWhileRevalidate({
         cacheName: 'google-fonts-stylesheets',
+        plugins: [
+            new CacheableResponsePlugin({
+                statuses: [0, 200],
+            }),
+        ],
     }),
 );
+
+/**
+ * Cache the underlying javascript files with a cache-first strategy for 30 days.
+ * Uncomment the following condition to enable caching in dev mode. In makes a huge load on the CPU because of Vite.
+ */
+if (import.meta.env.PROD) {
+    registerRoute(
+        ({request: {destination}}) => destination === 'script',
+        new StaleWhileRevalidate({
+            cacheName: 'javascript-files',
+            plugins: [
+                new CacheableResponsePlugin({
+                    statuses: [0, 200],
+                }),
+                new ExpirationPlugin({purgeOnQuotaError: true, maxEntries: 1000, maxAgeSeconds: 60 * 60 * 24 * 30}),
+            ],
+        }),
+    );
+}
 
 // Cache the underlying font files with a cache-first strategy for 1 year.
 // @see https://developers.google.com/web/tools/workbox/guides/common-recipes#google_fonts
@@ -60,19 +89,23 @@ registerRoute(
         // If this isn't a navigation, skip.
         if (request.mode !== 'navigate') {
             return false;
-        } // If this is a URL that starts with /_, skip.
+        }
 
+        // If this is a URL that starts with /_, skip.
         if (url.pathname.startsWith('/_')) {
             return false;
-        } // If this looks like a URL for a resource, because it contains // a file extension, skip.
+        }
 
+        // If this looks like a URL for a resource, because it contains // a file extension, skip.
         if (url.pathname.match(fileExtensionRegexp)) {
             return false;
-        } // Return true to signal that we want to use the handler.
+        }
 
+        // Return true to signal that we want to use the handler.
         return true;
     },
-    createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html'),
+    // createHandlerBoundToURL(import.meta.env.BASE_URL === '/' ? 'index.html' : import.meta.env.BASE_URL + 'index.html'),
+    createHandlerBoundToURL(import.meta.env.BASE_URL + 'index.html'),
 );
 
 registerRoute(
@@ -89,7 +122,7 @@ registerRoute(
         plugins: [
             // Ensure that once this runtime cache reaches a maximum size the
             // least-recently used images are removed.
-            new ExpirationPlugin({maxEntries: 250}),
+            new ExpirationPlugin({purgeOnQuotaError: true, maxEntries: 1000}),
         ],
     }),
 );
@@ -102,4 +135,56 @@ registerRoute(
 //     }
 // });
 
-// Any other custom service worker logic can go here.
+const debuggerApiRoutesRegExp = /\/debug|gii|inspect\//i;
+self.addEventListener('fetch', (event) => {
+    const request = event.request;
+    if (request.mode === 'navigate') {
+        return;
+    }
+
+    if (request.url.match(fileExtensionRegexp)) {
+        return;
+    }
+
+    if (request.url.match(debuggerApiRoutesRegExp)) {
+        return;
+    }
+    console.log('sw fetch', request);
+
+    event.respondWith(
+        fetch(event.request)
+            .then((response) => {
+                notify(event.clientId, request, response);
+
+                return response;
+            })
+            .catch((error) => {
+                console.log('sw fetch error', error);
+                throw error;
+            }),
+    );
+});
+
+function notify(clientId, request, response) {
+    // console.log('notify', request, response);
+    const events = [
+        {
+            type: 'FETCH',
+            payload: {
+                headers: Object.fromEntries(response.headers),
+                url: request.url,
+                method: request.method,
+                status: request.status,
+            },
+        },
+    ];
+    events.map((event) => {
+        self.clients.get(clientId).then((client) => {
+            // console.log('client', client);
+            client.postMessage(event);
+        });
+        // self.clients.matchAll().then((all) => {
+        //     all.map((client) => client.postMessage(eventToSend));
+        // });
+    });
+}

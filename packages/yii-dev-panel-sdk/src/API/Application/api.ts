@@ -3,7 +3,7 @@ import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
 const applicationSliceConfig = {
-    key: ApplicationSlice.reducer.name,
+    key: ApplicationSlice.name,
     version: 2,
     storage,
 };

@@ -8,10 +8,11 @@ export const createBaseQuery = (
         const baseUrl = (WebApi.getState() as any).application?.baseUrl || '';
 
         const rawBaseQuery = fetchBaseQuery({
-            baseUrl: baseUrl + baseUrlAdditional,
+            baseUrl: baseUrl.replace(/\/$/, '') + baseUrlAdditional,
             referrerPolicy: 'no-referrer',
             headers: {
                 Accept: 'application/json',
+                'Content-Type': 'application/json',
             },
         });
         return rawBaseQuery(args, WebApi, extraOptions);

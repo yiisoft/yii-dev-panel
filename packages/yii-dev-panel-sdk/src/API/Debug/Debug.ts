@@ -6,36 +6,36 @@ export type HTTPMethod = 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT';
 export type DebugEntry = {
     id: string;
     collectors: string[];
-    logger: {
+    logger?: {
         total: number;
     };
-    event: {
+    event?: {
         total: number;
     };
-    service: {
+    service?: {
         total: number;
     };
-    validator: {
+    validator?: {
         total: number;
         valid: number;
         invalid: number;
     };
-    queue: {
+    queue?: {
         countPushes: number;
         countStatuses: number;
         countProcessingMessages: number;
     };
-    http: {
+    http?: {
         count: number;
         totalTime: number;
     };
-    fs_stream: {
+    fs_stream?: {
         read?: number;
         write?: number;
         mkdir?: number;
     };
-    http_stream: [];
-    web: {
+    http_stream?: [];
+    web?: {
         php: {
             version: string;
         };
@@ -47,7 +47,7 @@ export type DebugEntry = {
             peakUsage: number;
         };
     };
-    console: {
+    console?: {
         php: {
             version: string;
         };
@@ -59,7 +59,7 @@ export type DebugEntry = {
             peakUsage: number;
         };
     };
-    request: {
+    request?: {
         url: string;
         path: string;
         query: string;
@@ -67,16 +67,16 @@ export type DebugEntry = {
         isAjax: boolean;
         userIp: string;
     };
-    command: {
+    command?: {
         exitCode: number;
         class: string;
         input: string;
         name: string;
     };
-    response: {
+    response?: {
         statusCode: number;
     };
-    router: null | {
+    router?: null | {
         matchTime: number;
         name: string;
         pattern: string;
@@ -86,22 +86,22 @@ export type DebugEntry = {
         action: string | string[];
         middlewares: any[];
     };
-    middleware: {
+    middleware?: {
         total: number;
     };
-    asset: {
+    asset?: {
         bundles: {
             total: number;
         };
     };
-    exception: {
+    exception?: {
         class: string;
         message: string;
         line: string;
         file: string;
         code: string;
     };
-    db: {
+    db?: {
         queries: {
             error: number;
             total: number;
@@ -131,13 +131,14 @@ type CollectorResponseType = any;
 
 export const debugApi = createApi({
     reducerPath: 'api.debug',
+    tagTypes: ['debug/list'],
     baseQuery: createBaseQuery('/debug/api/'),
     endpoints: (builder) => ({
         getDebug: builder.query<DebugEntry[], void>({
             query: () => ``,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
+            providesTags: ['debug/list'],
         }),
-
         getObject: builder.query<DebugEntry[], GetObjectProps>({
             query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],

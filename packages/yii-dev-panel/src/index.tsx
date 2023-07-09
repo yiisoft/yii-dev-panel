@@ -1,10 +1,8 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import reportWebVitals from '@yiisoft/yii-dev-panel/reportWebVitals';
-import * as serviceWorkerRegistration from '@yiisoft/yii-dev-panel/serviceWorkerRegistration';
-import * as process from 'process';
 
-Config.backendUrl = process.env.REACT_APP_BACKEND_URL;
-Config.appEnv = process.env.REACT_APP_ENV;
+Config.backendUrl = import.meta.env.VITE_BACKEND_URL;
+Config.appEnv = import.meta.env.VITE_ENV;
 
 import('@yiisoft/yii-dev-panel/bootstrap');
 
@@ -12,4 +10,3 @@ import('@yiisoft/yii-dev-panel/bootstrap');
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-serviceWorkerRegistration.register();
