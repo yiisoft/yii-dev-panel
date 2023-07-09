@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/yii-dev-panel/service-worker.js', { scope: '/yii-dev-panel/' })})}

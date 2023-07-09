@@ -1,3 +1,1844 @@
-/*! For license information please see service-worker.js.LICENSE.txt */
-!function(){"use strict";var e={692:function(){try{self["workbox:cacheable-response:6.5.4"]&&_()}catch(e){}},838:function(){try{self["workbox:core:6.5.4"]&&_()}catch(e){}},404:function(){try{self["workbox:expiration:6.5.4"]&&_()}catch(e){}},362:function(){try{self["workbox:precaching:6.5.4"]&&_()}catch(e){}},161:function(){try{self["workbox:routing:6.5.4"]&&_()}catch(e){}},880:function(){try{self["workbox:strategies:6.5.4"]&&_()}catch(e){}}},t={};function r(n){var a=t[n];if(void 0!==a)return a.exports;var i=t[n]={exports:{}};return e[n](i,i.exports,r),i.exports}!function(){function e(e,t){if(!(e instanceof t))throw new TypeError("Cannot call a class as a function")}function t(e){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},t(e)}function n(e){var r=function(e,r){if("object"!==t(e)||null===e)return e;var n=e[Symbol.toPrimitive];if(void 0!==n){var a=n.call(e,r||"default");if("object"!==t(a))return a;throw new TypeError("@@toPrimitive must return a primitive value.")}return("string"===r?String:Number)(e)}(e,"string");return"symbol"===t(r)?r:String(r)}function a(e,t){for(var r=0;r<t.length;r++){var a=t[r];a.enumerable=a.enumerable||!1,a.configurable=!0,"value"in a&&(a.writable=!0),Object.defineProperty(e,n(a.key),a)}}function i(e,t,r){return t&&a(e.prototype,t),r&&a(e,r),Object.defineProperty(e,"prototype",{writable:!1}),e}function s(e,t){return s=Object.setPrototypeOf?Object.setPrototypeOf.bind():function(e,t){return e.__proto__=t,e},s(e,t)}function c(e,t){if("function"!==typeof t&&null!==t)throw new TypeError("Super expression must either be null or a function");e.prototype=Object.create(t&&t.prototype,{constructor:{value:e,writable:!0,configurable:!0}}),Object.defineProperty(e,"prototype",{writable:!1}),t&&s(e,t)}function o(e){return o=Object.setPrototypeOf?Object.getPrototypeOf.bind():function(e){return e.__proto__||Object.getPrototypeOf(e)},o(e)}function u(){if("undefined"===typeof Reflect||!Reflect.construct)return!1;if(Reflect.construct.sham)return!1;if("function"===typeof Proxy)return!0;try{return Boolean.prototype.valueOf.call(Reflect.construct(Boolean,[],(function(){}))),!0}catch(e){return!1}}function h(e,r){if(r&&("object"===t(r)||"function"===typeof r))return r;if(void 0!==r)throw new TypeError("Derived constructors may only return object or undefined");return function(e){if(void 0===e)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return e}(e)}function f(e){var t=u();return function(){var r,n=o(e);if(t){var a=o(this).constructor;r=Reflect.construct(n,arguments,a)}else r=n.apply(this,arguments);return h(this,r)}}function l(e,t,r){return l=u()?Reflect.construct.bind():function(e,t,r){var n=[null];n.push.apply(n,t);var a=new(Function.bind.apply(e,n));return r&&s(a,r.prototype),a},l.apply(null,arguments)}function p(e){var t="function"===typeof Map?new Map:void 0;return p=function(e){if(null===e||(r=e,-1===Function.toString.call(r).indexOf("[native code]")))return e;var r;if("function"!==typeof e)throw new TypeError("Super expression must either be null or a function");if("undefined"!==typeof t){if(t.has(e))return t.get(e);t.set(e,n)}function n(){return l(e,arguments,o(this).constructor)}return n.prototype=Object.create(e.prototype,{constructor:{value:n,enumerable:!1,writable:!0,configurable:!0}}),s(n,e)},p(e)}r(838);var v=function(e){for(var t=e,r=arguments.length,n=new Array(r>1?r-1:0),a=1;a<r;a++)n[a-1]=arguments[a];return n.length>0&&(t+=" :: ".concat(JSON.stringify(n))),t},d=function(t){c(n,t);var r=f(n);function n(t,a){var i;e(this,n);var s=v(t,a);return(i=r.call(this,s)).name=t,i.details=a,i}return i(n)}(p(Error)),y=function(e){return new URL(String(e),location.href).href.replace(new RegExp("^".concat(location.origin)),"")},b=null,g=(r(692),function(){function t(){var r=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};e(this,t),this._statuses=r.statuses,this._headers=r.headers}return i(t,[{key:"isResponseCacheable",value:function(e){var t=this;var r=!0;return this._statuses&&(r=this._statuses.includes(e.status)),this._headers&&r&&(r=Object.keys(this._headers).some((function(r){return e.headers.get(r)===t._headers[r]}))),r}}]),t}());function m(){m=function(){return e};var e={},r=Object.prototype,n=r.hasOwnProperty,a=Object.defineProperty||function(e,t,r){e[t]=r.value},i="function"==typeof Symbol?Symbol:{},s=i.iterator||"@@iterator",c=i.asyncIterator||"@@asyncIterator",o=i.toStringTag||"@@toStringTag";function u(e,t,r){return Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}),e[t]}try{u({},"")}catch(T){u=function(e,t,r){return e[t]=r}}function h(e,t,r,n){var i=t&&t.prototype instanceof p?t:p,s=Object.create(i.prototype),c=new C(n||[]);return a(s,"_invoke",{value:_(e,r,c)}),s}function f(e,t,r){try{return{type:"normal",arg:e.call(t,r)}}catch(T){return{type:"throw",arg:T}}}e.wrap=h;var l={};function p(){}function v(){}function d(){}var y={};u(y,s,(function(){return this}));var b=Object.getPrototypeOf,g=b&&b(b(O([])));g&&g!==r&&n.call(g,s)&&(y=g);var x=d.prototype=p.prototype=Object.create(y);function w(e){["next","throw","return"].forEach((function(t){u(e,t,(function(e){return this._invoke(t,e)}))}))}function k(e,r){function i(a,s,c,o){var u=f(e[a],e,s);if("throw"!==u.type){var h=u.arg,l=h.value;return l&&"object"==t(l)&&n.call(l,"__await")?r.resolve(l.__await).then((function(e){i("next",e,c,o)}),(function(e){i("throw",e,c,o)})):r.resolve(l).then((function(e){h.value=e,c(h)}),(function(e){return i("throw",e,c,o)}))}o(u.arg)}var s;a(this,"_invoke",{value:function(e,t){function n(){return new r((function(r,n){i(e,t,r,n)}))}return s=s?s.then(n,n):n()}})}function _(e,t,r){var n="suspendedStart";return function(a,i){if("executing"===n)throw new Error("Generator is already running");if("completed"===n){if("throw"===a)throw i;return j()}for(r.method=a,r.arg=i;;){var s=r.delegate;if(s){var c=R(s,r);if(c){if(c===l)continue;return c}}if("next"===r.method)r.sent=r._sent=r.arg;else if("throw"===r.method){if("suspendedStart"===n)throw n="completed",r.arg;r.dispatchException(r.arg)}else"return"===r.method&&r.abrupt("return",r.arg);n="executing";var o=f(e,t,r);if("normal"===o.type){if(n=r.done?"completed":"suspendedYield",o.arg===l)continue;return{value:o.arg,done:r.done}}"throw"===o.type&&(n="completed",r.method="throw",r.arg=o.arg)}}}function R(e,t){var r=t.method,n=e.iterator[r];if(void 0===n)return t.delegate=null,"throw"===r&&e.iterator.return&&(t.method="return",t.arg=void 0,R(e,t),"throw"===t.method)||"return"!==r&&(t.method="throw",t.arg=new TypeError("The iterator does not provide a '"+r+"' method")),l;var a=f(n,e.iterator,t.arg);if("throw"===a.type)return t.method="throw",t.arg=a.arg,t.delegate=null,l;var i=a.arg;return i?i.done?(t[e.resultName]=i.value,t.next=e.nextLoc,"return"!==t.method&&(t.method="next",t.arg=void 0),t.delegate=null,l):i:(t.method="throw",t.arg=new TypeError("iterator result is not an object"),t.delegate=null,l)}function E(e){var t={tryLoc:e[0]};1 in e&&(t.catchLoc=e[1]),2 in e&&(t.finallyLoc=e[2],t.afterLoc=e[3]),this.tryEntries.push(t)}function L(e){var t=e.completion||{};t.type="normal",delete t.arg,e.completion=t}function C(e){this.tryEntries=[{tryLoc:"root"}],e.forEach(E,this),this.reset(!0)}function O(e){if(e){var t=e[s];if(t)return t.call(e);if("function"==typeof e.next)return e;if(!isNaN(e.length)){var r=-1,a=function t(){for(;++r<e.length;)if(n.call(e,r))return t.value=e[r],t.done=!1,t;return t.value=void 0,t.done=!0,t};return a.next=a}}return{next:j}}function j(){return{value:void 0,done:!0}}return v.prototype=d,a(x,"constructor",{value:d,configurable:!0}),a(d,"constructor",{value:v,configurable:!0}),v.displayName=u(d,o,"GeneratorFunction"),e.isGeneratorFunction=function(e){var t="function"==typeof e&&e.constructor;return!!t&&(t===v||"GeneratorFunction"===(t.displayName||t.name))},e.mark=function(e){return Object.setPrototypeOf?Object.setPrototypeOf(e,d):(e.__proto__=d,u(e,o,"GeneratorFunction")),e.prototype=Object.create(x),e},e.awrap=function(e){return{__await:e}},w(k.prototype),u(k.prototype,c,(function(){return this})),e.AsyncIterator=k,e.async=function(t,r,n,a,i){void 0===i&&(i=Promise);var s=new k(h(t,r,n,a),i);return e.isGeneratorFunction(r)?s:s.next().then((function(e){return e.done?e.value:s.next()}))},w(x),u(x,o,"Generator"),u(x,s,(function(){return this})),u(x,"toString",(function(){return"[object Generator]"})),e.keys=function(e){var t=Object(e),r=[];for(var n in t)r.push(n);return r.reverse(),function e(){for(;r.length;){var n=r.pop();if(n in t)return e.value=n,e.done=!1,e}return e.done=!0,e}},e.values=O,C.prototype={constructor:C,reset:function(e){if(this.prev=0,this.next=0,this.sent=this._sent=void 0,this.done=!1,this.delegate=null,this.method="next",this.arg=void 0,this.tryEntries.forEach(L),!e)for(var t in this)"t"===t.charAt(0)&&n.call(this,t)&&!isNaN(+t.slice(1))&&(this[t]=void 0)},stop:function(){this.done=!0;var e=this.tryEntries[0].completion;if("throw"===e.type)throw e.arg;return this.rval},dispatchException:function(e){if(this.done)throw e;var t=this;function r(r,n){return s.type="throw",s.arg=e,t.next=r,n&&(t.method="next",t.arg=void 0),!!n}for(var a=this.tryEntries.length-1;a>=0;--a){var i=this.tryEntries[a],s=i.completion;if("root"===i.tryLoc)return r("end");if(i.tryLoc<=this.prev){var c=n.call(i,"catchLoc"),o=n.call(i,"finallyLoc");if(c&&o){if(this.prev<i.catchLoc)return r(i.catchLoc,!0);if(this.prev<i.finallyLoc)return r(i.finallyLoc)}else if(c){if(this.prev<i.catchLoc)return r(i.catchLoc,!0)}else{if(!o)throw new Error("try statement without catch or finally");if(this.prev<i.finallyLoc)return r(i.finallyLoc)}}}},abrupt:function(e,t){for(var r=this.tryEntries.length-1;r>=0;--r){var a=this.tryEntries[r];if(a.tryLoc<=this.prev&&n.call(a,"finallyLoc")&&this.prev<a.finallyLoc){var i=a;break}}i&&("break"===e||"continue"===e)&&i.tryLoc<=t&&t<=i.finallyLoc&&(i=null);var s=i?i.completion:{};return s.type=e,s.arg=t,i?(this.method="next",this.next=i.finallyLoc,l):this.complete(s)},complete:function(e,t){if("throw"===e.type)throw e.arg;return"break"===e.type||"continue"===e.type?this.next=e.arg:"return"===e.type?(this.rval=this.arg=e.arg,this.method="return",this.next="end"):"normal"===e.type&&t&&(this.next=t),l},finish:function(e){for(var t=this.tryEntries.length-1;t>=0;--t){var r=this.tryEntries[t];if(r.finallyLoc===e)return this.complete(r.completion,r.afterLoc),L(r),l}},catch:function(e){for(var t=this.tryEntries.length-1;t>=0;--t){var r=this.tryEntries[t];if(r.tryLoc===e){var n=r.completion;if("throw"===n.type){var a=n.arg;L(r)}return a}}throw new Error("illegal catch attempt")},delegateYield:function(e,t,r){return this.delegate={iterator:O(e),resultName:t,nextLoc:r},"next"===this.method&&(this.arg=void 0),l}},e}function x(e,t,r,n,a,i,s){try{var c=e[i](s),o=c.value}catch(u){return void r(u)}c.done?t(o):Promise.resolve(o).then(n,a)}function w(e){return function(){var t=this,r=arguments;return new Promise((function(n,a){var i=e.apply(t,r);function s(e){x(i,n,a,s,c,"next",e)}function c(e){x(i,n,a,s,c,"throw",e)}s(void 0)}))}}var k=i((function t(r){var n=this;e(this,t),this.cacheWillUpdate=function(){var e=w(m().mark((function e(t){var r;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(r=t.response,!n._cacheableResponse.isResponseCacheable(r)){e.next=3;break}return e.abrupt("return",r);case 3:return e.abrupt("return",null);case 4:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}(),this._cacheableResponse=new g(r)})),_=new Set;var R,E={googleAnalytics:"googleAnalytics",precache:"precache-v2",prefix:"workbox",runtime:"runtime",suffix:"undefined"!==typeof registration?registration.scope:""},L=function(e){return[E.prefix,e,E.suffix].filter((function(e){return e&&e.length>0})).join("-")},C=function(e){return e||L(E.precache)},O=function(e){return e||L(E.runtime)};function j(e,t){(null==t||t>e.length)&&(t=e.length);for(var r=0,n=new Array(t);r<t;r++)n[r]=e[r];return n}function T(e,t){if(e){if("string"===typeof e)return j(e,t);var r=Object.prototype.toString.call(e).slice(8,-1);return"Object"===r&&e.constructor&&(r=e.constructor.name),"Map"===r||"Set"===r?Array.from(e):"Arguments"===r||/^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(r)?j(e,t):void 0}}function S(e,t){var r="undefined"!==typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(!r){if(Array.isArray(e)||(r=T(e))||t&&e&&"number"===typeof e.length){r&&(e=r);var n=0,a=function(){};return{s:a,n:function(){return n>=e.length?{done:!0}:{done:!1,value:e[n++]}},e:function(e){throw e},f:a}}throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}var i,s=!0,c=!1;return{s:function(){r=r.call(e)},n:function(){var e=r.next();return s=e.done,e},e:function(e){c=!0,i=e},f:function(){try{s||null==r.return||r.return()}finally{if(c)throw i}}}}function P(e,t){var r,n=new URL(e),a=S(t);try{for(a.s();!(r=a.n()).done;){var i=r.value;n.searchParams.delete(i)}}catch(s){a.e(s)}finally{a.f()}return n.href}function q(e,t,r,n){return D.apply(this,arguments)}function D(){return(D=w(m().mark((function e(t,r,n,a){var i,s,c,o,u,h,f;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(i=P(r.url,n),r.url!==i){e.next=3;break}return e.abrupt("return",t.match(r,a));case 3:return s=Object.assign(Object.assign({},a),{ignoreSearch:!0}),e.next=6,t.keys(r,s);case 6:c=e.sent,o=S(c),e.prev=8,o.s();case 10:if((u=o.n()).done){e.next=17;break}if(h=u.value,f=P(h.url,n),i!==f){e.next=15;break}return e.abrupt("return",t.match(h,a));case 15:e.next=10;break;case 17:e.next=22;break;case 19:e.prev=19,e.t0=e.catch(8),o.e(e.t0);case 22:return e.prev=22,o.f(),e.finish(22);case 25:return e.abrupt("return");case 26:case"end":return e.stop()}}),e,null,[[8,19,22,25]])})))).apply(this,arguments)}function N(){if(void 0===R){var e=new Response("");if("body"in e)try{new Response(e.body),R=!0}catch(t){R=!1}R=!1}return R}function U(e){e.then((function(){}))}var I=i((function t(){var r=this;e(this,t),this.promise=new Promise((function(e,t){r.resolve=e,r.reject=t}))}));function A(){return M.apply(this,arguments)}function M(){return(M=w(m().mark((function e(){var t,r,n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:0,t=S(_),e.prev=2,t.s();case 4:if((r=t.n()).done){e.next=11;break}return n=r.value,e.next=8,n();case 8:0;case 9:e.next=4;break;case 11:e.next=16;break;case 13:e.prev=13,e.t0=e.catch(2),t.e(e.t0);case 16:return e.prev=16,t.f(),e.finish(16);case 19:0;case 20:case"end":return e.stop()}}),e,null,[[2,13,16,19]])})))).apply(this,arguments)}function K(e){return new Promise((function(t){return setTimeout(t,e)}))}function W(e,t){var r=t();return e.waitUntil(r),r}function B(e,t){return F.apply(this,arguments)}function F(){return(F=w(m().mark((function e(t,r){var n,a,i,s,c,o;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(n=null,t.url&&(a=new URL(t.url),n=a.origin),n===self.location.origin){e.next=4;break}throw new d("cross-origin-copy-response",{origin:n});case 4:if(i=t.clone(),s={headers:new Headers(i.headers),status:i.status,statusText:i.statusText},c=r?r(s):s,!N()){e.next=11;break}e.t0=i.body,e.next=14;break;case 11:return e.next=13,i.blob();case 13:e.t0=e.sent;case 14:return o=e.t0,e.abrupt("return",new Response(o,c));case 16:case"end":return e.stop()}}),e)})))).apply(this,arguments)}function H(e,t,r){return(t=n(t))in e?Object.defineProperty(e,t,{value:r,enumerable:!0,configurable:!0,writable:!0}):e[t]=r,e}function V(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter((function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable}))),r.push.apply(r,n)}return r}function G(e){for(var t=1;t<arguments.length;t++){var r=null!=arguments[t]?arguments[t]:{};t%2?V(Object(r),!0).forEach((function(t){H(e,t,r[t])})):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):V(Object(r)).forEach((function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))}))}return e}var $,Y,Q=function(e,t){return t.some((function(t){return e instanceof t}))};var J=new WeakMap,z=new WeakMap,X=new WeakMap,Z=new WeakMap,ee=new WeakMap;var te={get:function(e,t,r){if(e instanceof IDBTransaction){if("done"===t)return z.get(e);if("objectStoreNames"===t)return e.objectStoreNames||X.get(e);if("store"===t)return r.objectStoreNames[1]?void 0:r.objectStore(r.objectStoreNames[0])}return ae(e[t])},set:function(e,t,r){return e[t]=r,!0},has:function(e,t){return e instanceof IDBTransaction&&("done"===t||"store"===t)||t in e}};function re(e){return e!==IDBDatabase.prototype.transaction||"objectStoreNames"in IDBTransaction.prototype?(Y||(Y=[IDBCursor.prototype.advance,IDBCursor.prototype.continue,IDBCursor.prototype.continuePrimaryKey])).includes(e)?function(){for(var t=arguments.length,r=new Array(t),n=0;n<t;n++)r[n]=arguments[n];return e.apply(ie(this),r),ae(J.get(this))}:function(){for(var t=arguments.length,r=new Array(t),n=0;n<t;n++)r[n]=arguments[n];return ae(e.apply(ie(this),r))}:function(t){for(var r=arguments.length,n=new Array(r>1?r-1:0),a=1;a<r;a++)n[a-1]=arguments[a];var i=e.call.apply(e,[ie(this),t].concat(n));return X.set(i,t.sort?t.sort():[t]),ae(i)}}function ne(e){return"function"===typeof e?re(e):(e instanceof IDBTransaction&&function(e){if(!z.has(e)){var t=new Promise((function(t,r){var n=function(){e.removeEventListener("complete",a),e.removeEventListener("error",i),e.removeEventListener("abort",i)},a=function(){t(),n()},i=function(){r(e.error||new DOMException("AbortError","AbortError")),n()};e.addEventListener("complete",a),e.addEventListener("error",i),e.addEventListener("abort",i)}));z.set(e,t)}}(e),Q(e,$||($=[IDBDatabase,IDBObjectStore,IDBIndex,IDBCursor,IDBTransaction]))?new Proxy(e,te):e)}function ae(e){if(e instanceof IDBRequest)return function(e){var t=new Promise((function(t,r){var n=function(){e.removeEventListener("success",a),e.removeEventListener("error",i)},a=function(){t(ae(e.result)),n()},i=function(){r(e.error),n()};e.addEventListener("success",a),e.addEventListener("error",i)}));return t.then((function(t){t instanceof IDBCursor&&J.set(t,e)})).catch((function(){})),ee.set(t,e),t}(e);if(Z.has(e))return Z.get(e);var t=ne(e);return t!==e&&(Z.set(e,t),ee.set(t,e)),t}var ie=function(e){return ee.get(e)};function se(e,t){var r=arguments.length>2&&void 0!==arguments[2]?arguments[2]:{},n=r.blocked,a=r.upgrade,i=r.blocking,s=r.terminated,c=indexedDB.open(e,t),o=ae(c);return a&&c.addEventListener("upgradeneeded",(function(e){a(ae(c.result),e.oldVersion,e.newVersion,ae(c.transaction),e)})),n&&c.addEventListener("blocked",(function(e){return n(e.oldVersion,e.newVersion,e)})),o.then((function(e){s&&e.addEventListener("close",(function(){return s()})),i&&e.addEventListener("versionchange",(function(e){return i(e.oldVersion,e.newVersion,e)}))})).catch((function(){})),o}var ce=["get","getKey","getAll","getAllKeys","count"],oe=["put","add","delete","clear"],ue=new Map;function he(e,t){if(e instanceof IDBDatabase&&!(t in e)&&"string"===typeof t){if(ue.get(t))return ue.get(t);var r=t.replace(/FromIndex$/,""),n=t!==r,a=oe.includes(r);if(r in(n?IDBIndex:IDBObjectStore).prototype&&(a||ce.includes(r))){var i=function(){var e=w(m().mark((function e(t){var i,s,c,o,u,h,f=arguments;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:for(s=this.transaction(t,a?"readwrite":"readonly"),c=s.store,o=f.length,u=new Array(o>1?o-1:0),h=1;h<o;h++)u[h-1]=f[h];return n&&(c=c.index(u.shift())),e.next=6,Promise.all([(i=c)[r].apply(i,u),a&&s.done]);case 6:return e.abrupt("return",e.sent[0]);case 7:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}();return ue.set(t,i),i}}}te=function(e){return G(G({},e),{},{get:function(t,r,n){return he(t,r)||e.get(t,r,n)},has:function(t,r){return!!he(t,r)||e.has(t,r)}})}(te);r(404);var fe="cache-entries",le=function(e){var t=new URL(e,location.href);return t.hash="",t.href},pe=function(){function t(r){e(this,t),this._db=null,this._cacheName=r}return i(t,[{key:"_upgradeDb",value:function(e){var t=e.createObjectStore(fe,{keyPath:"id"});t.createIndex("cacheName","cacheName",{unique:!1}),t.createIndex("timestamp","timestamp",{unique:!1})}},{key:"_upgradeDbAndDeleteOldDbs",value:function(e){this._upgradeDb(e),this._cacheName&&function(e){var t=(arguments.length>1&&void 0!==arguments[1]?arguments[1]:{}).blocked,r=indexedDB.deleteDatabase(e);t&&r.addEventListener("blocked",(function(e){return t(e.oldVersion,e)})),ae(r).then((function(){}))}(this._cacheName)}},{key:"setTimestamp",value:function(){var e=w(m().mark((function e(t,r){var n,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return t=le(t),n={url:t,timestamp:r,cacheName:this._cacheName,id:this._getId(t)},e.next=4,this.getDb();case 4:return a=e.sent,i=a.transaction(fe,"readwrite",{durability:"relaxed"}),e.next=8,i.store.put(n);case 8:return e.next=10,i.done;case 10:case"end":return e.stop()}}),e,this)})));return function(t,r){return e.apply(this,arguments)}}()},{key:"getTimestamp",value:function(){var e=w(m().mark((function e(t){var r,n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,this.getDb();case 2:return r=e.sent,e.next=5,r.get(fe,this._getId(t));case 5:return n=e.sent,e.abrupt("return",null===n||void 0===n?void 0:n.timestamp);case 7:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}()},{key:"expireEntries",value:function(){var e=w(m().mark((function e(t,r){var n,a,i,s,c,o,u,h,f;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,this.getDb();case 2:return n=e.sent,e.next=5,n.transaction(fe).store.index("timestamp").openCursor(null,"prev");case 5:a=e.sent,i=[],s=0;case 8:if(!a){e.next=16;break}return(c=a.value).cacheName===this._cacheName&&(t&&c.timestamp<t||r&&s>=r?i.push(a.value):s++),e.next=13,a.continue();case 13:a=e.sent,e.next=8;break;case 16:o=[],u=0,h=i;case 18:if(!(u<h.length)){e.next=26;break}return f=h[u],e.next=22,n.delete(fe,f.id);case 22:o.push(f.url);case 23:u++,e.next=18;break;case 26:return e.abrupt("return",o);case 27:case"end":return e.stop()}}),e,this)})));return function(t,r){return e.apply(this,arguments)}}()},{key:"_getId",value:function(e){return this._cacheName+"|"+le(e)}},{key:"getDb",value:function(){var e=w(m().mark((function e(){return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(this._db){e.next=4;break}return e.next=3,se("workbox-expiration",1,{upgrade:this._upgradeDbAndDeleteOldDbs.bind(this)});case 3:this._db=e.sent;case 4:return e.abrupt("return",this._db);case 5:case"end":return e.stop()}}),e,this)})));return function(){return e.apply(this,arguments)}}()}]),t}(),ve=function(){function t(r){var n=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{};e(this,t),this._isRunning=!1,this._rerunRequested=!1,this._maxEntries=n.maxEntries,this._maxAgeSeconds=n.maxAgeSeconds,this._matchOptions=n.matchOptions,this._cacheName=r,this._timestampModel=new pe(r)}return i(t,[{key:"expireEntries",value:function(){var e=w(m().mark((function e(){var t,r,n,a,i,s;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(!this._isRunning){e.next=3;break}return this._rerunRequested=!0,e.abrupt("return");case 3:return this._isRunning=!0,t=this._maxAgeSeconds?Date.now()-1e3*this._maxAgeSeconds:0,e.next=7,this._timestampModel.expireEntries(t,this._maxEntries);case 7:return r=e.sent,e.next=10,self.caches.open(this._cacheName);case 10:n=e.sent,a=S(r),e.prev=12,a.s();case 14:if((i=a.n()).done){e.next=20;break}return s=i.value,e.next=18,n.delete(s,this._matchOptions);case 18:e.next=14;break;case 20:e.next=25;break;case 22:e.prev=22,e.t0=e.catch(12),a.e(e.t0);case 25:return e.prev=25,a.f(),e.finish(25);case 28:0,this._isRunning=!1,this._rerunRequested&&(this._rerunRequested=!1,U(this.expireEntries()));case 31:case"end":return e.stop()}}),e,this,[[12,22,25,28]])})));return function(){return e.apply(this,arguments)}}()},{key:"updateTimestamp",value:function(){var e=w(m().mark((function e(t){return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=3,this._timestampModel.setTimestamp(t,Date.now());case 3:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}()},{key:"isURLExpired",value:function(){var e=w(m().mark((function e(t){var r,n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(this._maxAgeSeconds){e.next=6;break}e.next=3;break;case 3:return e.abrupt("return",!1);case 6:return e.next=8,this._timestampModel.getTimestamp(t);case 8:return r=e.sent,n=Date.now()-1e3*this._maxAgeSeconds,e.abrupt("return",void 0===r||r<n);case 11:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}()},{key:"delete",value:function(){var e=w(m().mark((function e(){return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return this._rerunRequested=!1,e.next=3,this._timestampModel.expireEntries(1/0);case 3:case"end":return e.stop()}}),e,this)})));return function(){return e.apply(this,arguments)}}()}]),t}();function de(e,t){return function(e){if(Array.isArray(e))return e}(e)||function(e,t){var r=null==e?null:"undefined"!=typeof Symbol&&e[Symbol.iterator]||e["@@iterator"];if(null!=r){var n,a,i,s,c=[],o=!0,u=!1;try{if(i=(r=r.call(e)).next,0===t){if(Object(r)!==r)return;o=!1}else for(;!(o=(n=i.call(r)).done)&&(c.push(n.value),c.length!==t);o=!0);}catch(h){u=!0,a=h}finally{try{if(!o&&null!=r.return&&(s=r.return(),Object(s)!==s))return}finally{if(u)throw a}}return c}}(e,t)||T(e,t)||function(){throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}var ye=function(){function t(){var r=this,n=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};e(this,t),this.cachedResponseWillBeUsed=function(){var e=w(m().mark((function e(t){var n,a,i,s,c,o,u;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(n=t.event,a=t.request,i=t.cacheName,s=t.cachedResponse){e.next=3;break}return e.abrupt("return",null);case 3:if(c=r._isResponseDateFresh(s),U((o=r._getCacheExpiration(i)).expireEntries()),u=o.updateTimestamp(a.url),n)try{n.waitUntil(u)}catch(h){0}return e.abrupt("return",c?s:null);case 9:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}(),this.cacheDidUpdate=function(){var e=w(m().mark((function e(t){var n,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return n=t.cacheName,a=t.request,i=r._getCacheExpiration(n),e.next=5,i.updateTimestamp(a.url);case 5:return e.next=7,i.expireEntries();case 7:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}(),this._config=n,this._maxAgeSeconds=n.maxAgeSeconds,this._cacheExpirations=new Map,n.purgeOnQuotaError&&function(e){_.add(e)}((function(){return r.deleteCacheAndMetadata()}))}return i(t,[{key:"_getCacheExpiration",value:function(e){if(e===O())throw new d("expire-custom-caches-only");var t=this._cacheExpirations.get(e);return t||(t=new ve(e,this._config),this._cacheExpirations.set(e,t)),t}},{key:"_isResponseDateFresh",value:function(e){if(!this._maxAgeSeconds)return!0;var t=this._getDateHeaderTimestamp(e);return null===t||t>=Date.now()-1e3*this._maxAgeSeconds}},{key:"_getDateHeaderTimestamp",value:function(e){if(!e.headers.has("date"))return null;var t=e.headers.get("date"),r=new Date(t).getTime();return isNaN(r)?null:r}},{key:"deleteCacheAndMetadata",value:function(){var e=w(m().mark((function e(){var t,r,n,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:t=S(this._cacheExpirations),e.prev=1,t.s();case 3:if((r=t.n()).done){e.next=11;break}return n=de(r.value,2),a=n[0],i=n[1],e.next=7,self.caches.delete(a);case 7:return e.next=9,i.delete();case 9:e.next=3;break;case 11:e.next=16;break;case 13:e.prev=13,e.t0=e.catch(1),t.e(e.t0);case 16:return e.prev=16,t.f(),e.finish(16);case 19:this._cacheExpirations=new Map;case 20:case"end":return e.stop()}}),e,this,[[1,13,16,19]])})));return function(){return e.apply(this,arguments)}}()}]),t}();function be(e){return function(e){if(Array.isArray(e))return j(e)}(e)||function(e){if("undefined"!==typeof Symbol&&null!=e[Symbol.iterator]||null!=e["@@iterator"])return Array.from(e)}(e)||T(e)||function(){throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.")}()}r(362);function ge(e){if(!e)throw new d("add-to-cache-list-unexpected-type",{entry:e});if("string"===typeof e){var t=new URL(e,location.href);return{cacheKey:t.href,url:t.href}}var r=e.revision,n=e.url;if(!n)throw new d("add-to-cache-list-unexpected-type",{entry:e});if(!r){var a=new URL(n,location.href);return{cacheKey:a.href,url:a.href}}var i=new URL(n,location.href),s=new URL(n,location.href);return i.searchParams.set("__WB_REVISION__",r),{cacheKey:i.href,url:s.href}}var me=i((function t(){var r=this;e(this,t),this.updatedURLs=[],this.notUpdatedURLs=[],this.handlerWillStart=function(){var e=w(m().mark((function e(t){var r,n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:r=t.request,(n=t.state)&&(n.originalRequest=r);case 2:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}(),this.cachedResponseWillBeUsed=function(){var e=w(m().mark((function e(t){var n,a,i,s;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return n=t.event,a=t.state,i=t.cachedResponse,"install"===n.type&&a&&a.originalRequest&&a.originalRequest instanceof Request&&(s=a.originalRequest.url,i?r.notUpdatedURLs.push(s):r.updatedURLs.push(s)),e.abrupt("return",i);case 3:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}()})),xe=i((function t(r){var n=this,a=r.precacheController;e(this,t),this.cacheKeyWillBeUsed=function(){var e=w(m().mark((function e(t){var r,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return r=t.request,a=t.params,i=(null===a||void 0===a?void 0:a.cacheKey)||n._precacheController.getCacheKeyForURL(r.url),e.abrupt("return",i?new Request(i,{headers:r.headers}):r);case 3:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}(),this._precacheController=a}));r(880);function we(e){return"string"===typeof e?new Request(e):e}var ke=function(){function t(r,n){e(this,t),this._cacheKeys={},Object.assign(this,n),this.event=n.event,this._strategy=r,this._handlerDeferred=new I,this._extendLifetimePromises=[],this._plugins=be(r.plugins),this._pluginStateMap=new Map;var a,i=S(this._plugins);try{for(i.s();!(a=i.n()).done;){var s=a.value;this._pluginStateMap.set(s,{})}}catch(c){i.e(c)}finally{i.f()}this.event.waitUntil(this._handlerDeferred.promise)}return i(t,[{key:"fetch",value:function(e){function t(t){return e.apply(this,arguments)}return t.toString=function(){return e.toString()},t}(function(){var e=w(m().mark((function e(t){var r,n,a,i,s,c,o,u,h,f,l,p;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(r=this.event,!("navigate"===(n=we(t)).mode&&r instanceof FetchEvent&&r.preloadResponse)){e.next=9;break}return e.next=5,r.preloadResponse;case 5:if(!(a=e.sent)){e.next=9;break}return e.abrupt("return",a);case 9:i=this.hasCallback("fetchDidFail")?n.clone():null,e.prev=10,s=S(this.iterateCallbacks("requestWillFetch")),e.prev=12,s.s();case 14:if((c=s.n()).done){e.next=21;break}return o=c.value,e.next=18,o({request:n.clone(),event:r});case 18:n=e.sent;case 19:e.next=14;break;case 21:e.next=26;break;case 23:e.prev=23,e.t0=e.catch(12),s.e(e.t0);case 26:return e.prev=26,s.f(),e.finish(26);case 29:e.next=35;break;case 31:if(e.prev=31,e.t1=e.catch(10),!(e.t1 instanceof Error)){e.next=35;break}throw new d("plugin-error-request-will-fetch",{thrownErrorMessage:e.t1.message});case 35:return u=n.clone(),e.prev=36,e.next=39,fetch(n,"navigate"===n.mode?void 0:this._strategy.fetchOptions);case 39:h=e.sent,f=S(this.iterateCallbacks("fetchDidSucceed")),e.prev=42,f.s();case 44:if((l=f.n()).done){e.next=51;break}return p=l.value,e.next=48,p({event:r,request:u,response:h});case 48:h=e.sent;case 49:e.next=44;break;case 51:e.next=56;break;case 53:e.prev=53,e.t2=e.catch(42),f.e(e.t2);case 56:return e.prev=56,f.f(),e.finish(56);case 59:return e.abrupt("return",h);case 62:if(e.prev=62,e.t3=e.catch(36),!i){e.next=68;break}return e.next=68,this.runCallbacks("fetchDidFail",{error:e.t3,event:r,originalRequest:i.clone(),request:u.clone()});case 68:throw e.t3;case 69:case"end":return e.stop()}}),e,this,[[10,31],[12,23,26,29],[36,62],[42,53,56,59]])})));return function(t){return e.apply(this,arguments)}}())},{key:"fetchAndCachePut",value:function(){var e=w(m().mark((function e(t){var r,n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,this.fetch(t);case 2:return r=e.sent,n=r.clone(),this.waitUntil(this.cachePut(t,n)),e.abrupt("return",r);case 6:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}()},{key:"cacheMatch",value:function(){var e=w(m().mark((function e(t){var r,n,a,i,s,c,o,u,h,f;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return r=we(t),a=this._strategy,i=a.cacheName,s=a.matchOptions,e.next=4,this.getCacheKey(r,"read");case 4:return c=e.sent,o=Object.assign(Object.assign({},s),{cacheName:i}),e.next=8,caches.match(c,o);case 8:n=e.sent,u=S(this.iterateCallbacks("cachedResponseWillBeUsed")),e.prev=11,u.s();case 13:if((h=u.n()).done){e.next=23;break}return f=h.value,e.next=17,f({cacheName:i,matchOptions:s,cachedResponse:n,request:c,event:this.event});case 17:if(e.t0=e.sent,e.t0){e.next=20;break}e.t0=void 0;case 20:n=e.t0;case 21:e.next=13;break;case 23:e.next=28;break;case 25:e.prev=25,e.t1=e.catch(11),u.e(e.t1);case 28:return e.prev=28,u.f(),e.finish(28);case 31:return e.abrupt("return",n);case 32:case"end":return e.stop()}}),e,this,[[11,25,28,31]])})));return function(t){return e.apply(this,arguments)}}()},{key:"cachePut",value:function(){var e=w(m().mark((function e(t,r){var n,a,i,s,c,o,u,h,f,l,p,v,g;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return n=we(t),e.next=3,K(0);case 3:return e.next=5,this.getCacheKey(n,"write");case 5:a=e.sent,e.next=11;break;case 9:(i=r.headers.get("Vary"))&&b.debug("The response for ".concat(y(a.url)," ")+"has a 'Vary: ".concat(i,"' header. ")+"Consider setting the {ignoreVary: true} option on your strategy to ensure cache matching and deletion works as expected.");case 11:if(r){e.next=14;break}throw new d("cache-put-with-no-response",{url:y(a.url)});case 14:return e.next=16,this._ensureResponseSafeToCache(r);case 16:if(s=e.sent){e.next=20;break}return e.abrupt("return",!1);case 20:return c=this._strategy,o=c.cacheName,u=c.matchOptions,e.next=23,self.caches.open(o);case 23:if(h=e.sent,!(f=this.hasCallback("cacheDidUpdate"))){e.next=31;break}return e.next=28,q(h,a.clone(),["__WB_REVISION__"],u);case 28:e.t0=e.sent,e.next=32;break;case 31:e.t0=null;case 32:return l=e.t0,e.prev=34,e.next=37,h.put(a,f?s.clone():s);case 37:e.next=46;break;case 39:if(e.prev=39,e.t1=e.catch(34),!(e.t1 instanceof Error)){e.next=46;break}if("QuotaExceededError"!==e.t1.name){e.next=45;break}return e.next=45,A();case 45:throw e.t1;case 46:p=S(this.iterateCallbacks("cacheDidUpdate")),e.prev=47,p.s();case 49:if((v=p.n()).done){e.next=55;break}return g=v.value,e.next=53,g({cacheName:o,oldResponse:l,newResponse:s.clone(),request:a,event:this.event});case 53:e.next=49;break;case 55:e.next=60;break;case 57:e.prev=57,e.t2=e.catch(47),p.e(e.t2);case 60:return e.prev=60,p.f(),e.finish(60);case 63:return e.abrupt("return",!0);case 64:case"end":return e.stop()}}),e,this,[[34,39],[47,57,60,63]])})));return function(t,r){return e.apply(this,arguments)}}()},{key:"getCacheKey",value:function(){var e=w(m().mark((function e(t,r){var n,a,i,s,c;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(n="".concat(t.url," | ").concat(r),this._cacheKeys[n]){e.next=24;break}a=t,i=S(this.iterateCallbacks("cacheKeyWillBeUsed")),e.prev=4,i.s();case 6:if((s=i.n()).done){e.next=15;break}return c=s.value,e.t0=we,e.next=11,c({mode:r,request:a,event:this.event,params:this.params});case 11:e.t1=e.sent,a=(0,e.t0)(e.t1);case 13:e.next=6;break;case 15:e.next=20;break;case 17:e.prev=17,e.t2=e.catch(4),i.e(e.t2);case 20:return e.prev=20,i.f(),e.finish(20);case 23:this._cacheKeys[n]=a;case 24:return e.abrupt("return",this._cacheKeys[n]);case 25:case"end":return e.stop()}}),e,this,[[4,17,20,23]])})));return function(t,r){return e.apply(this,arguments)}}()},{key:"hasCallback",value:function(e){var t,r=S(this._strategy.plugins);try{for(r.s();!(t=r.n()).done;){if(e in t.value)return!0}}catch(n){r.e(n)}finally{r.f()}return!1}},{key:"runCallbacks",value:function(){var e=w(m().mark((function e(t,r){var n,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:n=S(this.iterateCallbacks(t)),e.prev=1,n.s();case 3:if((a=n.n()).done){e.next=9;break}return i=a.value,e.next=7,i(r);case 7:e.next=3;break;case 9:e.next=14;break;case 11:e.prev=11,e.t0=e.catch(1),n.e(e.t0);case 14:return e.prev=14,n.f(),e.finish(14);case 17:case"end":return e.stop()}}),e,this,[[1,11,14,17]])})));return function(t,r){return e.apply(this,arguments)}}()},{key:"iterateCallbacks",value:m().mark((function e(t){var r,n,a,i=this;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:r=S(this._strategy.plugins),e.prev=1,a=m().mark((function e(){var r,a,s;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if("function"!==typeof(r=n.value)[t]){e.next=6;break}return a=i._pluginStateMap.get(r),s=function(e){var n=Object.assign(Object.assign({},e),{state:a});return r[t](n)},e.next=6,s;case 6:case"end":return e.stop()}}),e)})),r.s();case 4:if((n=r.n()).done){e.next=8;break}return e.delegateYield(a(),"t0",6);case 6:e.next=4;break;case 8:e.next=13;break;case 10:e.prev=10,e.t1=e.catch(1),r.e(e.t1);case 13:return e.prev=13,r.f(),e.finish(13);case 16:case"end":return e.stop()}}),e,this,[[1,10,13,16]])}))},{key:"waitUntil",value:function(e){return this._extendLifetimePromises.push(e),e}},{key:"doneWaiting",value:function(){var e=w(m().mark((function e(){var t;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(!(t=this._extendLifetimePromises.shift())){e.next=5;break}return e.next=3,t;case 3:e.next=0;break;case 5:case"end":return e.stop()}}),e,this)})));return function(){return e.apply(this,arguments)}}()},{key:"destroy",value:function(){this._handlerDeferred.resolve(null)}},{key:"_ensureResponseSafeToCache",value:function(){var e=w(m().mark((function e(t){var r,n,a,i,s;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:r=t,n=!1,a=S(this.iterateCallbacks("cacheWillUpdate")),e.prev=3,a.s();case 5:if((i=a.n()).done){e.next=18;break}return s=i.value,e.next=9,s({request:this.request,response:r,event:this.event});case 9:if(e.t0=e.sent,e.t0){e.next=12;break}e.t0=void 0;case 12:if(r=e.t0,n=!0,r){e.next=16;break}return e.abrupt("break",18);case 16:e.next=5;break;case 18:e.next=23;break;case 20:e.prev=20,e.t1=e.catch(3),a.e(e.t1);case 23:return e.prev=23,a.f(),e.finish(23);case 26:return n||r&&200!==r.status&&(r=void 0),e.abrupt("return",r);case 28:case"end":return e.stop()}}),e,this,[[3,20,23,26]])})));return function(t){return e.apply(this,arguments)}}()}]),t}(),_e=function(){function t(){var r=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};e(this,t),this.cacheName=O(r.cacheName),this.plugins=r.plugins||[],this.fetchOptions=r.fetchOptions,this.matchOptions=r.matchOptions}return i(t,[{key:"handle",value:function(e){return de(this.handleAll(e),1)[0]}},{key:"handleAll",value:function(e){e instanceof FetchEvent&&(e={event:e,request:e.request});var t=e.event,r="string"===typeof e.request?new Request(e.request):e.request,n="params"in e?e.params:void 0,a=new ke(this,{event:t,request:r,params:n}),i=this._getResponse(a,r,t);return[i,this._awaitComplete(i,a,r,t)]}},{key:"_getResponse",value:function(){var e=w(m().mark((function e(t,r,n){var a,i,s,c,o,u,h;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,t.runCallbacks("handlerWillStart",{event:n,request:r});case 2:return a=void 0,e.prev=3,e.next=6,this._handle(r,t);case 6:if((a=e.sent)&&"error"!==a.type){e.next=9;break}throw new d("no-response",{url:r.url});case 9:e.next=39;break;case 11:if(e.prev=11,e.t0=e.catch(3),!(e.t0 instanceof Error)){e.next=34;break}i=S(t.iterateCallbacks("handlerDidError")),e.prev=15,i.s();case 17:if((s=i.n()).done){e.next=26;break}return c=s.value,e.next=21,c({error:e.t0,event:n,request:r});case 21:if(!(a=e.sent)){e.next=24;break}return e.abrupt("break",26);case 24:e.next=17;break;case 26:e.next=31;break;case 28:e.prev=28,e.t1=e.catch(15),i.e(e.t1);case 31:return e.prev=31,i.f(),e.finish(31);case 34:if(a){e.next=38;break}throw e.t0;case 38:0;case 39:o=S(t.iterateCallbacks("handlerWillRespond")),e.prev=40,o.s();case 42:if((u=o.n()).done){e.next=49;break}return h=u.value,e.next=46,h({event:n,request:r,response:a});case 46:a=e.sent;case 47:e.next=42;break;case 49:e.next=54;break;case 51:e.prev=51,e.t2=e.catch(40),o.e(e.t2);case 54:return e.prev=54,o.f(),e.finish(54);case 57:return e.abrupt("return",a);case 58:case"end":return e.stop()}}),e,this,[[3,11],[15,28,31,34],[40,51,54,57]])})));return function(t,r,n){return e.apply(this,arguments)}}()},{key:"_awaitComplete",value:function(){var e=w(m().mark((function e(t,r,n,a){var i,s;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.prev=0,e.next=3,t;case 3:i=e.sent,e.next=8;break;case 6:e.prev=6,e.t0=e.catch(0);case 8:return e.prev=8,e.next=11,r.runCallbacks("handlerDidRespond",{event:a,request:n,response:i});case 11:return e.next=13,r.doneWaiting();case 13:e.next=18;break;case 15:e.prev=15,e.t1=e.catch(8),e.t1 instanceof Error&&(s=e.t1);case 18:return e.next=20,r.runCallbacks("handlerDidComplete",{event:a,request:n,response:i,error:s});case 20:if(r.destroy(),!s){e.next=23;break}throw s;case 23:case"end":return e.stop()}}),e,null,[[0,6],[8,15]])})));return function(t,r,n,a){return e.apply(this,arguments)}}()}]),t}(),Re=function(t){c(n,t);var r=f(n);function n(){var t,a=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return e(this,n),a.cacheName=C(a.cacheName),(t=r.call(this,a))._fallbackToNetwork=!1!==a.fallbackToNetwork,t.plugins.push(n.copyRedirectedCacheableResponsesPlugin),t}return i(n,[{key:"_handle",value:function(){var e=w(m().mark((function e(t,r){var n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,r.cacheMatch(t);case 2:if(!(n=e.sent)){e.next=5;break}return e.abrupt("return",n);case 5:if(!r.event||"install"!==r.event.type){e.next=9;break}return e.next=8,this._handleInstall(t,r);case 8:case 11:return e.abrupt("return",e.sent);case 9:return e.next=11,this._handleFetch(t,r);case 12:case"end":return e.stop()}}),e,this)})));return function(t,r){return e.apply(this,arguments)}}()},{key:"_handleFetch",value:function(){var e=w(m().mark((function e(t,r){var n,a,i,s,c,o;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(a=r.params||{},!this._fallbackToNetwork){e.next=17;break}return i=a.integrity,s=t.integrity,c=!s||s===i,e.next=8,r.fetch(new Request(t,{integrity:"no-cors"!==t.mode?s||i:void 0}));case 8:if(n=e.sent,!i||!c||"no-cors"===t.mode){e.next=15;break}return this._useDefaultCacheabilityPluginIfNeeded(),e.next=13,r.cachePut(t,n.clone());case 13:e.sent;case 15:e.next=18;break;case 17:throw new d("missing-precache-entry",{cacheName:this.cacheName,url:t.url});case 18:e.next=34;break;case 23:e.t0=e.sent;case 24:o=e.t0,b.groupCollapsed("Precaching is responding to: "+y(t.url)),b.log("Serving the precached url: ".concat(y(o instanceof Request?o.url:o))),b.groupCollapsed("View request details here."),b.log(t),b.groupEnd(),b.groupCollapsed("View response details here."),b.log(n),b.groupEnd(),b.groupEnd();case 34:return e.abrupt("return",n);case 35:case"end":return e.stop()}}),e,this)})));return function(t,r){return e.apply(this,arguments)}}()},{key:"_handleInstall",value:function(){var e=w(m().mark((function e(t,r){var n;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return this._useDefaultCacheabilityPluginIfNeeded(),e.next=3,r.fetch(t);case 3:return n=e.sent,e.next=6,r.cachePut(t,n.clone());case 6:if(e.sent){e.next=9;break}throw new d("bad-precaching-response",{url:t.url,status:n.status});case 9:return e.abrupt("return",n);case 10:case"end":return e.stop()}}),e,this)})));return function(t,r){return e.apply(this,arguments)}}()},{key:"_useDefaultCacheabilityPluginIfNeeded",value:function(){var e,t=null,r=0,a=S(this.plugins.entries());try{for(a.s();!(e=a.n()).done;){var i=de(e.value,2),s=i[0],c=i[1];c!==n.copyRedirectedCacheableResponsesPlugin&&(c===n.defaultPrecacheCacheabilityPlugin&&(t=s),c.cacheWillUpdate&&r++)}}catch(o){a.e(o)}finally{a.f()}0===r?this.plugins.push(n.defaultPrecacheCacheabilityPlugin):r>1&&null!==t&&this.plugins.splice(t,1)}}]),n}(_e);Re.defaultPrecacheCacheabilityPlugin={cacheWillUpdate:function(e){return w(m().mark((function t(){var r;return m().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if((r=e.response)&&!(r.status>=400)){t.next=3;break}return t.abrupt("return",null);case 3:return t.abrupt("return",r);case 4:case"end":return t.stop()}}),t)})))()}},Re.copyRedirectedCacheableResponsesPlugin={cacheWillUpdate:function(e){return w(m().mark((function t(){var r;return m().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:if(!(r=e.response).redirected){t.next=7;break}return t.next=4,B(r);case 4:t.t0=t.sent,t.next=8;break;case 7:t.t0=r;case 8:return t.abrupt("return",t.t0);case 9:case"end":return t.stop()}}),t)})))()}};var Ee,Le=function(){function t(){var r=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n=r.cacheName,a=r.plugins,i=void 0===a?[]:a,s=r.fallbackToNetwork,c=void 0===s||s;e(this,t),this._urlsToCacheKeys=new Map,this._urlsToCacheModes=new Map,this._cacheKeysToIntegrities=new Map,this._strategy=new Re({cacheName:C(n),plugins:[].concat(be(i),[new xe({precacheController:this})]),fallbackToNetwork:c}),this.install=this.install.bind(this),this.activate=this.activate.bind(this)}return i(t,[{key:"strategy",get:function(){return this._strategy}},{key:"precache",value:function(e){this.addToCacheList(e),this._installAndActiveListenersAdded||(self.addEventListener("install",this.install),self.addEventListener("activate",this.activate),this._installAndActiveListenersAdded=!0)}},{key:"addToCacheList",value:function(e){var t,r=[],n=S(e);try{for(n.s();!(t=n.n()).done;){var a=t.value;"string"===typeof a?r.push(a):a&&void 0===a.revision&&r.push(a.url);var i=ge(a),s=i.cacheKey,c=i.url,o="string"!==typeof a&&a.revision?"reload":"default";if(this._urlsToCacheKeys.has(c)&&this._urlsToCacheKeys.get(c)!==s)throw new d("add-to-cache-list-conflicting-entries",{firstEntry:this._urlsToCacheKeys.get(c),secondEntry:s});if("string"!==typeof a&&a.integrity){if(this._cacheKeysToIntegrities.has(s)&&this._cacheKeysToIntegrities.get(s)!==a.integrity)throw new d("add-to-cache-list-conflicting-integrities",{url:c});this._cacheKeysToIntegrities.set(s,a.integrity)}if(this._urlsToCacheKeys.set(c,s),this._urlsToCacheModes.set(c,o),r.length>0){var u="Workbox is precaching URLs without revision "+"info: ".concat(r.join(", "),"\nThis is generally NOT safe. ")+"Learn more at https://bit.ly/wb-precache";console.warn(u)}}}catch(h){n.e(h)}finally{n.f()}}},{key:"install",value:function(e){var t=this;return W(e,w(m().mark((function r(){var n,a,i,s,c,o,u,h,f,l,p;return m().wrap((function(r){for(;;)switch(r.prev=r.next){case 0:n=new me,t.strategy.plugins.push(n),a=S(t._urlsToCacheKeys),r.prev=3,a.s();case 5:if((i=a.n()).done){r.next=14;break}return s=de(i.value,2),c=s[0],o=s[1],u=t._cacheKeysToIntegrities.get(o),h=t._urlsToCacheModes.get(c),f=new Request(c,{integrity:u,cache:h,credentials:"same-origin"}),r.next=12,Promise.all(t.strategy.handleAll({params:{cacheKey:o},request:f,event:e}));case 12:r.next=5;break;case 14:r.next=19;break;case 16:r.prev=16,r.t0=r.catch(3),a.e(r.t0);case 19:return r.prev=19,a.f(),r.finish(19);case 22:return l=n.updatedURLs,p=n.notUpdatedURLs,r.abrupt("return",{updatedURLs:l,notUpdatedURLs:p});case 25:case"end":return r.stop()}}),r,null,[[3,16,19,22]])}))))}},{key:"activate",value:function(e){var t=this;return W(e,w(m().mark((function e(){var r,n,a,i,s,c,o;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return e.next=2,self.caches.open(t.strategy.cacheName);case 2:return r=e.sent,e.next=5,r.keys();case 5:n=e.sent,a=new Set(t._urlsToCacheKeys.values()),i=[],s=S(n),e.prev=9,s.s();case 11:if((c=s.n()).done){e.next=19;break}if(o=c.value,a.has(o.url)){e.next=17;break}return e.next=16,r.delete(o);case 16:i.push(o.url);case 17:e.next=11;break;case 19:e.next=24;break;case 21:e.prev=21,e.t0=e.catch(9),s.e(e.t0);case 24:return e.prev=24,s.f(),e.finish(24);case 27:return e.abrupt("return",{deletedURLs:i});case 29:case"end":return e.stop()}}),e,null,[[9,21,24,27]])}))))}},{key:"getURLsToCacheKeys",value:function(){return this._urlsToCacheKeys}},{key:"getCachedURLs",value:function(){return be(this._urlsToCacheKeys.keys())}},{key:"getCacheKeyForURL",value:function(e){var t=new URL(e,location.href);return this._urlsToCacheKeys.get(t.href)}},{key:"getIntegrityForCacheKey",value:function(e){return this._cacheKeysToIntegrities.get(e)}},{key:"matchPrecache",value:function(){var e=w(m().mark((function e(t){var r,n,a;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(r=t instanceof Request?t.url:t,!(n=this.getCacheKeyForURL(r))){e.next=7;break}return e.next=5,self.caches.open(this.strategy.cacheName);case 5:return a=e.sent,e.abrupt("return",a.match(n));case 7:return e.abrupt("return",void 0);case 8:case"end":return e.stop()}}),e,this)})));return function(t){return e.apply(this,arguments)}}()},{key:"createHandlerBoundToURL",value:function(e){var t=this,r=this.getCacheKeyForURL(e);if(!r)throw new d("non-precached-url",{url:e});return function(n){return n.request=new Request(e),n.params=Object.assign({cacheKey:r},n.params),t.strategy.handle(n)}}}]),t}(),Ce=function(){return Ee||(Ee=new Le),Ee};r(161);var Oe,je=function(e){return e&&"object"===typeof e?e:{handle:e}},Te=function(){function t(r,n){var a=arguments.length>2&&void 0!==arguments[2]?arguments[2]:"GET";e(this,t),this.handler=je(n),this.match=r,this.method=a}return i(t,[{key:"setCatchHandler",value:function(e){this.catchHandler=je(e)}}]),t}(),Se=function(t){c(n,t);var r=f(n);function n(t,a,i){e(this,n);return r.call(this,(function(e){var r=e.url,n=t.exec(r.href);if(n&&(r.origin===location.origin||0===n.index))return n.slice(1)}),a,i)}return i(n)}(Te),Pe=function(){function t(){e(this,t),this._routes=new Map,this._defaultHandlerMap=new Map}return i(t,[{key:"routes",get:function(){return this._routes}},{key:"addFetchListener",value:function(){var e=this;self.addEventListener("fetch",(function(t){var r=t.request,n=e.handleRequest({request:r,event:t});n&&t.respondWith(n)}))}},{key:"addCacheListener",value:function(){var e=this;self.addEventListener("message",(function(t){if(t.data&&"CACHE_URLS"===t.data.type){var r=t.data.payload;0;var n=Promise.all(r.urlsToCache.map((function(r){"string"===typeof r&&(r=[r]);var n=l(Request,be(r));return e.handleRequest({request:n,event:t})})));t.waitUntil(n),t.ports&&t.ports[0]&&n.then((function(){return t.ports[0].postMessage(!0)}))}}))}},{key:"handleRequest",value:function(e){var t=this,r=e.request,n=e.event;var a=new URL(r.url,location.href);if(a.protocol.startsWith("http")){var i=a.origin===location.origin,s=this.findMatchingRoute({event:n,request:r,sameOrigin:i,url:a}),c=s.params,o=s.route,u=o&&o.handler;0;var h=r.method;if(!u&&this._defaultHandlerMap.has(h)&&(u=this._defaultHandlerMap.get(h)),u){var f;0;try{f=u.handle({url:a,request:r,event:n,params:c})}catch(p){f=Promise.reject(p)}var l=o&&o.catchHandler;return f instanceof Promise&&(this._catchHandler||l)&&(f=f.catch(function(){var e=w(m().mark((function e(i){return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(!l){e.next=11;break}return e.prev=2,e.next=5,l.handle({url:a,request:r,event:n,params:c});case 5:return e.abrupt("return",e.sent);case 8:e.prev=8,e.t0=e.catch(2),e.t0 instanceof Error&&(i=e.t0);case 11:if(!t._catchHandler){e.next=14;break}return e.abrupt("return",t._catchHandler.handle({url:a,request:r,event:n}));case 14:throw i;case 15:case"end":return e.stop()}}),e,null,[[2,8]])})));return function(t){return e.apply(this,arguments)}}())),f}}}},{key:"findMatchingRoute",value:function(e){var t,r=e.url,n=e.sameOrigin,a=e.request,i=e.event,s=S(this._routes.get(a.method)||[]);try{for(s.s();!(t=s.n()).done;){var c=t.value,o=void 0,u=c.match({url:r,sameOrigin:n,request:a,event:i});if(u)return o=u,(Array.isArray(o)&&0===o.length||u.constructor===Object&&0===Object.keys(u).length||"boolean"===typeof u)&&(o=void 0),{route:c,params:o}}}catch(h){s.e(h)}finally{s.f()}return{}}},{key:"setDefaultHandler",value:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:"GET";this._defaultHandlerMap.set(t,je(e))}},{key:"setCatchHandler",value:function(e){this._catchHandler=je(e)}},{key:"registerRoute",value:function(e){this._routes.has(e.method)||this._routes.set(e.method,[]),this._routes.get(e.method).push(e)}},{key:"unregisterRoute",value:function(e){if(!this._routes.has(e.method))throw new d("unregister-route-but-not-found-with-method",{method:e.method});var t=this._routes.get(e.method).indexOf(e);if(!(t>-1))throw new d("unregister-route-route-not-registered");this._routes.get(e.method).splice(t,1)}}]),t}(),qe=function(){return Oe||((Oe=new Pe).addFetchListener(),Oe.addCacheListener()),Oe};function De(e,t,r){var n;if("string"===typeof e){var a=new URL(e,location.href);n=new Te((function(e){return e.url.href===a.href}),t,r)}else if(e instanceof RegExp)n=new Se(e,t,r);else if("function"===typeof e)n=new Te(e,t,r);else{if(!(e instanceof Te))throw new d("unsupported-route-type",{moduleName:"workbox-routing",funcName:"registerRoute",paramName:"capture"});n=e}return qe().registerRoute(n),n}function Ne(e){for(var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:[],r=function(){var r=a[n];t.some((function(e){return e.test(r)}))&&e.searchParams.delete(r)},n=0,a=be(e.searchParams.keys());n<a.length;n++)r();return e}var Ue=function(t){c(n,t);var r=f(n);function n(t,a){e(this,n);return r.call(this,(function(e){var r,n=e.request,i=t.getURLsToCacheKeys(),s=S(function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},r=t.ignoreURLParametersMatching,n=void 0===r?[/^utm_/,/^fbclid$/]:r,a=t.directoryIndex,i=void 0===a?"index.html":a,s=t.cleanURLs,c=void 0===s||s,o=t.urlManipulation;return m().mark((function t(){var r,a,s,u,h,f,l,p;return m().wrap((function(t){for(;;)switch(t.prev=t.next){case 0:return(r=new URL(e,location.href)).hash="",t.next=4,r.href;case 4:return a=Ne(r,n),t.next=7,a.href;case 7:if(!i||!a.pathname.endsWith("/")){t.next=12;break}return(s=new URL(a.href)).pathname+=i,t.next=12,s.href;case 12:if(!c){t.next=17;break}return(u=new URL(a.href)).pathname+=".html",t.next=17,u.href;case 17:if(!o){t.next=36;break}h=o({url:r}),f=S(h),t.prev=20,f.s();case 22:if((l=f.n()).done){t.next=28;break}return p=l.value,t.next=26,p.href;case 26:t.next=22;break;case 28:t.next=33;break;case 30:t.prev=30,t.t0=t.catch(20),f.e(t.t0);case 33:return t.prev=33,f.f(),t.finish(33);case 36:case"end":return t.stop()}}),t,null,[[20,30,33,36]])}))()}(n.url,a));try{for(s.s();!(r=s.n()).done;){var c=r.value,o=i.get(c);if(o)return{cacheKey:o,integrity:t.getIntegrityForCacheKey(o)}}}catch(u){s.e(u)}finally{s.f()}}),t.strategy)}return i(n)}(Te);var Ie,Ae={cacheWillUpdate:function(){var e=w(m().mark((function e(t){var r;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:if(200!==(r=t.response).status&&0!==r.status){e.next=3;break}return e.abrupt("return",r);case 3:return e.abrupt("return",null);case 4:case"end":return e.stop()}}),e)})));return function(t){return e.apply(this,arguments)}}()},Me=function(t){c(n,t);var r=f(n);function n(){var t,a=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{};return e(this,n),(t=r.call(this,a)).plugins.some((function(e){return"cacheWillUpdate"in e}))||t.plugins.unshift(Ae),t}return i(n,[{key:"_handle",value:function(){var e=w(m().mark((function e(t,r){var n,a,i;return m().wrap((function(e){for(;;)switch(e.prev=e.next){case 0:return[],n=r.fetchAndCachePut(t).catch((function(){})),r.waitUntil(n),e.next=6,r.cacheMatch(t);case 6:if(!(a=e.sent)){e.next=11;break}0,e.next=21;break;case 11:return e.prev=12,e.next=15,n;case 15:a=e.sent,e.next=21;break;case 18:e.prev=18,e.t0=e.catch(12),e.t0 instanceof Error&&(i=e.t0);case 21:if(a){e.next=24;break}throw new d("no-response",{url:t.url,error:i});case 24:return e.abrupt("return",a);case 25:case"end":return e.stop()}}),e,this,[[12,18]])})));return function(t,r){return e.apply(this,arguments)}}()}]),n}(_e);self.addEventListener("activate",(function(){return self.clients.claim()})),self.skipWaiting(),function(e){Ce().precache(e)}([{'revision':'74d1ad4275123f595298b266c18bd540','url':'./index.html'},{'revision':null,'url':'./static/css/main.a7149c72.css'}]),function(e){var t=Ce();De(new Ue(t,e))}(Ie),De((function(e){return"https://fonts.googleapis.com"===e.url.origin}),new Me({cacheName:"google-fonts-stylesheets"})),De((function(e){return"https://fonts.gstatic.com"===e.url.origin}),new Me({cacheName:"google-fonts-webfonts",plugins:[new k({statuses:[0,200]})]}));var Ke,We=new RegExp("/[^/?]+\\.[^/]+$");De((function(e){var t=e.request,r=e.url;return"navigate"===t.mode&&(!r.pathname.startsWith("/_")&&!r.pathname.match(We))}),(Ke="./index.html",Ce().createHandlerBoundToURL(Ke))),De((function(e){var t=e.url;return t.pathname.endsWith(".ico")||t.pathname.endsWith(".svg")||t.pathname.endsWith(".png")||t.pathname.endsWith(".jpeg")||t.pathname.endsWith(".jpg")||t.pathname.endsWith(".webp")}),new Me({cacheName:"images",plugins:[new ye({maxEntries:250})]}));var Be=/\/debug|inspect\//i;self.addEventListener("fetch",(function(e){var t=e.request;"navigate"!==t.mode&&(t.url.match(We)||t.url.match(Be)||e.respondWith(fetch(e.request).then((function(r){return function(e,t,r){var n=[{type:"FETCH",payload:{headers:Object.fromEntries(r.headers),url:t.url,method:t.method,status:t.status}}];n.map((function(t){self.clients.get(e).then((function(e){e.postMessage(t)}))}))}(e.clientId,t,r),r}))))}))}()}();
-//# sourceMappingURL=service-worker.js.map
+try {
+  self["workbox:core:6.5.4"] && _();
+} catch {
+}
+const X = (s, ...e) => {
+  let t = s;
+  return e.length > 0 && (t += ` :: ${JSON.stringify(e)}`), t;
+}, Y = X;
+class l extends Error {
+  /**
+   *
+   * @param {string} errorCode The error code that
+   * identifies this particular error.
+   * @param {Object=} details Any relevant arguments
+   * that will help developers identify issues should
+   * be added as a key on the context object.
+   */
+  constructor(e, t) {
+    const n = Y(e, t);
+    super(n), this.name = e, this.details = t;
+  }
+}
+const Z = (s) => new URL(String(s), location.href).href.replace(new RegExp(`^${location.origin}`), "");
+try {
+  self["workbox:cacheable-response:6.5.4"] && _();
+} catch {
+}
+class ee {
+  /**
+   * To construct a new CacheableResponse instance you must provide at least
+   * one of the `config` properties.
+   *
+   * If both `statuses` and `headers` are specified, then both conditions must
+   * be met for the `Response` to be considered cacheable.
+   *
+   * @param {Object} config
+   * @param {Array<number>} [config.statuses] One or more status codes that a
+   * `Response` can have and be considered cacheable.
+   * @param {Object<string,string>} [config.headers] A mapping of header names
+   * and expected values that a `Response` can have and be considered cacheable.
+   * If multiple headers are provided, only one needs to be present.
+   */
+  constructor(e = {}) {
+    this._statuses = e.statuses, this._headers = e.headers;
+  }
+  /**
+   * Checks a response to see whether it's cacheable or not, based on this
+   * object's configuration.
+   *
+   * @param {Response} response The response whose cacheability is being
+   * checked.
+   * @return {boolean} `true` if the `Response` is cacheable, and `false`
+   * otherwise.
+   */
+  isResponseCacheable(e) {
+    let t = !0;
+    return this._statuses && (t = this._statuses.includes(e.status)), this._headers && t && (t = Object.keys(this._headers).some((n) => e.headers.get(n) === this._headers[n])), t;
+  }
+}
+class N {
+  /**
+   * To construct a new CacheableResponsePlugin instance you must provide at
+   * least one of the `config` properties.
+   *
+   * If both `statuses` and `headers` are specified, then both conditions must
+   * be met for the `Response` to be considered cacheable.
+   *
+   * @param {Object} config
+   * @param {Array<number>} [config.statuses] One or more status codes that a
+   * `Response` can have and be considered cacheable.
+   * @param {Object<string,string>} [config.headers] A mapping of header names
+   * and expected values that a `Response` can have and be considered cacheable.
+   * If multiple headers are provided, only one needs to be present.
+   */
+  constructor(e) {
+    this.cacheWillUpdate = async ({ response: t }) => this._cacheableResponse.isResponseCacheable(t) ? t : null, this._cacheableResponse = new ee(e);
+  }
+}
+const F = /* @__PURE__ */ new Set();
+function te(s) {
+  F.add(s);
+}
+const d = {
+  googleAnalytics: "googleAnalytics",
+  precache: "precache-v2",
+  prefix: "workbox",
+  runtime: "runtime",
+  suffix: typeof registration < "u" ? registration.scope : ""
+}, L = (s) => [d.prefix, s, d.suffix].filter((e) => e && e.length > 0).join("-"), se = (s) => {
+  for (const e of Object.keys(d))
+    s(e);
+}, E = {
+  updateDetails: (s) => {
+    se((e) => {
+      typeof s[e] == "string" && (d[e] = s[e]);
+    });
+  },
+  getGoogleAnalyticsName: (s) => s || L(d.googleAnalytics),
+  getPrecacheName: (s) => s || L(d.precache),
+  getPrefix: () => d.prefix,
+  getRuntimeName: (s) => s || L(d.runtime),
+  getSuffix: () => d.suffix
+};
+function v(s, e) {
+  const t = new URL(s);
+  for (const n of e)
+    t.searchParams.delete(n);
+  return t.href;
+}
+async function ne(s, e, t, n) {
+  const a = v(e.url, t);
+  if (e.url === a)
+    return s.match(e, n);
+  const r = Object.assign(Object.assign({}, n), { ignoreSearch: !0 }), i = await s.keys(e, r);
+  for (const c of i) {
+    const o = v(c.url, t);
+    if (a === o)
+      return s.match(c, n);
+  }
+}
+let w;
+function ae() {
+  if (w === void 0) {
+    const s = new Response("");
+    if ("body" in s)
+      try {
+        new Response(s.body), w = !0;
+      } catch {
+        w = !1;
+      }
+    w = !1;
+  }
+  return w;
+}
+function H(s) {
+  s.then(() => {
+  });
+}
+class re {
+  /**
+   * Creates a promise and exposes its resolve and reject functions as methods.
+   */
+  constructor() {
+    this.promise = new Promise((e, t) => {
+      this.resolve = e, this.reject = t;
+    });
+  }
+}
+async function ie() {
+  for (const s of F)
+    await s();
+}
+function ce(s) {
+  return new Promise((e) => setTimeout(e, s));
+}
+function S(s, e) {
+  const t = e();
+  return s.waitUntil(t), t;
+}
+async function oe(s, e) {
+  let t = null;
+  if (s.url && (t = new URL(s.url).origin), t !== self.location.origin)
+    throw new l("cross-origin-copy-response", { origin: t });
+  const n = s.clone(), a = {
+    headers: new Headers(n.headers),
+    status: n.status,
+    statusText: n.statusText
+  }, r = e ? e(a) : a, i = ae() ? n.body : await n.blob();
+  return new Response(i, r);
+}
+function he() {
+  self.addEventListener("activate", () => self.clients.claim());
+}
+const le = (s, e) => e.some((t) => s instanceof t);
+let W, B;
+function ue() {
+  return W || (W = [
+    IDBDatabase,
+    IDBObjectStore,
+    IDBIndex,
+    IDBCursor,
+    IDBTransaction
+  ]);
+}
+function de() {
+  return B || (B = [
+    IDBCursor.prototype.advance,
+    IDBCursor.prototype.continue,
+    IDBCursor.prototype.continuePrimaryKey
+  ]);
+}
+const V = /* @__PURE__ */ new WeakMap(), I = /* @__PURE__ */ new WeakMap(), $ = /* @__PURE__ */ new WeakMap(), U = /* @__PURE__ */ new WeakMap(), K = /* @__PURE__ */ new WeakMap();
+function fe(s) {
+  const e = new Promise((t, n) => {
+    const a = () => {
+      s.removeEventListener("success", r), s.removeEventListener("error", i);
+    }, r = () => {
+      t(f(s.result)), a();
+    }, i = () => {
+      n(s.error), a();
+    };
+    s.addEventListener("success", r), s.addEventListener("error", i);
+  });
+  return e.then((t) => {
+    t instanceof IDBCursor && V.set(t, s);
+  }).catch(() => {
+  }), K.set(e, s), e;
+}
+function pe(s) {
+  if (I.has(s))
+    return;
+  const e = new Promise((t, n) => {
+    const a = () => {
+      s.removeEventListener("complete", r), s.removeEventListener("error", i), s.removeEventListener("abort", i);
+    }, r = () => {
+      t(), a();
+    }, i = () => {
+      n(s.error || new DOMException("AbortError", "AbortError")), a();
+    };
+    s.addEventListener("complete", r), s.addEventListener("error", i), s.addEventListener("abort", i);
+  });
+  I.set(s, e);
+}
+let M = {
+  get(s, e, t) {
+    if (s instanceof IDBTransaction) {
+      if (e === "done")
+        return I.get(s);
+      if (e === "objectStoreNames")
+        return s.objectStoreNames || $.get(s);
+      if (e === "store")
+        return t.objectStoreNames[1] ? void 0 : t.objectStore(t.objectStoreNames[0]);
+    }
+    return f(s[e]);
+  },
+  set(s, e, t) {
+    return s[e] = t, !0;
+  },
+  has(s, e) {
+    return s instanceof IDBTransaction && (e === "done" || e === "store") ? !0 : e in s;
+  }
+};
+function ge(s) {
+  M = s(M);
+}
+function me(s) {
+  return s === IDBDatabase.prototype.transaction && !("objectStoreNames" in IDBTransaction.prototype) ? function(e, ...t) {
+    const n = s.call(T(this), e, ...t);
+    return $.set(n, e.sort ? e.sort() : [e]), f(n);
+  } : de().includes(s) ? function(...e) {
+    return s.apply(T(this), e), f(V.get(this));
+  } : function(...e) {
+    return f(s.apply(T(this), e));
+  };
+}
+function we(s) {
+  return typeof s == "function" ? me(s) : (s instanceof IDBTransaction && pe(s), le(s, ue()) ? new Proxy(s, M) : s);
+}
+function f(s) {
+  if (s instanceof IDBRequest)
+    return fe(s);
+  if (U.has(s))
+    return U.get(s);
+  const e = we(s);
+  return e !== s && (U.set(s, e), K.set(e, s)), e;
+}
+const T = (s) => K.get(s);
+function ye(s, e, { blocked: t, upgrade: n, blocking: a, terminated: r } = {}) {
+  const i = indexedDB.open(s, e), c = f(i);
+  return n && i.addEventListener("upgradeneeded", (o) => {
+    n(f(i.result), o.oldVersion, o.newVersion, f(i.transaction), o);
+  }), t && i.addEventListener("blocked", (o) => t(
+    // Casting due to https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/1405
+    o.oldVersion,
+    o.newVersion,
+    o
+  )), c.then((o) => {
+    r && o.addEventListener("close", () => r()), a && o.addEventListener("versionchange", (h) => a(h.oldVersion, h.newVersion, h));
+  }).catch(() => {
+  }), c;
+}
+function _e(s, { blocked: e } = {}) {
+  const t = indexedDB.deleteDatabase(s);
+  return e && t.addEventListener("blocked", (n) => e(
+    // Casting due to https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/1405
+    n.oldVersion,
+    n
+  )), f(t).then(() => {
+  });
+}
+const Re = ["get", "getKey", "getAll", "getAllKeys", "count"], be = ["put", "add", "delete", "clear"], k = /* @__PURE__ */ new Map();
+function j(s, e) {
+  if (!(s instanceof IDBDatabase && !(e in s) && typeof e == "string"))
+    return;
+  if (k.get(e))
+    return k.get(e);
+  const t = e.replace(/FromIndex$/, ""), n = e !== t, a = be.includes(t);
+  if (
+    // Bail if the target doesn't exist on the target. Eg, getAll isn't in Edge.
+    !(t in (n ? IDBIndex : IDBObjectStore).prototype) || !(a || Re.includes(t))
+  )
+    return;
+  const r = async function(i, ...c) {
+    const o = this.transaction(i, a ? "readwrite" : "readonly");
+    let h = o.store;
+    return n && (h = h.index(c.shift())), (await Promise.all([
+      h[t](...c),
+      a && o.done
+    ]))[0];
+  };
+  return k.set(e, r), r;
+}
+ge((s) => ({
+  ...s,
+  get: (e, t, n) => j(e, t) || s.get(e, t, n),
+  has: (e, t) => !!j(e, t) || s.has(e, t)
+}));
+try {
+  self["workbox:expiration:6.5.4"] && _();
+} catch {
+}
+const Ce = "workbox-expiration", y = "cache-entries", q = (s) => {
+  const e = new URL(s, location.href);
+  return e.hash = "", e.href;
+};
+class xe {
+  /**
+   *
+   * @param {string} cacheName
+   *
+   * @private
+   */
+  constructor(e) {
+    this._db = null, this._cacheName = e;
+  }
+  /**
+   * Performs an upgrade of indexedDB.
+   *
+   * @param {IDBPDatabase<CacheDbSchema>} db
+   *
+   * @private
+   */
+  _upgradeDb(e) {
+    const t = e.createObjectStore(y, { keyPath: "id" });
+    t.createIndex("cacheName", "cacheName", { unique: !1 }), t.createIndex("timestamp", "timestamp", { unique: !1 });
+  }
+  /**
+   * Performs an upgrade of indexedDB and deletes deprecated DBs.
+   *
+   * @param {IDBPDatabase<CacheDbSchema>} db
+   *
+   * @private
+   */
+  _upgradeDbAndDeleteOldDbs(e) {
+    this._upgradeDb(e), this._cacheName && _e(this._cacheName);
+  }
+  /**
+   * @param {string} url
+   * @param {number} timestamp
+   *
+   * @private
+   */
+  async setTimestamp(e, t) {
+    e = q(e);
+    const n = {
+      url: e,
+      timestamp: t,
+      cacheName: this._cacheName,
+      // Creating an ID from the URL and cache name won't be necessary once
+      // Edge switches to Chromium and all browsers we support work with
+      // array keyPaths.
+      id: this._getId(e)
+    }, r = (await this.getDb()).transaction(y, "readwrite", {
+      durability: "relaxed"
+    });
+    await r.store.put(n), await r.done;
+  }
+  /**
+   * Returns the timestamp stored for a given URL.
+   *
+   * @param {string} url
+   * @return {number | undefined}
+   *
+   * @private
+   */
+  async getTimestamp(e) {
+    const n = await (await this.getDb()).get(y, this._getId(e));
+    return n == null ? void 0 : n.timestamp;
+  }
+  /**
+   * Iterates through all the entries in the object store (from newest to
+   * oldest) and removes entries once either `maxCount` is reached or the
+   * entry's timestamp is less than `minTimestamp`.
+   *
+   * @param {number} minTimestamp
+   * @param {number} maxCount
+   * @return {Array<string>}
+   *
+   * @private
+   */
+  async expireEntries(e, t) {
+    const n = await this.getDb();
+    let a = await n.transaction(y).store.index("timestamp").openCursor(null, "prev");
+    const r = [];
+    let i = 0;
+    for (; a; ) {
+      const o = a.value;
+      o.cacheName === this._cacheName && (e && o.timestamp < e || t && i >= t ? r.push(a.value) : i++), a = await a.continue();
+    }
+    const c = [];
+    for (const o of r)
+      await n.delete(y, o.id), c.push(o.url);
+    return c;
+  }
+  /**
+   * Takes a URL and returns an ID that will be unique in the object store.
+   *
+   * @param {string} url
+   * @return {string}
+   *
+   * @private
+   */
+  _getId(e) {
+    return this._cacheName + "|" + q(e);
+  }
+  /**
+   * Returns an open connection to the database.
+   *
+   * @private
+   */
+  async getDb() {
+    return this._db || (this._db = await ye(Ce, 1, {
+      upgrade: this._upgradeDbAndDeleteOldDbs.bind(this)
+    })), this._db;
+  }
+}
+class Ee {
+  /**
+   * To construct a new CacheExpiration instance you must provide at least
+   * one of the `config` properties.
+   *
+   * @param {string} cacheName Name of the cache to apply restrictions to.
+   * @param {Object} config
+   * @param {number} [config.maxEntries] The maximum number of entries to cache.
+   * Entries used the least will be removed as the maximum is reached.
+   * @param {number} [config.maxAgeSeconds] The maximum age of an entry before
+   * it's treated as stale and removed.
+   * @param {Object} [config.matchOptions] The [`CacheQueryOptions`](https://developer.mozilla.org/en-US/docs/Web/API/Cache/delete#Parameters)
+   * that will be used when calling `delete()` on the cache.
+   */
+  constructor(e, t = {}) {
+    this._isRunning = !1, this._rerunRequested = !1, this._maxEntries = t.maxEntries, this._maxAgeSeconds = t.maxAgeSeconds, this._matchOptions = t.matchOptions, this._cacheName = e, this._timestampModel = new xe(e);
+  }
+  /**
+   * Expires entries for the given cache and given criteria.
+   */
+  async expireEntries() {
+    if (this._isRunning) {
+      this._rerunRequested = !0;
+      return;
+    }
+    this._isRunning = !0;
+    const e = this._maxAgeSeconds ? Date.now() - this._maxAgeSeconds * 1e3 : 0, t = await this._timestampModel.expireEntries(e, this._maxEntries), n = await self.caches.open(this._cacheName);
+    for (const a of t)
+      await n.delete(a, this._matchOptions);
+    this._isRunning = !1, this._rerunRequested && (this._rerunRequested = !1, H(this.expireEntries()));
+  }
+  /**
+   * Update the timestamp for the given URL. This ensures the when
+   * removing entries based on maximum entries, most recently used
+   * is accurate or when expiring, the timestamp is up-to-date.
+   *
+   * @param {string} url
+   */
+  async updateTimestamp(e) {
+    await this._timestampModel.setTimestamp(e, Date.now());
+  }
+  /**
+   * Can be used to check if a URL has expired or not before it's used.
+   *
+   * This requires a look up from IndexedDB, so can be slow.
+   *
+   * Note: This method will not remove the cached entry, call
+   * `expireEntries()` to remove indexedDB and Cache entries.
+   *
+   * @param {string} url
+   * @return {boolean}
+   */
+  async isURLExpired(e) {
+    if (this._maxAgeSeconds) {
+      const t = await this._timestampModel.getTimestamp(e), n = Date.now() - this._maxAgeSeconds * 1e3;
+      return t !== void 0 ? t < n : !0;
+    } else
+      return !1;
+  }
+  /**
+   * Removes the IndexedDB object store used to keep track of cache expiration
+   * metadata.
+   */
+  async delete() {
+    this._rerunRequested = !1, await this._timestampModel.expireEntries(1 / 0);
+  }
+}
+class Q {
+  /**
+   * @param {ExpirationPluginOptions} config
+   * @param {number} [config.maxEntries] The maximum number of entries to cache.
+   * Entries used the least will be removed as the maximum is reached.
+   * @param {number} [config.maxAgeSeconds] The maximum age of an entry before
+   * it's treated as stale and removed.
+   * @param {Object} [config.matchOptions] The [`CacheQueryOptions`](https://developer.mozilla.org/en-US/docs/Web/API/Cache/delete#Parameters)
+   * that will be used when calling `delete()` on the cache.
+   * @param {boolean} [config.purgeOnQuotaError] Whether to opt this cache in to
+   * automatic deletion if the available storage quota has been exceeded.
+   */
+  constructor(e = {}) {
+    this.cachedResponseWillBeUsed = async ({ event: t, request: n, cacheName: a, cachedResponse: r }) => {
+      if (!r)
+        return null;
+      const i = this._isResponseDateFresh(r), c = this._getCacheExpiration(a);
+      H(c.expireEntries());
+      const o = c.updateTimestamp(n.url);
+      if (t)
+        try {
+          t.waitUntil(o);
+        } catch {
+        }
+      return i ? r : null;
+    }, this.cacheDidUpdate = async ({ cacheName: t, request: n }) => {
+      const a = this._getCacheExpiration(t);
+      await a.updateTimestamp(n.url), await a.expireEntries();
+    }, this._config = e, this._maxAgeSeconds = e.maxAgeSeconds, this._cacheExpirations = /* @__PURE__ */ new Map(), e.purgeOnQuotaError && te(() => this.deleteCacheAndMetadata());
+  }
+  /**
+   * A simple helper method to return a CacheExpiration instance for a given
+   * cache name.
+   *
+   * @param {string} cacheName
+   * @return {CacheExpiration}
+   *
+   * @private
+   */
+  _getCacheExpiration(e) {
+    if (e === E.getRuntimeName())
+      throw new l("expire-custom-caches-only");
+    let t = this._cacheExpirations.get(e);
+    return t || (t = new Ee(e, this._config), this._cacheExpirations.set(e, t)), t;
+  }
+  /**
+   * @param {Response} cachedResponse
+   * @return {boolean}
+   *
+   * @private
+   */
+  _isResponseDateFresh(e) {
+    if (!this._maxAgeSeconds)
+      return !0;
+    const t = this._getDateHeaderTimestamp(e);
+    if (t === null)
+      return !0;
+    const n = Date.now();
+    return t >= n - this._maxAgeSeconds * 1e3;
+  }
+  /**
+   * This method will extract the data header and parse it into a useful
+   * value.
+   *
+   * @param {Response} cachedResponse
+   * @return {number|null}
+   *
+   * @private
+   */
+  _getDateHeaderTimestamp(e) {
+    if (!e.headers.has("date"))
+      return null;
+    const t = e.headers.get("date"), a = new Date(t).getTime();
+    return isNaN(a) ? null : a;
+  }
+  /**
+   * This is a helper method that performs two operations:
+   *
+   * - Deletes *all* the underlying Cache instances associated with this plugin
+   * instance, by calling caches.delete() on your behalf.
+   * - Deletes the metadata from IndexedDB used to keep track of expiration
+   * details for each Cache instance.
+   *
+   * When using cache expiration, calling this method is preferable to calling
+   * `caches.delete()` directly, since this will ensure that the IndexedDB
+   * metadata is also cleanly removed and open IndexedDB instances are deleted.
+   *
+   * Note that if you're *not* using cache expiration for a given cache, calling
+   * `caches.delete()` and passing in the cache's name should be sufficient.
+   * There is no Workbox-specific method needed for cleanup in that case.
+   */
+  async deleteCacheAndMetadata() {
+    for (const [e, t] of this._cacheExpirations)
+      await self.caches.delete(e), await t.delete();
+    this._cacheExpirations = /* @__PURE__ */ new Map();
+  }
+}
+try {
+  self["workbox:precaching:6.5.4"] && _();
+} catch {
+}
+const De = "__WB_REVISION__";
+function Le(s) {
+  if (!s)
+    throw new l("add-to-cache-list-unexpected-type", { entry: s });
+  if (typeof s == "string") {
+    const r = new URL(s, location.href);
+    return {
+      cacheKey: r.href,
+      url: r.href
+    };
+  }
+  const { revision: e, url: t } = s;
+  if (!t)
+    throw new l("add-to-cache-list-unexpected-type", { entry: s });
+  if (!e) {
+    const r = new URL(t, location.href);
+    return {
+      cacheKey: r.href,
+      url: r.href
+    };
+  }
+  const n = new URL(t, location.href), a = new URL(t, location.href);
+  return n.searchParams.set(De, e), {
+    cacheKey: n.href,
+    url: a.href
+  };
+}
+class Ue {
+  constructor() {
+    this.updatedURLs = [], this.notUpdatedURLs = [], this.handlerWillStart = async ({ request: e, state: t }) => {
+      t && (t.originalRequest = e);
+    }, this.cachedResponseWillBeUsed = async ({ event: e, state: t, cachedResponse: n }) => {
+      if (e.type === "install" && t && t.originalRequest && t.originalRequest instanceof Request) {
+        const a = t.originalRequest.url;
+        n ? this.notUpdatedURLs.push(a) : this.updatedURLs.push(a);
+      }
+      return n;
+    };
+  }
+}
+class Te {
+  constructor({ precacheController: e }) {
+    this.cacheKeyWillBeUsed = async ({ request: t, params: n }) => {
+      const a = (n == null ? void 0 : n.cacheKey) || this._precacheController.getCacheKeyForURL(t.url);
+      return a ? new Request(a, { headers: t.headers }) : t;
+    }, this._precacheController = e;
+  }
+}
+try {
+  self["workbox:strategies:6.5.4"] && _();
+} catch {
+}
+function C(s) {
+  return typeof s == "string" ? new Request(s) : s;
+}
+class ke {
+  /**
+   * Creates a new instance associated with the passed strategy and event
+   * that's handling the request.
+   *
+   * The constructor also initializes the state that will be passed to each of
+   * the plugins handling this request.
+   *
+   * @param {workbox-strategies.Strategy} strategy
+   * @param {Object} options
+   * @param {Request|string} options.request A request to run this strategy for.
+   * @param {ExtendableEvent} options.event The event associated with the
+   *     request.
+   * @param {URL} [options.url]
+   * @param {*} [options.params] The return value from the
+   *     {@link workbox-routing~matchCallback} (if applicable).
+   */
+  constructor(e, t) {
+    this._cacheKeys = {}, Object.assign(this, t), this.event = t.event, this._strategy = e, this._handlerDeferred = new re(), this._extendLifetimePromises = [], this._plugins = [...e.plugins], this._pluginStateMap = /* @__PURE__ */ new Map();
+    for (const n of this._plugins)
+      this._pluginStateMap.set(n, {});
+    this.event.waitUntil(this._handlerDeferred.promise);
+  }
+  /**
+   * Fetches a given request (and invokes any applicable plugin callback
+   * methods) using the `fetchOptions` (for non-navigation requests) and
+   * `plugins` defined on the `Strategy` object.
+   *
+   * The following plugin lifecycle methods are invoked when using this method:
+   * - `requestWillFetch()`
+   * - `fetchDidSucceed()`
+   * - `fetchDidFail()`
+   *
+   * @param {Request|string} input The URL or request to fetch.
+   * @return {Promise<Response>}
+   */
+  async fetch(e) {
+    const { event: t } = this;
+    let n = C(e);
+    if (n.mode === "navigate" && t instanceof FetchEvent && t.preloadResponse) {
+      const i = await t.preloadResponse;
+      if (i)
+        return i;
+    }
+    const a = this.hasCallback("fetchDidFail") ? n.clone() : null;
+    try {
+      for (const i of this.iterateCallbacks("requestWillFetch"))
+        n = await i({ request: n.clone(), event: t });
+    } catch (i) {
+      if (i instanceof Error)
+        throw new l("plugin-error-request-will-fetch", {
+          thrownErrorMessage: i.message
+        });
+    }
+    const r = n.clone();
+    try {
+      let i;
+      i = await fetch(n, n.mode === "navigate" ? void 0 : this._strategy.fetchOptions);
+      for (const c of this.iterateCallbacks("fetchDidSucceed"))
+        i = await c({
+          event: t,
+          request: r,
+          response: i
+        });
+      return i;
+    } catch (i) {
+      throw a && await this.runCallbacks("fetchDidFail", {
+        error: i,
+        event: t,
+        originalRequest: a.clone(),
+        request: r.clone()
+      }), i;
+    }
+  }
+  /**
+   * Calls `this.fetch()` and (in the background) runs `this.cachePut()` on
+   * the response generated by `this.fetch()`.
+   *
+   * The call to `this.cachePut()` automatically invokes `this.waitUntil()`,
+   * so you do not have to manually call `waitUntil()` on the event.
+   *
+   * @param {Request|string} input The request or URL to fetch and cache.
+   * @return {Promise<Response>}
+   */
+  async fetchAndCachePut(e) {
+    const t = await this.fetch(e), n = t.clone();
+    return this.waitUntil(this.cachePut(e, n)), t;
+  }
+  /**
+   * Matches a request from the cache (and invokes any applicable plugin
+   * callback methods) using the `cacheName`, `matchOptions`, and `plugins`
+   * defined on the strategy object.
+   *
+   * The following plugin lifecycle methods are invoked when using this method:
+   * - cacheKeyWillByUsed()
+   * - cachedResponseWillByUsed()
+   *
+   * @param {Request|string} key The Request or URL to use as the cache key.
+   * @return {Promise<Response|undefined>} A matching response, if found.
+   */
+  async cacheMatch(e) {
+    const t = C(e);
+    let n;
+    const { cacheName: a, matchOptions: r } = this._strategy, i = await this.getCacheKey(t, "read"), c = Object.assign(Object.assign({}, r), { cacheName: a });
+    n = await caches.match(i, c);
+    for (const o of this.iterateCallbacks("cachedResponseWillBeUsed"))
+      n = await o({
+        cacheName: a,
+        matchOptions: r,
+        cachedResponse: n,
+        request: i,
+        event: this.event
+      }) || void 0;
+    return n;
+  }
+  /**
+   * Puts a request/response pair in the cache (and invokes any applicable
+   * plugin callback methods) using the `cacheName` and `plugins` defined on
+   * the strategy object.
+   *
+   * The following plugin lifecycle methods are invoked when using this method:
+   * - cacheKeyWillByUsed()
+   * - cacheWillUpdate()
+   * - cacheDidUpdate()
+   *
+   * @param {Request|string} key The request or URL to use as the cache key.
+   * @param {Response} response The response to cache.
+   * @return {Promise<boolean>} `false` if a cacheWillUpdate caused the response
+   * not be cached, and `true` otherwise.
+   */
+  async cachePut(e, t) {
+    const n = C(e);
+    await ce(0);
+    const a = await this.getCacheKey(n, "write");
+    if (!t)
+      throw new l("cache-put-with-no-response", {
+        url: Z(a.url)
+      });
+    const r = await this._ensureResponseSafeToCache(t);
+    if (!r)
+      return !1;
+    const { cacheName: i, matchOptions: c } = this._strategy, o = await self.caches.open(i), h = this.hasCallback("cacheDidUpdate"), m = h ? await ne(
+      // TODO(philipwalton): the `__WB_REVISION__` param is a precaching
+      // feature. Consider into ways to only add this behavior if using
+      // precaching.
+      o,
+      a.clone(),
+      ["__WB_REVISION__"],
+      c
+    ) : null;
+    try {
+      await o.put(a, h ? r.clone() : r);
+    } catch (u) {
+      if (u instanceof Error)
+        throw u.name === "QuotaExceededError" && await ie(), u;
+    }
+    for (const u of this.iterateCallbacks("cacheDidUpdate"))
+      await u({
+        cacheName: i,
+        oldResponse: m,
+        newResponse: r.clone(),
+        request: a,
+        event: this.event
+      });
+    return !0;
+  }
+  /**
+   * Checks the list of plugins for the `cacheKeyWillBeUsed` callback, and
+   * executes any of those callbacks found in sequence. The final `Request`
+   * object returned by the last plugin is treated as the cache key for cache
+   * reads and/or writes. If no `cacheKeyWillBeUsed` plugin callbacks have
+   * been registered, the passed request is returned unmodified
+   *
+   * @param {Request} request
+   * @param {string} mode
+   * @return {Promise<Request>}
+   */
+  async getCacheKey(e, t) {
+    const n = `${e.url} | ${t}`;
+    if (!this._cacheKeys[n]) {
+      let a = e;
+      for (const r of this.iterateCallbacks("cacheKeyWillBeUsed"))
+        a = C(await r({
+          mode: t,
+          request: a,
+          event: this.event,
+          // params has a type any can't change right now.
+          params: this.params
+          // eslint-disable-line
+        }));
+      this._cacheKeys[n] = a;
+    }
+    return this._cacheKeys[n];
+  }
+  /**
+   * Returns true if the strategy has at least one plugin with the given
+   * callback.
+   *
+   * @param {string} name The name of the callback to check for.
+   * @return {boolean}
+   */
+  hasCallback(e) {
+    for (const t of this._strategy.plugins)
+      if (e in t)
+        return !0;
+    return !1;
+  }
+  /**
+   * Runs all plugin callbacks matching the given name, in order, passing the
+   * given param object (merged ith the current plugin state) as the only
+   * argument.
+   *
+   * Note: since this method runs all plugins, it's not suitable for cases
+   * where the return value of a callback needs to be applied prior to calling
+   * the next callback. See
+   * {@link workbox-strategies.StrategyHandler#iterateCallbacks}
+   * below for how to handle that case.
+   *
+   * @param {string} name The name of the callback to run within each plugin.
+   * @param {Object} param The object to pass as the first (and only) param
+   *     when executing each callback. This object will be merged with the
+   *     current plugin state prior to callback execution.
+   */
+  async runCallbacks(e, t) {
+    for (const n of this.iterateCallbacks(e))
+      await n(t);
+  }
+  /**
+   * Accepts a callback and returns an iterable of matching plugin callbacks,
+   * where each callback is wrapped with the current handler state (i.e. when
+   * you call each callback, whatever object parameter you pass it will
+   * be merged with the plugin's current state).
+   *
+   * @param {string} name The name fo the callback to run
+   * @return {Array<Function>}
+   */
+  *iterateCallbacks(e) {
+    for (const t of this._strategy.plugins)
+      if (typeof t[e] == "function") {
+        const n = this._pluginStateMap.get(t);
+        yield (r) => {
+          const i = Object.assign(Object.assign({}, r), { state: n });
+          return t[e](i);
+        };
+      }
+  }
+  /**
+   * Adds a promise to the
+   * [extend lifetime promises]{@link https://w3c.github.io/ServiceWorker/#extendableevent-extend-lifetime-promises}
+   * of the event event associated with the request being handled (usually a
+   * `FetchEvent`).
+   *
+   * Note: you can await
+   * {@link workbox-strategies.StrategyHandler~doneWaiting}
+   * to know when all added promises have settled.
+   *
+   * @param {Promise} promise A promise to add to the extend lifetime promises
+   *     of the event that triggered the request.
+   */
+  waitUntil(e) {
+    return this._extendLifetimePromises.push(e), e;
+  }
+  /**
+   * Returns a promise that resolves once all promises passed to
+   * {@link workbox-strategies.StrategyHandler~waitUntil}
+   * have settled.
+   *
+   * Note: any work done after `doneWaiting()` settles should be manually
+   * passed to an event's `waitUntil()` method (not this handler's
+   * `waitUntil()` method), otherwise the service worker thread my be killed
+   * prior to your work completing.
+   */
+  async doneWaiting() {
+    let e;
+    for (; e = this._extendLifetimePromises.shift(); )
+      await e;
+  }
+  /**
+   * Stops running the strategy and immediately resolves any pending
+   * `waitUntil()` promises.
+   */
+  destroy() {
+    this._handlerDeferred.resolve(null);
+  }
+  /**
+   * This method will call cacheWillUpdate on the available plugins (or use
+   * status === 200) to determine if the Response is safe and valid to cache.
+   *
+   * @param {Request} options.request
+   * @param {Response} options.response
+   * @return {Promise<Response|undefined>}
+   *
+   * @private
+   */
+  async _ensureResponseSafeToCache(e) {
+    let t = e, n = !1;
+    for (const a of this.iterateCallbacks("cacheWillUpdate"))
+      if (t = await a({
+        request: this.request,
+        response: t,
+        event: this.event
+      }) || void 0, n = !0, !t)
+        break;
+    return n || t && t.status !== 200 && (t = void 0), t;
+  }
+}
+class G {
+  /**
+   * Creates a new instance of the strategy and sets all documented option
+   * properties as public instance properties.
+   *
+   * Note: if a custom strategy class extends the base Strategy class and does
+   * not need more than these properties, it does not need to define its own
+   * constructor.
+   *
+   * @param {Object} [options]
+   * @param {string} [options.cacheName] Cache name to store and retrieve
+   * requests. Defaults to the cache names provided by
+   * {@link workbox-core.cacheNames}.
+   * @param {Array<Object>} [options.plugins] [Plugins]{@link https://developers.google.com/web/tools/workbox/guides/using-plugins}
+   * to use in conjunction with this caching strategy.
+   * @param {Object} [options.fetchOptions] Values passed along to the
+   * [`init`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)
+   * of [non-navigation](https://github.com/GoogleChrome/workbox/issues/1796)
+   * `fetch()` requests made by this strategy.
+   * @param {Object} [options.matchOptions] The
+   * [`CacheQueryOptions`]{@link https://w3c.github.io/ServiceWorker/#dictdef-cachequeryoptions}
+   * for any `cache.match()` or `cache.put()` calls made by this strategy.
+   */
+  constructor(e = {}) {
+    this.cacheName = E.getRuntimeName(e.cacheName), this.plugins = e.plugins || [], this.fetchOptions = e.fetchOptions, this.matchOptions = e.matchOptions;
+  }
+  /**
+   * Perform a request strategy and returns a `Promise` that will resolve with
+   * a `Response`, invoking all relevant plugin callbacks.
+   *
+   * When a strategy instance is registered with a Workbox
+   * {@link workbox-routing.Route}, this method is automatically
+   * called when the route matches.
+   *
+   * Alternatively, this method can be used in a standalone `FetchEvent`
+   * listener by passing it to `event.respondWith()`.
+   *
+   * @param {FetchEvent|Object} options A `FetchEvent` or an object with the
+   *     properties listed below.
+   * @param {Request|string} options.request A request to run this strategy for.
+   * @param {ExtendableEvent} options.event The event associated with the
+   *     request.
+   * @param {URL} [options.url]
+   * @param {*} [options.params]
+   */
+  handle(e) {
+    const [t] = this.handleAll(e);
+    return t;
+  }
+  /**
+   * Similar to {@link workbox-strategies.Strategy~handle}, but
+   * instead of just returning a `Promise` that resolves to a `Response` it
+   * it will return an tuple of `[response, done]` promises, where the former
+   * (`response`) is equivalent to what `handle()` returns, and the latter is a
+   * Promise that will resolve once any promises that were added to
+   * `event.waitUntil()` as part of performing the strategy have completed.
+   *
+   * You can await the `done` promise to ensure any extra work performed by
+   * the strategy (usually caching responses) completes successfully.
+   *
+   * @param {FetchEvent|Object} options A `FetchEvent` or an object with the
+   *     properties listed below.
+   * @param {Request|string} options.request A request to run this strategy for.
+   * @param {ExtendableEvent} options.event The event associated with the
+   *     request.
+   * @param {URL} [options.url]
+   * @param {*} [options.params]
+   * @return {Array<Promise>} A tuple of [response, done]
+   *     promises that can be used to determine when the response resolves as
+   *     well as when the handler has completed all its work.
+   */
+  handleAll(e) {
+    e instanceof FetchEvent && (e = {
+      event: e,
+      request: e.request
+    });
+    const t = e.event, n = typeof e.request == "string" ? new Request(e.request) : e.request, a = "params" in e ? e.params : void 0, r = new ke(this, { event: t, request: n, params: a }), i = this._getResponse(r, n, t), c = this._awaitComplete(i, r, n, t);
+    return [i, c];
+  }
+  async _getResponse(e, t, n) {
+    await e.runCallbacks("handlerWillStart", { event: n, request: t });
+    let a;
+    try {
+      if (a = await this._handle(t, e), !a || a.type === "error")
+        throw new l("no-response", { url: t.url });
+    } catch (r) {
+      if (r instanceof Error) {
+        for (const i of e.iterateCallbacks("handlerDidError"))
+          if (a = await i({ error: r, event: n, request: t }), a)
+            break;
+      }
+      if (!a)
+        throw r;
+    }
+    for (const r of e.iterateCallbacks("handlerWillRespond"))
+      a = await r({ event: n, request: t, response: a });
+    return a;
+  }
+  async _awaitComplete(e, t, n, a) {
+    let r, i;
+    try {
+      r = await e;
+    } catch {
+    }
+    try {
+      await t.runCallbacks("handlerDidRespond", {
+        event: a,
+        request: n,
+        response: r
+      }), await t.doneWaiting();
+    } catch (c) {
+      c instanceof Error && (i = c);
+    }
+    if (await t.runCallbacks("handlerDidComplete", {
+      event: a,
+      request: n,
+      response: r,
+      error: i
+    }), t.destroy(), i)
+      throw i;
+  }
+}
+class p extends G {
+  /**
+   *
+   * @param {Object} [options]
+   * @param {string} [options.cacheName] Cache name to store and retrieve
+   * requests. Defaults to the cache names provided by
+   * {@link workbox-core.cacheNames}.
+   * @param {Array<Object>} [options.plugins] {@link https://developers.google.com/web/tools/workbox/guides/using-plugins|Plugins}
+   * to use in conjunction with this caching strategy.
+   * @param {Object} [options.fetchOptions] Values passed along to the
+   * {@link https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters|init}
+   * of all fetch() requests made by this strategy.
+   * @param {Object} [options.matchOptions] The
+   * {@link https://w3c.github.io/ServiceWorker/#dictdef-cachequeryoptions|CacheQueryOptions}
+   * for any `cache.match()` or `cache.put()` calls made by this strategy.
+   * @param {boolean} [options.fallbackToNetwork=true] Whether to attempt to
+   * get the response from the network if there's a precache miss.
+   */
+  constructor(e = {}) {
+    e.cacheName = E.getPrecacheName(e.cacheName), super(e), this._fallbackToNetwork = e.fallbackToNetwork !== !1, this.plugins.push(p.copyRedirectedCacheableResponsesPlugin);
+  }
+  /**
+   * @private
+   * @param {Request|string} request A request to run this strategy for.
+   * @param {workbox-strategies.StrategyHandler} handler The event that
+   *     triggered the request.
+   * @return {Promise<Response>}
+   */
+  async _handle(e, t) {
+    const n = await t.cacheMatch(e);
+    return n || (t.event && t.event.type === "install" ? await this._handleInstall(e, t) : await this._handleFetch(e, t));
+  }
+  async _handleFetch(e, t) {
+    let n;
+    const a = t.params || {};
+    if (this._fallbackToNetwork) {
+      const r = a.integrity, i = e.integrity, c = !i || i === r;
+      n = await t.fetch(new Request(e, {
+        integrity: e.mode !== "no-cors" ? i || r : void 0
+      })), r && c && e.mode !== "no-cors" && (this._useDefaultCacheabilityPluginIfNeeded(), await t.cachePut(e, n.clone()));
+    } else
+      throw new l("missing-precache-entry", {
+        cacheName: this.cacheName,
+        url: e.url
+      });
+    return n;
+  }
+  async _handleInstall(e, t) {
+    this._useDefaultCacheabilityPluginIfNeeded();
+    const n = await t.fetch(e);
+    if (!await t.cachePut(e, n.clone()))
+      throw new l("bad-precaching-response", {
+        url: e.url,
+        status: n.status
+      });
+    return n;
+  }
+  /**
+   * This method is complex, as there a number of things to account for:
+   *
+   * The `plugins` array can be set at construction, and/or it might be added to
+   * to at any time before the strategy is used.
+   *
+   * At the time the strategy is used (i.e. during an `install` event), there
+   * needs to be at least one plugin that implements `cacheWillUpdate` in the
+   * array, other than `copyRedirectedCacheableResponsesPlugin`.
+   *
+   * - If this method is called and there are no suitable `cacheWillUpdate`
+   * plugins, we need to add `defaultPrecacheCacheabilityPlugin`.
+   *
+   * - If this method is called and there is exactly one `cacheWillUpdate`, then
+   * we don't have to do anything (this might be a previously added
+   * `defaultPrecacheCacheabilityPlugin`, or it might be a custom plugin).
+   *
+   * - If this method is called and there is more than one `cacheWillUpdate`,
+   * then we need to check if one is `defaultPrecacheCacheabilityPlugin`. If so,
+   * we need to remove it. (This situation is unlikely, but it could happen if
+   * the strategy is used multiple times, the first without a `cacheWillUpdate`,
+   * and then later on after manually adding a custom `cacheWillUpdate`.)
+   *
+   * See https://github.com/GoogleChrome/workbox/issues/2737 for more context.
+   *
+   * @private
+   */
+  _useDefaultCacheabilityPluginIfNeeded() {
+    let e = null, t = 0;
+    for (const [n, a] of this.plugins.entries())
+      a !== p.copyRedirectedCacheableResponsesPlugin && (a === p.defaultPrecacheCacheabilityPlugin && (e = n), a.cacheWillUpdate && t++);
+    t === 0 ? this.plugins.push(p.defaultPrecacheCacheabilityPlugin) : t > 1 && e !== null && this.plugins.splice(e, 1);
+  }
+}
+p.defaultPrecacheCacheabilityPlugin = {
+  async cacheWillUpdate({ response: s }) {
+    return !s || s.status >= 400 ? null : s;
+  }
+};
+p.copyRedirectedCacheableResponsesPlugin = {
+  async cacheWillUpdate({ response: s }) {
+    return s.redirected ? await oe(s) : s;
+  }
+};
+class Pe {
+  /**
+   * Create a new PrecacheController.
+   *
+   * @param {Object} [options]
+   * @param {string} [options.cacheName] The cache to use for precaching.
+   * @param {string} [options.plugins] Plugins to use when precaching as well
+   * as responding to fetch events for precached assets.
+   * @param {boolean} [options.fallbackToNetwork=true] Whether to attempt to
+   * get the response from the network if there's a precache miss.
+   */
+  constructor({ cacheName: e, plugins: t = [], fallbackToNetwork: n = !0 } = {}) {
+    this._urlsToCacheKeys = /* @__PURE__ */ new Map(), this._urlsToCacheModes = /* @__PURE__ */ new Map(), this._cacheKeysToIntegrities = /* @__PURE__ */ new Map(), this._strategy = new p({
+      cacheName: E.getPrecacheName(e),
+      plugins: [
+        ...t,
+        new Te({ precacheController: this })
+      ],
+      fallbackToNetwork: n
+    }), this.install = this.install.bind(this), this.activate = this.activate.bind(this);
+  }
+  /**
+   * @type {workbox-precaching.PrecacheStrategy} The strategy created by this controller and
+   * used to cache assets and respond to fetch events.
+   */
+  get strategy() {
+    return this._strategy;
+  }
+  /**
+   * Adds items to the precache list, removing any duplicates and
+   * stores the files in the
+   * {@link workbox-core.cacheNames|"precache cache"} when the service
+   * worker installs.
+   *
+   * This method can be called multiple times.
+   *
+   * @param {Array<Object|string>} [entries=[]] Array of entries to precache.
+   */
+  precache(e) {
+    this.addToCacheList(e), this._installAndActiveListenersAdded || (self.addEventListener("install", this.install), self.addEventListener("activate", this.activate), this._installAndActiveListenersAdded = !0);
+  }
+  /**
+   * This method will add items to the precache list, removing duplicates
+   * and ensuring the information is valid.
+   *
+   * @param {Array<workbox-precaching.PrecacheController.PrecacheEntry|string>} entries
+   *     Array of entries to precache.
+   */
+  addToCacheList(e) {
+    const t = [];
+    for (const n of e) {
+      typeof n == "string" ? t.push(n) : n && n.revision === void 0 && t.push(n.url);
+      const { cacheKey: a, url: r } = Le(n), i = typeof n != "string" && n.revision ? "reload" : "default";
+      if (this._urlsToCacheKeys.has(r) && this._urlsToCacheKeys.get(r) !== a)
+        throw new l("add-to-cache-list-conflicting-entries", {
+          firstEntry: this._urlsToCacheKeys.get(r),
+          secondEntry: a
+        });
+      if (typeof n != "string" && n.integrity) {
+        if (this._cacheKeysToIntegrities.has(a) && this._cacheKeysToIntegrities.get(a) !== n.integrity)
+          throw new l("add-to-cache-list-conflicting-integrities", {
+            url: r
+          });
+        this._cacheKeysToIntegrities.set(a, n.integrity);
+      }
+      if (this._urlsToCacheKeys.set(r, a), this._urlsToCacheModes.set(r, i), t.length > 0) {
+        const c = `Workbox is precaching URLs without revision info: ${t.join(", ")}
+This is generally NOT safe. Learn more at https://bit.ly/wb-precache`;
+        console.warn(c);
+      }
+    }
+  }
+  /**
+   * Precaches new and updated assets. Call this method from the service worker
+   * install event.
+   *
+   * Note: this method calls `event.waitUntil()` for you, so you do not need
+   * to call it yourself in your event handlers.
+   *
+   * @param {ExtendableEvent} event
+   * @return {Promise<workbox-precaching.InstallResult>}
+   */
+  install(e) {
+    return S(e, async () => {
+      const t = new Ue();
+      this.strategy.plugins.push(t);
+      for (const [r, i] of this._urlsToCacheKeys) {
+        const c = this._cacheKeysToIntegrities.get(i), o = this._urlsToCacheModes.get(r), h = new Request(r, {
+          integrity: c,
+          cache: o,
+          credentials: "same-origin"
+        });
+        await Promise.all(this.strategy.handleAll({
+          params: { cacheKey: i },
+          request: h,
+          event: e
+        }));
+      }
+      const { updatedURLs: n, notUpdatedURLs: a } = t;
+      return { updatedURLs: n, notUpdatedURLs: a };
+    });
+  }
+  /**
+   * Deletes assets that are no longer present in the current precache manifest.
+   * Call this method from the service worker activate event.
+   *
+   * Note: this method calls `event.waitUntil()` for you, so you do not need
+   * to call it yourself in your event handlers.
+   *
+   * @param {ExtendableEvent} event
+   * @return {Promise<workbox-precaching.CleanupResult>}
+   */
+  activate(e) {
+    return S(e, async () => {
+      const t = await self.caches.open(this.strategy.cacheName), n = await t.keys(), a = new Set(this._urlsToCacheKeys.values()), r = [];
+      for (const i of n)
+        a.has(i.url) || (await t.delete(i), r.push(i.url));
+      return { deletedURLs: r };
+    });
+  }
+  /**
+   * Returns a mapping of a precached URL to the corresponding cache key, taking
+   * into account the revision information for the URL.
+   *
+   * @return {Map<string, string>} A URL to cache key mapping.
+   */
+  getURLsToCacheKeys() {
+    return this._urlsToCacheKeys;
+  }
+  /**
+   * Returns a list of all the URLs that have been precached by the current
+   * service worker.
+   *
+   * @return {Array<string>} The precached URLs.
+   */
+  getCachedURLs() {
+    return [...this._urlsToCacheKeys.keys()];
+  }
+  /**
+   * Returns the cache key used for storing a given URL. If that URL is
+   * unversioned, like `/index.html', then the cache key will be the original
+   * URL with a search parameter appended to it.
+   *
+   * @param {string} url A URL whose cache key you want to look up.
+   * @return {string} The versioned URL that corresponds to a cache key
+   * for the original URL, or undefined if that URL isn't precached.
+   */
+  getCacheKeyForURL(e) {
+    const t = new URL(e, location.href);
+    return this._urlsToCacheKeys.get(t.href);
+  }
+  /**
+   * @param {string} url A cache key whose SRI you want to look up.
+   * @return {string} The subresource integrity associated with the cache key,
+   * or undefined if it's not set.
+   */
+  getIntegrityForCacheKey(e) {
+    return this._cacheKeysToIntegrities.get(e);
+  }
+  /**
+   * This acts as a drop-in replacement for
+   * [`cache.match()`](https://developer.mozilla.org/en-US/docs/Web/API/Cache/match)
+   * with the following differences:
+   *
+   * - It knows what the name of the precache is, and only checks in that cache.
+   * - It allows you to pass in an "original" URL without versioning parameters,
+   * and it will automatically look up the correct cache key for the currently
+   * active revision of that URL.
+   *
+   * E.g., `matchPrecache('index.html')` will find the correct precached
+   * response for the currently active service worker, even if the actual cache
+   * key is `'/index.html?__WB_REVISION__=1234abcd'`.
+   *
+   * @param {string|Request} request The key (without revisioning parameters)
+   * to look up in the precache.
+   * @return {Promise<Response|undefined>}
+   */
+  async matchPrecache(e) {
+    const t = e instanceof Request ? e.url : e, n = this.getCacheKeyForURL(t);
+    if (n)
+      return (await self.caches.open(this.strategy.cacheName)).match(n);
+  }
+  /**
+   * Returns a function that looks up `url` in the precache (taking into
+   * account revision information), and returns the corresponding `Response`.
+   *
+   * @param {string} url The precached URL which will be used to lookup the
+   * `Response`.
+   * @return {workbox-routing~handlerCallback}
+   */
+  createHandlerBoundToURL(e) {
+    const t = this.getCacheKeyForURL(e);
+    if (!t)
+      throw new l("non-precached-url", { url: e });
+    return (n) => (n.request = new Request(e), n.params = Object.assign({ cacheKey: t }, n.params), this.strategy.handle(n));
+  }
+}
+let P;
+const A = () => (P || (P = new Pe()), P);
+try {
+  self["workbox:routing:6.5.4"] && _();
+} catch {
+}
+const z = "GET", x = (s) => s && typeof s == "object" ? s : { handle: s };
+class b {
+  /**
+   * Constructor for Route class.
+   *
+   * @param {workbox-routing~matchCallback} match
+   * A callback function that determines whether the route matches a given
+   * `fetch` event by returning a non-falsy value.
+   * @param {workbox-routing~handlerCallback} handler A callback
+   * function that returns a Promise resolving to a Response.
+   * @param {string} [method='GET'] The HTTP method to match the Route
+   * against.
+   */
+  constructor(e, t, n = z) {
+    this.handler = x(t), this.match = e, this.method = n;
+  }
+  /**
+   *
+   * @param {workbox-routing-handlerCallback} handler A callback
+   * function that returns a Promise resolving to a Response
+   */
+  setCatchHandler(e) {
+    this.catchHandler = x(e);
+  }
+}
+class Ie extends b {
+  /**
+   * If the regular expression contains
+   * [capture groups]{@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp#grouping-back-references},
+   * the captured values will be passed to the
+   * {@link workbox-routing~handlerCallback} `params`
+   * argument.
+   *
+   * @param {RegExp} regExp The regular expression to match against URLs.
+   * @param {workbox-routing~handlerCallback} handler A callback
+   * function that returns a Promise resulting in a Response.
+   * @param {string} [method='GET'] The HTTP method to match the Route
+   * against.
+   */
+  constructor(e, t, n) {
+    const a = ({ url: r }) => {
+      const i = e.exec(r.href);
+      if (i && !(r.origin !== location.origin && i.index !== 0))
+        return i.slice(1);
+    };
+    super(a, t, n);
+  }
+}
+class Me {
+  /**
+   * Initializes a new Router.
+   */
+  constructor() {
+    this._routes = /* @__PURE__ */ new Map(), this._defaultHandlerMap = /* @__PURE__ */ new Map();
+  }
+  /**
+   * @return {Map<string, Array<workbox-routing.Route>>} routes A `Map` of HTTP
+   * method name ('GET', etc.) to an array of all the corresponding `Route`
+   * instances that are registered.
+   */
+  get routes() {
+    return this._routes;
+  }
+  /**
+   * Adds a fetch event listener to respond to events when a route matches
+   * the event's request.
+   */
+  addFetchListener() {
+    self.addEventListener("fetch", (e) => {
+      const { request: t } = e, n = this.handleRequest({ request: t, event: e });
+      n && e.respondWith(n);
+    });
+  }
+  /**
+   * Adds a message event listener for URLs to cache from the window.
+   * This is useful to cache resources loaded on the page prior to when the
+   * service worker started controlling it.
+   *
+   * The format of the message data sent from the window should be as follows.
+   * Where the `urlsToCache` array may consist of URL strings or an array of
+   * URL string + `requestInit` object (the same as you'd pass to `fetch()`).
+   *
+   * ```
+   * {
+   *   type: 'CACHE_URLS',
+   *   payload: {
+   *     urlsToCache: [
+   *       './script1.js',
+   *       './script2.js',
+   *       ['./script3.js', {mode: 'no-cors'}],
+   *     ],
+   *   },
+   * }
+   * ```
+   */
+  addCacheListener() {
+    self.addEventListener("message", (e) => {
+      if (e.data && e.data.type === "CACHE_URLS") {
+        const { payload: t } = e.data, n = Promise.all(t.urlsToCache.map((a) => {
+          typeof a == "string" && (a = [a]);
+          const r = new Request(...a);
+          return this.handleRequest({ request: r, event: e });
+        }));
+        e.waitUntil(n), e.ports && e.ports[0] && n.then(() => e.ports[0].postMessage(!0));
+      }
+    });
+  }
+  /**
+   * Apply the routing rules to a FetchEvent object to get a Response from an
+   * appropriate Route's handler.
+   *
+   * @param {Object} options
+   * @param {Request} options.request The request to handle.
+   * @param {ExtendableEvent} options.event The event that triggered the
+   *     request.
+   * @return {Promise<Response>|undefined} A promise is returned if a
+   *     registered route can handle the request. If there is no matching
+   *     route and there's no `defaultHandler`, `undefined` is returned.
+   */
+  handleRequest({ request: e, event: t }) {
+    const n = new URL(e.url, location.href);
+    if (!n.protocol.startsWith("http"))
+      return;
+    const a = n.origin === location.origin, { params: r, route: i } = this.findMatchingRoute({
+      event: t,
+      request: e,
+      sameOrigin: a,
+      url: n
+    });
+    let c = i && i.handler;
+    const o = e.method;
+    if (!c && this._defaultHandlerMap.has(o) && (c = this._defaultHandlerMap.get(o)), !c)
+      return;
+    let h;
+    try {
+      h = c.handle({ url: n, request: e, event: t, params: r });
+    } catch (u) {
+      h = Promise.reject(u);
+    }
+    const m = i && i.catchHandler;
+    return h instanceof Promise && (this._catchHandler || m) && (h = h.catch(async (u) => {
+      if (m)
+        try {
+          return await m.handle({ url: n, request: e, event: t, params: r });
+        } catch (O) {
+          O instanceof Error && (u = O);
+        }
+      if (this._catchHandler)
+        return this._catchHandler.handle({ url: n, request: e, event: t });
+      throw u;
+    })), h;
+  }
+  /**
+   * Checks a request and URL (and optionally an event) against the list of
+   * registered routes, and if there's a match, returns the corresponding
+   * route along with any params generated by the match.
+   *
+   * @param {Object} options
+   * @param {URL} options.url
+   * @param {boolean} options.sameOrigin The result of comparing `url.origin`
+   *     against the current origin.
+   * @param {Request} options.request The request to match.
+   * @param {Event} options.event The corresponding event.
+   * @return {Object} An object with `route` and `params` properties.
+   *     They are populated if a matching route was found or `undefined`
+   *     otherwise.
+   */
+  findMatchingRoute({ url: e, sameOrigin: t, request: n, event: a }) {
+    const r = this._routes.get(n.method) || [];
+    for (const i of r) {
+      let c;
+      const o = i.match({ url: e, sameOrigin: t, request: n, event: a });
+      if (o)
+        return c = o, (Array.isArray(c) && c.length === 0 || o.constructor === Object && // eslint-disable-line
+        Object.keys(o).length === 0 || typeof o == "boolean") && (c = void 0), { route: i, params: c };
+    }
+    return {};
+  }
+  /**
+   * Define a default `handler` that's called when no routes explicitly
+   * match the incoming request.
+   *
+   * Each HTTP method ('GET', 'POST', etc.) gets its own default handler.
+   *
+   * Without a default handler, unmatched requests will go against the
+   * network as if there were no service worker present.
+   *
+   * @param {workbox-routing~handlerCallback} handler A callback
+   * function that returns a Promise resulting in a Response.
+   * @param {string} [method='GET'] The HTTP method to associate with this
+   * default handler. Each method has its own default.
+   */
+  setDefaultHandler(e, t = z) {
+    this._defaultHandlerMap.set(t, x(e));
+  }
+  /**
+   * If a Route throws an error while handling a request, this `handler`
+   * will be called and given a chance to provide a response.
+   *
+   * @param {workbox-routing~handlerCallback} handler A callback
+   * function that returns a Promise resulting in a Response.
+   */
+  setCatchHandler(e) {
+    this._catchHandler = x(e);
+  }
+  /**
+   * Registers a route with the router.
+   *
+   * @param {workbox-routing.Route} route The route to register.
+   */
+  registerRoute(e) {
+    this._routes.has(e.method) || this._routes.set(e.method, []), this._routes.get(e.method).push(e);
+  }
+  /**
+   * Unregisters a route with the router.
+   *
+   * @param {workbox-routing.Route} route The route to unregister.
+   */
+  unregisterRoute(e) {
+    if (!this._routes.has(e.method))
+      throw new l("unregister-route-but-not-found-with-method", {
+        method: e.method
+      });
+    const t = this._routes.get(e.method).indexOf(e);
+    if (t > -1)
+      this._routes.get(e.method).splice(t, 1);
+    else
+      throw new l("unregister-route-route-not-registered");
+  }
+}
+let R;
+const Ne = () => (R || (R = new Me(), R.addFetchListener(), R.addCacheListener()), R);
+function g(s, e, t) {
+  let n;
+  if (typeof s == "string") {
+    const r = new URL(s, location.href), i = ({ url: c }) => c.href === r.href;
+    n = new b(i, e, t);
+  } else if (s instanceof RegExp)
+    n = new Ie(s, e, t);
+  else if (typeof s == "function")
+    n = new b(s, e, t);
+  else if (s instanceof b)
+    n = s;
+  else
+    throw new l("unsupported-route-type", {
+      moduleName: "workbox-routing",
+      funcName: "registerRoute",
+      paramName: "capture"
+    });
+  return Ne().registerRoute(n), n;
+}
+function Ke(s, e = []) {
+  for (const t of [...s.searchParams.keys()])
+    e.some((n) => n.test(t)) && s.searchParams.delete(t);
+  return s;
+}
+function* Ae(s, { ignoreURLParametersMatching: e = [/^utm_/, /^fbclid$/], directoryIndex: t = "index.html", cleanURLs: n = !0, urlManipulation: a } = {}) {
+  const r = new URL(s, location.href);
+  r.hash = "", yield r.href;
+  const i = Ke(r, e);
+  if (yield i.href, t && i.pathname.endsWith("/")) {
+    const c = new URL(i.href);
+    c.pathname += t, yield c.href;
+  }
+  if (n) {
+    const c = new URL(i.href);
+    c.pathname += ".html", yield c.href;
+  }
+  if (a) {
+    const c = a({ url: r });
+    for (const o of c)
+      yield o.href;
+  }
+}
+class Oe extends b {
+  /**
+   * @param {PrecacheController} precacheController A `PrecacheController`
+   * instance used to both match requests and respond to fetch events.
+   * @param {Object} [options] Options to control how requests are matched
+   * against the list of precached URLs.
+   * @param {string} [options.directoryIndex=index.html] The `directoryIndex` will
+   * check cache entries for a URLs ending with '/' to see if there is a hit when
+   * appending the `directoryIndex` value.
+   * @param {Array<RegExp>} [options.ignoreURLParametersMatching=[/^utm_/, /^fbclid$/]] An
+   * array of regex's to remove search params when looking for a cache match.
+   * @param {boolean} [options.cleanURLs=true] The `cleanURLs` option will
+   * check the cache for the URL with a `.html` added to the end of the end.
+   * @param {workbox-precaching~urlManipulation} [options.urlManipulation]
+   * This is a function that should take a URL and return an array of
+   * alternative URLs that should be checked for precache matches.
+   */
+  constructor(e, t) {
+    const n = ({ request: a }) => {
+      const r = e.getURLsToCacheKeys();
+      for (const i of Ae(a.url, t)) {
+        const c = r.get(i);
+        if (c) {
+          const o = e.getIntegrityForCacheKey(c);
+          return { cacheKey: c, integrity: o };
+        }
+      }
+    };
+    super(n, e.strategy);
+  }
+}
+function ve(s) {
+  const e = A(), t = new Oe(e, s);
+  g(t);
+}
+function Se(s) {
+  return A().createHandlerBoundToURL(s);
+}
+function We(s) {
+  A().precache(s);
+}
+function Be(s, e) {
+  We(s), ve(e);
+}
+const je = {
+  /**
+   * Returns a valid response (to allow caching) if the status is 200 (OK) or
+   * 0 (opaque).
+   *
+   * @param {Object} options
+   * @param {Response} options.response
+   * @return {Response|null}
+   *
+   * @private
+   */
+  cacheWillUpdate: async ({ response: s }) => s.status === 200 || s.status === 0 ? s : null
+};
+class D extends G {
+  /**
+   * @param {Object} [options]
+   * @param {string} [options.cacheName] Cache name to store and retrieve
+   * requests. Defaults to cache names provided by
+   * {@link workbox-core.cacheNames}.
+   * @param {Array<Object>} [options.plugins] [Plugins]{@link https://developers.google.com/web/tools/workbox/guides/using-plugins}
+   * to use in conjunction with this caching strategy.
+   * @param {Object} [options.fetchOptions] Values passed along to the
+   * [`init`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters)
+   * of [non-navigation](https://github.com/GoogleChrome/workbox/issues/1796)
+   * `fetch()` requests made by this strategy.
+   * @param {Object} [options.matchOptions] [`CacheQueryOptions`](https://w3c.github.io/ServiceWorker/#dictdef-cachequeryoptions)
+   */
+  constructor(e = {}) {
+    super(e), this.plugins.some((t) => "cacheWillUpdate" in t) || this.plugins.unshift(je);
+  }
+  /**
+   * @private
+   * @param {Request|string} request A request to run this strategy for.
+   * @param {workbox-strategies.StrategyHandler} handler The event that
+   *     triggered the request.
+   * @return {Promise<Response>}
+   */
+  async _handle(e, t) {
+    const n = t.fetchAndCachePut(e).catch(() => {
+    });
+    t.waitUntil(n);
+    let a = await t.cacheMatch(e), r;
+    if (!a)
+      try {
+        a = await n;
+      } catch (i) {
+        i instanceof Error && (r = i);
+      }
+    if (!a)
+      throw new l("no-response", { url: e.url, error: r });
+    return a;
+  }
+}
+he();
+self.skipWaiting();
+Be([{"revision":"2e391f06b728ad025b227ebec551658d","url":"assets/__federation_shared_react-dom.js"},{"revision":"5a00e1a5cbeb93c9464c1f517292d6c8","url":"assets/__federation_shared_react-redux.js"},{"revision":"c78f8708aabad7132213339559ab4425","url":"assets/__federation_shared_react-router-dom.js"},{"revision":"4329bdef365363b1a007dd804851174d","url":"assets/__federation_shared_react-router.js"},{"revision":"43344ed0615322511b3a38e6e5ece112","url":"assets/__federation_shared_react.js"},{"revision":"1ead1c8b66ab385a56570c35bbd99204","url":"assets/__federation_shared_redux-persist.js"},{"revision":null,"url":"assets/_virtual___federation_fn_import-d1f97fc6.js"},{"revision":null,"url":"assets/bootstrap-41b14b55.css"},{"revision":null,"url":"assets/bootstrap-d57d1f35.js"},{"revision":null,"url":"assets/index-73f8d6c6.js"},{"revision":null,"url":"assets/index-976ea850.js"},{"revision":null,"url":"assets/preload-helper-910b4efd.js"},{"revision":null,"url":"assets/redux-5ddf189d.js"},{"revision":null,"url":"assets/web-vitals-cfb28182.js"},{"revision":"a560f41b0a8e11453ef4a2a9931b1aec","url":"index.html"},{"revision":"cfeec0a2e9cf48cc86e758ae5d4b5876","url":"registerSW.js"},{"revision":null,"url":"static/css/main.a7149c72.css"},{"revision":"e7fa5ca578bafb07c7baf3faf00d9d46","url":"manifest.webmanifest"}]);
+g(
+  ({ url: s }) => s.origin === "https://fonts.googleapis.com",
+  new D({
+    cacheName: "google-fonts-stylesheets",
+    plugins: [
+      new N({
+        statuses: [0, 200]
+      })
+    ]
+  })
+);
+g(
+  ({ request: { destination: s } }) => s === "script",
+  new D({
+    cacheName: "javascript-files",
+    plugins: [
+      new N({
+        statuses: [0, 200]
+      }),
+      new Q({ purgeOnQuotaError: !0, maxEntries: 1e3, maxAgeSeconds: 60 * 60 * 24 * 30 })
+    ]
+  })
+);
+g(
+  ({ url: s }) => s.origin === "https://fonts.gstatic.com",
+  new D({
+    cacheName: "google-fonts-webfonts",
+    plugins: [
+      new N({
+        statuses: [0, 200]
+      })
+    ]
+  })
+);
+const J = new RegExp("/[^/?]+\\.[^/]+$");
+g(
+  // Return false to exempt requests from being fulfilled by index.html.
+  ({ request: s, url: e }) => !(s.mode !== "navigate" || e.pathname.startsWith("/_") || e.pathname.match(J)),
+  // createHandlerBoundToURL("/yii-dev-panel/" === '/' ? 'index.html' : "/yii-dev-panel/" + 'index.html'),
+  Se("/yii-dev-panel/index.html")
+);
+g(
+  // Add in any other file extensions or routing criteria as needed.
+  ({ url: s }) => s.pathname.endsWith(".ico") || s.pathname.endsWith(".svg") || s.pathname.endsWith(".png") || s.pathname.endsWith(".jpeg") || s.pathname.endsWith(".jpg") || s.pathname.endsWith(".webp"),
+  new D({
+    cacheName: "images",
+    plugins: [
+      // Ensure that once this runtime cache reaches a maximum size the
+      // least-recently used images are removed.
+      new Q({ purgeOnQuotaError: !0, maxEntries: 1e3 })
+    ]
+  })
+);
+const qe = /\/debug|gii|inspect\//i;
+self.addEventListener("fetch", (s) => {
+  const e = s.request;
+  e.mode !== "navigate" && (e.url.match(J) || e.url.match(qe) || (console.log("sw fetch", e), s.respondWith(
+    fetch(s.request).then((t) => (Fe(s.clientId, e, t), t)).catch((t) => {
+      throw console.log("sw fetch error", t), t;
+    })
+  )));
+});
+function Fe(s, e, t) {
+  [
+    {
+      type: "FETCH",
+      payload: {
+        headers: Object.fromEntries(t.headers),
+        url: e.url,
+        method: e.method,
+        status: e.status
+      }
+    }
+  ].map((a) => {
+    self.clients.get(s).then((r) => {
+      r.postMessage(a);
+    });
+  });
+}
