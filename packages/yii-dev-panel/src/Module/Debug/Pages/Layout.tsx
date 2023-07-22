@@ -22,6 +22,7 @@ import {
 } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import {changeAutoLatest} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {
     DebugEntry,
@@ -46,6 +47,7 @@ import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogP
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useSelector} from '@yiisoft/yii-dev-panel/store';
 import clipboardCopy from 'clipboard-copy';
 import * as React from 'react';
 import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
@@ -211,6 +213,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
 const Layout = () => {
     const dispatch = useDispatch();
+    const [autoLatest, setAutoLatest] = useState<boolean>(false);
     const debugEntry = useDebugEntry();
     const [searchParams, setSearchParams] = useSearchParams();
     const [getDebugQuery, getDebugQueryInfo] = useLazyGetDebugQuery();
@@ -218,11 +221,16 @@ const Layout = () => {
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
+    const autoLatestState = useSelector((state) => state.application.autoLatest);
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
     }, []);
     useEffect(onRefreshHandler, [onRefreshHandler]);
+
+    useEffect(() => {
+        setAutoLatest(autoLatestState);
+    }, [autoLatestState]);
 
     useEffect(() => {
         if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
@@ -318,8 +326,6 @@ const Layout = () => {
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
 
-    const [autoLatest, setAutoLatest] = useState<boolean>(true);
-
     const onUpdatesHandler = useCallback(async (event: MessageEvent) => {
         const data = JSON.parse(event.data);
         if (data.type && data.type === EventTypesEnum.DebugUpdated) {
@@ -332,7 +338,10 @@ const Layout = () => {
     useServerSentEvents(onUpdatesHandler, autoLatest);
 
     const autoLatestHandler = () => {
-        setAutoLatest((prev) => !prev);
+        setAutoLatest((prev) => {
+            dispatch(changeAutoLatest(!prev));
+            return !prev;
+        });
     };
 
     if (getDebugQueryInfo.isLoading) {
@@ -437,7 +446,7 @@ const Layout = () => {
                 <Tooltip title="Switches to the latest debug entry automatically (delay 1s). Needs server-sent events suppport.">
                     <span>
                         <FormControlLabel
-                            control={<Switch value={autoLatest} onChange={autoLatestHandler} />}
+                            control={<Switch checked={autoLatest} value={autoLatest} onChange={autoLatestHandler} />}
                             label="Latest auto"
                         />
                     </span>

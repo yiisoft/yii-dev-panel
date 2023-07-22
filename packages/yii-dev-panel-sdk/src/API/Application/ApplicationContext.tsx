@@ -6,6 +6,7 @@ type ApplicationContext = {
     preferredPageSize: number;
     toolbarOpen: boolean;
     favoriteUrls: string[];
+    autoLatest: boolean;
 };
 export const ApplicationSlice = createSlice({
     name: 'application',
@@ -14,6 +15,7 @@ export const ApplicationSlice = createSlice({
         preferredPageSize: 20,
         toolbarOpen: true,
         favoriteUrls: [] as string[],
+        autoLatest: false,
     } as ApplicationContext,
     reducers: {
         changeBaseUrl(state, action: PayloadAction<string>) {
@@ -34,8 +36,17 @@ export const ApplicationSlice = createSlice({
             set.delete(action.payload);
             state.favoriteUrls = Array.from(set.values());
         },
+        changeAutoLatest: (state, action) => {
+            state.autoLatest = action.payload;
+        },
     },
 });
 
-export const {changeBaseUrl, setToolbarOpen, setPreferredPageSize, addFavoriteUrl, removeFavoriteUrl} =
-    ApplicationSlice.actions;
+export const {
+    changeBaseUrl,
+    changeAutoLatest,
+    setToolbarOpen,
+    setPreferredPageSize,
+    addFavoriteUrl,
+    removeFavoriteUrl,
+} = ApplicationSlice.actions;
