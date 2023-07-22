@@ -6,4 +6,4 @@ export const routes = [
         path: '/gii',
         element: <Pages.Layout />,
     },
-] as RouteObject[];
+] satisfies RouteObject[];

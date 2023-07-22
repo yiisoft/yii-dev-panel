@@ -6,4 +6,4 @@ export const routes = [
         path: '/open-api',
         element: <Pages.Layout />,
     },
-] as RouteObject[];
+] satisfies RouteObject[];

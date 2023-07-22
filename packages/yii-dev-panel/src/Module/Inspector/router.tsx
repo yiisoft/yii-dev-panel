@@ -110,4 +110,4 @@ export const routes = [
             },
         ],
     },
-] as RouteObject[];
+] satisfies RouteObject[];

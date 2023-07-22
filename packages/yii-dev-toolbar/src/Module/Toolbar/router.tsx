@@ -6,4 +6,4 @@ export const routes = [
         path: '*',
         element: <Pages.Toolbar />,
     },
-] as RouteObject[];
+] satisfies RouteObject[];

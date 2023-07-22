@@ -20,4 +20,4 @@ export const routes = [
         path: 'debug/list',
         element: <Pages.ListPage />,
     },
-] as RouteObject[];
+] satisfies RouteObject[];

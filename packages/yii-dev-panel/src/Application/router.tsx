@@ -10,4 +10,4 @@ export const routes = [
         path: 'shared',
         element: <Pages.SharedPage />,
     },
-] as RouteObject[];
+] satisfies RouteObject[];

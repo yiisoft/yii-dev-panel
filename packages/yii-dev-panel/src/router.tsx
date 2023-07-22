@@ -17,9 +17,9 @@ export function createRouter(modules: ModuleInterface[]) {
                     <DebugToolbar />
                 </Layout>
             ),
-            children: ([] as RouteObject[]).concat(...others.map((module) => module.routes)),
+            children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
-        ...([] as RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
+        ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
     ];
     return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes);
 }

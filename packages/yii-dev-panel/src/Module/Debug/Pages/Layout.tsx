@@ -20,6 +20,9 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
+import {changeAutoLatest} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {
     DebugEntry,
@@ -30,6 +33,7 @@ import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback'
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
+import {EventTypesEnum, useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useServerSentEvents';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
@@ -43,6 +47,7 @@ import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogP
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useSelector} from '@yiisoft/yii-dev-panel/store';
 import clipboardCopy from 'clipboard-copy';
 import * as React from 'react';
 import {HTMLAttributes, useCallback, useEffect, useMemo, useState} from 'react';
@@ -208,6 +213,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
 const Layout = () => {
     const dispatch = useDispatch();
+    const [autoLatest, setAutoLatest] = useState<boolean>(false);
     const debugEntry = useDebugEntry();
     const [searchParams, setSearchParams] = useSearchParams();
     const [getDebugQuery, getDebugQueryInfo] = useLazyGetDebugQuery();
@@ -215,10 +221,16 @@ const Layout = () => {
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
+    const autoLatestState = useSelector((state) => state.application.autoLatest);
 
-    useEffect(() => {
+    const onRefreshHandler = useCallback(() => {
         getDebugQuery();
     }, []);
+    useEffect(onRefreshHandler, [onRefreshHandler]);
+
+    useEffect(() => {
+        setAutoLatest(autoLatestState);
+    }, [autoLatestState]);
 
     useEffect(() => {
         if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
@@ -228,7 +240,7 @@ const Layout = () => {
             }
             changeEntry(entry ?? getDebugQueryInfo.data[0]);
         }
-    }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data, dispatch]);
+    }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data]);
 
     const clearCollectorAndData = () => {
         searchParams.delete('collector');
@@ -313,9 +325,24 @@ const Layout = () => {
         clipboardCopy(result.data.command);
     }, [debugEntry]);
     const onEntryChangeHandler = useCallback(changeEntry, []);
-    const onRefreshHandler = useCallback(() => {
-        getDebugQuery();
+
+    const onUpdatesHandler = useCallback(async (event: MessageEvent) => {
+        const data = JSON.parse(event.data);
+        if (data.type && data.type === EventTypesEnum.DebugUpdated) {
+            const result = await getDebugQuery();
+            if ('data' in result && result.data.length > 0) {
+                changeEntry(result.data[0]);
+            }
+        }
     }, []);
+    useServerSentEvents(onUpdatesHandler, autoLatest);
+
+    const autoLatestHandler = () => {
+        setAutoLatest((prev) => {
+            dispatch(changeAutoLatest(!prev));
+            return !prev;
+        });
+    };
 
     if (getDebugQueryInfo.isLoading) {
         return <FullScreenCircularProgress />;
@@ -346,7 +373,6 @@ const Layout = () => {
             />
         );
     }
-
     return (
         <>
             <Breadcrumbs sx={{my: 2}}>
@@ -416,6 +442,15 @@ const Layout = () => {
                         </span>
                     </Tooltip>
                 )}
+                {/*TODO add documentation and description how it work and how add it to php-fpm / road-runner*/}
+                <Tooltip title="Switches to the latest debug entry automatically (delay 1s). Needs server-sent events suppport.">
+                    <span>
+                        <FormControlLabel
+                            control={<Switch checked={autoLatest} value={autoLatest} onChange={autoLatestHandler} />}
+                            label="Latest auto"
+                        />
+                    </span>
+                </Tooltip>
             </Stack>
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
