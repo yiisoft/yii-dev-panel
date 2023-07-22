@@ -28,6 +28,7 @@ export const useServerSentEvents = (onMessage: (event: MessageEvent<EventTypes>)
 
         return () => {
             ServerSentEventsObserver.unsubscribe(onMessage);
+            ServerSentEventsObserver.close();
         };
-    }, [onMessage]);
+    }, [onMessage, subscribe]);
 };
