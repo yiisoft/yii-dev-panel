@@ -60,7 +60,7 @@
     "workbox-streams": "^6.5.4"
   },
   "scripts": {
-    "start": "BROWSER=none vite",
+    "start": "vite",
     "build": "npm run build:prod",
     "build:dev": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
     "build:prod": "rm -r dist; tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build",

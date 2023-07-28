@@ -28,10 +28,10 @@
     "vite": "^4.3.9"
   },
   "scripts": {
-    "start": "PORT=3002 BROWSER=none vite",
+    "start": "vite --port=3002",
     "build": "rm -r dist; tsc && vite build",
     "test": "vite test",
-    "serve:dev": "npm run build && BROWSER=none vite preview --port 3002"
+    "serve:dev": "npm run build && vite preview --port 3002"
   },
   "eslintConfig": {
     "extends": [
