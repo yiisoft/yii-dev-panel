@@ -52,7 +52,7 @@ const pages = [
     },
     {name: 'Open API', link: '/open-api'},
     // Uncomment to debug shared components
-    // {name: 'Shared', link: '/shared'},
+    {name: 'Shared', link: '/shared'},
 ];
 const StyledLink = styled(Link)(({theme}) => {
     return {
