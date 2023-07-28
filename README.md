@@ -32,6 +32,14 @@ The main application.
 
 The `app` application requires both `sdk` and `toolbar` packages.
 
+### Examples
+
+#### [`examples/remote-panel`](examples/remote-panel)
+
+Example of remote components that may be used as a custom panel.
+
+Read more about how to work with remote components [here](docs/shared_components.md).
+
 #### Dependency graph:
 
 ```mermaid
