@@ -4,7 +4,7 @@
 
 Remote components are components that are located in a remote repository. 
 They are not installed in the project, but are used as if they were provided from the backend. 
-This allows feature allows you to create custom panels for the `yii-dev-panel` and render them as native components.
+This feature allows you to create custom panels for the `yii-dev-panel` and render them as native components.
 
 ### How to test
 
