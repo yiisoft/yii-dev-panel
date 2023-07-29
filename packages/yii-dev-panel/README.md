@@ -90,7 +90,7 @@ There are a few ways to use the Yii Dev Panel:
 To use the application you need to build the app and specify the URL your app running on.
 Connect the apps and serve the built app any way you want: nginx, apache, node, php built-in server.
 
-### PWA
+### PWA (Progressive Web Application)
 
 Online-mode or as standalone application.
 
@@ -105,6 +105,52 @@ Open https://yiisoft.github.io/yii-dev-panel
     4. Use Yii dev panel
 
 Both options also work with mobile phones.
+
+## Contributing
+
+### Prerequisites
+
+First thing that you need is [`yiisoft/yii-debug-api`](https://github.com/yiisoft/yii-debug-api) running somewhere.
+
+For example, you can clone [`yiisoft/demo`](https://github.com/yiisoft/demo) and serve `blog-api` or `blog`.
+
+```shell
+git clone git@github.com:yiisoft/demo demo
+```
+
+```shell
+cd demo/blog-api
+```
+
+```shell
+composer install
+```
+
+```shell
+./yii serve
+```
+
+#### Installation
+
+```shell
+git clone git@github.com:yiisoft/yii-dev-panel yii-dev-panel
+```
+```shell
+npm install
+```
+
+All necessary dependencies are now installed and ready to use. 
+
+Serve `yii-dev-panel`
+
+```shell
+cd packages/yii-dev-panel
+```
+```shell
+npm start
+```
+
+`yii-dev-panel` is now serving on http://localhost:3000
 
 ## Screenshot
 
