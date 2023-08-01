@@ -32,6 +32,14 @@ The main application.
 
 The `app` application requires both `sdk` and `toolbar` packages.
 
+### Examples
+
+#### [`examples/remote-panel`](examples/remote-panel)
+
+Example of remote components that may be used as a custom panel.
+
+Read more about how to work with remote components [here](docs/shared_components.md).
+
 #### Dependency graph:
 
 ```mermaid
@@ -45,45 +53,4 @@ flowchart LR
 ## Additional docs:
 
 - [How to use Local registry (`verdaccio`)](docs/local_registry.md)
-
-## Contributing
-
-0. First thing that you need is [`yiisoft/yii-debug-api`](https://github.com/yiisoft/yii-debug-api) running somewhere.
-
-   For example, you can clone [`yiisoft/demo`](https://github.com/yiisoft/demo) and serve `blog-api` or `blog`.
-
-   ```shell
-   git clone git@github.com:yiisoft/demo demo
-   ```
-
-   ```shell
-   cd demo/blog-api
-   ```
-
-   ```shell
-   composer install
-   ```
-
-   ```shell
-   ./yii serve
-   ```
-
-1. Clone the project
-
-   ```shell
-   git clone git@github.com:yiisoft/yii-dev-panel yii-dev-panel
-   ```
-
-2. Install dependencies
-
-   ```shell
-   npm install
-   ```
-
-3. Run dev server
-
-   ```shell
-   npm start
-   ```
-
-4. Feel free to make Pull Request
+- [How to work with remote components](docs/shared_components.md)
