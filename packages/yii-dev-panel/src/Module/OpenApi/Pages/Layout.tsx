@@ -1,13 +1,13 @@
 import {EmojiObjects, Settings} from '@mui/icons-material';
 import {TabContext, TabPanel} from '@mui/lab';
-import {IconButton, Stack, Tab, Tabs, TextField, Typography, useTheme} from '@mui/material';
+import {IconButton, Stack, Tab, Tabs, Typography, useTheme} from '@mui/material';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {SettingsDialog} from '@yiisoft/yii-dev-panel/Module/OpenApi/Component/SettingsDialog';
 import {useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
 import '@yiisoft/yii-dev-panel/Module/OpenApi/Pages/dark.css';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
-// import SwaggerUI from 'swagger-ui-react';
+import SwaggerUI from 'swagger-ui-react';
 import 'swagger-ui-react/swagger-ui.css';
 
 const NoEntries = React.memo(() => {
@@ -59,14 +59,14 @@ export const Layout = () => {
                             <Settings />
                         </IconButton>
                     </Stack>
-                    <TextField disabled value={apiEntries[tab]} />
+                    {/*<TextField disabled value={apiEntries[tab]} />*/}
                     {Object.keys(apiEntries).length === 0 ? (
                         <NoEntries />
                     ) : (
                         <>
                             {Object.entries(apiEntries).map(([name, url], index) => (
                                 <TabPanel key={index} value={name} className={theme.palette.mode}>
-                                    {/*<SwaggerUI url={url} />*/}
+                                    <SwaggerUI url={url} />
                                 </TabPanel>
                             ))}
                         </>
