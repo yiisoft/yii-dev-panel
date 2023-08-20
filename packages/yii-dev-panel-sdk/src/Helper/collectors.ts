@@ -13,4 +13,5 @@ export enum CollectorsMap {
     ConsoleAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\ConsoleAppInfoCollector',
     CommandCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\CommandCollector',
     MiddlewareCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector',
+    VarDumperCollector = 'Yiisoft\\VarDumper\\Debug\\VarDumperCollector',
 }
