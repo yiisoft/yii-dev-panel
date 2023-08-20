@@ -15,13 +15,12 @@ type VarDumperPanelProps = {
 };
 
 export const VarDumperPanel = ({data}: VarDumperPanelProps) => {
-    console.log('VarDumperPanel', data);
     return (
         <>
-            {!data || data['var-dumper'].length === 0 ? (
+            {!data || !('var-dumper' in data) || data['var-dumper'].length === 0 ? (
                 <>Nothing here</>
             ) : (
-                [].concat(data['var-dumper'], data['var-dumper']).map((variable, index) => (
+                data['var-dumper'].map((variable, index) => (
                     <Box border={0} my={1} p={1}>
                         <JsonRenderer value={variable.variable} depth={10} />
                         <Link
