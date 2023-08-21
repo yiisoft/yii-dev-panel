@@ -20,6 +20,16 @@
   "publishConfig": {
     "access": "public"
   },
+  "scripts": {
+    "start": "vite",
+    "build": "npm run build:prod",
+    "build:dev": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
+    "build:prod": "rm -r dist; tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build",
+    "test": "vite test",
+    "serve:dev": "vite preview",
+    "serve:prod": "VITE_ENV=github vite preview",
+    "generate-service-worker": "tsc && vite build && yes | cp -rf build/service-worker.js* build/static public"
+  },
   "dependencies": {
     "@originjs/vite-plugin-federation": "^1.2.3",
     "@welldone-software/why-did-you-render": "^7.0.1",
@@ -58,16 +68,6 @@
     "workbox-routing": "^6.5.4",
     "workbox-strategies": "^6.5.4",
     "workbox-streams": "^6.5.4"
-  },
-  "scripts": {
-    "start": "vite",
-    "build": "npm run build:prod",
-    "build:dev": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
-    "build:prod": "rm -r dist; tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build",
-    "test": "vite test",
-    "serve:dev": "vite preview",
-    "serve:prod": "VITE_ENV=github vite preview",
-    "generate-service-worker": "tsc && vite build && yes | cp -rf build/service-worker.js* build/static public"
   },
   "browserslist": {
     "production": [
