@@ -15,6 +15,9 @@ export type DebugEntry = {
     service?: {
         total: number;
     };
+    'var-dumper'?: {
+        total: number;
+    };
     validator?: {
         total: number;
         valid: number;
