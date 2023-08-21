@@ -6,7 +6,7 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig(async ({command}) => ({
     server: {
         open: false,
-        port: 3000,
+        port: 3001,
         fs: {
             allow: ['.'],
         },
