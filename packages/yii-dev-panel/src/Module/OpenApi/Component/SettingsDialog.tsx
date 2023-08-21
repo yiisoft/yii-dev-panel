@@ -27,7 +27,7 @@ type SettingsDialogProps = {
     onClose: () => void;
 };
 export const SettingsDialog = (props: SettingsDialogProps) => {
-    const [selectedEntry, setSelectedEntry] = React.useState(Config.backendUrl);
+    const [selectedEntry, setSelectedEntry] = React.useState(Config.backendUrl + '/docs/openapi.json');
     const dispatch = useDispatch();
 
     const apiEntries = useOpenApiEntries();

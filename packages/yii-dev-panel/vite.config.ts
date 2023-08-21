@@ -31,7 +31,8 @@ export default defineConfig(async ({command}) => {
             VitePWA({
                 // injectRegister: 'script',
                 strategies: 'injectManifest',
-                srcDir: 'src',
+                // Fix symlink for Windows
+                srcDir: './../yii-dev-panel-sdk/src/',
                 filename: 'service-worker.ts',
                 devOptions: {
                     enabled: process.env.NODE_ENV === 'development',

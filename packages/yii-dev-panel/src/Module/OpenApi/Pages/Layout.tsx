@@ -1,6 +1,6 @@
 import {EmojiObjects, Settings} from '@mui/icons-material';
-import {TabContext, TabPanel} from '@mui/lab';
-import {IconButton, Stack, Tab, Tabs, TextField, Typography, useTheme} from '@mui/material';
+import {TabContext} from '@mui/lab';
+import {IconButton, Stack, Tab, Tabs, Typography, useTheme} from '@mui/material';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {SettingsDialog} from '@yiisoft/yii-dev-panel/Module/OpenApi/Component/SettingsDialog';
 import {useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
@@ -59,16 +59,17 @@ export const Layout = () => {
                             <Settings />
                         </IconButton>
                     </Stack>
-                    <TextField disabled value={apiEntries[tab]} />
+                    {/*<TextField disabled value={apiEntries[tab]} />*/}
                     {Object.keys(apiEntries).length === 0 ? (
                         <NoEntries />
                     ) : (
                         <>
-                            {Object.entries(apiEntries).map(([name, url], index) => (
-                                <TabPanel key={index} value={name} className={theme.palette.mode}>
-                                    {/*<SwaggerUI url={url} />*/}
-                                </TabPanel>
-                            ))}
+                            Temporary disabled
+                            {/*{Object.entries(apiEntries).map(([name, url], index) => (*/}
+                            {/*    <TabPanel key={index} value={name} className={theme.palette.mode}>*/}
+                            {/*<SwaggerUI url={url} />*/}
+                            {/*</TabPanel>*/}
+                            {/*))}*/}
                         </>
                     )}
                 </Stack>

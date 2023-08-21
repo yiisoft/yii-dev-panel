@@ -15,6 +15,8 @@ export const getCollectedCountByCollector = (collector: CollectorsMap, data: Deb
             return Number(data.logger?.total);
         case CollectorsMap.ServiceCollector:
             return Number(data.service?.total);
+        case CollectorsMap.VarDumperCollector:
+            return Number(data['var-dumper']?.total);
         case CollectorsMap.ValidatorCollector:
             return Number(data.validator?.total) + Number(data.validator?.invalid) + Number(data.validator?.valid);
         case CollectorsMap.MiddlewareCollector:
@@ -29,6 +31,8 @@ export const getCollectedCountByCollector = (collector: CollectorsMap, data: Deb
             return Number(data.http?.count);
         case CollectorsMap.HttpStreamCollector:
             return Number(data.http_stream?.length);
+        case CollectorsMap.MailerCollector:
+            return Number(data.mailer?.total);
         case CollectorsMap.FilesystemStreamCollector:
             return Object.values(data.fs_stream ?? []).reduce((acc, value) => acc + value, 0);
         case CollectorsMap.ConsoleAppInfoCollector:
