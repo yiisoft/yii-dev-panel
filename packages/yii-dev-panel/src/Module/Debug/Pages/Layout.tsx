@@ -44,6 +44,7 @@ import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteCompone
 import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
 import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
 import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
+import {MailerPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MailerPanel';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
@@ -58,6 +59,12 @@ import {useSearchParams} from 'react-router-dom';
 
 function parseCollectorName(text: string) {
     return text
+        .replace('Yiisoft\\Assets\\Debug\\', '')
+        .replace('Yiisoft\\Db\\Debug\\', '')
+        .replace('Yiisoft\\Mailer\\Debug\\', '')
+        .replace('Yiisoft\\Validator\\Debug\\', '')
+        .replace('Yiisoft\\Yii\\View\\Debug\\', '')
+        .replace('Yiisoft\\Yii\\Queue\\Debug\\', '')
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Web\\', '')
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Console\\', '')
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Database\\', '')
@@ -74,6 +81,7 @@ const backendUrl = Config.backendUrl;
 
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages: {[name: string]: (data: any) => JSX.Element} = {
+        [CollectorsMap.MailerCollector]: (data: any) => <MailerPanel data={data} />,
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
