@@ -30,14 +30,20 @@ const pages = [
     {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
     {
+        name: 'Configuration',
+        link: '/debug',
+        items: [
+            {name: 'Parameters', link: '/inspector/parameters'},
+            {name: 'Definitions', link: '/inspector/definitions'},
+            {name: 'Container', link: '/inspector/container'},
+            {name: 'Events', link: '/inspector/events'},
+            {name: 'Routes', link: '/inspector/routes'},
+        ],
+    },
+    {
         name: 'Inspector',
         link: '#',
         items: [
-            {name: 'Routes', link: '/inspector/routes'},
-            {name: 'Events', link: '/inspector/events'},
-            {name: 'Parameters', link: '/inspector/parameters'},
-            {name: 'Configuration', link: '/inspector/configuration'},
-            {name: 'Container', link: '/inspector/container'},
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
             {name: 'File Explorer', link: '/inspector/files'},

@@ -59,7 +59,7 @@ const columns: GridColDef[] = [
         renderCell: (params: GridRenderCellParams) => <TempComponent {...params} />,
     },
 ];
-export const ConfigurationPage = () => {
+export const DefinitionsPage = () => {
     const {data, isLoading} = useGetConfigurationQuery('di');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [searchParams, setSearchParams] = useSearchParams();
@@ -98,7 +98,7 @@ export const ConfigurationPage = () => {
 
     return (
         <>
-            <h2>Configuration</h2>
+            <h2>Definitions</h2>
             <FilterInput value={searchString} onChange={onChangeHandler} />
             <LoaderContextProvider loader={handleLoadObject}>
                 <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row.id} columns={columns} />

@@ -2,10 +2,10 @@ export {AnalysePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Analyse
 export {CachePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CachePage';
 export {CommandsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CommandsPage';
 export {ComposerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ComposerPage';
-export {ConfigurationPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ConfigurationPage';
 export {ContainerEntryPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerEntryPage';
 export {ContainerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerPage';
 export {DatabasePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DatabasePage';
+export {DefinitionsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DefinitionsPage';
 export {EventsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/EventsPage';
 export {FileExplorerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/FileExplorerPage';
 export * as GitPages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Git';

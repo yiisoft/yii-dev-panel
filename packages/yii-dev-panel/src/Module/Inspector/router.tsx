@@ -13,10 +13,10 @@ export const routes = [
                 element: <Pages.ParametersPage />,
             },
             {
-                path: 'configuration',
+                path: 'definitions',
                 element: (
                     <DataContextProvider>
-                        <Pages.ConfigurationPage />
+                        <Pages.DefinitionsPage />
                     </DataContextProvider>
                 ),
             },
