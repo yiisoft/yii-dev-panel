@@ -1,6 +1,7 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {Layout} from '@yiisoft/yii-dev-panel-sdk/Pages/Layout';
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
+import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
 import {DebugToolbar} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DebugToolbar';
 import {createBrowserRouter, createHashRouter, RouteObject} from 'react-router-dom';
 
@@ -20,6 +21,14 @@ export function createRouter(modules: ModuleInterface[]) {
             children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
         ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
+        {
+            path: '*',
+            element: (
+                <Layout>
+                    <NotFoundPage />
+                </Layout>
+            ),
+        },
     ];
     return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes);
 }
