@@ -16,6 +16,7 @@ const initialState: State = {
     parameters: [],
     results: [],
 };
+
 const setFiles = createAction<any>('setFiles');
 const setOperations = createAction<any>('setOperations');
 const setParameters = createAction<any>('setParameters');
@@ -65,9 +66,9 @@ export const ContextProvider = ({children}: any) => {
         setResults: (results: any[]) => {
             dispatch(setResults(results));
         },
-        reset: ()=>{
+        reset: () => {
             dispatch(reset());
-        }
+        },
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;

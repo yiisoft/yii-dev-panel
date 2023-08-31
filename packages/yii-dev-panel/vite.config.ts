@@ -1,6 +1,6 @@
 import federation from '@originjs/vite-plugin-federation';
 import react from '@vitejs/plugin-react';
-import {defineConfig, splitVendorChunkPlugin} from 'vite';
+import {defineConfig} from 'vite';
 import {VitePWA} from 'vite-plugin-pwa';
 import svgrPlugin from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
@@ -51,7 +51,6 @@ export default defineConfig(async ({command}) => {
                 remotes: {},
                 shared: sharedModules,
             }),
-            splitVendorChunkPlugin()
         ],
         base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : './',
         build: {
