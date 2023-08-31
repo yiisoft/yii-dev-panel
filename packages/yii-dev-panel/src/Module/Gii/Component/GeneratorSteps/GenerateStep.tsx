@@ -89,19 +89,19 @@ function FileAction({file, generator}: {file: GiiFile; generator: GiiGenerator})
                 <ListItemText
                     primary={file.relativePath}
                     secondary={
-                        <Typography component="span" color={matchSeverityByFileState(file.state) + '.main'}>
+                        <Typography component='span' color={matchSeverityByFileState(file.state) + '.main'}>
                             {getStateLabel(file.state)}
                         </Typography>
                     }
                 />
                 <ListItemSecondaryAction>
-                    <Box mr={2} display="inline-block">
+                    <Box mr={2} display='inline-block'>
                         {file.state === FileStateEnum.NOT_EXIST ? (
-                            <Button size="large" variant="contained" onClick={handlePreviewDialogOpen}>
+                            <Button size='large' variant='contained' onClick={handlePreviewDialogOpen}>
                                 Preview
                             </Button>
                         ) : file.state === FileStateEnum.PRESENT_DIFFERENT ? (
-                            <Button size="large" variant="contained" onClick={handleDiff}>
+                            <Button size='large' variant='contained' onClick={handleDiff}>
                                 Diff
                             </Button>
                         ) : null}
@@ -134,7 +134,6 @@ export function GenerateStep({generator, onComplete}: StepProps) {
     // TODO: add validation
     // const validationSchema = createValidationSchema(context.files);
 
-    console.log('context', context);
     const defaultValues = useMemo(() => {
         return Object.fromEntries(context.files.map((file) => [file.id, String(file.operation)]));
     }, [context.files]);
@@ -166,27 +165,25 @@ export function GenerateStep({generator, onComplete}: StepProps) {
     }
 
     return (
-        <>
-            <FormProvider {...form}>
-                <Box component="form" onReset={form.reset as any} onSubmit={form.handleSubmit(generateHandler)} my={2}>
-                    <List subheader={<ListSubheader>Operations</ListSubheader>}>
-                        {context.files.map((file, index) => (
-                            <FileAction key={index} file={file} generator={generator} />
-                        ))}
-                    </List>
+        <FormProvider {...form}>
+            <Box component='form' onReset={form.reset as any} onSubmit={form.handleSubmit(generateHandler)} my={2}>
+                <List subheader={<ListSubheader>Operations</ListSubheader>}>
+                    {context.files.map((file, index) => (
+                        <FileAction key={index} file={file} generator={generator} />
+                    ))}
+                </List>
 
-                    <Box my={2}>
-                        <ButtonGroup>
-                            <Button type="submit" name="generate" variant="contained">
-                                Generate
-                            </Button>
-                            <Button type="reset" color="warning">
-                                Reset
-                            </Button>
-                        </ButtonGroup>
-                    </Box>
+                <Box my={2}>
+                    <ButtonGroup>
+                        <Button type='submit' name='generate' variant='contained'>
+                            Generate
+                        </Button>
+                        <Button type='reset' color='warning'>
+                            Reset
+                        </Button>
+                    </ButtonGroup>
                 </Box>
-            </FormProvider>
-        </>
+            </Box>
+        </FormProvider>
     );
 }

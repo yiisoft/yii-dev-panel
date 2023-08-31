@@ -20,6 +20,7 @@ const setFiles = createAction<any>('setFiles');
 const setOperations = createAction<any>('setOperations');
 const setParameters = createAction<any>('setParameters');
 const setResults = createAction<any>('setResults');
+const reset = createAction<void>('reset');
 
 export const Reducer = createReducer(initialState, (builder) => {
     builder
@@ -34,6 +35,12 @@ export const Reducer = createReducer(initialState, (builder) => {
         })
         .addCase(setResults, (state, action) => {
             state.results = action.payload as any;
+        })
+        .addCase(reset, (state, action) => {
+            state.results = initialState.results;
+            state.parameters = initialState.parameters;
+            state.operations = initialState.operations;
+            state.files = initialState.files;
         });
 });
 
@@ -58,6 +65,9 @@ export const ContextProvider = ({children}: any) => {
         setResults: (results: any[]) => {
             dispatch(setResults(results));
         },
+        reset: ()=>{
+            dispatch(reset());
+        }
     };
 
     return <Context.Provider value={value}>{children}</Context.Provider>;

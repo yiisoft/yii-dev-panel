@@ -7,7 +7,7 @@ import {StepProps} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSt
 import {mapErrorsToForm} from '@yiisoft/yii-dev-panel/Module/Gii/Component/errorMapper';
 import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
 import * as React from 'react';
-import {useContext} from 'react';
+import {useContext, useEffect} from 'react';
 import {FieldValues, FormProvider, useForm} from 'react-hook-form';
 
 export function PreviewStep({generator, onComplete}: StepProps) {
@@ -19,6 +19,11 @@ export function PreviewStep({generator, onComplete}: StepProps) {
         mode: 'onBlur',
         resolver: yupResolver(validationSchema),
     });
+
+    useEffect(() => {
+        form.reset();
+    }, [generator]);
+
     const [previewQuery] = usePostPreviewMutation();
 
     async function previewHandler(data: FieldValues) {
@@ -44,30 +49,24 @@ export function PreviewStep({generator, onComplete}: StepProps) {
     }
 
     return (
-        <>
-            <FormProvider {...form}>
-                <Box component="form" onReset={form.reset} onSubmit={form.handleSubmit(previewHandler)} my={2}>
-                    {Object.entries(attributes).map(([attributeName, attribute], index) => {
-                        return (
-                            <React.Fragment key={index}>
-                                <Box mb={1}>
-                                    <FormInput attributeName={attributeName} attribute={attribute} />
-                                </Box>
-                            </React.Fragment>
-                        );
-                    })}
-                    <Box my={2}>
-                        <ButtonGroup>
-                            <Button type="submit" name="preview" variant="contained">
-                                Preview
-                            </Button>
-                            <Button type="reset" color="warning">
-                                Reset
-                            </Button>
-                        </ButtonGroup>
-                    </Box>
+        <FormProvider {...form}>
+            <Box component="form" onReset={form.reset} onSubmit={form.handleSubmit(previewHandler)} my={2}>
+                {Object.entries(attributes).map(([attributeName, attribute], index) =>
+                    <Box mb={1} key={attributeName}>
+                        <FormInput attributeName={attributeName} attribute={attribute} />
+                    </Box>,
+                )}
+                <Box my={2}>
+                    <ButtonGroup>
+                        <Button type='submit' name='preview' variant='contained'>
+                            Preview
+                        </Button>
+                        <Button type='reset' color='warning'>
+                            Reset
+                        </Button>
+                    </ButtonGroup>
                 </Box>
-            </FormProvider>
-        </>
+            </Box>
+        </FormProvider>
     );
 }

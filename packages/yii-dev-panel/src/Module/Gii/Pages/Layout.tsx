@@ -11,6 +11,7 @@ import {GeneratorStepper} from '@yiisoft/yii-dev-panel/Module/Gii/Component/Gene
 import {useEffect, useMemo, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {useSearchParams} from 'react-router-dom';
+import {ContextProvider} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
 
 const Layout = () => {
     const [selectedGenerator, setSelectedGenerator] = useState<GiiGenerator | null>(null);
@@ -70,7 +71,9 @@ const Layout = () => {
                 <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                     {selectedGenerator ? (
                         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
-                            <GeneratorStepper generator={selectedGenerator} />
+                            <ContextProvider>
+                                <GeneratorStepper generator={selectedGenerator} />
+                            </ContextProvider>
                         </ErrorBoundary>
                     ) : (
                         <InfoBox
