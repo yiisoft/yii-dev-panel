@@ -41,6 +41,7 @@ import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/co
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
+import {DatabasePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/DatabasePanel';
 import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
 import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
 import {FilesystemPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/FilesystemPanel';
@@ -85,6 +86,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages: {[name: string]: (data: any) => JSX.Element} = {
         [CollectorsMap.MailerCollector]: (data: any) => <MailerPanel data={data} />,
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
+        [CollectorsMap.DatabaseCollector]: (data: any) => <DatabasePanel data={data} />,
         [CollectorsMap.FilesystemStreamCollector]: (data: any) => <FilesystemPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
