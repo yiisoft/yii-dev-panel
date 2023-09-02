@@ -54,6 +54,12 @@ export default defineConfig(async ({command}) => {
         ],
         base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : './',
         build: {
+            rollupOptions: {
+                output: {
+                    assetFileNames: 'bundle.css',
+                    entryFileNames: 'bundle.js',
+                },
+            },
             minify: 'terser',
             outDir: 'dist',
             target: 'esnext',
