@@ -1,5 +1,6 @@
 import {OpenInNew} from '@mui/icons-material';
 import {IconButton, Tooltip, useMediaQuery} from '@mui/material';
+import Typography from '@mui/material/Typography';
 import {DataType, JsonViewer, JsonViewerOnChange, JsonViewerTheme} from '@textea/json-viewer';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {isClassString} from '@yiisoft/yii-dev-panel-sdk/Helper/classMatcher';
@@ -58,18 +59,17 @@ export const JsonRenderer = React.memo(
                         is: (value: any) => typeof value === 'string' && isClassString(value),
                         Component: (props) => {
                             return (
-                                <>
+                                <Typography sx={{display: 'inline', wordBreak: 'break-word'}}>
                                     {props.value}
                                     <Tooltip title="Examine as a container entry">
                                         <IconButton
                                             size="small"
-                                            target="_blank"
                                             href={'/inspector/container/view?class=' + props.value}
                                         >
                                             <OpenInNew fontSize="small" />
                                         </IconButton>
                                     </Tooltip>
-                                </>
+                                </Typography>
                             );
                         },
                     },

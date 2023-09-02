@@ -49,6 +49,7 @@ import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogP
 import {MailerPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MailerPanel';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
 import {ServicesPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ServicesPanel';
+import {TimelinePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/TimelinePanel';
 import {VarDumperPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/VarDumperPanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
@@ -87,6 +88,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
     const pages: {[name: string]: (data: any) => JSX.Element} = {
         [CollectorsMap.MailerCollector]: (data: any) => <MailerPanel data={data} />,
         [CollectorsMap.ServiceCollector]: (data: any) => <ServicesPanel data={data} />,
+        [CollectorsMap.TimelineCollector]: (data: any) => <TimelinePanel data={data} />,
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
         [CollectorsMap.DatabaseCollector]: (data: any) => <DatabasePanel data={data} />,
         [CollectorsMap.FilesystemStreamCollector]: (data: any) => <FilesystemPanel data={data} />,
@@ -377,7 +379,7 @@ const Layout = () => {
                         </Typography>
                         <Typography>
                             See more information on the link{' '}
-                            <Link target="_blank" href="https://github.com/yiisoft/yii-debug">
+                            <Link href="https://github.com/yiisoft/yii-debug">
                                 https://github.com/yiisoft/yii-debug
                             </Link>
                             .

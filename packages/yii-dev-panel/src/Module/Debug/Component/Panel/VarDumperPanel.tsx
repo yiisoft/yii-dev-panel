@@ -23,10 +23,7 @@ export const VarDumperPanel = ({data}: VarDumperPanelProps) => {
                 data['var-dumper'].map((variable, index) => (
                     <Box border={0} my={1} p={1}>
                         <JsonRenderer value={variable.variable} depth={10} />
-                        <Link
-                            href={`/inspector/files?path=${parseFilePathWithLineAnchor(variable.line)}`}
-                            target="_blank"
-                        >
+                        <Link href={`/inspector/files?path=${parseFilePathWithLineAnchor(variable.line)}`}>
                             {variable.line}
                             <FilePresent fontSize="small" />
                         </Link>

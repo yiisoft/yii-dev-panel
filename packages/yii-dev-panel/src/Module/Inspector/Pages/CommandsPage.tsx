@@ -75,7 +75,7 @@ export const CommandsPage = () => {
                         </Typography>
                         <Typography>
                             See more information on the link{' '}
-                            <Link target="_blank" href="https://github.com/yiisoft/yii-debug-api">
+                            <Link href="https://github.com/yiisoft/yii-debug-api">
                                 https://github.com/yiisoft/yii-debug-api
                             </Link>
                             .

@@ -29,11 +29,7 @@ const Line = ({event}: {event: EventType}) => {
                 </Typography>
             </Tooltip>
             <Tooltip title="Open in File Explorer">
-                <IconButton
-                    size="small"
-                    target="_blank"
-                    href={`/inspector/files?path=${parseFilePathWithLineAnchor(event.line)}`}
-                >
+                <IconButton size="small" href={`/inspector/files?path=${parseFilePathWithLineAnchor(event.line)}`}>
                     <OpenInNew fontSize="small" />
                 </IconButton>
             </Tooltip>

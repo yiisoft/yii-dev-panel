@@ -120,7 +120,7 @@ export function IndexPage() {
                                 <ListItem key={index}>
                                     <ListItemText>{url}</ListItemText>
                                     <ListItemSecondaryAction>
-                                        <IconButton target="_blank" href={url}>
+                                        <IconButton href={url}>
                                             <OpenInNew />
                                         </IconButton>
                                         <IconButton

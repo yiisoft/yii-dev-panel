@@ -4,6 +4,7 @@ export enum CollectorsMap {
     EventCollector = 'Yiisoft\\Yii\\Debug\\Collector\\EventCollector',
     ExceptionCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ExceptionCollector',
     ServiceCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ServiceCollector',
+    TimelineCollector = 'Yiisoft\\Yii\\Debug\\Collector\\TimelineCollector',
     ValidatorCollector = 'Yiisoft\\Validator\\Debug\\ValidatorCollector',
     DatabaseCollector = 'Yiisoft\\Db\\Debug\\DatabaseCollector',
     QueueCollector = 'Yiisoft\\Queue\\Debug\\QueueCollector',

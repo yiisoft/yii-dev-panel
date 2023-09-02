@@ -12,7 +12,7 @@ import {
     Typography,
 } from '@mui/material';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
-import {parseFilename, parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {parseFilePath, parseFilename} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 import {InspectorFileContent, useLazyGetFilesQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useEffect, useState} from 'react';
 
@@ -60,7 +60,6 @@ export const ExceptionPreview = (props: ExceptionPreview) => {
                             <Tooltip title="Open in File Explorer">
                                 <Button
                                     size="small"
-                                    target="_blank"
                                     fullWidth
                                     href={`/inspector/files?class=${parseFilePath(props.class)}`}
                                     endIcon={<OpenInNew fontSize="small" />}
@@ -71,7 +70,6 @@ export const ExceptionPreview = (props: ExceptionPreview) => {
                             <Tooltip title="Open in File Explorer">
                                 <Button
                                     size="small"
-                                    target="_blank"
                                     fullWidth
                                     href={`/inspector/files?path=${parseFilePath(props.file)}#L${props.line}`}
                                     endIcon={<OpenInNew fontSize="small" />}
