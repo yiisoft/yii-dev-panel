@@ -8,6 +8,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary, {AccordionSummaryProps} from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {formatMillisecondsAsDuration} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import React, {SyntheticEvent, useState} from 'react';
 
 const Accordion = styled((props: AccordionProps) => <MuiAccordion disableGutters elevation={0} square {...props} />)(
@@ -107,7 +108,7 @@ function getQueryTime(actions: QueryAction[]) {
     const start = actions.find((a) => a.action === 'query.start');
     const end = actions.find((a) => a.action === 'query.end');
 
-    return `${((end.time - start.time) * 1000).toFixed(1)} ms`;
+    return formatMillisecondsAsDuration(end.time - start.time);
 }
 
 export const DatabasePanel = ({data}: DatabasePanelProps) => {
