@@ -9,9 +9,9 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import {isClassString} from '@yiisoft/yii-dev-panel-sdk/Helper/classMatcher';
+import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {toObjectString} from '@yiisoft/yii-dev-panel-sdk/Helper/objectString';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
-import format from 'date-fns/format';
 
 type Item = [number, number, string] | [number, number, string, string];
 type TimelinePanelProps = {
@@ -28,7 +28,7 @@ export const TimelinePanel = ({data}: TimelinePanelProps) => {
                 <TimelineItem key={index}>
                     <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                         <Tooltip title={row[0]}>
-                            <Typography component="span">{format(new Date(row[0]), 'HH:mm:ss.SSSS')}</Typography>
+                            <Typography component="span">{formatMicrotime(row[0])}</Typography>
                         </Tooltip>
                     </TimelineOppositeContent>
                     <TimelineSeparator>

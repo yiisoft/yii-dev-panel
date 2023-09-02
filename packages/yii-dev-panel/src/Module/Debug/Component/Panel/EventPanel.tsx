@@ -8,8 +8,8 @@ import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {IconButton, Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import {parseFilePathWithLineAnchor, parseFilename} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
-import format from 'date-fns/format';
 
 type EventType = {
     event: string;
@@ -50,7 +50,7 @@ export const EventPanel = (props: EventTimelineProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={event.time}>
-                                <Typography component="span">{format(event.time, 'HH:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{formatMicrotime(event.time)}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>

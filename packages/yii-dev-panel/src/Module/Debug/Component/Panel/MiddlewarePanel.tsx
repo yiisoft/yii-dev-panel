@@ -7,6 +7,7 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
+import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
 import format from 'date-fns/format';
 
@@ -41,7 +42,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'HH:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{formatMicrotime(middleware.time)}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
