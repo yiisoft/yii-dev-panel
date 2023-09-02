@@ -38,7 +38,7 @@ export const JsonRenderer = React.memo(
                 groupArraysAfterLength={50}
                 theme={mode}
                 style={{
-                    height: '100%',
+                    // height: '100%',
                     width: '100%',
                 }}
                 collapseStringsAfterLength={50}

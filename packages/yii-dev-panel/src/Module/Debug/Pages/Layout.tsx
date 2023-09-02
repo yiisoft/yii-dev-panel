@@ -48,6 +48,7 @@ import {FilesystemPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Pan
 import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
 import {MailerPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MailerPanel';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
+import {RequestPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/RequestPanel';
 import {ServicesPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ServicesPanel';
 import {TimelinePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/TimelinePanel';
 import {VarDumperPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/VarDumperPanel';
@@ -92,6 +93,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
         [CollectorsMap.DatabaseCollector]: (data: any) => <DatabasePanel data={data} />,
         [CollectorsMap.FilesystemStreamCollector]: (data: any) => <FilesystemPanel data={data} />,
+        [CollectorsMap.RequestCollector]: (data: any) => <RequestPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
         [CollectorsMap.ExceptionCollector]: (data: any) => <ExceptionPanel exceptions={data} />,
