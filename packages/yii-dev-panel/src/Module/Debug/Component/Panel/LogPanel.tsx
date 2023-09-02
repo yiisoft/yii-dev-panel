@@ -27,10 +27,7 @@ export const LogPanel = ({data}: LogPanelProps) => {
                         <AlertTitle>{entry.message}</AlertTitle>
                         <Box>
                             <JsonRenderer value={entry.context} depth={2} />
-                            <Link
-                                href={`/inspector/files?path=${parseFilePathWithLineAnchor(entry.line)}`}
-                                target="_blank"
-                            >
+                            <Link href={`/inspector/files?path=${parseFilePathWithLineAnchor(entry.line)}`}>
                                 {entry.line}
                                 <FilePresent fontSize="small" />
                             </Link>

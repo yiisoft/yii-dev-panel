@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import {objectIdParser} from '@yiisoft/yii-dev-panel-sdk/Helper/objectIdParser';
+import {parseObjectId} from '@yiisoft/yii-dev-panel-sdk/Helper/objectString';
 import * as React from 'react';
 import {PropsWithChildren} from 'react';
 
@@ -18,7 +18,7 @@ type TimelineContentWrapperProps = {
 export const TimelineContentWrapper = React.memo((props: PropsWithChildren<TimelineContentWrapperProps>) => {
     const {name, file, payload, children} = props;
     const shortName = name.split('\\').splice(-1).join('');
-    const objectId = objectIdParser(payload || '');
+    const objectId = parseObjectId(payload || '');
     const debugEntry = useDebugEntry();
 
     return (
@@ -34,7 +34,7 @@ export const TimelineContentWrapper = React.memo((props: PropsWithChildren<Timel
                 </Tooltip>
                 {file && (
                     <Tooltip title="Open in File Explorer">
-                        <IconButton size="small" target="_blank" href={`/inspector/files?path=${parseFilePath(file)}`}>
+                        <IconButton size="small" href={`/inspector/files?path=${parseFilePath(file)}`}>
                             <OpenInNew fontSize="small" />
                         </IconButton>
                     </Tooltip>

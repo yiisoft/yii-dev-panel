@@ -52,7 +52,6 @@ export const FilesystemPanel = ({data}: FilesystemPanelProps) => {
                                     <Tooltip title="Open in File Explorer">
                                         <IconButton
                                             size="small"
-                                            target="_blank"
                                             href={`/inspector/files?path=${parseFilePath(el.path)}`}
                                         >
                                             <OpenInNew fontSize="small" />

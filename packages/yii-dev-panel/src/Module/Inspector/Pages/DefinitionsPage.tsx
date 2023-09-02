@@ -36,7 +36,7 @@ const columns: GridColDef[] = [
         renderCell: (params: GridRenderCellParams) => {
             const value = params.value as string;
             return (
-                <div style={{wordBreak: 'break-all'}}>
+                <div style={{wordBreak: 'break-word'}}>
                     <Tooltip title="Copy">
                         <IconButton size="small" onClick={() => clipboardCopy(value)}>
                             <ContentCopy fontSize="small" />

@@ -42,7 +42,6 @@ const columns: GridColDef[] = [
                     <Tooltip title="Examine as a file">
                         <IconButton
                             size="small"
-                            target="_blank"
                             href={'/inspector/files?path=' + parseFilePathWithLineAnchor(filePath)}
                         >
                             <FilePresent fontSize="small" />
@@ -61,9 +60,7 @@ const columns: GridColDef[] = [
             return (
                 <>
                     <b>
-                        <Link href={params.row.link} target="_blank">
-                            {params.row.type}
-                        </Link>
+                        <Link href={params.row.link}>{params.row.type}</Link>
                     </b>
                     {params.row.message}
                 </>

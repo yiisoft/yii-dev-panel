@@ -28,6 +28,12 @@ export default defineConfig(async ({command}) => ({
         svgrPlugin(),
     ],
     build: {
+        rollupOptions: {
+            output: {
+                assetFileNames: 'bundle.css',
+                entryFileNames: 'bundle.js',
+            },
+        },
         outDir: 'dist',
     },
 }));

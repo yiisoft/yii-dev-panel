@@ -36,7 +36,7 @@ const columns: GridColDef[] = [
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Examine as a container entry">
-                        <IconButton size="small" target="_blank" href={'/inspector/container/view?class=' + value}>
+                        <IconButton size="small" href={'/inspector/container/view?class=' + value}>
                             <OpenInNew fontSize="small" />
                         </IconButton>
                     </Tooltip>

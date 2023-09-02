@@ -1,6 +1,10 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '@yiisoft/yii-dev-panel-sdk/API/createBaseQuery';
 
+type Response<T = any> = {
+    data: T;
+};
+
 export type HTTPMethod = 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT';
 
 export type DebugEntry = {
@@ -133,6 +137,11 @@ type GetObjectProps = {
     objectId: number;
 };
 
+type GetObjectResponse = {
+    class: string;
+    value: any;
+} | null;
+
 type CollectorResponseType = any;
 
 export const debugApi = createApi({
@@ -145,9 +154,9 @@ export const debugApi = createApi({
             transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
             providesTags: ['debug/list'],
         }),
-        getObject: builder.query<DebugEntry[], GetObjectProps>({
+        getObject: builder.query<GetObjectResponse, GetObjectProps>({
             query: (args) => `object/${args.debugEntryId}/${args.objectId}`,
-            transformResponse: (result: SummaryResponseType) => (result.data as DebugEntry[]) || [],
+            transformResponse: (result: Response<GetObjectResponse>) => result.data,
         }),
         getCollectorInfo: builder.query<CollectorResponseType, GetCollectorInfoProps>({
             query: (args) => `view/${args.id}?collector=${args.collector}`,

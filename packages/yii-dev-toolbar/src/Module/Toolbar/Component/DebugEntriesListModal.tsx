@@ -17,7 +17,7 @@ import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
 import {useCurrentPageRequestIds, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {DebugChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugChip';
+import {DebugEntryChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugEntryChip';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import React, {MouseEvent, useEffect, useState} from 'react';
 
@@ -32,7 +32,7 @@ const DebugEntryItem = React.memo(({entry, onClick, selected, rightText}: DebugE
     return (
         <ListItemButton onClick={() => onClick(entry)} defaultChecked={selected}>
             <ListItemIcon>
-                <DebugChip entry={entry} />
+                <DebugEntryChip entry={entry} />
             </ListItemIcon>
             <ListItemText primary={entry.request?.path ?? entry.command?.input} />
             {rightText && (

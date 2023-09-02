@@ -34,7 +34,6 @@ const columns: GridColDef[] = [
                 <Tooltip title="Examine as a file in new window">
                     <IconButton
                         size="small"
-                        target="_blank"
                         href={'/inspector/files?path=' + parseFilePathWithLineAnchor(params.row.path)}
                     >
                         <FilePresent fontSize="small" />

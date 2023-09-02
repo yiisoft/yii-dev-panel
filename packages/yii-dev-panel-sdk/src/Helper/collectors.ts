@@ -4,6 +4,7 @@ export enum CollectorsMap {
     EventCollector = 'Yiisoft\\Yii\\Debug\\Collector\\EventCollector',
     ExceptionCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ExceptionCollector',
     ServiceCollector = 'Yiisoft\\Yii\\Debug\\Collector\\ServiceCollector',
+    TimelineCollector = 'Yiisoft\\Yii\\Debug\\Collector\\TimelineCollector',
     ValidatorCollector = 'Yiisoft\\Validator\\Debug\\ValidatorCollector',
     DatabaseCollector = 'Yiisoft\\Db\\Debug\\DatabaseCollector',
     QueueCollector = 'Yiisoft\\Queue\\Debug\\QueueCollector',
@@ -13,6 +14,7 @@ export enum CollectorsMap {
     ConsoleAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\ConsoleAppInfoCollector',
     CommandCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\CommandCollector',
     MiddlewareCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector',
+    RequestCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\RequestCollector',
     MailerCollector = 'Yiisoft\\Mailer\\Debug\\MailerCollector',
     VarDumperCollector = 'Yiisoft\\VarDumper\\Debug\\VarDumperCollector',
 }

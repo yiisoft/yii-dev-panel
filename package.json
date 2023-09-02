@@ -31,11 +31,13 @@
     "vite-tsconfig-paths": "^4.2.0"
   },
   "scripts": {
-    "predeploy": "npm run build",
+    "predeploy": "npm run build; npm run copy-toolbar",
     "deploy": "gh-pages -t true -d packages/yii-dev-panel/dist",
     "start": "lerna run start --parallel --verbose",
     "build": "lerna run build --parallel --verbose",
-    "copy-toolbar": "mkdir packages/yii-dev-panel/build/toolbar && cp -r packages/yii-dev-toolbar/build/* packages/yii-dev-panel/build/toolbar"
+    "build:dev": "npm run build:dev -w packages/yii-dev-panel; npm run build -w packages/yii-dev-toolbar; npm run copy-toolbar",
+    "serve:dev": "npm run serve:dev -w packages/yii-dev-panel",
+    "copy-toolbar": "mkdir packages/yii-dev-panel/dist/toolbar && cp -r packages/yii-dev-toolbar/dist/bundle.* packages/yii-dev-panel/dist/toolbar"
   },
   "eslintConfig": {
     "extends": [

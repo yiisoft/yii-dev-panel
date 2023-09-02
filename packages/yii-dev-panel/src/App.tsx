@@ -1,4 +1,5 @@
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
+import {RouterOptionsContextProvider} from '@yiisoft/yii-dev-panel-sdk/Component/RouterOptions';
 import {DefaultThemeProvider} from '@yiisoft/yii-dev-panel-sdk/Component/Theme/DefaultTheme';
 import '@yiisoft/yii-dev-panel/App.css';
 import {modules} from '@yiisoft/yii-dev-panel/modules';
@@ -13,14 +14,16 @@ const router = createRouter(modules);
 
 export default function App() {
     return (
-        <Provider store={store}>
-            <PersistGate persistor={persistor}>
-                <DefaultThemeProvider>
-                    <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
-                        <RouterProvider router={router} />
-                    </ErrorBoundary>
-                </DefaultThemeProvider>
-            </PersistGate>
-        </Provider>
+        <RouterOptionsContextProvider baseUrl="" openLinksInNewWindow={false}>
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <DefaultThemeProvider>
+                        <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
+                            <RouterProvider router={router} />
+                        </ErrorBoundary>
+                    </DefaultThemeProvider>
+                </PersistGate>
+            </Provider>
+        </RouterOptionsContextProvider>
     );
 }
