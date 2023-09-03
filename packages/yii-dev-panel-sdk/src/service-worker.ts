@@ -149,7 +149,6 @@ self.addEventListener('fetch', (event) => {
     if (request.url.match(debuggerApiRoutesRegExp)) {
         return;
     }
-    console.log('sw fetch', request);
 
     event.respondWith(
         fetch(event.request)
