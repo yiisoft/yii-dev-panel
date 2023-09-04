@@ -15,6 +15,7 @@ import {
     reducers as OpenApiReducers,
 } from '@yiisoft/yii-dev-panel/Module/OpenApi/api';
 // import {middlewares as ToolbarApiMiddlewares, reducers as ToolbarApiReducers} from './Module/Toolbar/api';
+import {errorNotificationMiddleware} from '@yiisoft/yii-dev-panel-sdk/API/errorNotificationMiddleware';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
 import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore} from 'redux-persist';
 
@@ -42,6 +43,7 @@ export const store = configureStore({
             ...GiiMiddlewares,
             ...OpenApiMiddlewares,
             // ...ToolbarApiMiddlewares,
+            errorNotificationMiddleware,
         ]),
     devTools: import.meta.env.DEV,
 });

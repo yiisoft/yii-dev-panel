@@ -18,8 +18,10 @@ import {OverrideProps} from '@mui/material/OverridableComponent';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
+import {ScrollTopButton} from '@yiisoft/yii-dev-panel-sdk/Component/ScrollTop';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {NotificationSnackbar} from '@yiisoft/yii-dev-panel/Application/Component/NotificationSnackbar';
 import * as React from 'react';
 import {Fragment} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -96,10 +98,9 @@ const NavLink = (props: NavLinkType) => {
         </StyledLink>
     );
 };
-
 const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
 
-export const Layout = ({children}: React.PropsWithChildren) => {
+export const Layout = React.memo(({children}: React.PropsWithChildren) => {
     const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
 
     const handleOpenUserMenu = (key: string, event: React.MouseEvent<HTMLElement>) => {
@@ -181,7 +182,7 @@ export const Layout = ({children}: React.PropsWithChildren) => {
                             <IconButton size="large" onClick={handleMenu} color="inherit">
                                 <AdbIcon />
                             </IconButton>
-                            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                            <Menu keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                                 <MenuItem component={Link} href={repositoryUrl} target="_blank">
                                     <ListItemIcon>
                                         <GitHub fontSize="small" />
@@ -207,13 +208,14 @@ export const Layout = ({children}: React.PropsWithChildren) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-
+            <NotificationSnackbar />
             <Container>
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />
                 </ErrorBoundary>
             </Container>
             {children}
+            <ScrollTopButton />
         </>
     );
-};
+});

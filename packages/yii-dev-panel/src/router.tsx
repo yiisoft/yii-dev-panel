@@ -1,6 +1,6 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
-import {Layout} from '@yiisoft/yii-dev-panel-sdk/Pages/Layout';
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
+import {Layout} from '@yiisoft/yii-dev-panel/Application/Component/Layout';
 import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
 import {DebugToolbar} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DebugToolbar';
 import {createBrowserRouter, createHashRouter, RouteObject} from 'react-router-dom';
