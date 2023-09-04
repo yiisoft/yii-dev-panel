@@ -16,5 +16,5 @@ export enum CollectorsMap {
     MiddlewareCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector',
     RequestCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\RequestCollector',
     MailerCollector = 'Yiisoft\\Mailer\\Debug\\MailerCollector',
-    VarDumperCollector = 'Yiisoft\\VarDumper\\Debug\\VarDumperCollector',
+    VarDumperCollector = 'Yiisoft\\Yii\\Debug\\Collector\\VarDumperCollector',
 }
