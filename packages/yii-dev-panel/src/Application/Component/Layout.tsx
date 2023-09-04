@@ -20,6 +20,7 @@ import Typography from '@mui/material/Typography';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
+import {NotificationsStack} from '@yiisoft/yii-dev-panel/Application/Component/Notifications';
 import * as React from 'react';
 import {Fragment} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -96,7 +97,6 @@ const NavLink = (props: NavLinkType) => {
         </StyledLink>
     );
 };
-
 const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
 
 export const Layout = ({children}: React.PropsWithChildren) => {
@@ -207,7 +207,7 @@ export const Layout = ({children}: React.PropsWithChildren) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-
+            <NotificationsStack />
             <Container>
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />
