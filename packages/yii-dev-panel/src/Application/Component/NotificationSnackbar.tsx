@@ -19,8 +19,6 @@ export const NotificationSnackbar = React.memo(() => {
         dispatch(removeNotification(notificationIndex));
     };
 
-    console.log('notifications', notifications);
-
     return (
         <>
             {notifications.map((notification, index) => (

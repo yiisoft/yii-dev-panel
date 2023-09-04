@@ -20,7 +20,7 @@ export const ScrollTopButton = React.memo(() => {
 
     return (
         <Fade in={trigger}>
-            <Box onClick={handleClick} role="presentation" sx={{position: 'fixed', bottom: 68, right: 16}}>
+            <Box onClick={handleClick} role="presentation" sx={{position: 'fixed', bottom: 68, right: 16, zIndex: 100}}>
                 <Fab size="small">
                     <KeyboardArrowUpIcon />
                 </Fab>

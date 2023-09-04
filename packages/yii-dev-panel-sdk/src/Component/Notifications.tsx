@@ -14,18 +14,7 @@ type State = {
 export const NotificationsSlice = createSlice({
     name: 'application',
     initialState: {
-        notifications: [
-            // {
-            //     id: 1,
-            //     text: 'This is a success message!',
-            //     color: 'error',
-            // },
-            // {
-            //     id: 2,
-            //     text: 'This is a success message!',
-            //     color: 'success',
-            // },
-        ],
+        notifications: [],
     } as State,
     reducers: {
         removeNotification(state, action: PayloadAction<number>) {
