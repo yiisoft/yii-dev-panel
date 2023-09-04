@@ -21,7 +21,7 @@ import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback'
 import {ScrollTopButton} from '@yiisoft/yii-dev-panel-sdk/Component/ScrollTop';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
-import {NotificationsStack} from '@yiisoft/yii-dev-panel/Application/Component/Notifications';
+import {NotificationSnackbar} from '@yiisoft/yii-dev-panel/Application/Component/NotificationSnackbar';
 import * as React from 'react';
 import {Fragment} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
@@ -182,7 +182,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                             <IconButton size="large" onClick={handleMenu} color="inherit">
                                 <AdbIcon />
                             </IconButton>
-                            <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                            <Menu keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                                 <MenuItem component={Link} href={repositoryUrl} target="_blank">
                                     <ListItemIcon>
                                         <GitHub fontSize="small" />
@@ -208,7 +208,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                     </Toolbar>
                 </Container>
             </AppBar>
-            <NotificationsStack />
+            <NotificationSnackbar />
             <Container>
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />

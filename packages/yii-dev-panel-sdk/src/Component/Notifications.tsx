@@ -5,6 +5,7 @@ type Notification = {
     title?: string;
     text: string;
     color: AlertColor;
+    shown: boolean;
 };
 type State = {
     notifications: Notification[];
@@ -28,10 +29,10 @@ export const NotificationsSlice = createSlice({
     } as State,
     reducers: {
         removeNotification(state, action: PayloadAction<number>) {
-            state.notifications = state.notifications.filter((n, index) => index !== action.payload);
+            state.notifications[action.payload].shown = false;
         },
-        addNotification: (state, action) => {
-            state.notifications = [...state.notifications, action.payload];
+        addNotification: (state, action: PayloadAction<Exclude<Notification, 'shown'>>) => {
+            state.notifications = [...state.notifications, {...action.payload, shown: true}];
         },
     },
 });
