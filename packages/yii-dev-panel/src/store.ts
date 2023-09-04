@@ -5,6 +5,7 @@ import {
     reducers as ApplicationReducers,
 } from '@yiisoft/yii-dev-panel-sdk/API/Application/api';
 import {middlewares as DebugMiddlewares, reducers as DebugReducers} from '@yiisoft/yii-dev-panel-sdk/API/Debug/api';
+import {middlewares as FramesMiddlewares, reducers as FramesReducers} from '@yiisoft/yii-dev-panel/Module/Frames/api';
 import {middlewares as GiiMiddlewares, reducers as GiiReducers} from '@yiisoft/yii-dev-panel/Module/Gii/api';
 import {
     middlewares as InspectorMiddlewares,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     ...DebugReducers,
     ...GiiReducers,
     ...OpenApiReducers,
+    ...FramesReducers,
     // ...ToolbarApiReducers,
 });
 
@@ -42,6 +44,7 @@ export const store = configureStore({
             ...DebugMiddlewares,
             ...GiiMiddlewares,
             ...OpenApiMiddlewares,
+            ...FramesMiddlewares,
             // ...ToolbarApiMiddlewares,
             errorNotificationMiddleware,
         ]),

@@ -12,7 +12,7 @@ type State = {
 };
 
 export const NotificationsSlice = createSlice({
-    name: 'application',
+    name: 'notifications',
     initialState: {
         notifications: [],
     } as State,
