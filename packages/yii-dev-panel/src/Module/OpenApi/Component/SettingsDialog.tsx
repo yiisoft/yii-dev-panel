@@ -82,6 +82,10 @@ export const SettingsDialog = (props: SettingsDialogProps) => {
                         p: [0.5, 1],
                         alignItems: 'center',
                     }}
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        onAddHandler();
+                    }}
                 >
                     <InputBase
                         sx={{ml: 1, flex: 1}}
