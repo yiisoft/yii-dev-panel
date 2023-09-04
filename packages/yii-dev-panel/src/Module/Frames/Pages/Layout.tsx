@@ -7,6 +7,30 @@ import {useFramesEntries} from '@yiisoft/yii-dev-panel/Module/Frames/Context/Con
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 
+const PoliciesList = () => {
+    return (
+        <ul>
+            <li>
+                <Link href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options" target="_blank">
+                    X-Frame-Options
+                </Link>
+            </li>
+            <li>
+                <Link href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank">
+                    CORS
+                </Link>
+            </li>
+            <li>
+                <Link
+                    href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources"
+                    target="_blank"
+                >
+                    Content-Security-Policy
+                </Link>
+            </li>
+        </ul>
+    );
+};
 type ErrorResolutionBoxProps = {
     url: string;
 };
@@ -23,29 +47,7 @@ const ErrorResolutionBox = ({url}: ErrorResolutionBoxProps) => {
                     </Typography>
                     <Typography>
                         Read more about blocking external resources:
-                        <ul>
-                            <li>
-                                <Link
-                                    href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
-                                    target="_blank"
-                                >
-                                    X-Frame-Options
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank">
-                                    CORS
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/Sources"
-                                    target="_blank"
-                                >
-                                    Content-Security-Policy
-                                </Link>
-                            </li>
-                        </ul>
+                        <PoliciesList />
                     </Typography>
                 </>
             }
@@ -58,10 +60,15 @@ const ErrorResolutionBox = ({url}: ErrorResolutionBoxProps) => {
 const NoEntries = React.memo(() => {
     return (
         <InfoBox
-            title="No Open API entries found"
+            title="No frames found"
             text={
                 <>
-                    <Typography>Click on settings button and add new Open API entry.</Typography>
+                    <Typography>You can add any external resources as a embed and manage them there.</Typography>
+                    <Typography>
+                        Due to multiple privacy policies some of frames cannot be opened. Read more about the policies:
+                        <PoliciesList />
+                    </Typography>
+                    <Typography>Click on settings button and add a frame.</Typography>
                 </>
             }
             severity="info"
@@ -75,13 +82,13 @@ export const Layout = () => {
     const handleChange = (event: any, value: string) => setTab(value);
     const theme = useTheme();
 
-    const apiEntries = useFramesEntries();
+    const frames = useFramesEntries();
 
     useEffect(() => {
-        if (apiEntries && Object.keys(apiEntries).length) {
-            setTab(Object.keys(apiEntries)[0]);
+        if (frames && Object.keys(frames).length) {
+            setTab(Object.keys(frames)[0]);
         }
-    }, [apiEntries]);
+    }, [frames]);
 
     return (
         <>
@@ -96,7 +103,7 @@ export const Layout = () => {
                             allowScrollButtonsMobile
                             sx={{maxWidth: '100%'}}
                         >
-                            {Object.keys(apiEntries).map((name, index) => (
+                            {Object.keys(frames).map((name, index) => (
                                 <Tab key={index} label={name} value={name} wrapped />
                             ))}
                         </Tabs>
@@ -104,11 +111,11 @@ export const Layout = () => {
                             <Settings />
                         </IconButton>
                     </Stack>
-                    {Object.keys(apiEntries).length === 0 ? (
+                    {Object.keys(frames).length === 0 ? (
                         <NoEntries />
                     ) : (
                         <>
-                            {Object.entries(apiEntries).map(([name, url], index) => (
+                            {Object.entries(frames).map(([name, url], index) => (
                                 <TabPanel key={index} value={name} className={theme.palette.mode}>
                                     {/*<iframe src={url} width="100%" height="1000px" />*/}
                                     <object data={url} width="100%" height="1000px" type="text/html">
