@@ -1,7 +1,6 @@
 import {Remove} from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import {
-    FormHelperText,
     IconButton,
     InputBase,
     List,
@@ -17,8 +16,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
-import {addApiEntry, deleteApiEntry, useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
+import {addFrame, deleteFrame, useFramesEntries} from '@yiisoft/yii-dev-panel/Module/Frames/Context/Context';
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
 
@@ -27,10 +25,10 @@ type SettingsDialogProps = {
     onClose: () => void;
 };
 export const SettingsDialog = (props: SettingsDialogProps) => {
-    const [selectedEntry, setSelectedEntry] = React.useState(Config.backendUrl + '/docs/openapi.json');
+    const [selectedEntry, setSelectedEntry] = React.useState('');
     const dispatch = useDispatch();
 
-    const apiEntries = useOpenApiEntries();
+    const frames = useFramesEntries();
 
     // const handleSave = () => {
     //     console.log('save');
@@ -42,21 +40,21 @@ export const SettingsDialog = (props: SettingsDialogProps) => {
     };
 
     const onAddHandler = () => {
-        dispatch(addApiEntry(selectedEntry));
+        dispatch(addFrame(selectedEntry));
     };
 
     const onDeleteHandler = (name: string) => {
-        return () => dispatch(deleteApiEntry(name));
+        return () => dispatch(deleteFrame(name));
     };
 
     return (
         <Dialog fullWidth={true} open={true} onClose={handleClose}>
-            <DialogTitle>Open API entries</DialogTitle>
+            <DialogTitle>Frames</DialogTitle>
             <DialogContent>
-                <DialogContentText>Create, edit or delete Open API entries.</DialogContentText>
+                <DialogContentText>Create, edit or delete frames.</DialogContentText>
 
                 <List>
-                    {Object.entries(apiEntries).map(([name, url], index) => (
+                    {Object.entries(frames).map(([name, url], index) => (
                         <ListItem key={index}>
                             <ListItemButton
                                 onClick={() => {
@@ -89,7 +87,7 @@ export const SettingsDialog = (props: SettingsDialogProps) => {
                 >
                     <InputBase
                         sx={{ml: 1, flex: 1}}
-                        placeholder={'http://localhost/docs/openapi.json'}
+                        placeholder={'https://external-resource.com/'}
                         value={selectedEntry}
                         onChange={(event) => setSelectedEntry(event.target.value)}
                     />
@@ -97,10 +95,6 @@ export const SettingsDialog = (props: SettingsDialogProps) => {
                         <CheckIcon />
                     </IconButton>
                 </Box>
-                <FormHelperText variant="outlined">
-                    Please make sure you entered the full path to the Open API json schema. For example:
-                    http://localhost/docs/openapi.json
-                </FormHelperText>
             </DialogContent>
             <DialogActions>
                 {/*<Button onClick={handleSave} color="success">*/}

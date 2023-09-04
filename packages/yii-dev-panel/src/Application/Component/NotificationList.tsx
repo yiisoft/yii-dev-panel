@@ -8,7 +8,7 @@ import {useDispatch} from 'react-redux';
 const TransitionUp = (props) => <Slide {...props} direction="up" />;
 
 export const NotificationList = React.memo(() => {
-    const notifications = useSelector((state) => state.application.notifications);
+    const notifications = useSelector((state) => state.notifications.notifications);
     const dispatch = useDispatch();
 
     const handleCloseSnackbar = (notificationIndex: number) => (event: React.SyntheticEvent, reason?: string) => {

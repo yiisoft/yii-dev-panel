@@ -59,6 +59,7 @@ const pages = [
         ],
     },
     {name: 'Open API', link: '/open-api'},
+    {name: 'Frames', link: '/frames'},
     // Uncomment to debug shared components
     // {name: 'Shared', link: '/shared'},
 ];
