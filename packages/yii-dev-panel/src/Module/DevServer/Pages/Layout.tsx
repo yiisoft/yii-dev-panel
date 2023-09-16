@@ -16,6 +16,7 @@ import {
 
 import Avatar from '@mui/material/Avatar';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
+import {LogEntry} from '@yiisoft/yii-dev-panel-sdk/Component/LogEntry';
 import {ServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/ServerSentEventsObserver';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
@@ -89,6 +90,16 @@ function DebugEntryIcon({type}: {type: EventTypeEnum | undefined}) {
     return <Avatar alt={'Unknown'} />;
 }
 
+function DebugEntryContent({data, type}: {data: string; type: EventTypeEnum}) {
+    if (type === EventTypeEnum.VAR_DUMPER) {
+        return <JsonRenderer value={JSON.parse(data)} />;
+    }
+    if (type === EventTypeEnum.LOGS) {
+        return <LogEntry entry={JSON.parse(data)} />;
+    }
+    return <>{data}</>;
+}
+
 export const Layout = () => {
     const [events, setEvents] = useState<EventType[]>([]);
     const [eventsCounter, setEventsCounter] = useState<Record<EventTypeEnum, number>>({
@@ -149,11 +160,7 @@ export const Layout = () => {
                                 <DebugEntryIcon type={e.type} />
                             </ListItemIcon>
                             <ListItemText secondary={formatDate(e.time.getTime())}>
-                                {e.type === EventTypeEnum.VAR_DUMPER ? (
-                                    <JsonRenderer value={JSON.parse(e.data)} />
-                                ) : (
-                                    e.data
-                                )}
+                                <DebugEntryContent type={e.type} data={e.data} />
                             </ListItemText>
                         </ListItem>
                     );

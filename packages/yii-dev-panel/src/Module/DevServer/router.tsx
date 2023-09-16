@@ -3,7 +3,7 @@ import {RouteObject} from 'react-router-dom';
 
 export const routes = [
     {
-        path: '/dev-server',
+        path: '/debug-server',
         element: <Pages.Layout />,
     },
 ] satisfies RouteObject[];
