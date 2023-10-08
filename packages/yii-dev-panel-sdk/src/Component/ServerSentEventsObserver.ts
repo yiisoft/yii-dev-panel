@@ -1,7 +1,7 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 // TODO support custom events and decode payload to object
-class ServerSentEvents {
+export class ServerSentEvents {
     private eventSource: EventSource = null;
     private listeners: ((event: MessageEvent) => void)[] = [];
     constructor(private url: string) {}
@@ -9,6 +9,15 @@ class ServerSentEvents {
     subscribe(subscriber: (event: MessageEvent) => void) {
         if (this.eventSource === null || this.eventSource.readyState === EventSource.CLOSED) {
             this.eventSource = new EventSource(this.url);
+            this.eventSource.onopen = () => {
+                console.log('ServerSentEvents: connected');
+            };
+            this.eventSource.onerror = () => {
+                console.log('ServerSentEvents: error', this.listeners);
+                this.listeners.forEach((listener) => {
+                    this.eventSource.addEventListener('message', listener);
+                });
+            };
         }
         this.listeners.push(subscriber);
         this.eventSource.addEventListener('message', subscriber);

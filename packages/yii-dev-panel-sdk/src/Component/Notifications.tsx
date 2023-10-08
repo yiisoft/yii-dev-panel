@@ -20,7 +20,7 @@ export const NotificationsSlice = createSlice({
         removeNotification(state, action: PayloadAction<number>) {
             state.notifications[action.payload].shown = false;
         },
-        addNotification: (state, action: PayloadAction<Exclude<Notification, 'shown'>>) => {
+        addNotification: (state, action: PayloadAction<Omit<Notification, 'shown'>>) => {
             state.notifications = [...state.notifications, {...action.payload, shown: true}];
         },
     },
