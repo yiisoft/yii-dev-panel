@@ -108,6 +108,10 @@ export const routes = [
                 path: 'cache',
                 element: <Pages.CachePage />,
             },
+            {
+                path: 'config',
+                element: <Pages.ConfigManagementPage />,
+            },
         ],
     },
 ] satisfies RouteObject[];

@@ -2,6 +2,7 @@ export {AnalysePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Analyse
 export {CachePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CachePage';
 export {CommandsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/CommandsPage';
 export {ComposerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ComposerPage';
+export {ConfigManagementPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ConfigManagementPage';
 export {ContainerEntryPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerEntryPage';
 export {ContainerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerPage';
 export {DatabasePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DatabasePage';
