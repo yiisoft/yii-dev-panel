@@ -1,5 +1,6 @@
-import {LinearProgress, Tab, Tabs} from '@mui/material';
+import {Button, LinearProgress, Stack, Tab, Tabs, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
+import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {useGetMergePlanQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import * as React from 'react';
@@ -39,11 +40,11 @@ export const ConfigManagementPage = () => {
     }, [mergePlanQuery.isFetching]);
 
     const groups = useMemo(() => {
-        if (!env || !mergePlanQuery.data) {
+        if (!env || !data) {
             return [];
         }
         return Object.keys(data[env] || {});
-    }, [mergePlanQuery.isFetching, env]);
+    }, [data, env]);
 
     useEffect(() => {
         setGroup(groups[0] || '');
@@ -52,12 +53,22 @@ export const ConfigManagementPage = () => {
         setEnv(envs[0] || '');
     }, [data]);
 
+    const handleReload = () => mergePlanQuery.refetch();
+
     return (
         <>
             <h2>{'Config Management'}</h2>
             {mergePlanQuery.isFetching && <LinearProgress />}
             {!mergePlanQuery.isFetching && (
                 <Box>
+                    <Stack direction="row" spacing={2} alignItems="center" justifyContent="space-between">
+                        <Typography variant="h6" my={1}>
+                            Path:{' '}
+                        </Typography>
+                        <Button onClick={handleReload}>Reload</Button>
+                    </Stack>
+
+                    <CodeHighlight language={'text/plain'} code={mergePlanQuery.data.path} showLineNumbers={false} />
                     <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
                         <Tabs value={env} onChange={handleChangeEnv}>
                             {envs.map((group) => (
