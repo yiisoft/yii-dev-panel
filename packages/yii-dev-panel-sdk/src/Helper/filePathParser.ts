@@ -1,5 +1,5 @@
 export const parseFilePath = (path: string): string => {
-    return path.replace(/([#:][0-9a-z_-]+)$/i, '');
+    return typeof path === 'string' ? path.replace(/([#:][0-9a-z_-]+)$/i, '') : '';
 };
 
 function parseTwoLineNumber(lineNumberMatches: RegExpMatchArray) {
