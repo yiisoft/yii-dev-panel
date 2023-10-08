@@ -21,16 +21,47 @@ type RequestPanelProps = {
     data: Response;
 };
 
-export const RequestPanel = ({data}: RequestPanelProps) => {
-    console.log(data);
-    if (!data) {
-        return <>Nothing here</>;
+const ResponseAccordion = ({data}: {data: Response}) => {
+    if (typeof data.responseRaw !== 'string') {
+        return null;
     }
+
     const responseParts = data.responseRaw.split('\r\n\r\n');
     const headers = responseParts[0];
     const content = responseParts.splice(1).join('\r\n\r\n');
     const contentType = headers.match(/Content-Type: \w+\/(\w+);/)[1] ?? 'plain';
     const isJson = !!contentType.match(/json/);
+
+    return (
+        <>
+            <Typography component="h2" variant="h6">
+                Response
+            </Typography>
+            <JsonRenderer value={data.response} />
+            <Accordion defaultExpanded={content.length < 500}>
+                <AccordionSummary>Content</AccordionSummary>
+                <AccordionDetails>
+                    {isJson ? (
+                        <JsonRenderer value={JSON.parse(content)} />
+                    ) : (
+                        <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
+                    )}
+                </AccordionDetails>
+            </Accordion>
+            <Accordion defaultExpanded={data.responseRaw.length < 500}>
+                <AccordionSummary>Raw</AccordionSummary>
+                <AccordionDetails>
+                    <CodeHighlight code={data.responseRaw} language={contentType} showLineNumbers={false} />
+                </AccordionDetails>
+            </Accordion>
+        </>
+    );
+};
+
+export const RequestPanel = ({data}: RequestPanelProps) => {
+    if (!data) {
+        return <>Nothing here</>;
+    }
 
     return (
         <>
@@ -54,26 +85,7 @@ export const RequestPanel = ({data}: RequestPanelProps) => {
                 </AccordionDetails>
             </Accordion>
             <Divider />
-            <Typography component="h2" variant="h6">
-                Response
-            </Typography>
-            <JsonRenderer value={data.response} />
-            <Accordion defaultExpanded={content.length < 500}>
-                <AccordionSummary>Content</AccordionSummary>
-                <AccordionDetails>
-                    {isJson ? (
-                        <JsonRenderer value={JSON.parse(content)} />
-                    ) : (
-                        <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
-                    )}
-                </AccordionDetails>
-            </Accordion>
-            <Accordion defaultExpanded={data.responseRaw.length < 500}>
-                <AccordionSummary>Raw</AccordionSummary>
-                <AccordionDetails>
-                    <CodeHighlight code={data.responseRaw} language={contentType} showLineNumbers={false} />
-                </AccordionDetails>
-            </Accordion>
+            <ResponseAccordion data={data} />
         </>
     );
 };
