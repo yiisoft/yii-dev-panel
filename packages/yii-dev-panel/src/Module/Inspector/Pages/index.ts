@@ -13,6 +13,7 @@ export {FileExplorerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Fi
 export * as GitPages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Git';
 export {PhpInfoPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/PhpInfoPage';
 export {RoutesPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/RoutesPage';
+export {SessionPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/SessionPage';
 export {TablePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TablePage';
 export {TestsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TestsPage';
 export {TranslationsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TranslationsPage';

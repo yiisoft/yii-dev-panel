@@ -95,6 +95,10 @@ export const routes = [
                 path: 'config/:page',
                 element: <Pages.ConfigurationPage />,
             },
+            {
+                path: 'session',
+                element: <Pages.SessionPage />,
+            },
         ],
     },
 ] satisfies RouteObject[];

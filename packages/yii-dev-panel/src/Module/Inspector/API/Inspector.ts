@@ -163,6 +163,10 @@ export const inspectorApi = createApi({
             query: () => `phpinfo`,
             transformResponse: (result: Response) => result.data || [],
         }),
+        getSession: builder.query<string, void>({
+            query: () => `session`,
+            transformResponse: (result: Response) => result.data || [],
+        }),
         getComposer: builder.query<ComposerResponse, void>({
             query: () => `composer`,
             transformResponse: (result: Response<ComposerResponse>) => result.data,
@@ -238,4 +242,5 @@ export const {
     usePostComposerRequirePackageMutation,
     usePostCurlBuildMutation,
     useGetEventsQuery,
+    useGetSessionQuery,
 } = inspectorApi;
