@@ -32,12 +32,9 @@ const pages = [
     {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
     {
-        name: 'Configuration',
-        link: '/debug',
+        name: 'Config',
         items: [
-            {name: 'Parameters', link: '/inspector/parameters'},
-            {name: 'Definitions', link: '/inspector/definitions'},
-            {name: 'Container', link: '/inspector/container'},
+            {name: 'Configuration', link: '/inspector/config'},
             {name: 'Events', link: '/inspector/events'},
             {name: 'Routes', link: '/inspector/routes'},
         ],
