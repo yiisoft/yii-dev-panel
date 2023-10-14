@@ -52,7 +52,7 @@
     "@mui/material": "^5.14.13",
     "@mui/x-data-grid": "^5.17.26",
     "@reduxjs/toolkit": "^1.9.7",
-    "@textea/json-viewer": "^2.17.2",
+    "@textea/json-viewer": "^3.2.2",
     "@types/swagger-ui-react": "^4.18.1",
     "clipboard-copy": "^4.0.1",
     "date-fns": "^2.30.0",
