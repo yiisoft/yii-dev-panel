@@ -2,6 +2,7 @@ import {Layout} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layo
 import {BreadcrumbsContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
 import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
 import {RouteObject} from 'react-router-dom';
+import {TestCaseRunnerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
 
 export const routes = [
     {
@@ -94,6 +95,10 @@ export const routes = [
             {
                 path: 'config/:page',
                 element: <Pages.ConfigurationPage />,
+            },
+            {
+                path: 'test-case-runner',
+                element: <Pages.TestCaseRunnerPage />,
             },
         ],
     },
