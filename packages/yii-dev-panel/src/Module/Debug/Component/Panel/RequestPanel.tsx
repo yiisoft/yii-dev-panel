@@ -29,7 +29,8 @@ const ResponseAccordion = ({data}: {data: Response}) => {
     const responseParts = data.responseRaw.split('\r\n\r\n');
     const headers = responseParts[0];
     const content = responseParts.splice(1).join('\r\n\r\n');
-    const contentType = headers.match(/Content-Type: \w+\/(\w+);/)[1] ?? 'plain';
+    const match = headers.match(/Content-Type: \w+\/(\w+);/);
+    const contentType = Array.isArray(match) ? match[1] : 'plain';
     const isJson = !!contentType.match(/json/);
 
     return (
@@ -38,16 +39,15 @@ const ResponseAccordion = ({data}: {data: Response}) => {
                 Response
             </Typography>
             <JsonRenderer value={data.response} />
-            <Accordion defaultExpanded={content.length < 500}>
+            {content && (<Accordion defaultExpanded={content.length < 500}>
                 <AccordionSummary>Content</AccordionSummary>
                 <AccordionDetails>
-                    {isJson ? (
-                        <JsonRenderer value={JSON.parse(content)} />
-                    ) : (
-                        <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
-                    )}
+                    {isJson
+                    ? <JsonRenderer value={JSON.parse(content)} />
+                    : <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
+                    }
                 </AccordionDetails>
-            </Accordion>
+            </Accordion>)}
             <Accordion defaultExpanded={data.responseRaw.length < 500}>
                 <AccordionSummary>Raw</AccordionSummary>
                 <AccordionDetails>
