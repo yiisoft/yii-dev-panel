@@ -17,7 +17,8 @@ export function PreviewStep({generator, onComplete}: StepProps) {
 
     const form = useForm({
         mode: 'onBlur',
-        resolver: yupResolver(validationSchema),
+        // todo: fix typ
+        resolver: yupResolver(validationSchema as any),
     });
 
     useEffect(() => {
@@ -51,17 +52,17 @@ export function PreviewStep({generator, onComplete}: StepProps) {
     return (
         <FormProvider {...form}>
             <Box component="form" onReset={form.reset} onSubmit={form.handleSubmit(previewHandler)} my={2}>
-                {Object.entries(attributes).map(([attributeName, attribute], index) =>
+                {Object.entries(attributes).map(([attributeName, attribute], index) => (
                     <Box mb={1} key={attributeName}>
                         <FormInput attributeName={attributeName} attribute={attribute} />
-                    </Box>,
-                )}
+                    </Box>
+                ))}
                 <Box my={2}>
                     <ButtonGroup>
-                        <Button type='submit' name='preview' variant='contained'>
+                        <Button type="submit" name="preview" variant="contained">
                             Preview
                         </Button>
-                        <Button type='reset' color='warning'>
+                        <Button type="reset" color="warning">
                             Reset
                         </Button>
                     </ButtonGroup>

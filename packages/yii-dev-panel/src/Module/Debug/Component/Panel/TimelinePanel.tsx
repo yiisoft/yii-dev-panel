@@ -39,9 +39,7 @@ export const TimelinePanel = ({data}: TimelinePanelProps) => {
                     </TimelineSeparator>
                     <TimelineContent sx={{py: '12px', px: 2}}>
                         <Tooltip title={row[2]}>
-                            <Typography variant="h6" component="span">
-                                {row[2].split('\\').pop()}
-                            </Typography>
+                            <Typography component="span">{row[2].split('\\').pop()}</Typography>
                         </Tooltip>
                         {!!row[3] && (
                             <JsonRenderer value={isClassString(row[3]) ? toObjectString(row[3], row[1]) : row[3]} />

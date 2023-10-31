@@ -377,7 +377,7 @@ const Layout = () => {
                         <Typography>Make sure you have enabled debugger and run your application.</Typography>
                         <Typography>
                             Check the "yiisoft/yii-debug" in the "params.php" on the backend or with{' '}
-                            <Link href="/inspector/parameters?filter=yiisoft/yii-debug">Inspector</Link>.
+                            <Link href="/inspector/config/parameters?filter=yiisoft/yii-debug">Inspector</Link>.
                         </Typography>
                         <Typography>
                             See more information on the link{' '}
