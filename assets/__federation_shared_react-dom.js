@@ -1,4 +1,4 @@
-import{r as e,g as n}from"./__federation_shared_react-d09a03c4.js";var t={exports:{}},r={},l={exports:{}},a={};
+import{r as e,g as n}from"./__federation_shared_react.js";var t={exports:{}},r={},l={exports:{}},a={};
 /**
  * @license React
  * scheduler.production.min.js
