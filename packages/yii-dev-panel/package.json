@@ -54,7 +54,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-organize-imports": "^3.2.4",
     "typescript": "^5.4.4",
-    "vite-plugin-pwa": "^0.16.7",
+    "vite-plugin-pwa": "^0.19.8",
     "web-vitals": "^3.5.2",
     "workbox-background-sync": "^7.0.0",
     "workbox-broadcast-update": "^7.0.0",
