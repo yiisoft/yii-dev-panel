@@ -52,7 +52,7 @@ export default defineConfig(async ({command}) => {
             //     shared: sharedModules,
             // }),
         ],
-        base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : './',
+        base: process.env.VITE_ENV === 'github' ? 'https://yiisoft.github.io/yii-dev-panel/' : './',
         build: {
             rollupOptions: {
                 output: {
