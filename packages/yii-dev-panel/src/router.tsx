@@ -4,9 +4,11 @@ import {Layout} from '@yiisoft/yii-dev-panel/Application/Component/Layout';
 import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
 import {DebugToolbar} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DebugToolbar';
 import {createBrowserRouter, createHashRouter, RouteObject} from 'react-router-dom';
+import type {FutureConfig as RouterFutureConfig} from '@remix-run/router/dist/router';
+import type {HydrationState} from '@remix-run/router';
 
 // TODO: move DebugToolbar somewhere else
-export function createRouter(modules: ModuleInterface[]) {
+export function createRouter(modules: ModuleInterface[], routerConfig: {basename: string}) {
     const standaloneModules = modules.filter((module) => module.standaloneModule);
     const others = modules.filter((module) => !module.standaloneModule);
 
@@ -30,5 +32,16 @@ export function createRouter(modules: ModuleInterface[]) {
             ),
         },
     ];
-    return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes);
+    const opts: DOMRouterOpts = {
+        basename: routerConfig.basename,
+    };
+    return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes, opts);
+}
+
+// from react-router
+interface DOMRouterOpts {
+    basename?: string;
+    future?: Partial<Omit<RouterFutureConfig, 'v7_prependBasename'>>;
+    hydrationData?: HydrationState;
+    window?: Window;
 }

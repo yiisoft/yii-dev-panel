@@ -5,9 +5,25 @@ import '@yiisoft/yii-dev-panel/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
+(function YiiDevPanelWidget(scope) {
+    console.log('set widget', scope);
+    scope.init = function () {
+        console.log('this', this);
+        const container = document.getElementById(this.config.containerId) as HTMLElement;
+
+        const root = ReactDOM.createRoot(container);
+        root.render(
+            <React.StrictMode>
+                <App config={this.config.options} />
+            </React.StrictMode>,
+        );
+    };
+    scope.init();
+})(
+    window['YiiDevPanelWidget'] ?? {
+        config: {
+            containerId: 'root',
+            options: {router: {basename: ''}},
+        },
+    },
 );

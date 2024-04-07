@@ -46,11 +46,11 @@ export default defineConfig(async ({command}) => {
             }),
             viteTsconfigPaths(),
             svgrPlugin(),
-            federation({
-                name: 'host',
-                remotes: {},
-                shared: sharedModules,
-            }),
+            // federation({
+            //     name: 'host',
+            //     remotes: {},
+            //     shared: sharedModules,
+            // }),
         ],
         base: process.env.VITE_ENV === 'github' ? '/yii-dev-panel/' : './',
         build: {
