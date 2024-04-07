@@ -51,6 +51,7 @@
     "@mui/lab": "^5.0.0-alpha.108",
     "@mui/material": "^5.15.15",
     "@mui/x-data-grid": "^5.17.26",
+    "@mui/x-tree-view": "^7.1.1",
     "@reduxjs/toolkit": "^1.9.7",
     "@textea/json-viewer": "^3.4.1",
     "@types/swagger-ui-react": "^4.18.3",
