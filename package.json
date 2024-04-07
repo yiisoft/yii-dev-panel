@@ -26,10 +26,10 @@
     "lerna": "^6.6.2",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.4.4",
-    "verdaccio": "^5.26.3",
-    "vite": "^4.4.11",
+    "verdaccio": "^5.30.3",
+    "vite": "^4.5.3",
     "vite-plugin-svgr": "^3.3.0",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.3.2"
   },
   "scripts": {
     "predeploy": "npm run build; npm run copy-toolbar",
