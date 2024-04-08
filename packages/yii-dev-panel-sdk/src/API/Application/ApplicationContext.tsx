@@ -11,7 +11,7 @@ type ApplicationContext = {
 export const ApplicationSlice = createSlice({
     name: 'application',
     initialState: {
-        baseUrl: Config.backendUrl as string,
+        baseUrl: '',
         preferredPageSize: 20,
         toolbarOpen: true,
         favoriteUrls: [] as string[],
