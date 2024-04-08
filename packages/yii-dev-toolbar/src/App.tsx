@@ -7,9 +7,16 @@ import {store} from '@yiisoft/yii-dev-toolbar/store';
 import {Provider} from 'react-redux';
 import {RouterProvider} from 'react-router-dom';
 
-const router = createRouter(modules);
+type AppProps = {
+    config: {
+        router: {
+            basename: string;
+        };
+    };
+};
 
-export default function App() {
+export default function App({config}: AppProps) {
+    const router = createRouter(modules, config.router);
     return (
         <RouterOptionsContextProvider baseUrl="debug" openLinksInNewWindow={true}>
             <Provider store={store}>

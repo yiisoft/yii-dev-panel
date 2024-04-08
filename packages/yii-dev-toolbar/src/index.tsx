@@ -6,33 +6,34 @@ import reportWebVitals from '@yiisoft/yii-dev-toolbar/reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 
-(function ToolbarWidget(scope) {
-    scope['ToolbarWidget'] = {
-        init: function (containerId, options) {
-            const container = document.getElementById(containerId);
+(function YiiDevPanelToolbarWidget(scope) {
+    console.log('call toolbar');
+    scope.init = function () {
+        console.log('init', this);
+        const container = document.getElementById(this.config.containerId) as HTMLElement;
 
-            const root = ReactDOM.createRoot(container);
-            root.render(
-                <React.StrictMode>
-                    <App />
-                </React.StrictMode>,
-            );
-        },
+        const root = ReactDOM.createRoot(container);
+        root.render(
+            <React.StrictMode>
+                <App config={this.config.options} />
+            </React.StrictMode>,
+        );
     };
-})(window);
-
-/**
- * For local purposes only
- */
-const widgetDivs = document.querySelectorAll('#yii-dev-toolbar');
-widgetDivs.forEach((div) => {
-    const root = ReactDOM.createRoot(document.getElementById(div.id) as HTMLElement);
-    root.render(
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>,
-    );
-});
+    scope.init();
+})(
+    window['YiiDevPanelToolbarWidget'] ?? {
+        config: {
+            containerId: 'yii-dev-toolbar',
+            options: {
+                router: {basename: ''},
+                backend: {
+                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080',
+                },
+            },
+        },
+    },
+);
+console.log('toolbar bundle');
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

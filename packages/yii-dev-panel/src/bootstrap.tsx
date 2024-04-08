@@ -23,7 +23,12 @@ import ReactDOM from 'react-dom/client';
     window['YiiDevPanelWidget'] ?? {
         config: {
             containerId: 'root',
-            options: {router: {basename: ''}},
+            options: {
+                router: {basename: ''},
+                backend: {
+                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080',
+                },
+            },
         },
     },
 );
