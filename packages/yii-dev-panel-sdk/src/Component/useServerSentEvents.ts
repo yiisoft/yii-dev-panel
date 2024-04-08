@@ -1,6 +1,5 @@
 import {createServerSentEventsObserver} from '@yiisoft/yii-dev-panel-sdk/Component/ServerSentEventsObserver';
 import {useEffect, useRef} from 'react';
-import {useSelector} from '@yiisoft/yii-dev-panel/store';
 
 type DebugUpdatedType = {
     type: EventTypesEnum.DebugUpdated;
@@ -13,9 +12,12 @@ export enum EventTypesEnum {
 
 export type EventTypes = DebugUpdatedType;
 
-export const useServerSentEvents = (onMessage: (event: MessageEvent<EventTypes>) => void, subscribe = true) => {
+export const useServerSentEvents = (
+    backendUrl: string,
+    onMessage: (event: MessageEvent<EventTypes>) => void,
+    subscribe = true,
+) => {
     const prevOnMessage = useRef(onMessage);
-    const backendUrl = useSelector((state) => state.application.baseUrl) as string;
     const ServerSentEventsObserverRef = useRef(createServerSentEventsObserver(backendUrl));
 
     useEffect(() => {

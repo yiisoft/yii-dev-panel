@@ -241,6 +241,7 @@ const Layout = () => {
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
     const autoLatestState = useSelector((state) => state.application.autoLatest);
+    const backendUrl = useSelector((state) => state.application.baseUrl) as string;
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
@@ -354,7 +355,7 @@ const Layout = () => {
             }
         }
     }, []);
-    useServerSentEvents(onUpdatesHandler, autoLatest);
+    useServerSentEvents(backendUrl, onUpdatesHandler, autoLatest);
 
     const autoLatestHandler = () => {
         setAutoLatest((prev) => {

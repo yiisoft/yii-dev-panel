@@ -11,6 +11,7 @@ import ReactDOM from 'react-dom/client';
     scope.init = function () {
         console.log('init', this);
         const container = document.getElementById(this.config.containerId) as HTMLElement;
+        console.log('container', container);
 
         const root = ReactDOM.createRoot(container);
         root.render(
@@ -27,13 +28,12 @@ import ReactDOM from 'react-dom/client';
             options: {
                 router: {basename: ''},
                 backend: {
-                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080',
+                    baseUrl: 'http://localhost:8090',
                 },
             },
         },
     },
 );
-console.log('toolbar bundle');
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

@@ -25,8 +25,9 @@ import ReactDOM from 'react-dom/client';
             containerId: 'root',
             options: {
                 router: {basename: ''},
+                aaa: 'vvv',
                 backend: {
-                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8080',
+                    baseUrl: 'http://localhost:8090',
                 },
             },
         },
