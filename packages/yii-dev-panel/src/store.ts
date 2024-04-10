@@ -18,9 +18,9 @@ import {
 // import {middlewares as ToolbarApiMiddlewares, reducers as ToolbarApiReducers} from './Module/Toolbar/api';
 import {errorNotificationMiddleware} from '@yiisoft/yii-dev-panel-sdk/API/errorNotificationMiddleware';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
-import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore, persistReducer} from 'redux-persist';
-import {store} from '@yiisoft/yii-dev-toolbar/store';
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore} from 'redux-persist';
 import type {PreloadedStateShapeFromReducersMapObject} from 'redux';
+import {initMessageListener} from 'redux-state-sync';
 
 // TODO: get reducers and middlewares from modules.ts
 const rootReducer = combineReducers({
@@ -33,29 +33,31 @@ const rootReducer = combineReducers({
     // ...ToolbarApiReducers,
 });
 
-export const createStore = (preloadedState: PreloadedStateShapeFromReducersMapObject<typeof persistReducer>) => {
+export const createStore = (preloadedState: PreloadedStateShapeFromReducersMapObject<typeof rootReducer>) => {
     const store = configureStore({
         reducer: rootReducer,
-        // @ts-ignore
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({
                 serializableCheck: {
                     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
                 },
-            }).concat([
-                ...ApplicationMiddlewares,
-                ...InspectorMiddlewares,
-                ...DebugMiddlewares,
-                ...GiiMiddlewares,
-                ...OpenApiMiddlewares,
-                ...FramesMiddlewares,
-                // ...ToolbarApiMiddlewares,
-                errorNotificationMiddleware,
-            ]),
+            })
+                // .concat(consoleLogActionsMiddleware)
+                .concat([
+                    ...ApplicationMiddlewares,
+                    ...InspectorMiddlewares,
+                    ...DebugMiddlewares,
+                    ...GiiMiddlewares,
+                    ...OpenApiMiddlewares,
+                    ...FramesMiddlewares,
+                    // ...ToolbarApiMiddlewares,
+                    errorNotificationMiddleware,
+                ]),
         devTools: import.meta.env.DEV,
         preloadedState: preloadedState,
     });
     setupListeners(store.dispatch);
+    initMessageListener(store);
 
     const persistor = persistStore(store);
 
@@ -66,7 +68,7 @@ type createStoreFunction = typeof createStore;
 type ReturnTypeOfCreateStoreFunction = ReturnType<createStoreFunction>;
 type StoreType = ReturnTypeOfCreateStoreFunction['store'];
 
-export type RootState = StoreType['getState'];
+export type RootState = ReturnType<StoreType['getState']>;
 export type AppDispatch = StoreType['dispatch'];
 const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 

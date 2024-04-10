@@ -10,8 +10,9 @@ import {
     reducers as ToolbarApiReducers,
 } from '@yiisoft/yii-dev-toolbar/Module/Toolbar/api';
 import {TypedUseSelectorHook, useSelector} from 'react-redux';
-import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore, persistReducer} from 'redux-persist';
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore} from 'redux-persist';
 import type {PreloadedStateShapeFromReducersMapObject} from 'redux';
+import {initMessageListener} from 'redux-state-sync';
 
 // TODO: get reducers and middlewares from modules.ts
 const rootReducer = combineReducers({
@@ -20,7 +21,7 @@ const rootReducer = combineReducers({
     ...ApplicationReducers,
 });
 
-export const createStore = (preloadedState: PreloadedStateShapeFromReducersMapObject<typeof persistReducer>) => {
+export const createStore = (preloadedState: PreloadedStateShapeFromReducersMapObject<typeof rootReducer>) => {
     const store = configureStore({
         reducer: rootReducer,
         middleware: (getDefaultMiddleware) =>
@@ -28,11 +29,14 @@ export const createStore = (preloadedState: PreloadedStateShapeFromReducersMapOb
                 serializableCheck: {
                     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
                 },
-            }).concat([...ToolbarApiMiddlewares, ...DebugMiddlewares, ...ApplicationMiddlewares]),
+            })
+                // .concat(consoleLogActionsMiddleware)
+                .concat([...ApplicationMiddlewares, ...ToolbarApiMiddlewares, ...DebugMiddlewares]),
         devTools: import.meta.env.DEV,
         preloadedState: preloadedState,
     });
     setupListeners(store.dispatch);
+    initMessageListener(store);
 
     const persistor = persistStore(store);
 
@@ -43,8 +47,8 @@ type createStoreFunction = typeof createStore;
 type ReturnTypeOfCreateStoreFunction = ReturnType<createStoreFunction>;
 type StoreType = ReturnTypeOfCreateStoreFunction['store'];
 
-export type RootState = StoreType['getState'];
+export type RootState = ReturnType<StoreType['getState']>;
 export type AppDispatch = StoreType['dispatch'];
-const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+const useAppSelector: TypedUseSelectorHook<RootState> = useSelector<RootState>;
 
 export {useAppSelector as useSelector};
