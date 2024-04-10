@@ -68,6 +68,7 @@
     "react-router-dom": "^6.22.3",
     "react-syntax-highlighter": "^15.5.0",
     "redux-persist": "^6.0.0",
+    "redux-state-sync": "^3.1.4",
     "swagger-ui-react": "^5.13.0",
     "yup": "^1.2.0"
   },
@@ -80,6 +81,7 @@
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
     "@types/react-syntax-highlighter": "^15.5.11",
+    "@types/redux-state-sync": "^3.1.10",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "@typescript-eslint/parser": "^5.62.0",
     "@welldone-software/why-did-you-render": "^7.0.1",
