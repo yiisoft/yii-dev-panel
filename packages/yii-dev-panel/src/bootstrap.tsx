@@ -4,6 +4,7 @@ import App from '@yiisoft/yii-dev-panel/App';
 import '@yiisoft/yii-dev-panel/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 (function YiiDevPanelWidget(scope) {
     console.log('set widget', scope);
@@ -20,16 +21,18 @@ import ReactDOM from 'react-dom/client';
     };
     scope.init();
 })(
-    window['YiiDevPanelWidget'] ?? {
+    (window['YiiDevPanelWidget'] ??= {
         config: {
             containerId: 'root',
             options: {
-                router: {basename: ''},
-                aaa: 'vvv',
+                router: {
+                    basename: '',
+                    useHashRouter: Config.appEnv === 'github',
+                },
                 backend: {
                     baseUrl: 'http://localhost:8090',
                 },
             },
         },
-    },
+    }),
 );

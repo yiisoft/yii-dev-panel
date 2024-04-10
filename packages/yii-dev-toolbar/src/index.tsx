@@ -5,6 +5,7 @@ import '@yiisoft/yii-dev-toolbar/index.css';
 import reportWebVitals from '@yiisoft/yii-dev-toolbar/reportWebVitals';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 (function YiiDevPanelToolbarWidget(scope) {
     console.log('call toolbar');
@@ -22,17 +23,20 @@ import ReactDOM from 'react-dom/client';
     };
     scope.init();
 })(
-    window['YiiDevPanelToolbarWidget'] ?? {
+    (window['YiiDevPanelToolbarWidget'] ??= {
         config: {
             containerId: 'yii-dev-toolbar',
             options: {
-                router: {basename: ''},
+                router: {
+                    basename: '',
+                    useHashRouter: Config.appEnv === 'github',
+                },
                 backend: {
                     baseUrl: 'http://localhost:8090',
                 },
             },
         },
-    },
+    }),
 );
 
 // If you want to start measuring performance in your app, pass a function

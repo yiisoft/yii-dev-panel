@@ -8,7 +8,13 @@ import type {FutureConfig as RouterFutureConfig} from '@remix-run/router/dist/ro
 import type {HydrationState} from '@remix-run/router';
 
 // TODO: move DebugToolbar somewhere else
-export function createRouter(modules: ModuleInterface[], routerConfig: {basename: string}) {
+export function createRouter(
+    modules: ModuleInterface[],
+    routerConfig: {
+        basename: string;
+        useHashRouter: boolean;
+    },
+) {
     const standaloneModules = modules.filter((module) => module.standaloneModule);
     const others = modules.filter((module) => !module.standaloneModule);
 
@@ -35,7 +41,7 @@ export function createRouter(modules: ModuleInterface[], routerConfig: {basename
     const opts: DOMRouterOpts = {
         basename: routerConfig.basename,
     };
-    return Config.appEnv === 'github' ? createHashRouter(routes) : createBrowserRouter(routes, opts);
+    return routerConfig.useHashRouter ? createHashRouter(routes) : createBrowserRouter(routes, opts);
 }
 
 // from react-router

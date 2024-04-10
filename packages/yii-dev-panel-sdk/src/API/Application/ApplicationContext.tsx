@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 type ApplicationContext = {
     baseUrl: string;

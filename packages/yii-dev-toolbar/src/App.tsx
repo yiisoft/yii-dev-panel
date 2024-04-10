@@ -11,6 +11,7 @@ type AppProps = {
     config: {
         router: {
             basename: string;
+            useHashRouter: boolean;
         };
         backend: {
             baseUrl: string;
