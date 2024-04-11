@@ -7,10 +7,10 @@ import ReactDOM from 'react-dom/client';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 (function YiiDevPanelWidget(scope) {
-    console.log('set widget', scope);
     scope.init = function () {
-        console.log('this', this);
+        console.debug('YiiDevPanelWidget initialization', this);
         const container = document.getElementById(this.config.containerId) as HTMLElement;
+        console.debug('YiiDevPanelWidget mounting into', container);
 
         const root = ReactDOM.createRoot(container);
         root.render(
@@ -30,7 +30,7 @@ import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
                     useHashRouter: Config.appEnv === 'github',
                 },
                 backend: {
-                    baseUrl: 'http://localhost:8090',
+                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8080',
                 },
             },
         },

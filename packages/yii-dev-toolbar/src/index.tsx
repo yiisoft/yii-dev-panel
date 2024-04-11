@@ -8,11 +8,10 @@ import ReactDOM from 'react-dom/client';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 (function YiiDevPanelToolbarWidget(scope) {
-    console.log('call toolbar');
     scope.init = function () {
-        console.log('init', this);
+        console.debug('YiiDevPanelToolbarWidget initialization', this);
         const container = document.getElementById(this.config.containerId) as HTMLElement;
-        console.log('container', container);
+        console.debug('YiiDevPanelToolbarWidget mounting into', container);
 
         const root = ReactDOM.createRoot(container);
         root.render(
@@ -32,7 +31,7 @@ import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
                     useHashRouter: Config.appEnv === 'github',
                 },
                 backend: {
-                    baseUrl: 'http://localhost:8090',
+                    baseUrl: import.meta.env.VITE_BACKEND_URL || 'http://127.0.0.1:8080',
                 },
             },
         },
