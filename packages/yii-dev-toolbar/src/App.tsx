@@ -30,7 +30,7 @@ export default function App({config}: AppProps) {
     });
 
     return (
-        <RouterOptionsContextProvider baseUrl="debug" openLinksInNewWindow={true}>
+        <RouterOptionsContextProvider baseUrl="" openLinksInNewWindow={true}>
             <Provider store={store}>
                 <DefaultThemeProvider>
                     <RouterProvider router={router} />
