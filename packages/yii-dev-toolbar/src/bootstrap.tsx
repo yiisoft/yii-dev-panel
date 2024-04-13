@@ -1,16 +1,16 @@
-import '@yiisoft/yii-dev-panel/wdyr';
+import '@yiisoft/yii-dev-toolbar/wdyr';
 
-import App from '@yiisoft/yii-dev-panel/App';
-import '@yiisoft/yii-dev-panel/index.css';
+import App from '@yiisoft/yii-dev-toolbar/App';
+import '@yiisoft/yii-dev-toolbar/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
-(function YiiDevPanelWidget(scope) {
+(function YiiDevPanelToolbarWidget(scope) {
     scope.init = function () {
-        console.debug('YiiDevPanelWidget initialization', this);
+        console.debug('YiiDevPanelToolbarWidget initialization', this);
         const container = document.getElementById(this.config.containerId) as HTMLElement;
-        console.debug('YiiDevPanelWidget mounting into', container);
+        console.debug('YiiDevPanelToolbarWidget mounting into', container);
 
         const root = ReactDOM.createRoot(container);
         root.render(
@@ -21,9 +21,9 @@ import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
     };
     scope.init();
 })(
-    (window['YiiDevPanelWidget'] ??= {
+    (window['YiiDevPanelToolbarWidget'] ??= {
         config: {
-            containerId: 'root',
+            containerId: 'yii-dev-toolbar',
             options: {
                 router: {
                     basename: '',

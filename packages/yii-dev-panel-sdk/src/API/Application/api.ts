@@ -2,6 +2,7 @@ import {ApplicationSlice} from '@yiisoft/yii-dev-panel-sdk/API/Application/Appli
 import {NotificationsSlice} from '@yiisoft/yii-dev-panel-sdk/Component/Notifications';
 import {persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+import {createStateSyncMiddleware, withReduxStateSync} from 'redux-state-sync';
 
 const applicationSliceConfig = {
     key: ApplicationSlice.name,
@@ -15,7 +16,11 @@ const notificationsSliceConfig = {
 };
 
 export const reducers = {
-    [ApplicationSlice.name]: persistReducer(applicationSliceConfig, ApplicationSlice.reducer),
+    [ApplicationSlice.name]: persistReducer(applicationSliceConfig, withReduxStateSync(ApplicationSlice.reducer)),
     [NotificationsSlice.name]: persistReducer(notificationsSliceConfig, NotificationsSlice.reducer),
 };
-export const middlewares = [];
+export const middlewares = [
+    createStateSyncMiddleware({
+        whitelist: [ApplicationSlice.actions.setToolbarOpen.type, ApplicationSlice.actions.changeBaseUrl.type],
+    }),
+];

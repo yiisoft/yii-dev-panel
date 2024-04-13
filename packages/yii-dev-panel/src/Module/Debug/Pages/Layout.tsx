@@ -83,9 +83,8 @@ type CollectorDataProps = {
     collectorData: any;
     selectedCollector: string;
 };
-const backendUrl = Config.backendUrl;
-
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
+    const baseUrl = useSelector((state) => state.application.baseUrl) as string;
     const pages: {[name: string]: (data: any) => JSX.Element} = {
         [CollectorsMap.MailerCollector]: (data: any) => <MailerPanel data={data} />,
         [CollectorsMap.ServiceCollector]: (data: any) => <ServicesPanel data={data} />,
@@ -103,7 +102,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
                 return (
                     <React.Suspense fallback={`Loading`}>
                         <ModuleLoader
-                            url={backendUrl + data.url}
+                            url={baseUrl + data.url}
                             module={data.module}
                             scope={data.scope}
                             props={{data: data.data}}
@@ -242,6 +241,7 @@ const Layout = () => {
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
     const autoLatestState = useSelector((state) => state.application.autoLatest);
+    const backendUrl = useSelector((state) => state.application.baseUrl) as string;
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
@@ -355,7 +355,7 @@ const Layout = () => {
             }
         }
     }, []);
-    useServerSentEvents(onUpdatesHandler, autoLatest);
+    useServerSentEvents(backendUrl, onUpdatesHandler, autoLatest);
 
     const autoLatestHandler = () => {
         setAutoLatest((prev) => {
