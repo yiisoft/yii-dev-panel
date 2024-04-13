@@ -4,15 +4,35 @@ import {DefaultThemeProvider} from '@yiisoft/yii-dev-panel-sdk/Component/Theme/D
 import '@yiisoft/yii-dev-panel/App.css';
 import {modules} from '@yiisoft/yii-dev-panel/modules';
 import {createRouter} from '@yiisoft/yii-dev-panel/router';
-import {persistor, store} from '@yiisoft/yii-dev-panel/store';
+import {createStore} from '@yiisoft/yii-dev-panel/store';
 import {ErrorBoundary} from 'react-error-boundary';
 import {Provider} from 'react-redux';
 import {RouterProvider} from 'react-router-dom';
+import React from 'react';
 import {PersistGate} from 'redux-persist/integration/react';
 
-const router = createRouter(modules);
+type AppProps = {
+    config: {
+        router: {
+            basename: string;
+            useHashRouter: boolean;
+        };
+        backend: {
+            baseUrl: string;
+            favoriteUrls: string;
+        };
+    };
+};
 
-export default function App() {
+export default function App({config}: AppProps) {
+    const router = createRouter(modules, config.router);
+    const {store, persistor} = createStore({
+        application: {
+            baseUrl: config.backend.baseUrl,
+            favoriteUrls: config.backend.favoriteUrls ?? [],
+        },
+    });
+
     return (
         <RouterOptionsContextProvider baseUrl="" openLinksInNewWindow={false}>
             <Provider store={store}>

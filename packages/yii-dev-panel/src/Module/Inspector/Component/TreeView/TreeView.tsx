@@ -1,5 +1,4 @@
-import {TreeView as MuiTreeView, treeItemClasses} from '@mui/lab';
-import TreeItem, {TreeItemProps} from '@mui/lab/TreeItem';
+import {SimpleTreeView, TreeItem, TreeItemProps, treeItemClasses} from '@mui/x-tree-view';
 import {styled, SvgIconProps, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {formatBytes} from '@yiisoft/yii-dev-panel-sdk/Helper/formatBytes';
@@ -36,12 +35,12 @@ const StyledTreeItemRoot = styled(TreeItem)(({theme}) => ({
             color: 'inherit',
         },
     },
-    [`& .${treeItemClasses.group}`]: {
-        marginLeft: 0,
-        [`& .${treeItemClasses.content}`]: {
-            paddingLeft: theme.spacing(2),
-        },
-    },
+    // [`& .${treeItemClasses.group}`]: {
+    //     marginLeft: 0,
+    //     [`& .${treeItemClasses.content}`]: {
+    //         paddingLeft: theme.spacing(2),
+    //     },
+    // },
 }));
 
 const StyledTreeItem = (props: StyledTreeItemProps) => {
@@ -69,7 +68,7 @@ const Tree = React.memo(({row}: {row: InspectorFile}) => {
     const fileSize = useMemo(() => formatBytes(row.size), [row]);
     return (
         <StyledTreeItem
-            nodeId={row.path}
+            itemId={row.path}
             fileName={row.baseName}
             fileIcon={fileExtensionIcon(row)}
             fileSize={fileSize}
@@ -84,18 +83,18 @@ export type TreeViewProps = {
 export const TreeView = (props: TreeViewProps) => {
     const {onSelect, tree} = props;
     return (
-        <MuiTreeView
-            defaultCollapseIcon={false}
-            defaultExpandIcon={false}
-            defaultEndIcon={false}
-            defaultParentIcon={false}
+        <SimpleTreeView
+            // defaultCollapseIcon={false}
+            // defaultExpandIcon={false}
+            // defaultEndIcon={false}
+            // defaultParentIcon={false}
             multiSelect={false}
             sx={{py: 2}}
-            onNodeSelect={(event, nodeId) => onSelect(nodeId)}
+            onItemSelectionToggle={(event, nodeId) => onSelect(nodeId)}
         >
             {tree.map((row, index) => (
                 <Tree key={index} row={row} />
             ))}
-        </MuiTreeView>
+        </SimpleTreeView>
     );
 };

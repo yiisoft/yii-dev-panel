@@ -1,10 +1,14 @@
 import {Link, Typography} from '@mui/material';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useMatches, useLocation} from 'react-router-dom';
 
 export const NotFoundPage = () => {
     const navigate = useNavigate();
+    const location = useLocation();
+    const matches = useMatches();
+    console.log('location', location);
+    console.log('matches', matches);
 
     return (
         <InfoBox

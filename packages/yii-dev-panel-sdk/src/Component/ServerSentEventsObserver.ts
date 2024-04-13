@@ -38,4 +38,5 @@ export class ServerSentEvents {
     }
 }
 
-export const ServerSentEventsObserver = new ServerSentEvents(Config.backendUrl + '/debug/api/event-stream');
+export const createServerSentEventsObserver = (backendUrl) =>
+    new ServerSentEvents(backendUrl + '/debug/api/event-stream');

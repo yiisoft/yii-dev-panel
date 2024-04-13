@@ -1,5 +1,4 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 
 type ApplicationContext = {
     baseUrl: string;
@@ -11,7 +10,7 @@ type ApplicationContext = {
 export const ApplicationSlice = createSlice({
     name: 'application',
     initialState: {
-        baseUrl: Config.backendUrl as string,
+        baseUrl: '',
         preferredPageSize: 20,
         toolbarOpen: true,
         favoriteUrls: [] as string[],
