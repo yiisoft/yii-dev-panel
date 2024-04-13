@@ -1,7 +1,6 @@
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import reportWebVitals from '@yiisoft/yii-dev-panel/reportWebVitals';
 
-Config.backendUrl = import.meta.env.VITE_BACKEND_URL;
 Config.appEnv = import.meta.env.VITE_ENV;
 
 import('@yiisoft/yii-dev-panel/bootstrap');

@@ -17,17 +17,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {addApiEntry, deleteApiEntry, useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
 import * as React from 'react';
 import {useDispatch} from 'react-redux';
+import {useSelector} from '@yiisoft/yii-dev-panel/store';
 
 // TODO: split saving and cancelling
 type SettingsDialogProps = {
     onClose: () => void;
 };
 export const SettingsDialog = (props: SettingsDialogProps) => {
-    const [selectedEntry, setSelectedEntry] = React.useState(Config.backendUrl + '/docs/openapi.json');
+    const baseUrl = useSelector((state) => state.application.baseUrl) as string;
+    const [selectedEntry, setSelectedEntry] = React.useState(baseUrl + '/docs/openapi.json');
     const dispatch = useDispatch();
 
     const apiEntries = useOpenApiEntries();

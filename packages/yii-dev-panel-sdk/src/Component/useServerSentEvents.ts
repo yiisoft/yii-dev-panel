@@ -1,4 +1,4 @@
-import {ServerSentEventsObserver} from '@yiisoft/yii-dev-panel-sdk/Component/ServerSentEventsObserver';
+import {createServerSentEventsObserver} from '@yiisoft/yii-dev-panel-sdk/Component/ServerSentEventsObserver';
 import {useEffect, useRef} from 'react';
 
 type DebugUpdatedType = {
@@ -12,23 +12,28 @@ export enum EventTypesEnum {
 
 export type EventTypes = DebugUpdatedType;
 
-export const useServerSentEvents = (onMessage: (event: MessageEvent<EventTypes>) => void, subscribe = true) => {
+export const useServerSentEvents = (
+    backendUrl: string,
+    onMessage: (event: MessageEvent<EventTypes>) => void,
+    subscribe = true,
+) => {
     const prevOnMessage = useRef(onMessage);
+    const ServerSentEventsObserverRef = useRef(createServerSentEventsObserver(backendUrl));
 
     useEffect(() => {
         if (prevOnMessage.current) {
-            ServerSentEventsObserver.unsubscribe(prevOnMessage.current);
+            ServerSentEventsObserverRef.current.unsubscribe(prevOnMessage.current);
         }
         if (!subscribe) {
             return;
         }
 
-        ServerSentEventsObserver.subscribe(onMessage);
+        ServerSentEventsObserverRef.current.subscribe(onMessage);
         prevOnMessage.current = onMessage;
 
         return () => {
-            ServerSentEventsObserver.unsubscribe(onMessage);
-            ServerSentEventsObserver.close();
+            ServerSentEventsObserverRef.current.unsubscribe(onMessage);
+            ServerSentEventsObserverRef.current.close();
         };
     }, [onMessage, subscribe]);
 };

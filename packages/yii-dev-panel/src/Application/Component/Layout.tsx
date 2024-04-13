@@ -32,12 +32,9 @@ const pages = [
     {name: 'Gii', link: '/gii'},
     {name: 'Debug', link: '/debug'},
     {
-        name: 'Configuration',
-        link: '/debug',
+        name: 'Config',
         items: [
-            {name: 'Parameters', link: '/inspector/parameters'},
-            {name: 'Definitions', link: '/inspector/definitions'},
-            {name: 'Container', link: '/inspector/container'},
+            {name: 'Configuration', link: '/inspector/config'},
             {name: 'Events', link: '/inspector/events'},
             {name: 'Routes', link: '/inspector/routes'},
         ],
@@ -158,12 +155,13 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                                 const key = page.name;
                                 return (
                                     <Fragment key={page.name}>
-                                        <NavLink name={page.name} onClick={handleOpenUserMenu.bind(this, key)} />
+                                        <NavLink name={page.name} onMouseOver={handleOpenUserMenu.bind(this, key)} />
                                         <Menu
                                             anchorEl={anchorElUser[key]}
                                             keepMounted
                                             open={Boolean(anchorElUser[key])}
                                             onClose={handleCloseUserMenu.bind(this, key)}
+                                            MenuListProps={{onMouseLeave: handleCloseUserMenu.bind(this, key)}}
                                         >
                                             {page.items.map((item) => (
                                                 <MenuItem
@@ -181,10 +179,16 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                             })}
                         </Box>
                         <div>
-                            <IconButton size="large" onClick={handleMenu} color="inherit">
+                            <IconButton size="large" onClick={handleMenu} onMouseOver={handleMenu} color="inherit">
                                 <AdbIcon />
                             </IconButton>
-                            <Menu keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+                            <Menu
+                                keepMounted
+                                open={Boolean(anchorEl)}
+                                anchorEl={anchorEl}
+                                onClose={handleClose}
+                                MenuListProps={{onMouseLeave: handleClose}}
+                            >
                                 <MenuItem component={Link} href={repositoryUrl} target="_blank">
                                     <ListItemIcon>
                                         <GitHub fontSize="small" />

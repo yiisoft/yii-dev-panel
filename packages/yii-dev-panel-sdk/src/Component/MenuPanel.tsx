@@ -59,7 +59,7 @@ export type LinkProps = {
 };
 
 const drawerStyles = {
-    flex: '1 1 auto',
+    flex: '0 1 auto',
     '&.drawer-opened .MuiListItemButton-root .MuiListItemIcon-root': {
         mr: 1,
     },
@@ -182,7 +182,7 @@ const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
                 <MenuPanelList onClick={toggleHandler} linkProps={links} activeLink={activeLink} />
             </Drawer>
             {/*TODO: rewrite max-width*/}
-            <Box sx={{flex: '1 0 100%', p: 1, maxWidth: '95%'}}>{children}</Box>
+            <Box sx={{flexGrow: 1, p: 1}}>{children}</Box>
         </Box>
     );
 });

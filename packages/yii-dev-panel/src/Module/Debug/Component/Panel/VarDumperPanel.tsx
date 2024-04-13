@@ -8,18 +8,16 @@ type VarDumperEntry = {
     line: string;
 };
 type VarDumperPanelProps = {
-    data: {
-        'var-dumper': VarDumperEntry[];
-    };
+    data: VarDumperEntry[];
 };
 
 export const VarDumperPanel = ({data}: VarDumperPanelProps) => {
     return (
         <>
-            {!data || !('var-dumper' in data) || data['var-dumper'].length === 0 ? (
+            {!data || data.length === 0 ? (
                 <>Nothing here</>
             ) : (
-                data['var-dumper'].map((variable, index) => (
+                data.map((variable, index) => (
                     <Paper sx={{mb: 1, p: 1}}>
                         <JsonRenderer value={variable.variable} depth={10} />
                         <Link href={`/inspector/files?path=${parseFilePathWithLineAnchor(variable.line)}`}>
