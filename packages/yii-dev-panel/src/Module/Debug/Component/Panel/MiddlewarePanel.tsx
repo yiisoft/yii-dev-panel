@@ -7,8 +7,8 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
+import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
-import format from 'date-fns/format';
 
 type MiddlewareType = {
     memory: number;
@@ -37,11 +37,12 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
     return (
         <Timeline position="alternate">
             {beforeStack &&
+                beforeStack.length > 0 &&
                 beforeStack.map((middleware, index) => (
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
                             <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'HH:mm:ss.SSSS')}</Typography>
+                                <Typography component="span">{formatMicrotime(middleware.time)}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -50,15 +51,16 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                             </TimelineDot>
                             <TimelineConnector />
                         </TimelineSeparator>
-                        <TimelineContentWrapper name={middleware.name} payload={middleware.request} />
+                        <TimelineContentWrapper name={middleware.name} payload={middleware.request} file={'1'} />
                     </TimelineItem>
                 ))}
-            {actionHandler &&
+            {typeof actionHandler === 'object' &&
+                !Array.isArray(actionHandler) &&
                 [actionHandler].map((middleware, index) => (
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} align="right" color="text.primary">
                             <Tooltip title={middleware.startTime}>
-                                <Typography>{format(middleware.startTime, 'HH:mm:ss')}</Typography>
+                                <Typography>{formatMicrotime(middleware.startTime)}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -66,15 +68,16 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                                 <ArrowDownward />
                             </TimelineDot>
                         </TimelineSeparator>
-                        <TimelineContentWrapper name={middleware.name} payload={middleware.request} />
+                        <TimelineContentWrapper name={middleware.name} payload={middleware.request} file={'2'} />
                     </TimelineItem>
                 ))}
             {afterStack &&
+                afterStack.length > 0 &&
                 afterStack.map((middleware, index) => (
                     <TimelineItem key={index}>
                         <TimelineOppositeContent sx={{m: 'auto 0'}} color="text.secondary">
-                            <Tooltip title={middleware.time}>
-                                <Typography component="span">{format(middleware.time, 'HH:mm:ss')}</Typography>
+                            <Tooltip title={middleware.time || '0'}>
+                                <Typography component="span">{formatMicrotime(middleware.time)}</Typography>
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
@@ -83,7 +86,7 @@ export const MiddlewarePanel = (props: MiddlewarePanelProps) => {
                                 <ArrowDownward />
                             </TimelineDot>
                         </TimelineSeparator>
-                        <TimelineContentWrapper name={middleware.name} payload={middleware.response} />
+                        <TimelineContentWrapper name={middleware.name} payload={middleware.response} file={'3'} />
                     </TimelineItem>
                 ))}
         </Timeline>

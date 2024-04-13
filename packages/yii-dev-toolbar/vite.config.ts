@@ -3,7 +3,7 @@ import {defineConfig} from 'vite';
 import svgrPlugin from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
-export default defineConfig(async ({command}) => ({
+export default defineConfig(async () => ({
     server: {
         open: false,
         port: 3001,
@@ -27,7 +27,16 @@ export default defineConfig(async ({command}) => ({
         viteTsconfigPaths(),
         svgrPlugin(),
     ],
+    base: process.env.VITE_ENV === 'github' ? 'https://yiisoft.github.io/yii-dev-panel/' : './',
     build: {
+        rollupOptions: {
+            output: {
+                assetFileNames: 'bundle.css',
+                entryFileNames: 'bundle.js',
+            },
+        },
+        minify: 'terser',
         outDir: 'dist',
+        target: 'esnext',
     },
 }));

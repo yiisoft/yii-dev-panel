@@ -41,11 +41,16 @@ import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/co
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import ModuleLoader from '@yiisoft/yii-dev-panel/Application/Pages/RemoteComponent';
+import {DatabasePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/DatabasePanel';
 import {EventPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/EventPanel';
 import {ExceptionPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ExceptionPanel';
+import {FilesystemPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/FilesystemPanel';
 import {LogPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/LogPanel';
 import {MailerPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MailerPanel';
 import {MiddlewarePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/MiddlewarePanel';
+import {RequestPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/RequestPanel';
+import {ServicesPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/ServicesPanel';
+import {TimelinePanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/TimelinePanel';
 import {VarDumperPanel} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Panel/VarDumperPanel';
 import {DumpPage} from '@yiisoft/yii-dev-panel/Module/Debug/Pages/DumpPage';
 import {useDoRequestMutation, usePostCurlBuildMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
@@ -78,12 +83,16 @@ type CollectorDataProps = {
     collectorData: any;
     selectedCollector: string;
 };
-const backendUrl = Config.backendUrl;
-
 function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
+    const baseUrl = useSelector((state) => state.application.baseUrl) as string;
     const pages: {[name: string]: (data: any) => JSX.Element} = {
         [CollectorsMap.MailerCollector]: (data: any) => <MailerPanel data={data} />,
+        [CollectorsMap.ServiceCollector]: (data: any) => <ServicesPanel data={data} />,
+        [CollectorsMap.TimelineCollector]: (data: any) => <TimelinePanel data={data} />,
         [CollectorsMap.LogCollector]: (data: any) => <LogPanel data={data} />,
+        [CollectorsMap.DatabaseCollector]: (data: any) => <DatabasePanel data={data} />,
+        [CollectorsMap.FilesystemStreamCollector]: (data: any) => <FilesystemPanel data={data} />,
+        [CollectorsMap.RequestCollector]: (data: any) => <RequestPanel data={data} />,
         [CollectorsMap.MiddlewareCollector]: (data: any) => <MiddlewarePanel {...data} />,
         [CollectorsMap.EventCollector]: (data: any) => <EventPanel events={data} />,
         [CollectorsMap.ExceptionCollector]: (data: any) => <ExceptionPanel exceptions={data} />,
@@ -93,7 +102,7 @@ function CollectorData({collectorData, selectedCollector}: CollectorDataProps) {
                 return (
                     <React.Suspense fallback={`Loading`}>
                         <ModuleLoader
-                            url={backendUrl + data.url}
+                            url={baseUrl + data.url}
                             module={data.module}
                             scope={data.scope}
                             props={{data: data.data}}
@@ -232,6 +241,7 @@ const Layout = () => {
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
     const autoLatestState = useSelector((state) => state.application.autoLatest);
+    const backendUrl = useSelector((state) => state.application.baseUrl) as string;
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
@@ -345,7 +355,7 @@ const Layout = () => {
             }
         }
     }, []);
-    useServerSentEvents(onUpdatesHandler, autoLatest);
+    useServerSentEvents(backendUrl, onUpdatesHandler, autoLatest);
 
     const autoLatestHandler = () => {
         setAutoLatest((prev) => {
@@ -367,11 +377,11 @@ const Layout = () => {
                         <Typography>Make sure you have enabled debugger and run your application.</Typography>
                         <Typography>
                             Check the "yiisoft/yii-debug" in the "params.php" on the backend or with{' '}
-                            <Link href="/inspector/parameters?filter=yiisoft/yii-debug">Inspector</Link>.
+                            <Link href="/inspector/config/parameters?filter=yiisoft/yii-debug">Inspector</Link>.
                         </Typography>
                         <Typography>
                             See more information on the link{' '}
-                            <Link target="_blank" href="https://github.com/yiisoft/yii-debug">
+                            <Link href="https://github.com/yiisoft/yii-debug">
                                 https://github.com/yiisoft/yii-debug
                             </Link>
                             .

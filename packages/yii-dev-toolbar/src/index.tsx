@@ -1,38 +1,9 @@
-import '@yiisoft/yii-dev-toolbar/wdyr';
-
-import App from '@yiisoft/yii-dev-toolbar/App';
-import '@yiisoft/yii-dev-toolbar/index.css';
+import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import reportWebVitals from '@yiisoft/yii-dev-toolbar/reportWebVitals';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
 
-(function ToolbarWidget(scope) {
-    scope['ToolbarWidget'] = {
-        init: function (containerId, options) {
-            const container = document.getElementById(containerId);
+Config.appEnv = import.meta.env.VITE_ENV;
 
-            const root = ReactDOM.createRoot(container);
-            root.render(
-                <React.StrictMode>
-                    <App />
-                </React.StrictMode>,
-            );
-        },
-    };
-})(window);
-
-/**
- * For local purposes only
- */
-const widgetDivs = document.querySelectorAll('#yii-dev-toolbar');
-widgetDivs.forEach((div) => {
-    const root = ReactDOM.createRoot(document.getElementById(div.id) as HTMLElement);
-    root.render(
-        <React.StrictMode>
-            <App />
-        </React.StrictMode>,
-    );
-});
+import('@yiisoft/yii-dev-toolbar/bootstrap');
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

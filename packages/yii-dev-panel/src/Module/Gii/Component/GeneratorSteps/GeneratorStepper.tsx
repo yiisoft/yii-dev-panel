@@ -6,8 +6,10 @@ import {GiiGenerator} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 import {GenerateStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GenerateStep';
 import {PreviewStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/PreviewStep';
 import {ResultStep} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/ResultStep';
-import {ContextProvider} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
+import {Context} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
 import * as React from 'react';
+import {useContext, useEffect} from 'react';
+import {useDispatch} from 'react-redux';
 
 const steps = [
     {
@@ -24,8 +26,13 @@ const steps = [
     },
 ];
 
-export function GeneratorStepper({generator}: {generator: GiiGenerator}) {
+type GeneratorStepperProps = {
+    generator: GiiGenerator
+};
+
+export const GeneratorStepper = ({generator}: GeneratorStepperProps) => {
     const [activeStepIndex, setActiveStepIndex] = React.useState(0);
+    const context = useContext(Context);
 
     const handleNext = async () => {
         setActiveStepIndex((prev) => prev + 1);
@@ -34,29 +41,31 @@ export function GeneratorStepper({generator}: {generator: GiiGenerator}) {
     const handleReset = () => {
         setActiveStepIndex(0);
     };
+    useEffect(() => {
+        handleReset();
+        // @ts-ignore
+        context.reset();
+        // dispatch(context.reset())
+    }, [generator]);
 
     return (
-        <>
-            <ContextProvider>
-                <Stepper activeStep={activeStepIndex} orientation="vertical">
-                    {Object.values(steps).map((step, index) => (
-                        <Step key={index}>
-                            <StepLabel>{step.label}</StepLabel>
-                            <StepContent>
-                                <step.component
-                                    generator={generator}
-                                    onComplete={() => {
-                                        if (index === steps.length - 1) {
-                                            return handleReset();
-                                        }
-                                        return handleNext();
-                                    }}
-                                />
-                            </StepContent>
-                        </Step>
-                    ))}
-                </Stepper>
-            </ContextProvider>
-        </>
+        <Stepper activeStep={activeStepIndex} orientation='vertical'>
+            {Object.values(steps).map((step, index) => (
+                <Step key={index}>
+                    <StepLabel>{step.label}</StepLabel>
+                    <StepContent>
+                        <step.component
+                            generator={generator}
+                            onComplete={() => {
+                                if (index === steps.length - 1) {
+                                    return handleReset();
+                                }
+                                return handleNext();
+                            }}
+                        />
+                    </StepContent>
+                </Step>
+            ))}
+        </Stepper>
     );
-}
+};

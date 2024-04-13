@@ -8,6 +8,7 @@ import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {GiiGenerator, useGetGeneratorsQuery} from '@yiisoft/yii-dev-panel/Module/Gii/API/Gii';
 import {GeneratorStepper} from '@yiisoft/yii-dev-panel/Module/Gii/Component/GeneratorSteps/GeneratorStepper';
+import {ContextProvider} from '@yiisoft/yii-dev-panel/Module/Gii/Context/Context';
 import {useEffect, useMemo, useState} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {useSearchParams} from 'react-router-dom';
@@ -59,7 +60,7 @@ const Layout = () => {
                             <Typography>Gii is not configured or it does not have any generators.</Typography>
                             <Typography>
                                 Make sure Gii is active and its configuration has at least one active generator.&nbsp;
-                                <Link href="/inspector/parameters?filter=yiisoft/yii-gii">Open parameters.</Link>
+                                <Link href="/inspector/config/parameters?filter=yiisoft/yii-gii">Open parameters.</Link>
                             </Typography>
                         </>
                     }
@@ -70,7 +71,9 @@ const Layout = () => {
                 <MenuPanel links={links} open={!selectedGenerator} activeLink={selectedGenerator?.id}>
                     {selectedGenerator ? (
                         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
-                            <GeneratorStepper generator={selectedGenerator} />
+                            <ContextProvider>
+                                <GeneratorStepper generator={selectedGenerator} />
+                            </ContextProvider>
                         </ErrorBoundary>
                     ) : (
                         <InfoBox

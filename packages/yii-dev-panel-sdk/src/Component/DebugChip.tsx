@@ -1,30 +1,11 @@
-import TerminalIcon from '@mui/icons-material/Terminal';
-import {Chip} from '@mui/material';
-import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {buttonColorConsole, buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
-import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
-type DebugChipProps = {
-    entry: DebugEntry;
+import {AlertColor, Chip} from '@mui/material';
+import {ReactElement} from 'react';
+
+type DebugChip = {
+    label?: string | number;
+    icon?: ReactElement;
+    color?: AlertColor;
 };
-export const DebugChip = ({entry}: DebugChipProps) => {
-    if (isDebugEntryAboutConsole(entry)) {
-        return (
-            <Chip
-                sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                icon={<TerminalIcon />}
-                label={entry.command?.exitCode}
-                color={buttonColorConsole(Number(entry.command?.exitCode))}
-            />
-        );
-    }
-    if (isDebugEntryAboutWeb(entry)) {
-        return (
-            <Chip
-                sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                label={[entry.response?.statusCode, entry.request.method].join(' ')}
-                color={buttonColorHttp(entry.response?.statusCode)}
-            />
-        );
-    }
-    return null;
+export const DebugChip = ({label, icon, color}: DebugChip) => {
+    return <Chip sx={{borderRadius: '5px 5px', margin: '0 2px'}} icon={icon} label={label} color={color} />;
 };

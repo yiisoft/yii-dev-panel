@@ -25,9 +25,8 @@ import {useSelector} from '@yiisoft/yii-dev-panel/store';
 import React, {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-const defaultBackendUrl = Config.backendUrl;
-
 export function IndexPage() {
+    const defaultBackendUrl = useSelector((state) => state.application.baseUrl) as string;
     const dispatch = useDispatch();
     const [debugQuery] = useLazyGetDebugQuery();
     const [inspectorQuery] = useLazyGetParametersQuery();
@@ -120,7 +119,7 @@ export function IndexPage() {
                                 <ListItem key={index}>
                                     <ListItemText>{url}</ListItemText>
                                     <ListItemSecondaryAction>
-                                        <IconButton target="_blank" href={url}>
+                                        <IconButton href={url}>
                                             <OpenInNew />
                                         </IconButton>
                                         <IconButton

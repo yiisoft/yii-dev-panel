@@ -1,4 +1,5 @@
 import {DataGrid, GridColumns, GridValidRowModel} from '@mui/x-data-grid';
+import {GridSortModel} from '@mui/x-data-grid/models/gridSortModel';
 import {setPreferredPageSize} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -11,10 +12,18 @@ type GridProps = {
     getRowId?: (row: any) => string | number;
     pageSize?: number;
     rowHeight?: number | 'auto';
+    sortModel?: GridSortModel;
 };
 
 export function DataTable(props: GridProps) {
-    const {rows, columns, rowHeight = 'auto', getRowId = (row) => row.id, rowsPerPage = [20, 50, 100]} = props;
+    const {
+        rows,
+        sortModel,
+        columns,
+        rowHeight = 'auto',
+        getRowId = (row) => row.id,
+        rowsPerPage = [20, 50, 100],
+    } = props;
 
     const dispatch = useDispatch();
     // @ts-ignore
@@ -36,6 +45,7 @@ export function DataTable(props: GridProps) {
             disableColumnSelector
             disableVirtualization
             disableSelectionOnClick
+            sortModel={sortModel}
             rows={rows}
             getRowId={getRowId}
             columns={columns}

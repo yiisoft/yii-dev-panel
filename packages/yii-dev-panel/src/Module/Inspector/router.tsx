@@ -1,6 +1,5 @@
 import {Layout} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layout';
 import {BreadcrumbsContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
-import {DataContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
 import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
 import {RouteObject} from 'react-router-dom';
 
@@ -8,18 +7,6 @@ export const routes = [
     {
         path: 'inspector',
         children: [
-            {
-                path: 'parameters',
-                element: <Pages.ParametersPage />,
-            },
-            {
-                path: 'configuration',
-                element: (
-                    <DataContextProvider>
-                        <Pages.ConfigurationPage />
-                    </DataContextProvider>
-                ),
-            },
             {
                 path: 'tests',
                 element: <Pages.TestsPage />,
@@ -73,14 +60,6 @@ export const routes = [
                 path: 'container',
                 children: [
                     {
-                        index: true,
-                        element: (
-                            <DataContextProvider>
-                                <Pages.ContainerPage />
-                            </DataContextProvider>
-                        ),
-                    },
-                    {
                         path: 'view',
                         element: <Pages.ContainerEntryPage />,
                     },
@@ -107,6 +86,14 @@ export const routes = [
             {
                 path: 'cache',
                 element: <Pages.CachePage />,
+            },
+            {
+                path: 'config',
+                element: <Pages.ConfigurationPage />,
+            },
+            {
+                path: 'config/:page',
+                element: <Pages.ConfigurationPage />,
             },
         ],
     },

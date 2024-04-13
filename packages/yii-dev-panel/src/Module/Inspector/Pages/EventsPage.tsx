@@ -25,7 +25,7 @@ const EventListeners = React.memo(({eventListeners}: EventListenersProps) => {
                     <Typography variant="subtitle2" component="h3">
                         {event[0]}
                         <Tooltip title="Open in File Explorer">
-                            <IconButton size="small" target="_blank" href={`/inspector/files?class=${event[0]}`}>
+                            <IconButton size="small" href={`/inspector/files?class=${event[0]}`}>
                                 <OpenInNew fontSize="small" />
                             </IconButton>
                         </Tooltip>
@@ -38,7 +38,6 @@ const EventListeners = React.memo(({eventListeners}: EventListenersProps) => {
                                     <Tooltip title="Open in File Explorer">
                                         <Button
                                             size="small"
-                                            target="_blank"
                                             href={`/inspector/files?class=${item[0]}&method=${item[1]}`}
                                             endIcon={<OpenInNew fontSize="small" />}
                                         >

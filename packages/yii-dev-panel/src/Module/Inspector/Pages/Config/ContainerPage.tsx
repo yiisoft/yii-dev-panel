@@ -1,4 +1,4 @@
-import {ContentCopy, DataObject} from '@mui/icons-material';
+import {ContentCopy, OpenInNew} from '@mui/icons-material';
 import {Button, IconButton, Tooltip} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {FilterInput} from '@yiisoft/yii-dev-panel-sdk/Component/Form/FilterInput';
@@ -6,7 +6,7 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
-import {useGetConfigurationQuery, useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
+import {useGetClassesQuery, useLazyGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {DataContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/DataContext';
 import {LoaderContext, LoaderContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/LoaderContext';
 import clipboardCopy from 'clipboard-copy';
@@ -15,18 +15,11 @@ import {useSearchParams} from 'react-router-dom';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {loader} = useContext(LoaderContext);
-    if (typeof params.value === 'string') {
-        if (!params.value.match(/^[\w\\]+$/i)) {
-            return <JsonRenderer value={params.value} />;
-        }
-        return (
-            <>
-                {params.value}
-                <Button onClick={() => loader(params.row.id)}>Load</Button>
-            </>
-        );
+    if (params.row.value) {
+        return <JsonRenderer key={params.id} value={params.value} />;
     }
-    return <JsonRenderer value={params.value} />;
+
+    return <Button onClick={() => loader(params.row.id)}>Load</Button>;
 };
 const columns: GridColDef[] = [
     {
@@ -34,7 +27,7 @@ const columns: GridColDef[] = [
         headerName: 'Name',
         width: 200,
         renderCell: (params: GridRenderCellParams) => {
-            const value = params.value as string;
+            const value = params.value;
             return (
                 <div style={{wordBreak: 'break-all'}}>
                     <Tooltip title="Copy">
@@ -44,7 +37,7 @@ const columns: GridColDef[] = [
                     </Tooltip>
                     <Tooltip title="Examine as a container entry">
                         <IconButton size="small" href={'/inspector/container/view?class=' + value}>
-                            <DataObject fontSize="small" />
+                            <OpenInNew fontSize="small" />
                         </IconButton>
                     </Tooltip>
                     {value}
@@ -59,11 +52,14 @@ const columns: GridColDef[] = [
         renderCell: (params: GridRenderCellParams) => <TempComponent {...params} />,
     },
 ];
-export const ConfigurationPage = () => {
-    const {data, isLoading} = useGetConfigurationQuery('di');
+
+export const ContainerPage = () => {
+    const {data, isLoading} = useGetClassesQuery('');
     const [lazyLoadObject] = useLazyGetObjectQuery();
     const [searchParams, setSearchParams] = useSearchParams();
     const searchString = searchParams.get('filter') || '';
+
+    console.log('data', data, isLoading);
 
     const {objects, setObjects, insertObject} = useContext(DataContext);
 
@@ -76,17 +72,30 @@ export const ConfigurationPage = () => {
 
     useEffect(() => {
         if (!isLoading && data) {
-            const rows = Object.entries(data || ([] as any));
-            const objects = rows.map((el) => ({id: el[0], value: el[1]}));
-
-            setObjects(objects);
+            console.log(
+                'setObjects',
+                data.map((row) => ({
+                    id: row,
+                    value: null,
+                })),
+            );
+            setObjects(
+                data.map((row) => ({
+                    id: row,
+                    value: null,
+                })),
+            );
         }
     }, [isLoading]);
 
-    const filteredRows = useMemo(() => {
-        const regExp = new RegExp(regexpQuote(searchString || ''), 'i');
-        return objects.filter((object) => object.id.match(regExp));
+    const filteredRows: any = useMemo(() => {
+        if (!searchString) {
+            return objects;
+        }
+        const regExp = new RegExp(regexpQuote(searchString), 'i');
+        return objects.filter((object: any) => object.id.match(regExp));
     }, [objects, searchString]);
+    console.log('filteredRows', filteredRows, objects);
 
     const onChangeHandler = useCallback(async (value: string) => {
         setSearchParams({filter: value});
@@ -98,7 +107,6 @@ export const ConfigurationPage = () => {
 
     return (
         <>
-            <h2>Configuration</h2>
             <FilterInput value={searchString} onChange={onChangeHandler} />
             <LoaderContextProvider loader={handleLoadObject}>
                 <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row.id} columns={columns} />

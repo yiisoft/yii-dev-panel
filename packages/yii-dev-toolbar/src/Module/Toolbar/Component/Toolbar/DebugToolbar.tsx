@@ -43,9 +43,7 @@ export const DebugToolbar = () => {
         };
     }, []);
 
-    const [isToolbarOpened, setIsToolbarOpened] = useState<boolean>(
-        useSelector((state) => state.application.toolbarOpen),
-    );
+    const [isToolbarOpened, setIsToolbarOpened] = useState<boolean>(false);
     const getDebugQuery = useGetDebugQuery();
     const debugEntry = useDebugEntry();
     const dispatch = useDispatch();
@@ -57,6 +55,10 @@ export const DebugToolbar = () => {
             setSelectedEntry(getDebugQuery.data[0]);
         }
     }, [getDebugQuery.isFetching]);
+
+    const toolbarOpenState = useSelector((state) => state.application.toolbarOpen);
+    const baseUrlState = useSelector((state) => state.application.baseUrl);
+    useEffect(() => setIsToolbarOpened(toolbarOpenState), [toolbarOpenState]);
 
     const onToolbarClickHandler = () => {
         setIsToolbarOpened((v) => {
@@ -102,6 +104,7 @@ export const DebugToolbar = () => {
                         flexDirection: 'row',
                         alignItems: 'center',
                         justifyContent: 'space-between',
+                        zIndex: 1,
                     }}
                 >
                     <Box

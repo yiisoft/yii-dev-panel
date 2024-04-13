@@ -4,7 +4,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import {Breadcrumbs, Button, CircularProgress, IconButton, Link, Stack, Tooltip, Typography} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {DebugChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugChip';
+import {DebugEntryChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugEntryChip';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {fromUnixTime} from 'date-fns';
 import format from 'date-fns/format';
@@ -15,7 +15,7 @@ const columns: GridColDef<DebugEntry>[] = [
     {
         field: 'status',
         headerName: 'Status',
-        renderCell: ({row}: GridRenderCellParams) => <DebugChip entry={row} />,
+        renderCell: ({row}: GridRenderCellParams) => <DebugEntryChip entry={row} />,
     },
     {
         field: 'url',
