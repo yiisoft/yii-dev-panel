@@ -11,11 +11,12 @@ To be able to use the local registry, you need:
 
 1. Run the local registry server
 
-```bash
+```shell
 npx verdaccio
 ```
 
 That will output:
+
 ```text
 info --- config file  - /Users/xepozz/.config/verdaccio/config.yaml
 info --- "crypt" algorithm is deprecated consider switch to "bcrypt". Read more: https://github.com/verdaccio/monorepo/pull/580

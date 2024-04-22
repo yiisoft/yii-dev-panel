@@ -14,6 +14,7 @@ npm i @yiisoft/yii-dev-toolbar
 
 First you need to tell `npm` to use GitHub Packages registry for @yiisoft scope.
 Add `@yiisoft:registry=https://npm.pkg.github.com` to `.npmrc` file or run the following command:
+
 ```shell
 echo "\n@yiisoft:registry=https://npm.pkg.github.com" >> .npmrc
 ```
@@ -33,4 +34,3 @@ Add the following code to the page to display the toolbar:
 <script src="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.js"></script>
 <link rel="stylesheet" href="https://yiisoft.github.io/yii-dev-panel/toolbar/bundle.css" />
 ```
-
