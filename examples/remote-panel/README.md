@@ -6,20 +6,20 @@ It is a simple example of how to use the remote panel.
 
 1. Run the server
 
-```bash
+```shell
 npm start
 ```
 
 2. Open the browser and go to `http://localhost:3002`
 
 > Port is 3002 because the yii-dev-panel is running on port 3000
-> 
+>
 > You can change the port in the `package.json` file
 
 3. You may use the remote panel to debug your application in the browser.
 4. When you are done, you need to build the application to prepare the production files.
 
-```bash
+```shell
 npm run build
 ```
 

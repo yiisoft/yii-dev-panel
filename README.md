@@ -2,7 +2,6 @@
 
 This is a monorepo for Yii Development Panel and its SDK.
 
-
 ## Architecture
 
 The project follows monorepository patterns. The project consists of several packages:
@@ -21,7 +20,6 @@ The `toolbar` application. It is used to display the toolbar on the page.
 
 The package is used to display the toolbar on the page. It can be used separately from the `yii-dev-panel` application.
 
-
 The `toolbar` application requires only `sdk` package.
 
 ### `@yiisoft/yii-dev-toolbar`
@@ -38,9 +36,9 @@ The `app` application requires both `sdk` and `toolbar` packages.
 
 Example of remote components that may be used as a custom panel.
 
-Read more about how to work with remote components [here](docs/shared_components.md).
+Read more about how to work with remote components [here](docs/guide/readme.md).
 
-#### Dependency graph:
+#### Dependency graph
 
 ```mermaid
 flowchart LR
@@ -50,7 +48,31 @@ flowchart LR
     B[yii-dev-toolbar] --> C
 ```
 
-## Additional docs:
+## Documentation
 
-- [How to use Local registry (`verdaccio`)](docs/local_registry.md)
-- [How to work with remote components](docs/shared_components.md)
+- [Guide](docs/guide/README.md)
+- [Internals](docs/internals.md)
+
+## Support
+
+If you need help or have a question, the [Yii Forum](https://forum.yiiframework.com/c/yii-3-0/63) is a good place for that.
+You may also check out other [Yii Community Resources](https://www.yiiframework.com/community).
+
+## Support the project
+
+[![Open Collective](https://img.shields.io/badge/Open%20Collective-sponsor-7eadf1?logo=open%20collective&logoColor=7eadf1&labelColor=555555)](https://opencollective.com/yiisoft)
+
+## Follow updates
+
+[![Official website](https://img.shields.io/badge/Powered_by-Yii_Framework-green.svg?style=flat)](https://www.yiiframework.com/)
+[![Twitter](https://img.shields.io/badge/twitter-follow-1DA1F2?logo=twitter&logoColor=1DA1F2&labelColor=555555?style=flat)](https://twitter.com/yiiframework)
+[![Telegram](https://img.shields.io/badge/telegram-join-1DA1F2?style=flat&logo=telegram)](https://t.me/yii3en)
+[![Facebook](https://img.shields.io/badge/facebook-join-1DA1F2?style=flat&logo=facebook&logoColor=ffffff)](https://www.facebook.com/groups/yiitalk)
+[![Slack](https://img.shields.io/badge/slack-join-1DA1F2?style=flat&logo=slack)](https://yiiframework.com/go/slack)
+
+## License
+
+The Yii Development Panel is free software. It is released under the terms of the BSD License.
+Please see [`LICENSE`](./LICENSE.md) for more information.
+
+Maintained by [Yii Software](https://www.yiiframework.com/).
