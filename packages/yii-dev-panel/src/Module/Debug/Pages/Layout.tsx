@@ -34,7 +34,6 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {EventTypesEnum, useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useServerSentEvents';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
@@ -312,16 +311,16 @@ const Layout = () => {
     const changeEntry = (entry: DebugEntry | null) => {
         if (entry) {
             dispatch(changeEntryAction(entry));
-            setSearchParams((prev) => {
-                prev.set('debugEntry', entry.id);
-                return prev;
+            setSearchParams((params) => {
+                params.set('debugEntry', entry.id);
+                return params;
             });
             return;
         }
         dispatch(changeEntryAction(null));
-        setSearchParams((prev) => {
-            prev.delete('debugEntry');
-            return prev;
+        setSearchParams((params) => {
+            params.delete('debugEntry');
+            return params;
         });
     };
     const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);

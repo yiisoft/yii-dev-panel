@@ -1,5 +1,3 @@
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
-
 // TODO support custom events and decode payload to object
 class ServerSentEvents {
     private eventSource: EventSource = null;
@@ -29,5 +27,5 @@ class ServerSentEvents {
     }
 }
 
-export const createServerSentEventsObserver = (backendUrl) =>
+export const createServerSentEventsObserver = (backendUrl: string) =>
     new ServerSentEvents(backendUrl + '/debug/api/event-stream');

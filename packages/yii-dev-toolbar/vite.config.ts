@@ -10,7 +10,6 @@ export default defineConfig(async () => ({
         fs: {
             allow: ['.'],
         },
-        cors: false,
     },
     resolve: {
         alias: {

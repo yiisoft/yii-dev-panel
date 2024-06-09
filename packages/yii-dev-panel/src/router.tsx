@@ -1,4 +1,3 @@
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
 import {Layout} from '@yiisoft/yii-dev-panel/Application/Component/Layout';
 import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
@@ -22,7 +21,7 @@ export function createRouter(
     const routes: RouteObject[] = [
         {
             path: '/',
-            element: <Layout>{modulesConfig.toolbar && <DebugToolbar iframe={true} />}</Layout>,
+            element: <Layout>{modulesConfig.toolbar && <DebugToolbar />}</Layout>,
             children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
         ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),

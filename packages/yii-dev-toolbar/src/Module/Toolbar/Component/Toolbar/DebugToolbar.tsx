@@ -19,16 +19,37 @@ import {ValidatorItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/T
 import {RequestItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/Web/RequestItem';
 import {RouterItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/Web/RouterItem';
 import {useSelector} from '@yiisoft/yii-dev-toolbar/store';
-import {useCallback, useEffect, useRef, useState} from 'react';
+import React, {ForwardedRef, forwardRef, useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useResizable} from 'react-resizable-layout';
 import {IFrameWrapper} from '@yiisoft/yii-dev-panel-sdk/Helper/IFrameWrapper';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const serviceWorker = navigator?.serviceWorker;
 
-export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
+type DebugIFrameProps = {
+    baseUrlState: string;
+    iframeEnabled: boolean;
+};
+
+const DebugIFrame = forwardRef(
+    ({baseUrlState, iframeEnabled}: DebugIFrameProps, ref: ForwardedRef<HTMLIFrameElement>) => {
+        return (
+            <iframe
+                ref={ref}
+                // src={`http://localhost:3000/debug?toolbar=0&debugEntry=${debugEntry?.id}`}
+                src={baseUrlState + `/debug?toolbar=0`}
+                style={{height: '100%', width: '100%'}}
+                hidden={!iframeEnabled}
+                loading="lazy"
+            />
+        );
+    },
+);
+
+export const DebugToolbar = () => {
     useEffect(() => {
         // console.debug('[START] Listen to message');
         const onMessageHandler = (event) => {
@@ -84,6 +105,10 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
     }, []);
 
     const [open, setOpen] = useState(false);
+
+    const handleDebugWindowOpen = useCallback(() => {
+        window.open(debugEntry ? baseUrlState + '/debug?debugEntry=' + debugEntry.id : baseUrlState + '/debug');
+    }, [debugEntry]);
 
     const handleClickOpen = useCallback(() => {
         setOpen(true);
@@ -235,6 +260,11 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
                                 }
                             >
                                 <SpeedDialAction
+                                    onClick={handleDebugWindowOpen}
+                                    icon={<OpenInNewIcon />}
+                                    tooltipTitle="Open debug in a new window"
+                                />
+                                <SpeedDialAction
                                     onClick={handleClickOpen}
                                     icon={<ListIcon />}
                                     tooltipTitle="List all debug entries"
@@ -254,14 +284,7 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
             )}
             <DebugEntriesListModal open={open} onClick={onChangeHandler} onClose={handleClose} />
             <div ref={iframeContainerRef} style={{height: position, overflow: 'hidden'}} hidden={!iframeEnabled}>
-                <iframe
-                    ref={iframeRef}
-                    // src={'http://localhost:3000/debug?toolbar=0&'}
-                    src={baseUrlState + '/debug?iframe=false&'}
-                    style={{height: '100%', width: '100%'}}
-                    hidden={!iframeEnabled}
-                    loading="lazy"
-                />
+                <DebugIFrame ref={iframeRef} baseUrlState={baseUrlState} iframeEnabled={iframeEnabled} />
             </div>
         </Portal>
     );

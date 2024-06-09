@@ -19,7 +19,7 @@ type TimelinePanelProps = {
 };
 export const TimelinePanel = ({data}: TimelinePanelProps) => {
     if (!data || !Array.isArray(data)) {
-        return <Typography>Nothing here</Typography>;
+        return <>Nothing here</>;
     }
     return (
         <Timeline position="alternate">
