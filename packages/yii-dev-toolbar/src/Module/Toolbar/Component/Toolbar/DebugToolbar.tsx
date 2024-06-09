@@ -1,11 +1,11 @@
 import ListIcon from '@mui/icons-material/List';
-import {ButtonGroup, Paper, Portal} from '@mui/material';
+import {ButtonGroup, Paper, Portal, useTheme} from '@mui/material';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
 import {setIFrameHeight, setToolbarOpen} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 import {addCurrentPageRequestId, changeEntryAction, useDebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Context';
-import {DebugEntry, debugApi, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {debugApi, DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import {DebugEntriesListModal} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/DebugEntriesListModal';
@@ -21,12 +21,8 @@ import {RouterItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Tool
 import {useSelector} from '@yiisoft/yii-dev-toolbar/store';
 import {useCallback, useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {DevPanelItem} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DevPanelItem';
-import Resizable from 'react-resizable-layout';
 import {useResizable} from 'react-resizable-layout';
-import {useTheme} from '@mui/material';
 import {IFrameWrapper} from '@yiisoft/yii-dev-panel-sdk/Helper/IFrameWrapper';
-import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import WebAssetOffIcon from '@mui/icons-material/WebAssetOff';
 import WebAssetIcon from '@mui/icons-material/WebAsset';
 
@@ -112,7 +108,7 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
             if (!iframeEnabled) {
                 setIframeEnabled(true);
             }
-            iframeWrapper?.dispatchWindowEvent('router.navigate', url);
+            iframeWrapper?.dispatchEvent('router.navigate', url);
         },
         [iframeWrapper],
     );
@@ -137,7 +133,6 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
         },
     });
     useEffect(() => {
-        console.log('set position');
         setPosition(iframeHeight);
     }, [iframeHeight]);
 
@@ -261,14 +256,10 @@ export const DebugToolbar = ({iframe = false}: {iframe: boolean}) => {
             <div ref={iframeContainerRef} style={{height: position, overflow: 'hidden'}} hidden={!iframeEnabled}>
                 <iframe
                     ref={iframeRef}
-                    src={'http://localhost:3000/debug?toolbar=0&'}
-                    // src={baseUrlState + '/debug?iframe=false&'}
+                    // src={'http://localhost:3000/debug?toolbar=0&'}
+                    src={baseUrlState + '/debug?iframe=false&'}
                     style={{height: '100%', width: '100%'}}
                     hidden={!iframeEnabled}
-                    onLoad={(e) => {
-                        console.log('i loaded', e);
-                    }}
-                    // sandbox="allow-same-origin allow-scripts"
                     loading="lazy"
                 />
             </div>

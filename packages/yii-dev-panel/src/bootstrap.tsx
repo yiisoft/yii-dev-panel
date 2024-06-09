@@ -12,7 +12,6 @@ try {
 } catch (e) {
     console.error('Error while parsing query params: ', e);
 }
-console.log('query params', queryParams);
 
 (function YiiDevPanelWidget(scope) {
     scope.init = function () {

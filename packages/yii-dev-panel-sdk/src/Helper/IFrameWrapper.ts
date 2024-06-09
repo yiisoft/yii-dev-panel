@@ -21,7 +21,7 @@ export class IFrameWrapper {
         });
     }
 
-    dispatchWindowEvent(event: CrossWindowEventType, value: CrossWindowValueType) {
+    dispatchEvent(event: CrossWindowEventType, value: CrossWindowValueType) {
         this.eventQueue.next(() => {
             dispatchWindowEvent(this.frame.contentWindow, event, value);
         });

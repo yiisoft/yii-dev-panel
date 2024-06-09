@@ -15,7 +15,7 @@ type GridProps = {
     sortModel?: GridSortModel;
 };
 const defaultRowsPerPage = [20, 50, 100];
-
+const voidCallback = () => null;
 const defaultStyle = {
     '& .MuiDataGrid-cell': {
         alignItems: 'flex-start',
@@ -44,11 +44,11 @@ export function DataTable(props: GridProps) {
 
     return (
         <DataGrid
-            onCellClick={useCallback(() => null, [])}
-            onCellDoubleClick={useCallback(() => null, [])}
-            onCellFocusOut={useCallback(() => null, [])}
-            onRowClick={useCallback(() => null, [])}
-            onColumnHeaderClick={useCallback(() => null, [])}
+            onCellClick={voidCallback}
+            onCellDoubleClick={voidCallback}
+            onCellFocusOut={voidCallback}
+            onRowClick={voidCallback}
+            onColumnHeaderClick={voidCallback}
             disableDensitySelector
             disableColumnSelector
             disableVirtualization
