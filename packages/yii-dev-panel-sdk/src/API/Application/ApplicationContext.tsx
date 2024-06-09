@@ -6,6 +6,7 @@ type ApplicationContext = {
     toolbarOpen: boolean;
     favoriteUrls: string[];
     autoLatest: boolean;
+    iframeHeight: number;
 };
 export const ApplicationSlice = createSlice({
     name: 'application',
@@ -15,6 +16,7 @@ export const ApplicationSlice = createSlice({
         toolbarOpen: true,
         favoriteUrls: [] as string[],
         autoLatest: false,
+        iframeHeight: 400,
     } as ApplicationContext,
     reducers: {
         changeBaseUrl(state, action: PayloadAction<string>) {
@@ -38,6 +40,9 @@ export const ApplicationSlice = createSlice({
         changeAutoLatest: (state, action) => {
             state.autoLatest = action.payload;
         },
+        setIFrameHeight: (state, action) => {
+            state.iframeHeight = action.payload;
+        },
     },
 });
 
@@ -48,4 +53,5 @@ export const {
     setPreferredPageSize,
     addFavoriteUrl,
     removeFavoriteUrl,
+    setIFrameHeight,
 } = ApplicationSlice.actions;

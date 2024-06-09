@@ -8,11 +8,15 @@ import {createStore} from '@yiisoft/yii-dev-panel/store';
 import {ErrorBoundary} from 'react-error-boundary';
 import {Provider} from 'react-redux';
 import {RouterProvider} from 'react-router-dom';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {PersistGate} from 'redux-persist/integration/react';
+import {CrossWindowEventType, dispatchWindowEvent} from '@yiisoft/yii-dev-panel-sdk/Helper/dispatchWindowEvent';
 
 type AppProps = {
     config: {
+        modules: {
+            toolbar: boolean;
+        };
         router: {
             basename: string;
             useHashRouter: boolean;
@@ -23,15 +27,37 @@ type AppProps = {
         };
     };
 };
-
 export default function App({config}: AppProps) {
-    const router = createRouter(modules, config.router);
+    const router = createRouter(modules, config.router, config.modules);
     const {store, persistor} = createStore({
         application: {
             baseUrl: config.backend.baseUrl,
             favoriteUrls: config.backend.favoriteUrls ?? [],
         },
     });
+
+    useEffect(() => {
+        dispatchWindowEvent(window.parent, 'panel.loaded', true);
+
+        const listener = (event: MessageEvent) => {
+            console.log('post message event', event);
+            const data = event.data;
+
+            if ('event' in data) {
+                switch (data.event as CrossWindowEventType) {
+                    case 'router.navigate':
+                        router.navigate(data.value);
+                        break;
+                }
+            }
+        };
+
+        window.addEventListener('message', listener);
+
+        return () => {
+            window?.removeEventListener('message', listener);
+        };
+    }, []);
 
     return (
         <RouterOptionsContextProvider baseUrl="" openLinksInNewWindow={false}>

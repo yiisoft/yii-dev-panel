@@ -220,7 +220,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                 </ErrorBoundary>
             </Container>
             {children}
-            <ScrollTopButton />
+            <ScrollTopButton bottomOffset={!!children} />
         </>
     );
 });

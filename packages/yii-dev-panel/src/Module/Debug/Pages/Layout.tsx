@@ -230,6 +230,26 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
     );
 };
 
+const NoCollectorsInfoBox = React.memo(() => {
+    return (
+        <InfoBox
+            title="No one collector is chosen"
+            text="Select a collector from the left side panel to see more options"
+            severity="info"
+            icon={<HelpOutline />}
+        />
+    );
+});
+
+const EmptyCollectorsInfoBox = React.memo(() => (
+    <InfoBox
+        title="Collectors are empty"
+        text="Looks like debugger was inactive or it did not have any active collectors during the request"
+        severity="info"
+        icon={<HelpOutline />}
+    />
+));
+
 const Layout = () => {
     const dispatch = useDispatch();
     const [autoLatest, setAutoLatest] = useState<boolean>(false);
@@ -475,12 +495,7 @@ const Layout = () => {
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
-                <InfoBox
-                    title="Collectors are empty"
-                    text="Looks like debugger was inactive or it did not have any active collectors during the request"
-                    severity="info"
-                    icon={<HelpOutline />}
-                />
+                <EmptyCollectorsInfoBox />
             ) : (
                 <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
@@ -506,12 +521,7 @@ const Layout = () => {
                             )}
                         </>
                     ) : (
-                        <InfoBox
-                            title="No one collector is chosen"
-                            text="Select a collector from the left side panel to see more options"
-                            severity="info"
-                            icon={<HelpOutline />}
-                        />
+                        <NoCollectorsInfoBox />
                     )}
                 </MenuPanel>
             )}
