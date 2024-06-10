@@ -49,10 +49,15 @@ const DebugIFrame = forwardRef(
     },
 );
 
-export const DebugToolbar = () => {
+type DebugToolbarProps = {
+    activeComponents: {
+        iframe: boolean;
+    };
+};
+export const DebugToolbar = ({activeComponents}: DebugToolbarProps) => {
     useEffect(() => {
         // console.debug('[START] Listen to message');
-        const onMessageHandler = (event) => {
+        const onMessageHandler = (event: MessageEvent) => {
             if (!event.data.payload || !('x-debug-id' in event.data.payload.headers)) {
                 return;
             }
@@ -130,18 +135,24 @@ export const DebugToolbar = () => {
 
     const iframeRouteNavigate = useCallback(
         (url: string) => {
+            if (!activeComponents.iframe) {
+                return;
+            }
             if (!iframeEnabled) {
                 setIframeEnabled(true);
             }
             iframeWrapper?.dispatchEvent('router.navigate', url);
         },
-        [iframeWrapper],
+        [iframeWrapper, activeComponents],
     );
 
     const [iframeEnabled, setIframeEnabled] = useState(false);
     const toggleIframeHandler = useCallback(() => {
+        if (!activeComponents.iframe) {
+            return;
+        }
         setIframeEnabled((value) => !value);
-    }, []);
+    }, [activeComponents]);
 
     const theme = useTheme();
     const iframeContainerRef = useRef<HTMLDivElement | undefined>(undefined);
@@ -269,7 +280,7 @@ export const DebugToolbar = () => {
                                     icon={<ListIcon />}
                                     tooltipTitle="List all debug entries"
                                 />
-                                {isToolbarOpened && (
+                                {activeComponents.iframe && isToolbarOpened && (
                                     <SpeedDialAction
                                         key={'iframe'}
                                         onClick={toggleIframeHandler}

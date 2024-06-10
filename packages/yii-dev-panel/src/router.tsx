@@ -21,7 +21,7 @@ export function createRouter(
     const routes: RouteObject[] = [
         {
             path: '/',
-            element: <Layout>{modulesConfig.toolbar && <DebugToolbar />}</Layout>,
+            element: <Layout>{modulesConfig.toolbar && <DebugToolbar activeComponents={{iframe: false}} />}</Layout>,
             children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
         ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),
