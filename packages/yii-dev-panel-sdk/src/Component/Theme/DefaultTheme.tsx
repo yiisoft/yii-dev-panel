@@ -9,11 +9,11 @@ const LinkBehavior = (routerOptions) =>
         let {href, ...other} = props;
         const routerHref = useHref(href);
 
-        if (typeof href !== 'string' || href === '#') {
-            return <a href={'#'} ref={ref} {...other} />;
+        if (typeof href !== 'string') {
+            href = '#';
         }
 
-        if (href.startsWith('http://') || href.startsWith('https://')) {
+        if (href === '#' || href.startsWith('http://') || href.startsWith('https://')) {
             return <a href={href} ref={ref} {...other} />;
         }
 

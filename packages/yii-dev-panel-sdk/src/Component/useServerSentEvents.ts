@@ -25,7 +25,9 @@ export const useServerSentEvents = (
             ServerSentEventsObserverRef.current.unsubscribe(prevOnMessage.current);
         }
         if (!subscribe) {
-            return;
+            return () => {
+                ServerSentEventsObserverRef.current.unsubscribe(onMessage);
+            };
         }
 
         ServerSentEventsObserverRef.current.subscribe(onMessage);

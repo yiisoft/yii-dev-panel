@@ -7,7 +7,7 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {IconButton, Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
-import {parseFilePathWithLineAnchor, parseFilename} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
+import {parseFilename, parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
 
@@ -42,6 +42,9 @@ type EventTimelineProps = {
 };
 export const EventPanel = (props: EventTimelineProps) => {
     const {events} = props;
+    if (events.length === 0) {
+        return <>Nothing here</>;
+    }
 
     return (
         <Timeline position="alternate">

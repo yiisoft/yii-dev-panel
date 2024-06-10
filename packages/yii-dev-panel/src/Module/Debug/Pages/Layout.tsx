@@ -34,7 +34,6 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {EventTypesEnum, useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useServerSentEvents';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
@@ -230,6 +229,26 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
     );
 };
 
+const NoCollectorsInfoBox = React.memo(() => {
+    return (
+        <InfoBox
+            title="No one collector is chosen"
+            text="Select a collector from the left side panel to see more options"
+            severity="info"
+            icon={<HelpOutline />}
+        />
+    );
+});
+
+const EmptyCollectorsInfoBox = React.memo(() => (
+    <InfoBox
+        title="Collectors are empty"
+        text="Looks like debugger was inactive or it did not have any active collectors during the request"
+        severity="info"
+        icon={<HelpOutline />}
+    />
+));
+
 const Layout = () => {
     const dispatch = useDispatch();
     const [autoLatest, setAutoLatest] = useState<boolean>(false);
@@ -292,16 +311,16 @@ const Layout = () => {
     const changeEntry = (entry: DebugEntry | null) => {
         if (entry) {
             dispatch(changeEntryAction(entry));
-            setSearchParams((prev) => {
-                prev.set('debugEntry', entry.id);
-                return prev;
+            setSearchParams((params) => {
+                params.set('debugEntry', entry.id);
+                return params;
             });
             return;
         }
         dispatch(changeEntryAction(null));
-        setSearchParams((prev) => {
-            prev.delete('debugEntry');
-            return prev;
+        setSearchParams((params) => {
+            params.delete('debugEntry');
+            return params;
         });
     };
     const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);
@@ -475,12 +494,7 @@ const Layout = () => {
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
-                <InfoBox
-                    title="Collectors are empty"
-                    text="Looks like debugger was inactive or it did not have any active collectors during the request"
-                    severity="info"
-                    icon={<HelpOutline />}
-                />
+                <EmptyCollectorsInfoBox />
             ) : (
                 <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
@@ -506,12 +520,7 @@ const Layout = () => {
                             )}
                         </>
                     ) : (
-                        <InfoBox
-                            title="No one collector is chosen"
-                            text="Select a collector from the left side panel to see more options"
-                            severity="info"
-                            icon={<HelpOutline />}
-                        />
+                        <NoCollectorsInfoBox />
                     )}
                 </MenuPanel>
             )}

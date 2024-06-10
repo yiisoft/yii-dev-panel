@@ -14,6 +14,14 @@ type GridProps = {
     rowHeight?: number | 'auto';
     sortModel?: GridSortModel;
 };
+const defaultRowsPerPage = [20, 50, 100];
+const voidCallback = () => null;
+const defaultStyle = {
+    '& .MuiDataGrid-cell': {
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+    },
+};
 
 export function DataTable(props: GridProps) {
     const {
@@ -21,8 +29,8 @@ export function DataTable(props: GridProps) {
         sortModel,
         columns,
         rowHeight = 'auto',
-        getRowId = (row) => row.id,
-        rowsPerPage = [20, 50, 100],
+        getRowId = useCallback((row) => row.id, []),
+        rowsPerPage = defaultRowsPerPage,
     } = props;
 
     const dispatch = useDispatch();
@@ -36,11 +44,11 @@ export function DataTable(props: GridProps) {
 
     return (
         <DataGrid
-            onCellClick={() => null}
-            onCellDoubleClick={() => null}
-            onCellFocusOut={() => null}
-            onRowClick={() => null}
-            onColumnHeaderClick={() => null}
+            onCellClick={voidCallback}
+            onCellDoubleClick={voidCallback}
+            onCellFocusOut={voidCallback}
+            onRowClick={voidCallback}
+            onColumnHeaderClick={voidCallback}
             disableDensitySelector
             disableColumnSelector
             disableVirtualization
@@ -52,23 +60,18 @@ export function DataTable(props: GridProps) {
             rowsPerPageOptions={rowsPerPage}
             pageSize={pageSize}
             page={Number(searchParams.get('page'))}
-            onPageChange={(page) => {
+            onPageChange={useCallback((page) => {
                 setSearchParams({page: String(page)});
-            }}
-            onPageSizeChange={(value) => {
+            }, [])}
+            onPageSizeChange={useCallback((value) => {
                 setPageSize(value);
                 dispatch(setPreferredPageSize(value));
-            }}
+            }, [])}
             rowBuffer={0}
             rowThreshold={0}
             hideFooterSelectedRowCount
             autoHeight
-            sx={{
-                '& .MuiDataGrid-cell': {
-                    alignItems: 'flex-start',
-                    flexDirection: 'column',
-                },
-            }}
+            sx={defaultStyle}
             getRowHeight={getRowHeightCallback}
         />
     );

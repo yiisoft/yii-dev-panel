@@ -3,7 +3,7 @@ import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {useSelector} from 'react-redux';
 
 type StateType = {
-    entry: DebugEntry;
+    entry: DebugEntry | null;
     currentPageRequestIds: string[];
 };
 const initialState: StateType = {
@@ -26,6 +26,6 @@ export const debugSlice = createSlice({
 export const {changeEntryAction, addCurrentPageRequestId} = debugSlice.actions;
 
 type State = {[debugSlice.name]: ReturnType<typeof debugSlice.getInitialState>};
-export const useDebugEntry = (): DebugEntry | null => useSelector((state: State) => state[debugSlice.name]?.entry);
+export const useDebugEntry = () => useSelector((state: State) => state[debugSlice.name]?.entry);
 export const useCurrentPageRequestIds = (): string[] =>
     useSelector((state: State) => state[debugSlice.name]?.currentPageRequestIds);
