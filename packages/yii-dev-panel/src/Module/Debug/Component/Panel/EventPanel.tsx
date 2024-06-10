@@ -42,7 +42,7 @@ type EventTimelineProps = {
 };
 export const EventPanel = (props: EventTimelineProps) => {
     const {events} = props;
-    if (events.length === 0) {
+    if (events && events.length === 0) {
         return <>Nothing here</>;
     }
 

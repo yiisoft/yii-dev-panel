@@ -255,7 +255,7 @@ const Layout = () => {
     const debugEntry = useDebugEntry();
     const [searchParams, setSearchParams] = useSearchParams();
     const [getDebugQuery, getDebugQueryInfo] = useLazyGetDebugQuery();
-    const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
+    const [selectedCollector, setSelectedCollector] = useState<string>(() => searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
@@ -264,7 +264,7 @@ const Layout = () => {
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
-    }, []);
+    }, [getDebugQuery]);
     useEffect(onRefreshHandler, [onRefreshHandler]);
 
     useEffect(() => {
@@ -273,11 +273,14 @@ const Layout = () => {
 
     useEffect(() => {
         if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
-            let entry;
-            if (searchParams.has('debugEntry')) {
-                entry = getDebugQueryInfo.data.find((entry) => entry.id === searchParams.get('debugEntry'));
+            if (!searchParams.has('debugEntry')) {
+                changeEntry(getDebugQueryInfo.data[0]);
+                return;
             }
-            changeEntry(entry ?? getDebugQueryInfo.data[0]);
+            const entry = getDebugQueryInfo.data.find((entry) => entry.id === searchParams.get('debugEntry'));
+            if (!entry) {
+                changeEntry(getDebugQueryInfo.data[0]);
+            }
         }
     }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data]);
 
@@ -308,20 +311,24 @@ const Layout = () => {
             })
             .catch(clearCollectorAndData);
     }, [searchParams, debugEntry]);
+
+    useEffect(() => {
+        if (debugEntry) {
+            setSearchParams((params) => {
+                params.set('debugEntry', debugEntry.id);
+                return params;
+            });
+        } else {
+            setSearchParams({});
+        }
+    }, [debugEntry, setSearchParams]);
+
     const changeEntry = (entry: DebugEntry | null) => {
         if (entry) {
             dispatch(changeEntryAction(entry));
-            setSearchParams((params) => {
-                params.set('debugEntry', entry.id);
-                return params;
-            });
             return;
         }
         dispatch(changeEntryAction(null));
-        setSearchParams((params) => {
-            params.delete('debugEntry');
-            return params;
-        });
     };
     const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);
 
@@ -363,7 +370,7 @@ const Layout = () => {
         console.log(result.data.command);
         clipboardCopy(result.data.command);
     }, [debugEntry]);
-    const onEntryChangeHandler = useCallback(changeEntry, []);
+    const onEntryChangeHandler = useCallback(changeEntry, [changeEntry]);
 
     const onUpdatesHandler = useCallback(async (event: MessageEvent) => {
         const data = JSON.parse(event.data);
