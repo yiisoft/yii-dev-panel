@@ -11,6 +11,7 @@ import {RouterProvider} from 'react-router-dom';
 import React, {useEffect} from 'react';
 import {PersistGate} from 'redux-persist/integration/react';
 import {CrossWindowEventType, dispatchWindowEvent} from '@yiisoft/yii-dev-panel-sdk/Helper/dispatchWindowEvent';
+import {changeBaseUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 
 type AppProps = {
     config: {
@@ -24,6 +25,7 @@ type AppProps = {
         backend: {
             baseUrl: string;
             favoriteUrls: string;
+            usePreferredUrl: boolean;
         };
     };
 };
@@ -37,10 +39,17 @@ export default function App({config}: AppProps) {
     });
 
     useEffect(() => {
+        if (config.backend.usePreferredUrl) {
+            console.log('Override backend url', config.backend.baseUrl);
+            store.dispatch(changeBaseUrl(config.backend.baseUrl));
+        }
+    }, []);
+
+    useEffect(() => {
         dispatchWindowEvent(window.parent, 'panel.loaded', true);
 
         const listener = (event: MessageEvent) => {
-            console.log('post message event', event);
+            console.log('Post message event', event, event.data);
             const data = event.data;
 
             if ('event' in data) {
