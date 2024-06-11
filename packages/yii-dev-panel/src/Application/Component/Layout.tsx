@@ -1,5 +1,6 @@
 import {ContentCut, GitHub, Refresh} from '@mui/icons-material';
 import AdbIcon from '@mui/icons-material/Adb';
+import InfoIcon from '@mui/icons-material/Info';
 import {
     CssBaseline,
     IconButton,
@@ -178,8 +179,11 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                             })}
                         </Box>
                         <div>
-                            <IconButton size="large" onClick={handleMenu} onMouseOver={handleMenu} color="inherit">
+                            <IconButton size="large" href={'/debug-server'} color="inherit">
                                 <AdbIcon />
+                            </IconButton>
+                            <IconButton size="large" onClick={handleMenu} onMouseOver={handleMenu} color="inherit">
+                                <InfoIcon />
                             </IconButton>
                             <Menu
                                 keepMounted
