@@ -16,3 +16,4 @@ export {RoutesPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/RoutesPa
 export {TablePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TablePage';
 export {TestsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TestsPage';
 export {TranslationsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/TranslationsPage';
+export {OpcachePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/OpcachePage';
