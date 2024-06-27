@@ -108,7 +108,7 @@ type OpcacheResponse = {
             'opcache.jit_max_trace_length': number;
         };
         version: {
-            version: '8.3.6';
+            version: string;
             opcache_product_name: 'Zend OPcache';
         };
         blacklist: [];
