@@ -57,6 +57,10 @@ export const routes = [
                 element: <Pages.ComposerPage />,
             },
             {
+                path: 'opcache',
+                element: <Pages.OpcachePage />,
+            },
+            {
                 path: 'container',
                 children: [
                     {

@@ -50,6 +50,124 @@ type ComposerResponse = {
         'packages-dev': {name: string; version: string}[];
     };
 };
+type OpcacheResponse = {
+    configuration: {
+        directives: {
+            'opcache.enable': boolean;
+            'opcache.enable_cli': boolean;
+            'opcache.use_cwd': boolean;
+            'opcache.validate_timestamps': boolean;
+            'opcache.validate_permission': boolean;
+            'opcache.validate_root': boolean;
+            'opcache.dups_fix': boolean;
+            'opcache.revalidate_path': boolean;
+            'opcache.log_verbosity_level': number;
+            'opcache.memory_consumption': number;
+            'opcache.interned_strings_buffer': number;
+            'opcache.max_accelerated_files': number;
+            'opcache.max_wasted_percentage': number;
+            'opcache.force_restart_timeout': number;
+            'opcache.revalidate_freq': number;
+            'opcache.preferred_memory_model': string;
+            'opcache.blacklist_filename': string;
+            'opcache.max_file_size': number;
+            'opcache.error_log': string;
+            'opcache.protect_memory': boolean;
+            'opcache.save_comments': boolean;
+            'opcache.record_warnings': boolean;
+            'opcache.enable_file_override': boolean;
+            'opcache.optimization_level': number;
+            'opcache.lockfile_path': string;
+            'opcache.file_cache': string;
+            'opcache.file_cache_only': boolean;
+            'opcache.file_cache_consistency_checks': boolean;
+            'opcache.file_update_protection': number;
+            'opcache.opt_debug_level': number;
+            'opcache.restrict_api': string;
+            'opcache.huge_code_pages': boolean;
+            'opcache.preload': string;
+            'opcache.preload_user': string;
+            'opcache.jit': string;
+            'opcache.jit_buffer_size': number;
+            'opcache.jit_debug': number;
+            'opcache.jit_bisect_limit': number;
+            'opcache.jit_blacklist_root_trace': number;
+            'opcache.jit_blacklist_side_trace': number;
+            'opcache.jit_hot_func': number;
+            'opcache.jit_hot_loop': number;
+            'opcache.jit_hot_return': number;
+            'opcache.jit_hot_side_exit': number;
+            'opcache.jit_max_exit_counters': number;
+            'opcache.jit_max_loop_unrolls': number;
+            'opcache.jit_max_polymorphic_calls': number;
+            'opcache.jit_max_recursive_calls': number;
+            'opcache.jit_max_recursive_returns': number;
+            'opcache.jit_max_root_traces': number;
+            'opcache.jit_max_side_traces': number;
+            'opcache.jit_prof_threshold': number;
+            'opcache.jit_max_trace_length': number;
+        };
+        version: {
+            version: string;
+            opcache_product_name: 'Zend OPcache';
+        };
+        blacklist: [];
+    };
+    status: {
+        opcache_enabled: boolean;
+        cache_full: boolean;
+        restart_pending: boolean;
+        restart_in_progress: boolean;
+        memory_usage: {
+            used_memory: number;
+            free_memory: number;
+            wasted_memory: number;
+            current_wasted_percentage: number;
+        };
+        interned_strings_usage: {
+            buffer_size: number;
+            used_memory: number;
+            free_memory: number;
+            number_of_strings: number;
+        };
+        opcache_statistics: {
+            num_cached_scripts: number;
+            num_cached_keys: number;
+            max_cached_keys: number;
+            hits: number;
+            start_time: number;
+            last_restart_time: number;
+            oom_restarts: number;
+            hash_restarts: number;
+            manual_restarts: number;
+            misses: number;
+            blacklist_misses: number;
+            blacklist_miss_ratio: number;
+            opcache_hit_rate: number;
+        };
+        scripts: Record<
+            string,
+            {
+                full_path: string;
+                hits: number;
+                memory_consumption: number;
+                last_used: string;
+                last_used_timestamp: number;
+                timestamp: number;
+                revalidate: number;
+            }
+        >;
+        jit: {
+            enabled: boolean;
+            on: boolean;
+            kind: number;
+            opt_level: number;
+            opt_flags: number;
+            buffer_size: number;
+            buffer_free: number;
+        };
+    };
+};
 
 type CurlBuilderResponse = {
     command: string;
@@ -83,7 +201,7 @@ type Response<T = any> = {
 export const inspectorApi = createApi({
     reducerPath: 'api.inspector',
     keepUnusedDataFor: 0,
-    tagTypes: ['inspector/composer'],
+    tagTypes: ['inspector/composer', 'inspector/opcache'],
     baseQuery: createBaseQuery('/inspect/api/'),
     endpoints: (builder) => ({
         getParameters: builder.query<Response, void>({
@@ -177,6 +295,11 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response<CommandResponseType>) => result.data,
             providesTags: ['inspector/composer'],
         }),
+        getOpcache: builder.query<OpcacheResponse, void>({
+            query: () => `opcache`,
+            transformResponse: (result: Response<OpcacheResponse>) => result.data,
+            providesTags: ['inspector/opcache'],
+        }),
         getCache: builder.query<CacheResponseType, string>({
             query: (key) => `cache?key=${key}`,
             transformResponse: (result: Response<CacheResponseType>) => result.data,
@@ -247,4 +370,5 @@ export const {
     usePostCurlBuildMutation,
     useGetEventsQuery,
     useGetMergePlanQuery,
+    useGetOpcacheQuery,
 } = inspectorApi;

@@ -6,17 +6,22 @@ import {forwardRef} from 'react';
 
 type LogsItemProps = {
     data: DebugEntry;
+    iframeUrlHandler: (url: string) => void;
 };
 
 export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref) => {
-    const {data, ...others} = props;
+    const {data, iframeUrlHandler, ...others} = props;
 
     return (
         <Badge color="secondary" badgeContent={String(data.logger?.total)}>
             <Button
                 ref={ref}
                 href={`/debug?collector=${CollectorsMap.LogCollector}&debugEntry=${data.id}`}
-                startIcon={<ChatBubble fontSize="small" />}
+                onClick={(e) => {
+                    iframeUrlHandler(`/debug?collector=${CollectorsMap.LogCollector}&debugEntry=${data.id}`);
+                    e.stopPropagation();
+                    e.preventDefault();
+                }}
                 color="info"
                 variant="contained"
                 sx={{

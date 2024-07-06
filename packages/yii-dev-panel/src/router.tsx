@@ -1,4 +1,3 @@
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
 import {Layout} from '@yiisoft/yii-dev-panel/Application/Component/Layout';
 import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
@@ -14,6 +13,7 @@ export function createRouter(
         basename: string;
         useHashRouter: boolean;
     },
+    modulesConfig: {toolbar: boolean},
 ) {
     const standaloneModules = modules.filter((module) => module.standaloneModule);
     const others = modules.filter((module) => !module.standaloneModule);
@@ -21,11 +21,7 @@ export function createRouter(
     const routes: RouteObject[] = [
         {
             path: '/',
-            element: (
-                <Layout>
-                    <DebugToolbar />
-                </Layout>
-            ),
+            element: <Layout>{modulesConfig.toolbar && <DebugToolbar activeComponents={{iframe: false}} />}</Layout>,
             children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
         ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),

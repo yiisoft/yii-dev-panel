@@ -6,16 +6,22 @@ import {ForwardedRef, forwardRef} from 'react';
 
 type EventsItemProps = {
     data: DebugEntry;
+    iframeUrlHandler: (url: string) => void;
 };
 
 const EventsItem = forwardRef((props: EventsItemProps, ref: ForwardedRef<HTMLButtonElement>) => {
-    const {data, ...others} = props;
+    const {data, iframeUrlHandler, ...others} = props;
+
     return (
         <Badge color="secondary" badgeContent={String(data.event?.total)}>
             <Button
                 ref={ref}
                 href={`/debug?collector=${CollectorsMap.EventCollector}&debugEntry=${data.id}`}
-                startIcon={<ChatBubble fontSize="small" />}
+                onClick={(e) => {
+                    iframeUrlHandler(`/debug?collector=${CollectorsMap.EventCollector}&debugEntry=${data.id}`);
+                    e.stopPropagation();
+                    e.preventDefault();
+                }}
                 color="info"
                 variant="contained"
                 sx={{

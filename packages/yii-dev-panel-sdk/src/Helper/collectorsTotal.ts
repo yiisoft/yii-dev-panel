@@ -18,7 +18,7 @@ export const getCollectedCountByCollector = (collector: CollectorsMap, data: Deb
         case CollectorsMap.VarDumperCollector:
             return Number(data['var-dumper']?.total);
         case CollectorsMap.ValidatorCollector:
-            return Number(data.validator?.total) + Number(data.validator?.invalid) + Number(data.validator?.valid);
+            return Number(data.validator?.total);
         case CollectorsMap.MiddlewareCollector:
             return Number(data.middleware?.total);
         case CollectorsMap.QueueCollector:

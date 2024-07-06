@@ -34,7 +34,6 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {LinkProps, MenuPanel} from '@yiisoft/yii-dev-panel-sdk/Component/MenuPanel';
 import {EventTypesEnum, useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useServerSentEvents';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 import {getCollectedCountByCollector} from '@yiisoft/yii-dev-panel-sdk/Helper/collectorsTotal';
@@ -230,13 +229,33 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
     );
 };
 
+const NoCollectorsInfoBox = React.memo(() => {
+    return (
+        <InfoBox
+            title="No one collector is chosen"
+            text="Select a collector from the left side panel to see more options"
+            severity="info"
+            icon={<HelpOutline />}
+        />
+    );
+});
+
+const EmptyCollectorsInfoBox = React.memo(() => (
+    <InfoBox
+        title="Collectors are empty"
+        text="Looks like debugger was inactive or it did not have any active collectors during the request"
+        severity="info"
+        icon={<HelpOutline />}
+    />
+));
+
 const Layout = () => {
     const dispatch = useDispatch();
     const [autoLatest, setAutoLatest] = useState<boolean>(false);
     const debugEntry = useDebugEntry();
     const [searchParams, setSearchParams] = useSearchParams();
     const [getDebugQuery, getDebugQueryInfo] = useLazyGetDebugQuery();
-    const [selectedCollector, setSelectedCollector] = useState<string>(searchParams.get('collector') || '');
+    const [selectedCollector, setSelectedCollector] = useState<string>(() => searchParams.get('collector') || '');
     const [collectorData, setCollectorData] = useState<any>(undefined);
     const [collectorInfo, collectorQueryInfo] = useLazyGetCollectorInfoQuery();
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
@@ -245,7 +264,7 @@ const Layout = () => {
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
-    }, []);
+    }, [getDebugQuery]);
     useEffect(onRefreshHandler, [onRefreshHandler]);
 
     useEffect(() => {
@@ -254,11 +273,14 @@ const Layout = () => {
 
     useEffect(() => {
         if (getDebugQueryInfo.isSuccess && getDebugQueryInfo.data && getDebugQueryInfo.data.length) {
-            let entry;
-            if (searchParams.has('debugEntry')) {
-                entry = getDebugQueryInfo.data.find((entry) => entry.id === searchParams.get('debugEntry'));
+            if (!searchParams.has('debugEntry')) {
+                changeEntry(getDebugQueryInfo.data[0]);
+                return;
             }
-            changeEntry(entry ?? getDebugQueryInfo.data[0]);
+            const entry = getDebugQueryInfo.data.find((entry) => entry.id === searchParams.get('debugEntry'));
+            if (!entry) {
+                changeEntry(getDebugQueryInfo.data[0]);
+            }
         }
     }, [getDebugQueryInfo.isSuccess, getDebugQueryInfo.data]);
 
@@ -289,20 +311,24 @@ const Layout = () => {
             })
             .catch(clearCollectorAndData);
     }, [searchParams, debugEntry]);
+
+    useEffect(() => {
+        if (debugEntry) {
+            setSearchParams((params) => {
+                params.set('debugEntry', debugEntry.id);
+                return params;
+            });
+        } else {
+            setSearchParams({});
+        }
+    }, [debugEntry, setSearchParams]);
+
     const changeEntry = (entry: DebugEntry | null) => {
         if (entry) {
             dispatch(changeEntryAction(entry));
-            setSearchParams((prev) => {
-                prev.set('debugEntry', entry.id);
-                return prev;
-            });
             return;
         }
         dispatch(changeEntryAction(null));
-        setSearchParams((prev) => {
-            prev.delete('debugEntry');
-            return prev;
-        });
     };
     const collectorName = useMemo(() => selectedCollector.split('\\').pop(), [selectedCollector]);
 
@@ -344,7 +370,7 @@ const Layout = () => {
         console.log(result.data.command);
         clipboardCopy(result.data.command);
     }, [debugEntry]);
-    const onEntryChangeHandler = useCallback(changeEntry, []);
+    const onEntryChangeHandler = useCallback(changeEntry, [changeEntry]);
 
     const onUpdatesHandler = useCallback(async (event: MessageEvent) => {
         const data = JSON.parse(event.data);
@@ -475,12 +501,7 @@ const Layout = () => {
 
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
-                <InfoBox
-                    title="Collectors are empty"
-                    text="Looks like debugger was inactive or it did not have any active collectors during the request"
-                    severity="info"
-                    icon={<HelpOutline />}
-                />
+                <EmptyCollectorsInfoBox />
             ) : (
                 <MenuPanel links={links} open={!selectedCollector} activeLink={selectedCollector}>
                     {selectedCollector ? (
@@ -506,12 +527,7 @@ const Layout = () => {
                             )}
                         </>
                     ) : (
-                        <InfoBox
-                            title="No one collector is chosen"
-                            text="Select a collector from the left side panel to see more options"
-                            severity="info"
-                            icon={<HelpOutline />}
-                        />
+                        <NoCollectorsInfoBox />
                     )}
                 </MenuPanel>
             )}
