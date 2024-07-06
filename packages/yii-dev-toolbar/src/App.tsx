@@ -6,6 +6,8 @@ import {createRouter} from '@yiisoft/yii-dev-toolbar/router';
 import {createStore} from '@yiisoft/yii-dev-toolbar/store';
 import {Provider} from 'react-redux';
 import {RouterProvider} from 'react-router-dom';
+import {useEffect} from 'react';
+import {changeBaseUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
 
 type AppProps = {
     config: {
@@ -16,6 +18,7 @@ type AppProps = {
         backend: {
             baseUrl: string;
             favoriteUrls: string;
+            usePreferredUrl: boolean;
         };
     };
 };
@@ -28,6 +31,13 @@ export default function App({config}: AppProps) {
             favoriteUrls: config.backend.favoriteUrls ?? [],
         },
     });
+
+    useEffect(() => {
+        if (config.backend.usePreferredUrl) {
+            console.log('Override backend url', config.backend.baseUrl);
+            store.dispatch(changeBaseUrl(config.backend.baseUrl));
+        }
+    }, []);
 
     return (
         <RouterOptionsContextProvider baseUrl="" openLinksInNewWindow={true}>

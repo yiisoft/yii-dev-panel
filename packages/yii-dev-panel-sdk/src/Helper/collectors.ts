@@ -12,6 +12,7 @@ export enum CollectorsMap {
     FilesystemStreamCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Stream\\FilesystemStreamCollector',
     HttpStreamCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Stream\\HttpStreamCollector',
     ConsoleAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\ConsoleAppInfoCollector',
+    WebAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\WebAppInfoCollector',
     CommandCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\CommandCollector',
     MiddlewareCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector',
     RequestCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\RequestCollector',
