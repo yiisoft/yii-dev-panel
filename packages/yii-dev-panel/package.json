@@ -12,6 +12,7 @@
   ],
   "author": "Dmitrii Derepko <xepozzd@gmail.com> (https://github.com/xepozz)",
   "license": "BSD-3-Clause",
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/yiisoft/yii-dev-panel",
