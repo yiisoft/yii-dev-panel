@@ -29,7 +29,6 @@
     "redux-state-sync": "^3.1.4"
   },
   "devDependencies": {
-    "@types/node": "^20.12.5",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
     "@types/redux-state-sync": "^3.1.10",

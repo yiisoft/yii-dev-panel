@@ -6,8 +6,7 @@ import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-g
 import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {DebugEntryChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugEntryChip';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
-import {fromUnixTime} from 'date-fns';
-import format from 'date-fns/format';
+import {format, fromUnixTime} from 'date-fns';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 

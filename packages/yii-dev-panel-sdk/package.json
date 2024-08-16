@@ -56,7 +56,7 @@
     "@textea/json-viewer": "^3.4.1",
     "@types/swagger-ui-react": "^4.18.3",
     "clipboard-copy": "^4.0.1",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.6.0",
     "immupdate": "^1.3.1",
     "mui-nested-menu": "^3.3.0",
     "react": "^18.3.1",
@@ -73,11 +73,8 @@
     "yup": "^1.2.0"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^14.2.2",
     "@testing-library/user-event": "^14.5.2",
     "@types/jest": "^29.5.12",
-    "@types/node": "^20.12.5",
     "@types/react": "^18.2.74",
     "@types/react-dom": "^18.2.24",
     "@types/react-syntax-highlighter": "^15.5.11",
