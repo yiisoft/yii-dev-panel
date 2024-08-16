@@ -46,9 +46,9 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc --build tsconfig.build.json && VITE_ENV=github vite build",
+    "build": "tsc --build tsconfig.build.json && VITE_ENV=${VITE_ENV:-github} vite build",
     "test": "vite test",
-    "serve": "vite preview",
+    "serve": "vite preview --host",
     "prettier": "prettier -l src"
   },
   "browserslist": {

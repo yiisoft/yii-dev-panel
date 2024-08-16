@@ -1,6 +1,6 @@
 FROM node:21.7-alpine as build
 
-RUN apk add --update git python3 py3-setuptools make g++\
+RUN apk add --update git nano curl python3 py3-setuptools make g++\
    && rm -rf /var/cache/apk/*
 
 WORKDIR /app
@@ -20,6 +20,9 @@ COPY packages/yii-dev-toolbar/package*.json packages/yii-dev-toolbar/
 RUN npm install
 
 COPY . .
+
+ARG VITE_BUILD_ID
+ENV VITE_BUILD_ID=$VITE_BUILD_ID
 
 RUN npm run build:dev
 
