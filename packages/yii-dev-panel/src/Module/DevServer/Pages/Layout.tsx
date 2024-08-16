@@ -17,34 +17,10 @@ import {
 import Avatar from '@mui/material/Avatar';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {LogEntry} from '@yiisoft/yii-dev-panel-sdk/Component/LogEntry';
-import {ServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/ServerSentEventsObserver';
-import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {formatDate} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
-import {forwardRef, MouseEvent, useCallback, useEffect, useRef, useState} from 'react';
-
-const DevServerObserver = new ServerSentEvents(Config.backendUrl + '/debug/api/dev');
-
-export const useDevServerEvents = (onMessage: (event: MessageEvent) => void, subscribe = true) => {
-    const prevOnMessage = useRef(onMessage);
-
-    useEffect(() => {
-        if (prevOnMessage.current) {
-            DevServerObserver.unsubscribe(prevOnMessage.current);
-        }
-        if (!subscribe) {
-            return;
-        }
-
-        DevServerObserver.subscribe(onMessage);
-        prevOnMessage.current = onMessage;
-
-        return () => {
-            console.log('destroy');
-            DevServerObserver.unsubscribe(onMessage);
-            DevServerObserver.close();
-        };
-    }, [onMessage, subscribe]);
-};
+import {forwardRef, MouseEvent, useCallback, useState} from 'react';
+import {useSelector} from '@yiisoft/yii-dev-panel/store';
+import {useServerSentEvents} from '@yiisoft/yii-dev-panel-sdk/Component/useDevServerEvents';
 
 export const BadgedToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps & {badgeContent: number}>(
     (props, ref) => {
@@ -106,14 +82,17 @@ export const Layout = () => {
         [EventTypeEnum.VAR_DUMPER]: 0,
         [EventTypeEnum.LOGS]: 0,
     });
-    useDevServerEvents(
-        useCallback((m) => {
-            // console.log('event', m);
-            const data = JSON.parse(m.data);
-            setEventsCounter((v) => ({...v, [data[0]]: v[data[0]] + 1}));
-            setEvents((v) => [...v, {data: data[1], time: new Date(), type: data[0] as EventTypeEnum}]);
-        }, []),
-    );
+    const backendUrl = useSelector((state) => state.application.baseUrl) as string;
+
+    const onUpdatesHandler = useCallback((m) => {
+        console.log('event', m);
+        const data = JSON.parse(m.data);
+        setEventsCounter((v) => ({...v, [data[0]]: v[data[0]] + 1}));
+        setEvents((v) => [...v, {data: data[1], time: new Date(), type: data[0] as EventTypeEnum}]);
+    }, []);
+
+    useServerSentEvents(backendUrl, onUpdatesHandler, true);
+
     const [types, setTypes] = useState<EventTypeEnum[]>([EventTypeEnum.VAR_DUMPER, EventTypeEnum.LOGS]);
 
     const handleFormat = (event: MouseEvent<HTMLElement>, types: EventTypeEnum[]) => {

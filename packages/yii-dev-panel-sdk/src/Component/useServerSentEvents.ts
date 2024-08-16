@@ -18,7 +18,7 @@ export const useServerSentEvents = (
     subscribe = true,
 ) => {
     const prevOnMessage = useRef(onMessage);
-    const ServerSentEventsObserverRef = useRef(createServerSentEventsObserver(backendUrl));
+    const ServerSentEventsObserverRef = useRef(createServerSentEventsObserver(backendUrl + '/debug/api/event-stream'));
 
     useEffect(() => {
         if (prevOnMessage.current) {
