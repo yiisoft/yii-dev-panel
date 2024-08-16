@@ -27,7 +27,7 @@
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.4.4",
     "verdaccio": "^5.30.3",
-    "vite": "^5.2.8",
+    "vite": "^5.4.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^4.3.2"
   },
