@@ -23,7 +23,7 @@
   "scripts": {
     "start": "vite",
     "build": "npm run build:prod",
-    "build:dev": "tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
+    "build:dev": "tsc --build tsconfig.build.json && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=dev vite build",
     "build:prod": "rm -r dist; tsc && VITE_BUILD_ID=`git rev-parse --short HEAD` VITE_ENV=github vite build",
     "test": "vite test",
     "serve:dev": "vite preview",

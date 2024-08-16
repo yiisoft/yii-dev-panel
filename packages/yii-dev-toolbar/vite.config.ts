@@ -35,7 +35,7 @@ export default defineConfig(async () => ({
                 entryFileNames: 'bundle.js',
             },
         },
-        minify: 'terser',
+        minify: true,
         outDir: 'dist',
         target: 'esnext',
     },

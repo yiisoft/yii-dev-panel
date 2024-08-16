@@ -26,19 +26,19 @@
     ],
     "paths": {
       "@yiisoft/yii-dev-panel/*": [
-        "packages/yii-dev-panel/src/*"
+        "./packages/yii-dev-panel/src/*"
       ],
       "@yiisoft/yii-dev-panel-sdk/*": [
-        "packages/yii-dev-panel-sdk/src/*"
+        "./packages/yii-dev-panel-sdk/src/*"
       ],
       "@yiisoft/yii-dev-toolbar/*": [
-        "packages/yii-dev-toolbar/src/*"
+        "./packages/yii-dev-toolbar/src/*"
       ]
     },
     "lib": [
       "DOM",
       "DOM.Iterable",
-      "ESNext",
+      "ESNext"
     ]
   },
   "exclude": [
