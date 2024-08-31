@@ -1,6 +1,6 @@
 FROM node:21.7-alpine as build
 
-RUN apk add --update git nano curl python3 py3-setuptools make g++\
+RUN apk add --update --no-cache git nano curl python3 py3-setuptools make g++\
    && rm -rf /var/cache/apk/*
 
 WORKDIR /app
