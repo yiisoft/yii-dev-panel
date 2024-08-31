@@ -152,6 +152,32 @@ npm start
 
 `yii-dev-panel` is now serving on http://localhost:3000
 
-## Screenshot
+## Screenshots
 
-![Screenshot](docs/screenshot.png)
+
+<details>
+  <summary>Debug</summary>
+  <img src="docs/debug.collector.event.png" alt="image-description"/>
+  <img src="docs/debug.collector.middleware.png" alt="image-description"/>
+  <img src="docs/debug.collector.request.png" alt="image-description"/>
+  <img src="docs/debug.collector.response.png" alt="image-description"/>
+  <img src="docs/debug.collector.service.png" alt="image-description"/>
+  <img src="docs/debug.logger.png" alt="image-description"/>
+</details>
+
+<details>
+  <summary>Inspector</summary>
+  <img src="docs/inspector.composer.png" alt="image-description"/>
+  <img src="docs/inspector.definitions.png" alt="image-description"/>
+  <img src="docs/inspector.events.png" alt="image-description"/>
+  <img src="docs/inspector.files.png" alt="image-description"/>
+  <img src="docs/inspector.git.png" alt="image-description"/>
+  <img src="docs/inspector.parameters.png" alt="image-description"/>
+  <img src="docs/inspector.php.png" alt="image-description"/>
+  <img src="docs/inspector.router.png" alt="image-description"/>
+  <img src="docs/inspector.router2.png" alt="image-description"/>
+</details>
+<details>
+  <summary>Frames</summary>
+  <img src="docs/frames.png" alt="image-description"/>
+</details>
