@@ -1,8 +1,8 @@
 # How to use Yii Dev Panel as PWA
 
-PWA – Power Web Application. Kind of web applications that may be installed into a system. 
+PWA – Progressive Web Application is a web application that may be installed into a system and behaves as a native app.
 
-Once install application can be connected to different application just by switching the base url from settings.
+Once installed, the application can be connected to different backend by switching the base URL from settings.
 
 0. Open https://yiisoft.github.io/yii-dev-panel
 1. Click "Install" button in the URL to install PWA application
