@@ -1,10 +1,11 @@
 **/.DS_Store
 .github
 .idea
-docs
+**/docs
 examples
 docker-compose.yml
 Dockerfile
+**/README.md
 **/node_modules
 **/build
 **/dist
