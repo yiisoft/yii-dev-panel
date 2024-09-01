@@ -26,4 +26,13 @@ ENV VITE_BUILD_ID=$VITE_BUILD_ID
 
 RUN npm run build:dev
 
-CMD ["npm", "run", "serve:dev"]
+FROM nginx:alpine
+
+LABEL org.opencontainers.image.source=https://github.com/yiisoft/yii-dev-panel
+LABEL org.opencontainers.image.description="Yii Dev Panel"
+LABEL org.opencontainers.image.licenses=BSD-3-Clause
+
+RUN rm -rf /usr/share/nginx/html/*
+COPY --from=build  /app/packages/yii-dev-panel/dist /usr/share/nginx/html
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
