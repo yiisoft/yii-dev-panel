@@ -1,5 +1,4 @@
-import {fromUnixTime} from 'date-fns';
-import format from 'date-fns/format';
+import {format, fromUnixTime} from 'date-fns';
 
 export function formatDate(unixTimeStamp: number) {
     return format(fromUnixTime(unixTimeStamp), 'do MMM HH:mm:ss');
