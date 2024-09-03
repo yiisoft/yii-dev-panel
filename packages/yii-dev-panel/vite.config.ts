@@ -5,7 +5,7 @@ import svgrPlugin from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 const sharedModules = ['react', 'react-dom', 'react-redux', 'react-router', 'react-router-dom', 'redux-persist'];
-export default defineConfig(async () => ({
+export default defineConfig(() => ({
     server: {
         open: false,
         port: 3000,
@@ -58,7 +58,7 @@ export default defineConfig(async () => ({
                 entryFileNames: 'bundle.js',
             },
         },
-        minify: 'terser',
+        minify: true,
         outDir: 'dist',
         target: 'esnext',
     },

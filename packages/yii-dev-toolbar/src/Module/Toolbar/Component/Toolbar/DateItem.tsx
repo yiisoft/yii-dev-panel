@@ -1,7 +1,6 @@
 import {Badge, Button} from '@mui/material';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
-import {fromUnixTime} from 'date-fns';
-import format from 'date-fns/format';
+import {format, fromUnixTime} from 'date-fns';
 import {ForwardedRef, forwardRef} from 'react';
 
 type DateItemProps = {
