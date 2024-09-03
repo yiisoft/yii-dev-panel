@@ -1,12 +1,11 @@
 version: '3.5'
 
 services:
-  rabbit:
-    image: rabbitmq:3-management
+  dev-panel:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VITE_BUILD_ID: 'docker'
     ports:
-      - 8091:8080
-      - 5672:5672
-      - 15672:15672
-    environment:
-      RABBITMQ_DEFAULT_USER: user
-      RABBITMQ_DEFAULT_PASS: password
+      - 4170:4173

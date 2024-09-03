@@ -8,6 +8,7 @@ import '@yiisoft/yii-dev-panel/Module/OpenApi/Pages/dark.css';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 // import SwaggerUI from 'swagger-ui-react';
+// todo: move dependency to sdk package
 import 'swagger-ui-react/swagger-ui.css';
 
 const NoEntries = React.memo(() => {

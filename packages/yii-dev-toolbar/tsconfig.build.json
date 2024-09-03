@@ -3,13 +3,13 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./build",
-    "declaration": true,
     "noEmit": false,
+    "declaration": true,
     "sourceMap": true,
     "composite": true
   },
   "include": ["src"],
   "references": [
-    {"path": "../yii-dev-panel-sdk"}
+    {"path": "../yii-dev-panel-sdk/tsconfig.build.json"}
   ]
 }
