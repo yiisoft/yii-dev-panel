@@ -53,6 +53,7 @@ const pages = [
             {name: 'Git', link: '/inspector/git'},
             {name: 'PHP Info', link: '/inspector/phpinfo'},
             {name: 'Composer', link: '/inspector/composer'},
+            {name: 'Opcache', link: '/inspector/opcache'},
         ],
     },
     {name: 'Open API', link: '/open-api'},
@@ -220,7 +221,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                 </ErrorBoundary>
             </Container>
             {children}
-            <ScrollTopButton />
+            <ScrollTopButton bottomOffset={!!children} />
         </>
     );
 });
