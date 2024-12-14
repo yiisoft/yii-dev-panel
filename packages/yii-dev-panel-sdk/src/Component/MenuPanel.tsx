@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {CSSObject, Theme, styled} from '@mui/material/styles';
+import {CSSObject, styled, Theme} from '@mui/material/styles';
 import * as React from 'react';
 import {PropsWithChildren, useCallback, useEffect, useRef, useState} from 'react';
 
@@ -132,7 +132,12 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                                 <Avatar
                                     variant="rounded"
                                     sx={{
-                                        bgcolor: activeLink === link.name ? 'secondary.main' : 'primary.main',
+                                        bgcolor:
+                                            activeLink === link.name
+                                                ? 'secondary.main'
+                                                : link.badge === 0
+                                                  ? 'primary.dark'
+                                                  : 'primary.main',
                                         fontSize: 14,
                                     }}
                                 >

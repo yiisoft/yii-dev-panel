@@ -1,7 +1,7 @@
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
 
-export const getCollectedCountByCollector = (collector: CollectorsMap, data: DebugEntry): number => {
+export const getCollectedCountByCollector = (collector: CollectorsMap, data: DebugEntry): number | undefined => {
     switch (collector) {
         case CollectorsMap.AssetCollector:
             return Number(data.asset?.bundles?.total);
@@ -37,7 +37,9 @@ export const getCollectedCountByCollector = (collector: CollectorsMap, data: Deb
             return Object.values(data.fs_stream ?? []).reduce((acc, value) => acc + value, 0);
         case CollectorsMap.ConsoleAppInfoCollector:
             return 0;
+        case CollectorsMap.TimelineCollector:
+            return Number(data.timeline?.total);
         default:
-            return 0;
+            return undefined;
     }
 };
