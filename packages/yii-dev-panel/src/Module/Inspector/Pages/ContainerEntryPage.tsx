@@ -4,6 +4,7 @@ import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/F
 import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {useGetObjectQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 export const ContainerEntryPage = () => {
     const [searchParams] = useSearchParams();
@@ -13,6 +14,8 @@ export const ContainerEntryPage = () => {
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
+
+    useBreadcrumbs(() => ['Inspector', 'Container Entry']);
 
     return (
         <pre>

@@ -9,19 +9,14 @@ import {
     useGetSummaryQuery,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/GitApi';
 import {CheckoutDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/CheckoutDialog';
-import {BreadcrumbsContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 import * as React from 'react';
-import {useCallback, useContext, useEffect} from 'react';
+import {useCallback} from 'react';
 
 export const GitPage = () => {
-    const context = useContext(BreadcrumbsContext);
     const getSummaryQuery = useGetSummaryQuery();
     const [checkoutMutation, checkoutInfo] = useCheckoutMutation();
     const [commandMutation, commandInfo] = useCommandMutation();
-
-    useEffect(() => {
-        context.setItems([]);
-    }, []);
 
     const [open, setOpen] = React.useState(false);
 
@@ -34,6 +29,8 @@ export const GitPage = () => {
     const onPullHandler = useCallback(() => commandMutation({command: 'pull'}), []);
     const onFetchHandler = useCallback(() => commandMutation({command: 'fetch'}), []);
     const onRefreshHandler = () => getSummaryQuery.refetch();
+
+    useBreadcrumbs(() => ['Inspector', 'Git']);
 
     return (
         <>

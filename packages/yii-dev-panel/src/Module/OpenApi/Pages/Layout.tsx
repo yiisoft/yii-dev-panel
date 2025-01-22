@@ -1,6 +1,6 @@
 import {EmojiObjects, Settings} from '@mui/icons-material';
 import {TabContext} from '@mui/lab';
-import {IconButton, Stack, Tab, Tabs, Typography, useTheme} from '@mui/material';
+import {IconButton, Stack, Tab, Tabs, Typography} from '@mui/material';
 import {InfoBox} from '@yiisoft/yii-dev-panel-sdk/Component/InfoBox';
 import {SettingsDialog} from '@yiisoft/yii-dev-panel/Module/OpenApi/Component/SettingsDialog';
 import {useOpenApiEntries} from '@yiisoft/yii-dev-panel/Module/OpenApi/Context/Context';
@@ -29,7 +29,6 @@ export const Layout = () => {
     const [tab, setTab] = useState<string>('');
     const [settingsPopupOpen, setSettingsPopupOpen] = useState<boolean>(false);
     const handleChange = (event: any, value: string) => setTab(value);
-    const theme = useTheme();
 
     const apiEntries = useOpenApiEntries();
 

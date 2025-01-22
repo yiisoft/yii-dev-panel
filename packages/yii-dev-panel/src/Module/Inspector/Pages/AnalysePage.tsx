@@ -19,6 +19,7 @@ import {useRunCommandMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API
 import clipboardCopy from 'clipboard-copy';
 import * as React from 'react';
 import {useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const columns: GridColDef[] = [
     {
@@ -137,6 +138,8 @@ export const AnalysePage = () => {
     const handleChange = (panel: string) => (event: React.SyntheticEvent) => {
         setExpanded((v) => (v.includes(panel) ? v.filter((v) => v !== panel) : v.concat(panel)));
     };
+
+    useBreadcrumbs(() => ['Inspector', 'Analyze']);
 
     return (
         <>

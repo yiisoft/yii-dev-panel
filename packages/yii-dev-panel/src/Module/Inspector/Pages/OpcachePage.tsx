@@ -4,6 +4,7 @@ import {JsonRenderer} from '@yiisoft/yii-dev-panel-sdk/Component/JsonRenderer';
 import {useGetOpcacheQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import * as React from 'react';
 import {SyntheticEvent, useEffect, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -41,6 +42,8 @@ export const OpcachePage = () => {
     }, [getOpcacheQuery.isSuccess]);
     console.log(getOpcacheQuery.data);
     const handleChange = (event: SyntheticEvent, newValue: number) => setValue(newValue);
+
+    useBreadcrumbs(() => ['Inspector', 'Opcache']);
 
     return (
         <Box sx={{width: '100%'}}>

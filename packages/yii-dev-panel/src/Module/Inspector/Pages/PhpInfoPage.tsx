@@ -1,6 +1,7 @@
 import {Box} from '@mui/material';
 import {useGetPhpInfoQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useEffect, useRef} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 export const PhpInfoPage = () => {
     const getPhpInfoQuery = useGetPhpInfoQuery();
@@ -16,6 +17,8 @@ export const PhpInfoPage = () => {
             shadowContainer?.appendChild(shadowRootElement);
         }
     }, [getPhpInfoQuery.data]);
+
+    useBreadcrumbs(() => ['Inspector', 'PHP Info']);
 
     return <>{!getPhpInfoQuery.isLoading && getPhpInfoQuery.data && <Box ref={containerRef} />}</>;
 };

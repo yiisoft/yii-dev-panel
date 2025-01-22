@@ -9,7 +9,6 @@ import {
     AlertTitle,
     Autocomplete,
     Box,
-    Breadcrumbs,
     Button,
     Chip,
     CircularProgress,
@@ -61,7 +60,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {useDispatch} from 'react-redux';
 import {Outlet} from 'react-router';
 import {useSearchParams} from 'react-router-dom';
-import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Component/Breadcrumbs';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 function parseCollectorName(text: string) {
     return text
@@ -272,16 +271,11 @@ const Layout = () => {
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
     const autoLatestState = useSelector((state) => state.application.autoLatest);
     const backendUrl = useSelector((state) => state.application.baseUrl) as string;
-    const {setBreadcrumbs} = useBreadcrumbs();
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
     }, [getDebugQuery]);
     useEffect(onRefreshHandler, [onRefreshHandler]);
-
-    useEffect(() => {
-        setBreadcrumbs({type: 'SET_BREADCRUMB', payload: ['Debug', 'Test']});
-    }, []);
 
     useEffect(() => {
         setAutoLatest(autoLatestState);
@@ -422,6 +416,8 @@ const Layout = () => {
         });
     };
 
+    useBreadcrumbs(() => ['Debug', collectorName]);
+
     if (getDebugQueryInfo.isLoading) {
         return <FullScreenCircularProgress />;
     }
@@ -455,12 +451,6 @@ const Layout = () => {
     return (
         <>
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
-            <Breadcrumbs sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/debug">
-                    Debug
-                </Link>
-                {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
-            </Breadcrumbs>
             <Stack direction="row" spacing={2}>
                 <Tooltip title="List">
                     <span>

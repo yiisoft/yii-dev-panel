@@ -20,24 +20,30 @@ import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {NotificationSnackbar} from '@yiisoft/yii-dev-panel/Application/Component/NotificationSnackbar';
 import * as React from 'react';
-import {Fragment, useEffect} from 'react';
+import {Fragment} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {Outlet} from 'react-router';
-import InboxIcon from '@mui/icons-material/Inbox';
-import MailIcon from '@mui/icons-material/Mail';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Component/Breadcrumbs';
+import {useBreadcrumbsContext} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import AdbIcon from '@mui/icons-material/Adb';
+import LoupeIcon from '@mui/icons-material/Loupe';
+import SettingsIcon from '@mui/icons-material/Settings';
+import DataObjectIcon from '@mui/icons-material/DataObject';
+import QueueIcon from '@mui/icons-material/Queue';
+import LabelIcon from '@mui/icons-material/Label';
 
 // TODO: replace with context and provider
 const pages = [
-    {name: 'Gii', link: '/gii'},
-    {name: 'Debug', link: '/debug'},
+    {name: 'Gii', link: '/gii', icon: <BuildCircleIcon />},
+    {name: 'Debug', link: '/debug', icon: <AdbIcon />},
     {
         name: 'Config',
+        icon: <SettingsIcon />,
         items: [
             {name: 'Configuration', link: '/inspector/config'},
             {name: 'Events', link: '/inspector/events'},
@@ -46,6 +52,7 @@ const pages = [
     },
     {
         name: 'Inspector',
+        icon: <LoupeIcon />,
         items: [
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
@@ -60,8 +67,8 @@ const pages = [
             {name: 'Opcache', link: '/inspector/opcache'},
         ],
     },
-    {name: 'Open API', link: '/open-api'},
-    {name: 'Frames', link: '/frames'},
+    {name: 'Open API', link: '/open-api', icon: <DataObjectIcon />},
+    {name: 'Frames', link: '/frames', icon: <QueueIcon />},
     // Uncomment to debug shared components
     // {name: 'Shared', link: '/shared'},
 ];
@@ -69,12 +76,6 @@ const pages = [
 const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
 
 export const Layout = React.memo(({children}: React.PropsWithChildren) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
-    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(event.currentTarget);
-    };
-
     const onRefreshHandler = () => {
         if ('location' in window) {
             window.location.reload();
@@ -128,11 +129,8 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                                     ? {href: parentPage.link}
                                     : {onClick: handleToggleChildren(parentPage)})}
                             >
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText
-                                    primary={parentPage.name}
-                                    secondary={String(openItems.has(parentPage) && openItems.get(parentPage))}
-                                />
+                                <ListItemIcon>{parentPage.icon}</ListItemIcon>
+                                <ListItemText primary={parentPage.name} />
                                 {'items' in parentPage && parentPage.items.length > 0 && (
                                     <ListItemSecondaryAction>
                                         {openItems.has(parentPage) && openItems.get(parentPage) ? (
@@ -155,7 +153,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                                         <Fragment key={page.name}>
                                             <ListItemButton href={page.link} sx={{pl: 4}}>
                                                 <ListItemIcon>
-                                                    <InboxIcon />
+                                                    <LabelIcon />
                                                 </ListItemIcon>
                                                 <ListItemText primary={page.name} />
                                             </ListItemButton>
@@ -198,11 +196,6 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
             </List>
         </Box>
     );
-    const {setBreadcrumbs} = useBreadcrumbs();
-
-    useEffect(() => {
-        setBreadcrumbs({type: 'SET_BREADCRUMB', payload: []});
-    }, []);
 
     return (
         <>
@@ -212,7 +205,7 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
             </Drawer>
             <NotificationSnackbar />
             <Container>
-                <MyBreadcrumbs toggleDrawer={toggleDrawer} />
+                <BreadcrumbsWrapper toggleDrawer={toggleDrawer} />
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />
                 </ErrorBoundary>
@@ -226,8 +219,22 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
 type MyBreadcrumbsType = {
     toggleDrawer: (open: boolean) => () => void;
 };
-const MyBreadcrumbs = ({toggleDrawer}: MyBreadcrumbsType) => {
-    const {breadcrumbs} = useBreadcrumbs();
+const BreadcrumbsWrapper = ({toggleDrawer}: MyBreadcrumbsType) => {
+    const context = useBreadcrumbsContext();
+    const breadcrumbs = context.breadcrumbs.filter(Boolean);
+
+    const linkableBreadcrumbs = breadcrumbs.slice(0, -1);
+    const lastBreadcrumb = breadcrumbs.at(-1);
+
+    const cumulativeBreadcrumbs = linkableBreadcrumbs.reduce((acc: {href: string; title?: string}[], item) => {
+        const previousHref = acc.length > 0 ? acc[acc.length - 1].href : '';
+        if (typeof item === 'string') {
+            acc.push({href: `${previousHref}/${item}`, title: item});
+        } else {
+            acc.push({href: `${previousHref}/${item.href}`, title: item.title});
+        }
+        return acc;
+    }, []);
 
     return (
         <Breadcrumbs sx={{my: 2}}>
@@ -235,11 +242,22 @@ const MyBreadcrumbs = ({toggleDrawer}: MyBreadcrumbsType) => {
             <Link underline="hover" color="inherit" href="/">
                 Main
             </Link>
-            {breadcrumbs.map((item) => (
-                <Link underline="hover" color="inherit" href={item}>
-                    {item}
-                </Link>
-            ))}
+            {cumulativeBreadcrumbs.map((item) =>
+                typeof item == 'string' ? (
+                    <Link underline="hover" color="inherit" href={item}>
+                        {item}
+                    </Link>
+                ) : (
+                    <Link underline="hover" color="inherit" href={item.href}>
+                        {item.title}
+                    </Link>
+                ),
+            )}
+            {lastBreadcrumb && (
+                <Typography color="text.primary">
+                    {typeof lastBreadcrumb == 'string' ? lastBreadcrumb : lastBreadcrumb.title}
+                </Typography>
+            )}
         </Breadcrumbs>
     );
 };
