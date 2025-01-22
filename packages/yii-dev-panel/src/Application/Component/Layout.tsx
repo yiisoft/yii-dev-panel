@@ -1,21 +1,18 @@
 import {ContentCut, GitHub, Refresh} from '@mui/icons-material';
-import AdbIcon from '@mui/icons-material/Adb';
 import {
+    Breadcrumbs,
     CssBaseline,
-    IconButton,
+    Divider,
     Link,
-    LinkTypeMap,
+    List,
+    ListItem,
+    ListItemButton,
     ListItemIcon,
+    ListItemSecondaryAction,
     ListItemText,
-    Menu,
-    MenuItem,
-    styled,
 } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import {OverrideProps} from '@mui/material/OverridableComponent';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import {ErrorFallback} from '@yiisoft/yii-dev-panel-sdk/Component/ErrorFallback';
 import {ScrollTopButton} from '@yiisoft/yii-dev-panel-sdk/Component/ScrollTop';
@@ -23,9 +20,17 @@ import {YiiIcon} from '@yiisoft/yii-dev-panel-sdk/Component/SvgIcon/YiiIcon';
 import {Config} from '@yiisoft/yii-dev-panel-sdk/Config';
 import {NotificationSnackbar} from '@yiisoft/yii-dev-panel/Application/Component/NotificationSnackbar';
 import * as React from 'react';
-import {Fragment} from 'react';
+import {Fragment, useEffect} from 'react';
 import {ErrorBoundary} from 'react-error-boundary';
 import {Outlet} from 'react-router';
+import InboxIcon from '@mui/icons-material/Inbox';
+import MailIcon from '@mui/icons-material/Mail';
+import Drawer from '@mui/material/Drawer';
+import Button from '@mui/material/Button';
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Component/Breadcrumbs';
 
 // TODO: replace with context and provider
 const pages = [
@@ -41,7 +46,6 @@ const pages = [
     },
     {
         name: 'Inspector',
-        link: '#',
         items: [
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
@@ -61,161 +65,154 @@ const pages = [
     // Uncomment to debug shared components
     // {name: 'Shared', link: '/shared'},
 ];
-const StyledLink = styled(Link)(({theme}) => {
-    return {
-        margin: theme.spacing(2, 1),
-        color: 'white',
-    };
-});
 
-type NavLinkType = OverrideProps<LinkTypeMap, 'a'> & {
-    name: string;
-    onClick?: (e: React.MouseEvent<HTMLElement>) => void;
-};
-
-const NavLink = (props: NavLinkType) => {
-    const {href, name, onClick, ...other} = props;
-    if (!href) {
-        return (
-            <StyledLink
-                onClick={(e) => {
-                    e.preventDefault();
-                    if (onClick) {
-                        return onClick(e);
-                    }
-                    return false;
-                }}
-                {...other}
-            >
-                {name}
-            </StyledLink>
-        );
-    }
-    return (
-        <StyledLink href={href} {...other}>
-            {name}
-        </StyledLink>
-    );
-};
 const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
 
 export const Layout = React.memo(({children}: React.PropsWithChildren) => {
-    const [anchorElUser, setAnchorElUser] = React.useState<Record<string, null | HTMLElement>>({});
-
-    const handleOpenUserMenu = (key: string, event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser({...anchorElUser, [key]: event.currentTarget});
-    };
-
-    const handleCloseUserMenu = (key: string) => {
-        const newAnchors = {...anchorElUser};
-        delete newAnchors[key];
-        setAnchorElUser(newAnchors);
-    };
-
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
     const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => setAnchorEl(null);
-
     const onRefreshHandler = () => {
         if ('location' in window) {
             window.location.reload();
         }
     };
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDrawer = (newOpen: boolean) => () => {
+        setOpen(newOpen);
+    };
+
+    const [openItems, setOpenItems] = React.useState(new Map());
+
+    const handleToggleChildren = (object: Object) => () => {
+        setOpenItems((prevMap) => {
+            const newMap = new Map(prevMap);
+            newMap.set(object, !(prevMap.has(object) && prevMap.get(object)));
+            return newMap;
+        });
+    };
+
+    const DrawerList = (
+        <Box
+            // onClick={toggleDrawer(false)}
+            sx={{
+                width: 280,
+                display: 'flex',
+                flexDirection: 'column',
+                flexGrow: 1,
+            }}
+        >
+            <Typography variant="h6">
+                <Link href={'/'} sx={{display: 'inline-block', height: '100%', mx: 2, my: 2}}>
+                    <YiiIcon />
+                </Link>
+                <Link
+                    href={'/'}
+                    sx={{
+                        textDecoration: 'none',
+                    }}
+                >
+                    Yii Dev Panel
+                </Link>
+            </Typography>
+            <List>
+                {pages.map((parentPage, index) => (
+                    <Fragment key={parentPage.name}>
+                        <ListItem key={parentPage.name} disablePadding>
+                            <ListItemButton
+                                {...('link' in parentPage
+                                    ? {href: parentPage.link}
+                                    : {onClick: handleToggleChildren(parentPage)})}
+                            >
+                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemText
+                                    primary={parentPage.name}
+                                    secondary={String(openItems.has(parentPage) && openItems.get(parentPage))}
+                                />
+                                {'items' in parentPage && parentPage.items.length > 0 && (
+                                    <ListItemSecondaryAction>
+                                        {openItems.has(parentPage) && openItems.get(parentPage) ? (
+                                            <ExpandLess />
+                                        ) : (
+                                            <ExpandMore />
+                                        )}
+                                    </ListItemSecondaryAction>
+                                )}
+                            </ListItemButton>
+                        </ListItem>
+                        {'items' in parentPage && parentPage.items.length > 0 && (
+                            <Collapse
+                                in={openItems.has(parentPage) && openItems.get(parentPage)}
+                                timeout="auto"
+                                unmountOnExit={false}
+                            >
+                                <List component="div" disablePadding>
+                                    {parentPage.items.map((page, index) => (
+                                        <Fragment key={page.name}>
+                                            <ListItemButton href={page.link} sx={{pl: 4}}>
+                                                <ListItemIcon>
+                                                    <InboxIcon />
+                                                </ListItemIcon>
+                                                <ListItemText primary={page.name} />
+                                            </ListItemButton>
+                                        </Fragment>
+                                    ))}
+                                </List>
+                            </Collapse>
+                        )}
+                    </Fragment>
+                ))}
+            </List>
+            <Divider />
+            <List sx={{mt: 'auto'}}>
+                <ListItem disablePadding>
+                    <ListItemButton onClick={onRefreshHandler}>
+                        <ListItemIcon>
+                            <Refresh fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Refresh page</ListItemText>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton href={repositoryUrl} target="_blank">
+                        <ListItemIcon>
+                            <GitHub fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>Open Github</ListItemText>
+                    </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                    <ListItemButton>
+                        <ListItemIcon>
+                            <ContentCut fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Build <b>{Config.buildVersion}</b>
+                        </ListItemText>
+                    </ListItemButton>
+                </ListItem>
+            </List>
+        </Box>
+    );
+    const {setBreadcrumbs} = useBreadcrumbs();
+
+    useEffect(() => {
+        setBreadcrumbs({type: 'SET_BREADCRUMB', payload: []});
+    }, []);
 
     return (
         <>
             <CssBaseline />
-            <AppBar position="static" color="primary">
-                <Container>
-                    <Toolbar disableGutters>
-                        <Link href={'/'}>
-                            <YiiIcon sx={{display: 'flex', mr: 1}} />
-                        </Link>
-                        <Typography variant="h6">
-                            <Link
-                                href={'/'}
-                                sx={{
-                                    color: 'white',
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                Yii Dev Panel
-                            </Link>
-                        </Typography>
-
-                        <Box sx={{flexGrow: 1, display: 'flex'}}>
-                            {pages.map((page) => {
-                                if (!page.items) {
-                                    return <NavLink key={page.name} name={page.name} href={page.link} />;
-                                }
-                                const key = page.name;
-                                return (
-                                    <Fragment key={page.name}>
-                                        <NavLink name={page.name} onMouseOver={handleOpenUserMenu.bind(this, key)} />
-                                        <Menu
-                                            anchorEl={anchorElUser[key]}
-                                            keepMounted
-                                            open={Boolean(anchorElUser[key])}
-                                            onClose={handleCloseUserMenu.bind(this, key)}
-                                            MenuListProps={{onMouseLeave: handleCloseUserMenu.bind(this, key)}}
-                                        >
-                                            {page.items.map((item) => (
-                                                <MenuItem
-                                                    key={item.name}
-                                                    href={item.link}
-                                                    onClick={handleCloseUserMenu.bind(this, key)}
-                                                    component={Link}
-                                                >
-                                                    {item.name}
-                                                </MenuItem>
-                                            ))}
-                                        </Menu>
-                                    </Fragment>
-                                );
-                            })}
-                        </Box>
-                        <div>
-                            <IconButton size="large" onClick={handleMenu} onMouseOver={handleMenu} color="inherit">
-                                <AdbIcon />
-                            </IconButton>
-                            <Menu
-                                keepMounted
-                                open={Boolean(anchorEl)}
-                                anchorEl={anchorEl}
-                                onClose={handleClose}
-                                MenuListProps={{onMouseLeave: handleClose}}
-                            >
-                                <MenuItem component={Link} href={repositoryUrl} target="_blank">
-                                    <ListItemIcon>
-                                        <GitHub fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Open Github</ListItemText>
-                                </MenuItem>
-                                <MenuItem component={Link} onClick={onRefreshHandler}>
-                                    <ListItemIcon>
-                                        <Refresh fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>Refresh page</ListItemText>
-                                </MenuItem>
-                                <MenuItem component="span" disableTouchRipple disableRipple>
-                                    <ListItemIcon>
-                                        <ContentCut fontSize="small" />
-                                    </ListItemIcon>
-                                    <ListItemText>
-                                        Build <b>{Config.buildVersion}</b>
-                                    </ListItemText>
-                                </MenuItem>
-                            </Menu>
-                        </div>
-                    </Toolbar>
-                </Container>
-            </AppBar>
+            <Drawer open={open} onClose={toggleDrawer(false)}>
+                {DrawerList}
+            </Drawer>
             <NotificationSnackbar />
             <Container>
+                <MyBreadcrumbs toggleDrawer={toggleDrawer} />
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />
                 </ErrorBoundary>
@@ -225,3 +222,24 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
         </>
     );
 });
+
+type MyBreadcrumbsType = {
+    toggleDrawer: (open: boolean) => () => void;
+};
+const MyBreadcrumbs = ({toggleDrawer}: MyBreadcrumbsType) => {
+    const {breadcrumbs} = useBreadcrumbs();
+
+    return (
+        <Breadcrumbs sx={{my: 2}}>
+            <Button onClick={toggleDrawer(true)}>Open menu</Button>
+            <Link underline="hover" color="inherit" href="/">
+                Main
+            </Link>
+            {breadcrumbs.map((item) => (
+                <Link underline="hover" color="inherit" href={item}>
+                    {item}
+                </Link>
+            ))}
+        </Breadcrumbs>
+    );
+};

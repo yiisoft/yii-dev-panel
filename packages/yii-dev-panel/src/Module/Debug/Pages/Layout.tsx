@@ -61,6 +61,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {useDispatch} from 'react-redux';
 import {Outlet} from 'react-router';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Component/Breadcrumbs';
 
 function parseCollectorName(text: string) {
     return text
@@ -271,11 +272,16 @@ const Layout = () => {
     const [postCurlBuildInfo, postCurlBuildQueryInfo] = usePostCurlBuildMutation();
     const autoLatestState = useSelector((state) => state.application.autoLatest);
     const backendUrl = useSelector((state) => state.application.baseUrl) as string;
+    const {setBreadcrumbs} = useBreadcrumbs();
 
     const onRefreshHandler = useCallback(() => {
         getDebugQuery();
     }, [getDebugQuery]);
     useEffect(onRefreshHandler, [onRefreshHandler]);
+
+    useEffect(() => {
+        setBreadcrumbs({type: 'SET_BREADCRUMB', payload: ['Debug', 'Test']});
+    }, []);
 
     useEffect(() => {
         setAutoLatest(autoLatestState);
@@ -445,8 +451,10 @@ const Layout = () => {
             />
         );
     }
+
     return (
         <>
+            <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             <Breadcrumbs sx={{my: 2}}>
                 <Link underline="hover" color="inherit" href="/debug">
                     Debug
@@ -525,7 +533,6 @@ const Layout = () => {
                 </Tooltip>
             </Stack>
 
-            <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
                 <EmptyCollectorsInfoBox />
             ) : (

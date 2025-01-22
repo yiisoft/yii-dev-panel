@@ -12,6 +12,7 @@ import React, {useEffect} from 'react';
 import {PersistGate} from 'redux-persist/integration/react';
 import {CrossWindowEventType, dispatchWindowEvent} from '@yiisoft/yii-dev-panel-sdk/Helper/dispatchWindowEvent';
 import {changeBaseUrl} from '@yiisoft/yii-dev-panel-sdk/API/Application/ApplicationContext';
+import {BreadcrumbsProvider} from '@yiisoft/yii-dev-panel/Application/Component/Breadcrumbs';
 
 type AppProps = {
     config: {
@@ -74,7 +75,9 @@ export default function App({config}: AppProps) {
                 <PersistGate persistor={persistor}>
                     <DefaultThemeProvider>
                         <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
-                            <RouterProvider router={router} />
+                            <BreadcrumbsProvider>
+                                <RouterProvider router={router} />
+                            </BreadcrumbsProvider>
                         </ErrorBoundary>
                     </DefaultThemeProvider>
                 </PersistGate>
