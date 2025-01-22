@@ -44,6 +44,7 @@ try {
                     favoriteUrls: [],
                     usePreferredUrl: false,
                 },
+                env: Config.appEnv,
             },
         },
     }),
