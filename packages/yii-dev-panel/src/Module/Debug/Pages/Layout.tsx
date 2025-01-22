@@ -9,7 +9,6 @@ import {
     AlertTitle,
     Autocomplete,
     Box,
-    Breadcrumbs,
     Button,
     Chip,
     CircularProgress,
@@ -61,6 +60,7 @@ import {ErrorBoundary} from 'react-error-boundary';
 import {useDispatch} from 'react-redux';
 import {Outlet} from 'react-router';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 function parseCollectorName(text: string) {
     return text
@@ -75,7 +75,8 @@ function parseCollectorName(text: string) {
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Database\\', '')
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Queue\\', '')
         .replace('Yiisoft\\Yii\\Debug\\Collector\\Stream\\', '')
-        .replace('Yiisoft\\Yii\\Debug\\Collector\\', '');
+        .replace('Yiisoft\\Yii\\Debug\\Collector\\', '')
+        .replace('Yiisoft\\Yii\\View\\Renderer\\Debug\\', '');
 }
 
 type CollectorDataProps = {
@@ -249,6 +250,15 @@ const EmptyCollectorsInfoBox = React.memo(() => (
     />
 ));
 
+const weights = {
+    [CollectorsMap.RequestCollector]: 1,
+    [CollectorsMap.LogCollector]: 2,
+    [CollectorsMap.DatabaseCollector]: 3,
+    [CollectorsMap.EventCollector]: 4,
+    [CollectorsMap.TimelineCollector]: 5,
+    [CollectorsMap.VarDumperCollector]: 6,
+};
+
 const Layout = () => {
     const dispatch = useDispatch();
     const [autoLatest, setAutoLatest] = useState<boolean>(false);
@@ -336,13 +346,29 @@ const Layout = () => {
         () =>
             !debugEntry
                 ? []
-                : debugEntry.collectors.map((collector, index) => ({
-                      name: collector,
-                      text: parseCollectorName(collector),
-                      href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
-                      icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
-                      badge: getCollectedCountByCollector(collector as CollectorsMap, debugEntry),
-                  })),
+                : debugEntry.collectors
+                      .map((collector, index) => ({
+                          name: collector,
+                          text: parseCollectorName(collector),
+                          href: `/debug?collector=${collector}&debugEntry=${debugEntry.id}`,
+                          icon: index % 2 === 0 ? <InboxIcon /> : <MailIcon />,
+                          badge: getCollectedCountByCollector(collector as CollectorsMap, debugEntry),
+                      }))
+                      .sort((a, b) => {
+                          const weightA = weights[a.name] ?? null;
+                          const weightB = weights[b.name] ?? null;
+
+                          if (weightA !== null && weightB !== null) {
+                              return weightA - weightB;
+                          }
+                          if (weightA !== null) {
+                              return -1;
+                          }
+                          if (weightB !== null) {
+                              return 1;
+                          }
+                          return a.name.localeCompare(b.name);
+                      }),
         [debugEntry],
     );
 
@@ -390,6 +416,8 @@ const Layout = () => {
         });
     };
 
+    useBreadcrumbs(() => ['Debug', collectorName]);
+
     if (getDebugQueryInfo.isLoading) {
         return <FullScreenCircularProgress />;
     }
@@ -419,14 +447,10 @@ const Layout = () => {
             />
         );
     }
+
     return (
         <>
-            <Breadcrumbs sx={{my: 2}}>
-                <Link underline="hover" color="inherit" href="/debug">
-                    Debug
-                </Link>
-                {!!collectorName && <Typography color="text.primary">{collectorName}</Typography>}
-            </Breadcrumbs>
+            <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             <Stack direction="row" spacing={2}>
                 <Tooltip title="List">
                     <span>
@@ -499,7 +523,6 @@ const Layout = () => {
                 </Tooltip>
             </Stack>
 
-            <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
             {links.length === 0 ? (
                 <EmptyCollectorsInfoBox />
             ) : (

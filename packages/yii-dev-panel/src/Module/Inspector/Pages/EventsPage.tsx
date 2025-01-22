@@ -12,6 +12,7 @@ import {
     useGetEventsQuery,
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import React, {SyntheticEvent, useEffect, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type EventListenersProps = {
     eventListeners: EventListenersType;
@@ -84,6 +85,8 @@ export const EventsPage = () => {
         // @ts-ignore
         setEvents(data);
     }, [isSuccess, data]);
+
+    useBreadcrumbs(() => ['Inspector', 'Event listeners']);
 
     if (isLoading) {
         return <FullScreenCircularProgress />;

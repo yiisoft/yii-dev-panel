@@ -10,6 +10,7 @@ import {concatClassMethod} from '@yiisoft/yii-dev-panel-sdk/Helper/classMethodCo
 import {useGetRoutesQuery, useLazyGetCheckRouteQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import clipboardCopy from 'clipboard-copy';
 import {useEffect, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const columns: GridColDef[] = [
     {
@@ -153,6 +154,8 @@ export const RoutesPage = () => {
         const result = await checkRouteQuery(url);
         console.log(result.data);
     };
+
+    useBreadcrumbs(() => ['Inspector', 'Routes']);
 
     if (isLoading) {
         return <FullScreenCircularProgress />;

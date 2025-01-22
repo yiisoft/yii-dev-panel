@@ -1,10 +1,10 @@
-import {Breadcrumbs, Link, Typography} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useCallback, useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 export const TablePage = () => {
     const {table} = useParams();
@@ -41,20 +41,15 @@ export const TablePage = () => {
 
     const getRowIdCallback = useCallback((row: any) => row[primaryKey], [primaryKey]);
 
+    useBreadcrumbs(() => ['Inspector', 'Database', table]);
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
 
     return (
         <>
-            <h2>
-                <Breadcrumbs>
-                    <Link underline="hover" color="inherit" href={'/inspector/database'}>
-                        Database
-                    </Link>
-                    <Typography>{table}</Typography>
-                </Breadcrumbs>
-            </h2>
+            <h2>Database</h2>
             <DataTable rows={records as GridValidRowModel[]} getRowId={getRowIdCallback} columns={columns} />
         </>
     );

@@ -7,6 +7,7 @@ import {regexpQuote} from '@yiisoft/yii-dev-panel-sdk/Helper/regexpQuote';
 import {useGetParametersQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useCallback, useMemo} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const columns: GridColDef[] = [
     {field: '0', headerName: 'Name', width: 130},
@@ -39,6 +40,8 @@ export const ParametersPage = () => {
     const onChangeHandler = useCallback(async (value: string) => {
         setSearchParams({filter: value});
     }, []);
+
+    useBreadcrumbs(() => ['Inspector', 'Parameters']);
 
     if (isLoading) {
         return <FullScreenCircularProgress />;

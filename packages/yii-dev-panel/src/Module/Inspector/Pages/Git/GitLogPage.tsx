@@ -3,20 +3,18 @@ import {Button, CircularProgress, Divider, List, ListItem, ListItemText} from '@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import {useCommandMutation, useGetLogQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/GitApi';
-import {BreadcrumbsContext} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
-import {useCallback, useContext, useEffect} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
+import {useCallback} from 'react';
 
 export const GitLogPage = () => {
     const getLogQuery = useGetLogQuery();
     const [commandMutation, commandInfo] = useCommandMutation();
-    const context = useContext(BreadcrumbsContext);
 
-    useEffect(() => {
-        context.setItems([{title: 'Log', href: '/inspector/git/log'}]);
-    }, []);
     const onPullHandler = useCallback(() => commandMutation({command: 'pull'}), []);
     const onFetchHandler = useCallback(() => commandMutation({command: 'fetch'}), []);
     const onRefreshHandler = () => getLogQuery.refetch();
+
+    useBreadcrumbs(() => [{title: 'Inspector', href: 'inspector'}, {title: 'Git', href: 'git'}, 'Log']);
 
     return (
         <>

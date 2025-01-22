@@ -22,6 +22,9 @@ export type DebugEntry = {
     mailer?: {
         total: number;
     };
+    timeline?: {
+        total: number;
+    };
     'var-dumper'?: {
         total: number;
     };

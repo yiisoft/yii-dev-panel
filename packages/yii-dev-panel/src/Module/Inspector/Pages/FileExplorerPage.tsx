@@ -13,6 +13,7 @@ import {
 import {TreeView} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/TreeView/TreeView';
 import {useEffect, useLayoutEffect, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type PathBreadcrumbsProps = {
     onClick: (nodeId: string) => void;
@@ -22,6 +23,8 @@ type PathBreadcrumbsProps = {
 const PathBreadcrumbs = ({path, onClick}: PathBreadcrumbsProps) => {
     const paths = path.split('/').filter((s) => !!s.length);
     const fullPath: string[] = [];
+
+    useBreadcrumbs(() => ['Inspector', 'File Explorer']);
 
     return (
         <h2>

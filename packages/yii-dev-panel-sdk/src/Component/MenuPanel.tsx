@@ -7,7 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import {CSSObject, Theme, styled} from '@mui/material/styles';
+import {CSSObject, styled, Theme} from '@mui/material/styles';
 import * as React from 'react';
 import {PropsWithChildren, useCallback, useEffect, useRef, useState} from 'react';
 
@@ -132,7 +132,12 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                                 <Avatar
                                     variant="rounded"
                                     sx={{
-                                        bgcolor: activeLink === link.name ? 'secondary.main' : 'primary.main',
+                                        bgcolor:
+                                            activeLink === link.name
+                                                ? 'secondary.main'
+                                                : link.badge === 0
+                                                  ? 'primary.dark'
+                                                  : 'primary.main',
                                         fontSize: 14,
                                     }}
                                 >
@@ -181,8 +186,7 @@ const MenuPanel = React.memo((props: PropsWithChildren<MenuPanelProps>) => {
             >
                 <MenuPanelList onClick={toggleHandler} linkProps={links} activeLink={activeLink} />
             </Drawer>
-            {/*TODO: rewrite max-width*/}
-            <Box sx={{flexGrow: 1, p: 1}}>{children}</Box>
+            <Box sx={{flexGrow: 1, p: 1, mr: -1, maxWidth: '100%', overflow: 'hidden'}}>{children}</Box>
         </Box>
     );
 });

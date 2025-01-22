@@ -6,20 +6,28 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import {Tooltip} from '@mui/material';
+import {Alert, AlertTitle, Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import {isClassString} from '@yiisoft/yii-dev-panel-sdk/Helper/classMatcher';
 import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {toObjectString} from '@yiisoft/yii-dev-panel-sdk/Helper/objectString';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
+import Box from '@mui/material/Box';
+import React from 'react';
 
 type Item = [number, number, string] | [number, number, string, string];
 type TimelinePanelProps = {
     data: Item[];
 };
 export const TimelinePanel = ({data}: TimelinePanelProps) => {
-    if (!data || !Array.isArray(data)) {
-        return <>Nothing here</>;
+    if (!data || !Array.isArray(data) || data.length === 0) {
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No timeline items found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
     return (
         <Timeline position="alternate">

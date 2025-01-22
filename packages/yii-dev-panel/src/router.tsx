@@ -1,7 +1,6 @@
 import {ModuleInterface} from '@yiisoft/yii-dev-panel-sdk/Types/Module.types';
 import {Layout} from '@yiisoft/yii-dev-panel/Application/Component/Layout';
 import {NotFoundPage} from '@yiisoft/yii-dev-panel/Application/Pages/NotFoundPage';
-import {DebugToolbar} from '@yiisoft/yii-dev-toolbar/Module/Toolbar/Component/Toolbar/DebugToolbar';
 import {createBrowserRouter, createHashRouter, RouteObject} from 'react-router-dom';
 import type {FutureConfig as RouterFutureConfig} from '@remix-run/router/dist/router';
 import type {HydrationState} from '@remix-run/router';
@@ -21,7 +20,7 @@ export function createRouter(
     const routes: RouteObject[] = [
         {
             path: '/',
-            element: <Layout>{modulesConfig.toolbar && <DebugToolbar activeComponents={{iframe: false}} />}</Layout>,
+            element: <Layout />,
             children: ([] satisfies RouteObject[]).concat(...others.map((module) => module.routes)),
         },
         ...([] satisfies RouteObject[]).concat(...standaloneModules.map((module) => module.routes)),

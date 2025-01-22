@@ -1,5 +1,3 @@
-import {Layout} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Git/Layout';
-import {BreadcrumbsContextProvider} from '@yiisoft/yii-dev-panel/Module/Inspector/Context/BreadcrumbsContext';
 import * as Pages from '@yiisoft/yii-dev-panel/Module/Inspector/Pages';
 import {RouteObject} from 'react-router-dom';
 
@@ -71,11 +69,6 @@ export const routes = [
             },
             {
                 path: 'git',
-                element: (
-                    <BreadcrumbsContextProvider>
-                        <Layout />
-                    </BreadcrumbsContextProvider>
-                ),
                 children: [
                     {
                         index: true,

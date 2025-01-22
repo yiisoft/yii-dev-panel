@@ -6,6 +6,7 @@ import {useGetComposerQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/I
 import {SwitchDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Composer/SwitchDialog';
 import * as React from 'react';
 import {SyntheticEvent, useMemo, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type TabPanelProps = {
     children?: React.ReactNode;
@@ -74,6 +75,8 @@ export const ComposerPage = () => {
         setShowSwitchDialog(true);
         setIsDev(true);
     };
+
+    useBreadcrumbs(() => ['Inspector', 'Composer']);
 
     return (
         <Box sx={{width: '100%'}}>
