@@ -1,6 +1,15 @@
 import HtmlIcon from '@mui/icons-material/Html';
 import RawOnIcon from '@mui/icons-material/RawOn';
-import {Button, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText} from '@mui/material';
+import {
+    Alert,
+    AlertTitle,
+    Button,
+    IconButton,
+    List,
+    ListItem,
+    ListItemSecondaryAction,
+    ListItemText,
+} from '@mui/material';
 import Avatar from '@mui/material/Avatar';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -10,7 +19,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Typography from '@mui/material/Typography';
 import {nl2br} from '@yiisoft/yii-dev-panel-sdk/Helper/nl2br';
-import {useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
+import Box from '@mui/material/Box';
 
 type PreviewType = 'html' | 'raw';
 type PreviewDialogProps = {
@@ -85,49 +95,53 @@ export const MailerPanel = ({data}: MailerPanelProps) => {
         setSelectedMessage(message);
         setDialogOpen(true);
     };
-
+    if (!data || data.messages.length === 0) {
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No dumped mails found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
+    }
     return (
         <>
-            {!data || data.messages.length === 0 ? (
-                <>Nothing here</>
-            ) : (
-                <List>
-                    {data.messages.map((entry, index) => (
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar>{index + 1}</Avatar>
-                            </ListItemAvatar>
-                            <ListItemText
-                                primary={entry.subject}
-                                secondary={`From: ${serializeSender(entry.to)}, to: ${serializeSender(entry.to)}`}
-                            />
-                            <ListItemSecondaryAction>
-                                <IconButton
-                                    edge="end"
-                                    onClick={() => {
-                                        selectPreviewType('html');
-                                        selectMessage(entry);
-                                    }}
-                                >
-                                    <HtmlIcon />
-                                </IconButton>
-                                <IconButton
-                                    edge="end"
-                                    onClick={() => {
-                                        selectPreviewType('raw');
-                                        selectMessage(entry);
-                                    }}
-                                >
-                                    <RawOnIcon />
-                                </IconButton>
-                                <Typography variant="body2" color="textSecondary">
-                                    {entry.date}
-                                </Typography>
-                            </ListItemSecondaryAction>
-                        </ListItem>
-                    ))}
-                </List>
-            )}
+            <List>
+                {data.messages.map((entry, index) => (
+                    <ListItem>
+                        <ListItemAvatar>
+                            <Avatar>{index + 1}</Avatar>
+                        </ListItemAvatar>
+                        <ListItemText
+                            primary={entry.subject}
+                            secondary={`From: ${serializeSender(entry.to)}, to: ${serializeSender(entry.to)}`}
+                        />
+                        <ListItemSecondaryAction>
+                            <IconButton
+                                edge="end"
+                                onClick={() => {
+                                    selectPreviewType('html');
+                                    selectMessage(entry);
+                                }}
+                            >
+                                <HtmlIcon />
+                            </IconButton>
+                            <IconButton
+                                edge="end"
+                                onClick={() => {
+                                    selectPreviewType('raw');
+                                    selectMessage(entry);
+                                }}
+                            >
+                                <RawOnIcon />
+                            </IconButton>
+                            <Typography variant="body2" color="textSecondary">
+                                {entry.date}
+                            </Typography>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
             <PreviewDialog
                 open={dialogOpen}
                 onClose={handleDialogClose}

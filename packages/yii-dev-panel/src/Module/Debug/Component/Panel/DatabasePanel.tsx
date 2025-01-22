@@ -2,7 +2,7 @@ import ArrowForwardIosSharpIcon from '@mui/icons-material/ArrowForwardIosSharp';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {TabContext, TabPanel} from '@mui/lab';
 import TabList from '@mui/lab/TabList';
-import {Tab, Typography, styled} from '@mui/material';
+import {Alert, AlertTitle, styled, Tab, Typography} from '@mui/material';
 import MuiAccordion, {AccordionProps} from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary, {AccordionSummaryProps} from '@mui/material/AccordionSummary';
@@ -47,7 +47,11 @@ type TransactionsPanelProps = {
 const TransactionsPanel = ({tab}: TransactionsPanelProps) => {
     return (
         <TabPanel value={tab} sx={{padding: '0'}}>
-            <Typography>Not supported yet</Typography>
+            <Box m={2}>
+                <Alert severity="warning">
+                    <AlertTitle>Not supported yet</AlertTitle>
+                </Alert>
+            </Box>
         </TabPanel>
     );
 };
@@ -61,6 +65,18 @@ const QueriesPanel = ({tab, queries}: QueriesPanelProps) => {
     const handleAccordion = (panel: number) => (event: React.SyntheticEvent, isExpanded: boolean) => {
         setExpanded(isExpanded ? panel : -1);
     };
+    if (!queries || queries.length === 0) {
+        return (
+            <TabPanel value={tab} sx={{padding: '0'}}>
+                <Box m={2}>
+                    <Alert severity="success">
+                        <AlertTitle>No queries found during the process</AlertTitle>
+                    </Alert>
+                </Box>
+            </TabPanel>
+        );
+    }
+
     return (
         <TabPanel value={tab} sx={{padding: '0'}}>
             {Object.values(queries).map((el: Query, index) => (
@@ -100,8 +116,8 @@ type Query = {
 type Keys = 'queries' | 'transactions';
 type DatabasePanelProps = {
     data: {
-        [key in Keys]: Query[] | any;
-    }[];
+        [key in Keys]?: Query[] | any;
+    };
 };
 
 function getQueryTime(actions: QueryAction[]) {
@@ -120,8 +136,14 @@ export const DatabasePanel = ({data}: DatabasePanelProps) => {
         setValue(newValue);
     };
 
-    if (!data || data.length === 0) {
-        return <>Nothing here</>;
+    if (!data || (data.queries?.length === 0 && data.transactions?.length === 0)) {
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No queries found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
     return (
         <TabContext value={value}>

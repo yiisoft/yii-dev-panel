@@ -1,13 +1,13 @@
 import {TabContext, TabPanel} from '@mui/lab';
 import TabList from '@mui/lab/TabList';
-import {Tab, Typography} from '@mui/material';
+import {Alert, AlertTitle, Tab, Typography} from '@mui/material';
 import Box from '@mui/material/Box';
 import {GridColDef, GridValidRowModel} from '@mui/x-data-grid';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {concatClassMethod} from '@yiisoft/yii-dev-panel-sdk/Helper/classMethodConcater';
 import {formatMillisecondsAsDuration} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
-import {SyntheticEvent, useMemo, useState} from 'react';
+import React, {SyntheticEvent, useMemo, useState} from 'react';
 
 type SummaryItemType = {
     class: string;
@@ -142,7 +142,7 @@ export const ServicesPanel = ({data}: ServicesPanelProps) => {
                     arguments: el.arguments,
                     result: el.result,
                     error: el.error,
-                } satisfies AllItemType),
+                }) satisfies AllItemType,
         );
     }, [data]);
 
@@ -172,7 +172,13 @@ export const ServicesPanel = ({data}: ServicesPanelProps) => {
     }, [allRows]);
 
     if (!data || data.length === 0) {
-        return <>Nothing here</>;
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No spied services found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
 
     return (

@@ -238,7 +238,9 @@ const BreadcrumbsWrapper = ({toggleDrawer}: MyBreadcrumbsType) => {
 
     return (
         <Breadcrumbs sx={{my: 2}}>
-            <Button onClick={toggleDrawer(true)}>Open menu</Button>
+            <Button color="primary" onClick={toggleDrawer(true)}>
+                Menu
+            </Button>
             <Link underline="hover" color="inherit" href="/">
                 Main
             </Link>

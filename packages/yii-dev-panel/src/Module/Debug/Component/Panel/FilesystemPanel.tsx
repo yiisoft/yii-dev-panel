@@ -1,10 +1,10 @@
 import {OpenInNew} from '@mui/icons-material';
 import {TabContext, TabPanel} from '@mui/lab';
 import TabList from '@mui/lab/TabList';
-import {IconButton, List, ListItem, ListItemText, Tab, Tooltip} from '@mui/material';
+import {Alert, AlertTitle, IconButton, List, ListItem, ListItemText, Tab, Tooltip} from '@mui/material';
 import Box from '@mui/material/Box';
 import {parseFilePath} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
-import {SyntheticEvent, useState} from 'react';
+import React, {SyntheticEvent, useState} from 'react';
 
 type Operation = 'readdir' | 'mkdir' | 'read' | 'unlink';
 type Information = {
@@ -29,7 +29,13 @@ export const FilesystemPanel = ({data}: FilesystemPanelProps) => {
     };
 
     if (!data || data.length === 0) {
-        return <>Nothing here</>;
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No operations with file system found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
     return (
         <TabContext value={value}>
