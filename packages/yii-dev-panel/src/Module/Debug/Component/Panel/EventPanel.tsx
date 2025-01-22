@@ -5,11 +5,13 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineOppositeContent, { timelineOppositeContentClasses } from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import {IconButton, Tooltip} from '@mui/material';
+import {Alert, AlertTitle, IconButton, Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
 import {parseFilename, parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/filePathParser';
 import {formatMicrotime} from '@yiisoft/yii-dev-panel-sdk/Helper/formatDate';
 import {TimelineContentWrapper} from '@yiisoft/yii-dev-panel/Module/Debug/Component/Timeline/TimelineContentWrapper';
+import Box from '@mui/material/Box';
+import React from 'react';
 
 type EventType = {
     event: string;
@@ -40,10 +42,15 @@ const Line = ({event}: {event: EventType}) => {
 type EventTimelineProps = {
     events: EventType[];
 };
-export const EventPanel = (props: EventTimelineProps) => {
-    const {events} = props;
-    if (events && events.length === 0) {
-        return <>Nothing here</>;
+export const EventPanel = ({events}: EventTimelineProps) => {
+    if (!events || events.length === 0) {
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>No dispatched events found during the process</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
 
     return (

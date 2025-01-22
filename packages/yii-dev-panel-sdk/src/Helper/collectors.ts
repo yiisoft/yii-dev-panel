@@ -18,4 +18,5 @@ export enum CollectorsMap {
     RequestCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\RequestCollector',
     MailerCollector = 'Yiisoft\\Mailer\\Debug\\MailerCollector',
     VarDumperCollector = 'Yiisoft\\Yii\\Debug\\Collector\\VarDumperCollector',
+    WebViewCollector = 'Yiisoft\\Yii\\View\\Renderer\\Debug\\WebViewCollector',
 }

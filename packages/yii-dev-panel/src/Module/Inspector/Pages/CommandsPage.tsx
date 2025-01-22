@@ -9,6 +9,7 @@ import {
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {ResultDialog} from '@yiisoft/yii-dev-panel/Module/Inspector/Component/Command/ResultDialog';
 import {useEffect, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type GroupedCommands = Record<string, CommandType[]>;
 type CommandStatusMap = Record<
@@ -49,6 +50,8 @@ export const CommandsPage = () => {
             }
         })();
     }, []);
+
+    useBreadcrumbs(() => ['Inspector', 'Commands']);
 
     const runCommand = async (command: CommandType) => {
         setCommandStatus((prev) => ({...prev, [command.name]: {...prev[command.name], isLoading: true}}));
@@ -115,15 +118,15 @@ export const CommandsPage = () => {
                     runCommandQueryInfo.isLoading
                         ? 'loading'
                         : runCommandQueryInfo.data
-                        ? runCommandQueryInfo.data.status
-                        : 'fail'
+                          ? runCommandQueryInfo.data.status
+                          : 'fail'
                 }
                 content={
                     runCommandQueryInfo.isLoading
                         ? 'loading'
                         : runCommandQueryInfo.data
-                        ? runCommandQueryInfo.data.result
-                        : ''
+                          ? runCommandQueryInfo.data.result
+                          : ''
                 }
                 open={showResultDialog}
                 onRerun={() => runCommandQuery(runCommandQueryInfo.originalArgs as string)}

@@ -1,7 +1,7 @@
 import {Check, ContentCopy, Error, FilePresent} from '@mui/icons-material';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import {Button, CircularProgress, IconButton, Tooltip, styled} from '@mui/material';
+import {Button, CircularProgress, IconButton, styled, Tooltip} from '@mui/material';
 import Box from '@mui/material/Box';
 import {GridColDef, GridColumns, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
@@ -10,6 +10,7 @@ import {parseFilePathWithLineAnchor} from '@yiisoft/yii-dev-panel-sdk/Helper/fil
 import {useRunCommandMutation} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import clipboardCopy from 'clipboard-copy';
 import {useCallback, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const CenteredBox = styled(Box)({
     height: '100%',
@@ -111,6 +112,8 @@ export const TestsPage = () => {
     }
 
     const getRowIdCallback = useCallback((row: any) => row.id, []);
+
+    useBreadcrumbs(() => ['Inspector', 'Tests']);
 
     return (
         <>

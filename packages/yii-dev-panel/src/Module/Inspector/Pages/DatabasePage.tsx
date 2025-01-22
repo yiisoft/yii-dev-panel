@@ -1,9 +1,10 @@
-import {Breadcrumbs, Button, Typography} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import {GridColDef, GridRenderCellParams, GridValidRowModel} from '@mui/x-data-grid';
 import {FullScreenCircularProgress} from '@yiisoft/yii-dev-panel-sdk/Component/FullScreenCircularProgress';
 import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {useGetTableQuery} from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useEffect, useState} from 'react';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const columns: GridColDef[] = [
     {
@@ -67,16 +68,14 @@ export const DatabasePage = () => {
         }
     }, [isLoading]);
 
+    useBreadcrumbs(() => ['Inspector', 'Database']);
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
     return (
         <>
-            <h2>
-                <Breadcrumbs>
-                    <Typography>Database</Typography>
-                </Breadcrumbs>
-            </h2>
+            <h2>Database</h2>
             <DataTable
                 rows={tables as GridValidRowModel[]}
                 getRowId={(row) => row.name}

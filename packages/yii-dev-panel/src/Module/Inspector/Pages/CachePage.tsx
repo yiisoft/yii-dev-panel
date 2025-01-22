@@ -8,6 +8,7 @@ import {
 } from '@yiisoft/yii-dev-panel/Module/Inspector/API/Inspector';
 import {useCallback} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 type CacheViewProps = {
     data: any;
@@ -38,6 +39,8 @@ export const CachePage = () => {
         await clearCacheMutation();
         await getCacheQuery.refetch();
     };
+
+    useBreadcrumbs(() => ['Inspector', 'Cache']);
 
     return (
         <>

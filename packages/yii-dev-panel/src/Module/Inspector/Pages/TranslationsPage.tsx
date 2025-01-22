@@ -14,6 +14,7 @@ import {
 } from '@yiisoft/yii-dev-panel/Module/Inspector/Context/TranslationUpdaterContext';
 import {useCallback, useContext, useMemo, useState} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {updater} = useContext(TranslationUpdaterContext);
@@ -82,9 +83,13 @@ export const TranslationsPage = () => {
         },
         [],
     );
+
+    useBreadcrumbs(() => ['Inspector', 'Translations']);
+
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
+
     return (
         <>
             <h2>{'Translations'}</h2>

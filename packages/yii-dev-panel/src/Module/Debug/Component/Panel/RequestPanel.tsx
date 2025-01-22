@@ -1,7 +1,9 @@
-import {Accordion, AccordionDetails, AccordionSummary, Divider, Typography} from '@mui/material';
+import {Accordion, AccordionDetails, AccordionSummary, Alert, AlertTitle, Divider, Typography} from '@mui/material';
 import {HTTPMethod} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {CodeHighlight} from '@yiisoft/yii-dev-panel-sdk/Component/CodeHighlight';
 import {JsonRenderer} from '@yiisoft/yii-dev-panel/Module/Debug/Component/JsonRenderer';
+import Box from '@mui/material/Box';
+import React from 'react';
 
 type Response = {
     content: string;
@@ -39,15 +41,18 @@ const ResponseAccordion = ({data}: {data: Response}) => {
                 Response
             </Typography>
             <JsonRenderer value={data.response} />
-            {content && (<Accordion defaultExpanded={content.length < 500}>
-                <AccordionSummary>Content</AccordionSummary>
-                <AccordionDetails>
-                    {isJson
-                    ? <JsonRenderer value={JSON.parse(content)} />
-                    : <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
-                    }
-                </AccordionDetails>
-            </Accordion>)}
+            {content && (
+                <Accordion defaultExpanded={content.length < 500}>
+                    <AccordionSummary>Content</AccordionSummary>
+                    <AccordionDetails>
+                        {isJson ? (
+                            <JsonRenderer value={JSON.parse(content)} />
+                        ) : (
+                            <CodeHighlight code={content} language={contentType} showLineNumbers={false} />
+                        )}
+                    </AccordionDetails>
+                </Accordion>
+            )}
             <Accordion defaultExpanded={data.responseRaw.length < 500}>
                 <AccordionSummary>Raw</AccordionSummary>
                 <AccordionDetails>
@@ -60,7 +65,13 @@ const ResponseAccordion = ({data}: {data: Response}) => {
 
 export const RequestPanel = ({data}: RequestPanelProps) => {
     if (!data) {
-        return <>Nothing here</>;
+        return (
+            <Box m={2}>
+                <Alert severity="info">
+                    <AlertTitle>Request is not associated with HTTP request</AlertTitle>
+                </Alert>
+            </Box>
+        );
     }
 
     return (

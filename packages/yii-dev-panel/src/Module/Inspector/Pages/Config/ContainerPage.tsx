@@ -12,6 +12,7 @@ import {LoaderContext, LoaderContextProvider} from '@yiisoft/yii-dev-panel/Modul
 import clipboardCopy from 'clipboard-copy';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {loader} = useContext(LoaderContext);
@@ -96,6 +97,8 @@ export const ContainerPage = () => {
         return objects.filter((object: any) => object.id.match(regExp));
     }, [objects, searchString]);
     console.log('filteredRows', filteredRows, objects);
+
+    useBreadcrumbs(() => ['Inspector', 'Container']);
 
     const onChangeHandler = useCallback(async (value: string) => {
         setSearchParams({filter: value});

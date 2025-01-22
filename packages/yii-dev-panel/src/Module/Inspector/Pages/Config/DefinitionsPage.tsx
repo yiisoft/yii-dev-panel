@@ -12,6 +12,7 @@ import {LoaderContext, LoaderContextProvider} from '@yiisoft/yii-dev-panel/Modul
 import clipboardCopy from 'clipboard-copy';
 import {useCallback, useContext, useEffect, useMemo} from 'react';
 import {useSearchParams} from 'react-router-dom';
+import {useBreadcrumbs} from '@yiisoft/yii-dev-panel/Application/Context/BreadcrumbsContext';
 
 const TempComponent = (params: GridRenderCellParams) => {
     const {loader} = useContext(LoaderContext);
@@ -92,6 +93,7 @@ export const DefinitionsPage = () => {
         setSearchParams({filter: value});
     }, []);
 
+    useBreadcrumbs(() => ['Inspector', 'Definitions']);
     if (isLoading) {
         return <FullScreenCircularProgress />;
     }
