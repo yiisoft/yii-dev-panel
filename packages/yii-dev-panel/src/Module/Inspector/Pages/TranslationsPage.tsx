@@ -92,7 +92,6 @@ export const TranslationsPage = () => {
 
     return (
         <>
-            <h2>{'Translations'}</h2>
             <FilterInput value={searchString} onChange={onChangeHandler} />
             <TranslationUpdaterContextProvider updater={updateTranslationHandler}>
                 <DataTable rows={filteredRows as GridValidRowModel[]} getRowId={(row) => row[0]} columns={columns} />

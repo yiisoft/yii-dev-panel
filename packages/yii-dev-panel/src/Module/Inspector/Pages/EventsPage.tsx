@@ -94,7 +94,6 @@ export const EventsPage = () => {
 
     return (
         <>
-            <h2>{'Event listeners'}</h2>
             {!events && <NoEventListenersFound />}
             {events && (
                 <TabContext value={tabValue}>

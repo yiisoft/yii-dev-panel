@@ -92,16 +92,16 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                 <ListItemButton
                     onClick={onClick}
                     sx={{
-                        minHeight: 48,
+                        minHeight: 36,
                         justifyContent: 'flex-end',
-                        px: 2.5,
+                        px: 1,
                     }}
                 >
                     <ListItemIcon
                         sx={{
                             minWidth: 0,
-                            mr: 'auto',
-                            transition: 'margin-right 1s',
+                            margin: 'auto',
+                            transition: 'margin 0.3s',
                             justifyContent: 'center',
                         }}
                     >
@@ -115,9 +115,9 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                         component={Link}
                         href={link.href}
                         sx={{
-                            minHeight: 48,
+                            minHeight: 36,
                             justifyContent: 'center',
-                            px: 2.5,
+                            px: 1,
                             overflowX: 'hidden',
                         }}
                     >
@@ -125,6 +125,7 @@ const MenuPanelList = React.memo((props: MenuPanelListProps) => {
                             sx={{
                                 minWidth: 0,
                                 mr: 'auto',
+                                transition: 'margin 0.3s',
                                 justifyContent: 'center',
                             }}
                         >
