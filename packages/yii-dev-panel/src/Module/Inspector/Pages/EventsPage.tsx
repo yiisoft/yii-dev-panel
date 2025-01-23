@@ -46,7 +46,7 @@ const EventListeners = React.memo(({eventListeners}: EventListenersProps) => {
                                         </Button>
                                     </Tooltip>
                                 )}
-                                <ListItem>
+                                <ListItem disablePadding>
                                     <CodeHighlight
                                         language={'php'}
                                         code={serializeCallable(item)}
@@ -104,21 +104,21 @@ export const EventsPage = () => {
                             <Tab value="console" label="Console" disabled={!events.console} />
                         </TabList>
                     </Box>
-                    <TabPanel value="common">
+                    <TabPanel value="common" sx={{px: 0}}>
                         {events.common && !Array.isArray(events.common) ? (
                             <EventListeners eventListeners={events.common} />
                         ) : (
                             <NoEventListenersFound />
                         )}
                     </TabPanel>
-                    <TabPanel value="web">
+                    <TabPanel value="web" sx={{px: 0}}>
                         {events.web && !Array.isArray(events.web) ? (
                             <EventListeners eventListeners={events.web} />
                         ) : (
                             <NoEventListenersFound />
                         )}
                     </TabPanel>
-                    <TabPanel value="console">
+                    <TabPanel value="console" sx={{px: 0}}>
                         {events.console && !Array.isArray(events.console) ? (
                             <EventListeners eventListeners={events.console} />
                         ) : (
