@@ -49,7 +49,7 @@ export const TablePage = () => {
 
     return (
         <>
-            <h2>Database</h2>
+            <h2>Tables</h2>
             <DataTable rows={records as GridValidRowModel[]} getRowId={getRowIdCallback} columns={columns} />
         </>
     );

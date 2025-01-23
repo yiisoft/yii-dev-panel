@@ -204,7 +204,12 @@ export const Layout = React.memo(({children}: React.PropsWithChildren) => {
                 {DrawerList}
             </Drawer>
             <NotificationSnackbar />
-            <Container>
+            <Container
+                maxWidth="lg"
+                sx={(theme) => ({
+                    [theme.breakpoints.down('md')]: {px: 2},
+                })}
+            >
                 <BreadcrumbsWrapper toggleDrawer={toggleDrawer} />
                 <ErrorBoundary FallbackComponent={ErrorFallback} resetKeys={[window.location.pathname]}>
                     <Outlet />

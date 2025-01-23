@@ -451,7 +451,7 @@ const Layout = () => {
     return (
         <>
             <DebugEntryAutocomplete data={getDebugQueryInfo.data} onChange={onEntryChangeHandler} />
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={1}>
                 <Tooltip title="List">
                     <span>
                         <Button href="/debug/list" startIcon={<ListIcon />}>

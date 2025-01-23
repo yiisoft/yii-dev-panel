@@ -27,46 +27,44 @@ const PathBreadcrumbs = ({path, onClick}: PathBreadcrumbsProps) => {
     useBreadcrumbs(() => ['Inspector', 'File Explorer']);
 
     return (
-        <h2>
-            <Breadcrumbs>
-                <Link
-                    underline="hover"
-                    color="inherit"
-                    href={'#'}
-                    onClick={(e) => {
-                        onClick('/');
-                        return false;
-                    }}
-                >
-                    @root
-                </Link>
-                {paths.map((directory, index) => {
-                    if (index === paths.length - 1) {
-                        return (
-                            <Typography key={index} color="text.primary">
-                                {directory}
-                            </Typography>
-                        );
-                    }
-                    fullPath.push(directory);
-
+        <Breadcrumbs>
+            <Link
+                underline="hover"
+                color="inherit"
+                href={'#'}
+                onClick={(e) => {
+                    onClick('/');
+                    return false;
+                }}
+            >
+                @root
+            </Link>
+            {paths.map((directory, index) => {
+                if (index === paths.length - 1) {
                     return (
-                        <Link
-                            key={index}
-                            underline="hover"
-                            color="inherit"
-                            href={'#'}
-                            onClick={(e) => {
-                                onClick('/' + fullPath.join('/'));
-                                return false;
-                            }}
-                        >
+                        <Typography key={index} color="text.primary">
                             {directory}
-                        </Link>
+                        </Typography>
                     );
-                })}
-            </Breadcrumbs>
-        </h2>
+                }
+                fullPath.push(directory);
+
+                return (
+                    <Link
+                        key={index}
+                        underline="hover"
+                        color="inherit"
+                        href={'#'}
+                        onClick={(e) => {
+                            onClick('/' + fullPath.join('/'));
+                            return false;
+                        }}
+                    >
+                        {directory}
+                    </Link>
+                );
+            })}
+        </Breadcrumbs>
     );
 };
 

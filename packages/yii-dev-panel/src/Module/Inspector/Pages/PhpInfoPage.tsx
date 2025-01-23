@@ -20,5 +20,7 @@ export const PhpInfoPage = () => {
 
     useBreadcrumbs(() => ['Inspector', 'PHP Info']);
 
-    return <>{!getPhpInfoQuery.isLoading && getPhpInfoQuery.data && <Box ref={containerRef} />}</>;
+    return (
+        <>{!getPhpInfoQuery.isLoading && getPhpInfoQuery.data && <Box ref={containerRef} sx={{overflow: 'auto'}} />}</>
+    );
 };
