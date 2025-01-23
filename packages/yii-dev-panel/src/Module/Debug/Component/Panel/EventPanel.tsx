@@ -3,7 +3,7 @@ import Timeline from '@mui/lab/Timeline';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import TimelineOppositeContent, { timelineOppositeContentClasses } from '@mui/lab/TimelineOppositeContent';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import {Alert, AlertTitle, IconButton, Tooltip} from '@mui/material';
 import Typography from '@mui/material/Typography';
@@ -54,7 +54,7 @@ export const EventPanel = ({events}: EventTimelineProps) => {
     }
 
     return (
-        <Timeline position="alternate">
+        <Timeline sx={{ [`& .${timelineOppositeContentClasses.root}`]: { flex: 0 } }}>
             {events &&
                 events.map((event, index) => (
                     <TimelineItem key={index}>
@@ -64,7 +64,7 @@ export const EventPanel = ({events}: EventTimelineProps) => {
                             </Tooltip>
                         </TimelineOppositeContent>
                         <TimelineSeparator>
-                            <TimelineDot color="info">
+                            <TimelineDot sx={{m: '22px 0 6px'}} color="info">
                                 <ArrowDownward />
                             </TimelineDot>
                             {index !== events.length - 1 && <TimelineConnector />}
