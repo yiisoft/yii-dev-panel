@@ -6,6 +6,7 @@ export {ConfigurationPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/C
 export {ContainerPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Config/ContainerPage';
 export {DefinitionsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Config/DefinitionsPage';
 export {ParametersPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/Config/ParametersPage';
+export {ConfigManagementPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ConfigManagementPage';
 export {ContainerEntryPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/ContainerEntryPage';
 export {DatabasePage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/DatabasePage';
 export {EventsPage} from '@yiisoft/yii-dev-panel/Module/Inspector/Pages/EventsPage';
