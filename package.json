@@ -38,7 +38,7 @@
     "build": "lerna run build --parallel --verbose",
     "build:dev": "npm run build:dev -w packages/yii-dev-panel; npm run build -w packages/yii-dev-toolbar; npm run copy-toolbar",
     "serve:dev": "npm run serve:dev -w packages/yii-dev-panel",
-    "copy-toolbar": "mkdir packages/yii-dev-panel/dist/toolbar && cp -r packages/yii-dev-toolbar/dist/bundle.* packages/yii-dev-toolbar/dist/assets packages/yii-dev-panel/dist/toolbar"
+    "copy-toolbar": "mkdir packages/yii-dev-panel/dist/toolbar && cp packages/yii-dev-toolbar/dist/bundle.* packages/yii-dev-panel/dist/toolbar && cp -r packages/yii-dev-toolbar/dist/assets packages/yii-dev-panel/dist"
   },
   "eslintConfig": {
     "extends": [
