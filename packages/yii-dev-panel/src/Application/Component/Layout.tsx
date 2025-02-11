@@ -54,6 +54,7 @@ const pages = [
         name: 'Inspector',
         icon: <LoupeIcon />,
         items: [
+            {name: 'Config Management', link: '/inspector/config'},
             {name: 'Tests', link: '/inspector/tests'},
             {name: 'Analyse', link: '/inspector/analyse'},
             {name: 'File Explorer', link: '/inspector/files'},
