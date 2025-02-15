@@ -70,7 +70,7 @@ const pages = [
     {name: 'Open API', link: '/open-api', icon: <DataObjectIcon />},
     {name: 'Frames', link: '/frames', icon: <QueueIcon />},
     // Uncomment to debug shared components
-    // {name: 'Shared', link: '/shared'},
+    {name: 'Shared', link: '/shared'},
 ];
 
 const repositoryUrl = 'https://github.com/yiisoft/yii-dev-panel';
