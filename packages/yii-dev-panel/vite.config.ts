@@ -58,7 +58,7 @@ export default defineConfig(() => ({
                 entryFileNames: 'bundle.js',
             },
         },
-        minify: true,
+        minify: process.env.VITE_ENV === 'github',
         outDir: 'dist',
         target: 'esnext',
     },
