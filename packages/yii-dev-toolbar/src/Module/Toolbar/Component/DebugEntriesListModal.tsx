@@ -20,6 +20,7 @@ import {DebugEntry, useGetDebugQuery} from '@yiisoft/yii-dev-panel-sdk/API/Debug
 import {DebugEntryChip} from '@yiisoft/yii-dev-panel-sdk/Component/DebugEntryChip';
 import {isDebugEntryAboutConsole, isDebugEntryAboutWeb} from '@yiisoft/yii-dev-panel-sdk/Helper/debugEntry';
 import React, {MouseEvent, useEffect, useState} from 'react';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 type DebugEntryItemProps = {
     entry: DebugEntry;
@@ -29,12 +30,13 @@ type DebugEntryItemProps = {
 };
 
 const DebugEntryItem = React.memo(({entry, onClick, selected, rightText}: DebugEntryItemProps) => {
+    const summary = entry.summary;
     return (
         <ListItemButton onClick={() => onClick(entry)} defaultChecked={selected}>
             <ListItemIcon>
                 <DebugEntryChip entry={entry} />
             </ListItemIcon>
-            <ListItemText primary={entry.request?.path ?? entry.command?.input} />
+            <ListItemText primary={summary[CollectorsMap.WebAppInfoCollector]?.path ?? summary[CollectorsMap.ConsoleAppInfoCollector]?.input} />
             {rightText && (
                 <Tooltip title="The request was made by the current page">
                     <SyncAltIcon />

@@ -11,9 +11,10 @@ type LogsItemProps = {
 
 export const LogsItem = forwardRef<HTMLButtonElement, LogsItemProps>((props, ref) => {
     const {data, iframeUrlHandler, ...others} = props;
+    const summary = data.summary;
 
     return (
-        <Badge color="secondary" badgeContent={String(data.logger?.total)}>
+        <Badge color="secondary" badgeContent={String(summary[CollectorsMap.LogCollector]?.total)}>
             <Button
                 ref={ref}
                 href={`/debug?collector=${CollectorsMap.LogCollector}&debugEntry=${data.id}`}

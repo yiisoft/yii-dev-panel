@@ -1,13 +1,15 @@
 import {Route} from '@mui/icons-material';
 import {Button} from '@mui/material';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 type RouterItemProps = {
     data: DebugEntry;
 };
 
 export const RouterItem = ({data}: RouterItemProps) => {
-    if (!data.router) {
+    const summary = data.summary;
+    if (!summary[CollectorsMap.RouterCollector]) {
         return null;
     }
     return (
@@ -22,7 +24,7 @@ export const RouterItem = ({data}: RouterItemProps) => {
                 borderRadius: 0,
             }}
         >
-            {data.router.name}
+            {summary[CollectorsMap.RouterCollector].name}
         </Button>
     );
 };

@@ -2,6 +2,8 @@ import {Badge, Button} from '@mui/material';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {format, fromUnixTime} from 'date-fns';
 import {ForwardedRef, forwardRef} from 'react';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
+import {isDebugEntryAboutWeb} from "@yiisoft/yii-dev-panel-sdk/Helper/debugEntry";
 
 type DateItemProps = {
     data: DebugEntry;
@@ -9,8 +11,11 @@ type DateItemProps = {
 
 const DateItem = forwardRef((props: DateItemProps, ref: ForwardedRef<HTMLButtonElement>) => {
     const {data, ...others} = props;
+    const summary = data.summary;
+    const collector = isDebugEntryAboutWeb(data) ? CollectorsMap.WebAppInfoCollector : CollectorsMap.ConsoleAppInfoCollector;
+
     return (
-        <Badge color="secondary" badgeContent={String(data.event?.total)}>
+        <Badge color="secondary" badgeContent={String(summary[CollectorsMap.EventCollector]?.total)}>
             <Button
                 ref={ref}
                 color="info"
@@ -21,7 +26,7 @@ const DateItem = forwardRef((props: DateItemProps, ref: ForwardedRef<HTMLButtonE
                     borderRadius: 0,
                 }}
             >
-                {format(fromUnixTime((data.web || data.console).request.startTime), 'do MMM HH:mm:ss')}
+                {format(fromUnixTime(summary[collector]?.request.startTime), 'do MMM HH:mm:ss')}
             </Button>
         </Badge>
     );

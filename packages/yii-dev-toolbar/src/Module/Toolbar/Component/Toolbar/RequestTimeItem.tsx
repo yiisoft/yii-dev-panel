@@ -9,9 +9,13 @@ type RequestTimeItemProps = {
 };
 export const RequestTimeItem = (props: RequestTimeItemProps) => {
     const {data, iframeUrlHandler, ...others} = props;
+    const summary = data.summary;
+    const collector = isDebugEntryAboutWeb(data)
+        ? CollectorsMap.WebAppInfoCollector
+        : CollectorsMap.ConsoleAppInfoCollector;
 
     return (
-        <Tooltip title={`${((data.web || data.console).request.processingTime * 1000).toFixed(1)} ms`} arrow>
+        <Tooltip title={`${(summary[collector]?.request.processingTime * 1000).toFixed(1)} ms`} arrow>
             <Button
                 href={`/debug?collector=${CollectorsMap.TimelineCollector}&debugEntry=${data.id}`}
                 onClick={(e) => {
@@ -27,7 +31,7 @@ export const RequestTimeItem = (props: RequestTimeItemProps) => {
                     borderRadius: 0,
                 }}
             >
-                {(data.web || data.console).request.processingTime.toFixed(3)} s
+                {summary[collector]?.request.processingTime.toFixed(3)} s
             </Button>
         </Tooltip>
     );

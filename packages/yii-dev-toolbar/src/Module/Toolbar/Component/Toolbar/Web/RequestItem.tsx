@@ -5,6 +5,7 @@ import {buttonColorHttp} from '@yiisoft/yii-dev-panel-sdk/Helper/buttonColor';
 import {serializeCallable} from '@yiisoft/yii-dev-panel-sdk/Helper/callableSerializer';
 import {NestedMenuItem} from 'mui-nested-menu';
 import React, {useState} from 'react';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 type RequestItemProps = {
     data: DebugEntry;
@@ -14,12 +15,16 @@ export const RequestItem = ({data}: RequestItemProps) => {
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+    const summary = data.summary;
+    const request = summary[CollectorsMap.RequestCollector].request
+    const response = summary[CollectorsMap.RequestCollector].response;
+    const router = summary[CollectorsMap.RouterCollector];
 
     return (
         <>
             <Tooltip title="Click to see more options" arrow>
                 <Button
-                    color={buttonColorHttp(data.response.statusCode)}
+                    color={buttonColorHttp(response.statusCode)}
                     variant="contained"
                     onClick={handleClick}
                     sx={{
@@ -28,9 +33,9 @@ export const RequestItem = ({data}: RequestItemProps) => {
                         borderRadius: 0,
                     }}
                 >
-                    {data.request.method}&nbsp;
-                    {data.request.path}&nbsp;
-                    {String(data.response.statusCode)}
+                    {request.method}&nbsp;
+                    {request.path}&nbsp;
+                    {String(response.statusCode)}
                 </Button>
             </Tooltip>
             <Menu
@@ -46,7 +51,7 @@ export const RequestItem = ({data}: RequestItemProps) => {
                     </ListItemIcon>
                     Repeat
                 </MenuItem>
-                {data.router?.middlewares && (
+                {router?.middlewares && (
                     <NestedMenuItem
                         onClick={handleClose}
                         sx={{
@@ -64,7 +69,7 @@ export const RequestItem = ({data}: RequestItemProps) => {
                         label="Middlewares"
                         parentMenuOpen={open}
                     >
-                        {data.router.middlewares.map((middleware, index) => (
+                        {router.middlewares.map((middleware, index) => (
                             <MenuItem key={index} onClick={handleClose}>
                                 <ListItemText color="text.secondary">
                                     {index + 1}. {serializeCallable(middleware)}
@@ -73,25 +78,25 @@ export const RequestItem = ({data}: RequestItemProps) => {
                         ))}
                     </NestedMenuItem>
                 )}
-                {data.router?.action && (
+                {router?.action && (
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <DataObject fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Action</ListItemText>
                         <Typography variant="body2" color="text.secondary" ml={2}>
-                            {serializeCallable(data.router.action)}
+                            {serializeCallable(router.action)}
                         </Typography>
                     </MenuItem>
                 )}
-                {data.router?.name && (
+                {router?.name && (
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <Route fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Route</ListItemText>
                         <Typography variant="body2" color="text.secondary" ml={2}>
-                            {data.router.name}
+                            {router.name}
                         </Typography>
                     </MenuItem>
                 )}
