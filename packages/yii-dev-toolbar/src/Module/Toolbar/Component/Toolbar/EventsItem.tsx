@@ -1,4 +1,3 @@
-import {ChatBubble} from '@mui/icons-material';
 import {Badge, Button} from '@mui/material';
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {CollectorsMap} from '@yiisoft/yii-dev-panel-sdk/Helper/collectors';
@@ -11,9 +10,10 @@ type EventsItemProps = {
 
 const EventsItem = forwardRef((props: EventsItemProps, ref: ForwardedRef<HTMLButtonElement>) => {
     const {data, iframeUrlHandler, ...others} = props;
+    const summary = data.summary;
 
     return (
-        <Badge color="secondary" badgeContent={String(data.event?.total)}>
+        <Badge color="secondary" badgeContent={String(summary[CollectorsMap.EventCollector]?.total)}>
             <Button
                 ref={ref}
                 href={`/debug?collector=${CollectorsMap.EventCollector}&debugEntry=${data.id}`}

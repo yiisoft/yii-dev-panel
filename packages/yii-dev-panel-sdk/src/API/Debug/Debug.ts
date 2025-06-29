@@ -1,5 +1,6 @@
 import {createApi} from '@reduxjs/toolkit/query/react';
 import {createBaseQuery} from '@yiisoft/yii-dev-panel-sdk/API/createBaseQuery';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 type Response<T = any> = {
     data: T;
@@ -10,121 +11,68 @@ export type HTTPMethod = 'DELETE' | 'GET' | 'HEAD' | 'PATCH' | 'POST' | 'PUT';
 export type DebugEntry = {
     id: string;
     collectors: string[];
-    logger?: {
-        total: number;
-    };
-    event?: {
-        total: number;
-    };
-    service?: {
-        total: number;
-    };
-    mailer?: {
-        total: number;
-    };
-    timeline?: {
-        total: number;
-    };
-    'var-dumper'?: {
-        total: number;
-    };
-    validator?: {
-        total: number;
-        valid: number;
-        invalid: number;
-    };
-    queue?: {
-        countPushes: number;
-        countStatuses: number;
-        countProcessingMessages: number;
-    };
-    http?: {
-        count: number;
-        totalTime: number;
-    };
-    fs_stream?: {
-        read?: number;
-        write?: number;
-        mkdir?: number;
-    };
-    http_stream?: [];
-    web?: {
-        php: {
-            version: string;
-        };
-        request: {
-            startTime: number;
-            processingTime: number;
-        };
-        memory: {
-            peakUsage: number;
-        };
-    };
-    console?: {
-        php: {
-            version: string;
-        };
-        request: {
-            startTime: number;
-            processingTime: number;
-        };
-        memory: {
-            peakUsage: number;
-        };
-    };
-    request?: {
-        url: string;
-        path: string;
-        query: string;
-        method: HTTPMethod;
-        isAjax: boolean;
-        userIp: string;
-    };
-    command?: {
-        exitCode: number;
-        class: string;
-        input: string;
-        name: string;
-    };
-    response?: {
-        statusCode: number;
-    };
-    router?: null | {
-        matchTime: number;
-        name: string;
-        pattern: string;
-        arguments: string;
-        host: string;
-        uri: string;
-        action: string | string[];
-        middlewares: any[];
-    };
-    middleware?: {
-        total: number;
-    };
-    asset?: {
-        bundles: {
+    summary: {
+        [key in CollectorsMap]: {
             total: number;
+            valid: number;
+            invalid: number;
+            countPushes: number;
+            countStatuses: number;
+            countProcessingMessages: number;
+            count: number;
+            totalTime: number;
+            read?: number;
+            write?: number;
+            mkdir?: number;
+            php: {
+                version: string;
+            };
+            request: {
+                startTime: number;
+                processingTime: number;
+                url: string;
+                path: string;
+                query: string;
+                method: HTTPMethod;
+                isAjax: boolean;
+                userIp: string;
+            };
+            memory: {
+                peakUsage: number;
+            };
+            exitCode: number;
+            class: string;
+            input: string;
+            name: string;
+            response: {
+                statusCode: number;
+            };
+            matchTime: number;
+            pattern: string;
+            arguments: string;
+            host: string;
+            uri: string;
+            action: string | string[];
+            middlewares: any[];
+            bundles: {
+                total: number;
+            };
+            message: string;
+            line: string;
+            file: string;
+            code: string;
+            queries: {
+                error: number;
+                total: number;
+            };
+            transactions: {
+                error: number;
+                total: number;
+            };
+            streams: [];
+            [key: string]: any
         };
-    };
-    exception?: {
-        class: string;
-        message: string;
-        line: string;
-        file: string;
-        code: string;
-    };
-    db?: {
-        queries: {
-            error: number;
-            total: number;
-        };
-        transactions: {
-            error: number;
-            total: number;
-        };
-    };
-    [name: string]: any;
+    }
 };
 type SummaryResponseType = {
     data: DebugEntry[];

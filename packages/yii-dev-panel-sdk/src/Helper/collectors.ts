@@ -14,9 +14,10 @@ export enum CollectorsMap {
     ConsoleAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\ConsoleAppInfoCollector',
     WebAppInfoCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\WebAppInfoCollector',
     CommandCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Console\\CommandCollector',
-    MiddlewareCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\MiddlewareCollector',
+    MiddlewareCollector = 'Yiisoft\\Middleware\\Dispatcher\\Debug\\MiddlewareCollector ',
     RequestCollector = 'Yiisoft\\Yii\\Debug\\Collector\\Web\\RequestCollector',
     MailerCollector = 'Yiisoft\\Mailer\\Debug\\MailerCollector',
+    RouterCollector = 'Yiisoft\\Router\\Debug\\RouterCollector',
     VarDumperCollector = 'Yiisoft\\Yii\\Debug\\Collector\\VarDumperCollector',
     WebViewCollector = 'Yiisoft\\Yii\\View\\Renderer\\Debug\\WebViewCollector',
 }

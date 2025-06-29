@@ -11,12 +11,13 @@ type MemoryItemProps = {
 
 export const MemoryItem = (props: MemoryItemProps) => {
     const {data, iframeUrlHandler, ...others} = props;
+    const summary = data.summary;
     const collector = isDebugEntryAboutWeb(data)
         ? CollectorsMap.WebAppInfoCollector
         : CollectorsMap.ConsoleAppInfoCollector;
 
     return (
-        <Tooltip title={`${(data.web || data.console).memory.peakUsage.toLocaleString(undefined)} bytes`} arrow>
+        <Tooltip title={`${summary[collector]?.memory.peakUsage.toLocaleString(undefined)} bytes`} arrow>
             <Button
                 href={`/debug?collector=${collector}&debugEntry=${data.id}`}
                 onClick={(e) => {
@@ -32,7 +33,7 @@ export const MemoryItem = (props: MemoryItemProps) => {
                     borderRadius: 0,
                 }}
             >
-                {formatBytes((data.web || data.console).memory.peakUsage)}
+                {formatBytes(summary[collector]?.memory.peakUsage)}
             </Button>
         </Tooltip>
     );

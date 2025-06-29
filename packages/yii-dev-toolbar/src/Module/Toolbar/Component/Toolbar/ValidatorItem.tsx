@@ -9,13 +9,13 @@ type ValidatorItemProps = {
 
 export const ValidatorItem = (props: ValidatorItemProps) => {
     const {data, iframeUrlHandler, ...others} = props;
-
-    if (!data.validator || data.validator.total === 0) {
+    const summary = data.summary;
+    if (!summary[CollectorsMap.ValidatorCollector] || summary[CollectorsMap.ValidatorCollector].total === 0) {
         return null;
     }
 
     return (
-        <Badge color="secondary" badgeContent={String(data.validator.total)}>
+        <Badge color="secondary" badgeContent={String(summary[CollectorsMap.ValidatorCollector].total)}>
             <Button
                 href={`/debug?collector=${CollectorsMap.ValidatorCollector}&debugEntry=${data.id}`}
                 onClick={(e) => {
@@ -23,7 +23,7 @@ export const ValidatorItem = (props: ValidatorItemProps) => {
                     e.stopPropagation();
                     e.preventDefault();
                 }}
-                color={data.validator.invalid === 0 ? 'info' : 'warning'}
+                color={summary[CollectorsMap.ValidatorCollector]?.invalid === 0 ? 'info' : 'warning'}
                 variant="contained"
                 sx={{
                     whiteSpace: 'nowrap',

@@ -3,6 +3,7 @@ import {Button, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip, Typography}
 import {DebugEntry} from '@yiisoft/yii-dev-panel-sdk/API/Debug/Debug';
 import {MuiColor} from '@yiisoft/yii-dev-panel-sdk/Adapter/mui/types';
 import React, {useState} from 'react';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 const buttonColor = (exitCode: number): MuiColor => {
     return exitCode === 0 ? 'success' : 'error';
@@ -12,9 +13,11 @@ type CommandItemProps = {
 };
 
 export const CommandItem = ({data}: CommandItemProps) => {
-    if (!data.command) {
+    const summary = data.summary;
+    if (!summary[CollectorsMap.CommandCollector]) {
         return null;
     }
+    const command = summary[CollectorsMap.CommandCollector];
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -25,7 +28,7 @@ export const CommandItem = ({data}: CommandItemProps) => {
             <Tooltip title="Click to see more options" arrow>
                 <Button
                     startIcon={<Terminal fontSize="small" />}
-                    color={buttonColor(data.command.exitCode)}
+                    color={buttonColor(command.exitCode)}
                     variant="contained"
                     onClick={handleClick}
                     sx={{
@@ -34,7 +37,7 @@ export const CommandItem = ({data}: CommandItemProps) => {
                         borderRadius: 0,
                     }}
                 >
-                    {data.command.name}
+                    {command.name}
                 </Button>
             </Tooltip>
             <Menu
@@ -50,25 +53,25 @@ export const CommandItem = ({data}: CommandItemProps) => {
                     </ListItemIcon>
                     Repeat
                 </MenuItem>
-                {data.command.class && (
+                {command.class && (
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <DataObject fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Class</ListItemText>
                         <Typography variant="body2" color="text.secondary" ml={2}>
-                            {data.command.class}
+                            {command.class}
                         </Typography>
                     </MenuItem>
                 )}
-                {data.command.input && (
+                {command.input && (
                     <MenuItem onClick={handleClose}>
                         <ListItemIcon>
                             <Input fontSize="small" />
                         </ListItemIcon>
                         <ListItemText>Input</ListItemText>
                         <Typography variant="body2" color="text.secondary" ml={2}>
-                            {data.command.input}
+                            {command.input}
                         </Typography>
                     </MenuItem>
                 )}

@@ -154,10 +154,10 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
 
     const renderLabel = useCallback((entry: DebugEntry): string => {
         if (isDebugEntryAboutConsole(entry)) {
-            return [entry.command?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.command?.input].filter(Boolean).join(' ');
+            return [entry.summary[CollectorsMap.CommandCollector]?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.summary[CollectorsMap.CommandCollector]?.input].filter(Boolean).join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
-            return ['[' + entry.response.statusCode + ']', entry.request.method, entry.request.path].join(' ');
+            return ['[' + entry.summary[CollectorsMap.RequestCollector]?.statusCode + ']', entry.summary[CollectorsMap.RequestCollector]?.method, entry.summary[CollectorsMap.RequestCollector]?.path].join(' ');
         }
         return entry.id;
     }, []);
@@ -176,32 +176,32 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                         <Typography component="span" sx={{flex: 1}}>
                             <Chip
                                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                                label={`${entry.response?.statusCode} ${entry.request.method}`}
-                                color={buttonColorHttp(entry.response?.statusCode)}
+                                label={`${entry.summary[CollectorsMap.RequestCollector]?.statusCode} ${entry.summary[CollectorsMap.RequestCollector]?.method}`}
+                                color={buttonColorHttp(entry.summary[CollectorsMap.RequestCollector]?.statusCode)}
                             />
-                            <span style={{margin: '0 2px'}}>{entry.request.path}</span>
+                            <span style={{margin: '0 2px'}}>{entry.summary[CollectorsMap.RequestCollector]?.path}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
-                            <span>{formatDate(entry.web.request.startTime)}</span>
+                            <span>{formatDate(entry.summary[CollectorsMap.WebAppInfoCollector]?.request.startTime)}</span>
                         </Typography>
                     </>
                 )}
                 {isDebugEntryAboutConsole(entry) && (
                     <>
                         <Typography component="span" sx={{flex: 1}}>
-                            {entry.command?.exitCode === 0 ? (
+                            {entry.summary[CollectorsMap.CommandCollector]?.exitCode === 0 ? (
                                 <Chip label="OK" color={'success'} sx={{borderRadius: '5px 5px', margin: '0 2px'}} />
                             ) : (
                                 <Chip
-                                    label={`CODE: ${entry.command?.exitCode ?? 'Unknown'}`}
+                                    label={`CODE: ${entry.summary[CollectorsMap.CommandCollector]?.exitCode ?? 'Unknown'}`}
                                     color={'error'}
                                     sx={{borderRadius: '5px 5px', margin: '0 2px'}}
                                 />
                             )}
-                            <span style={{margin: '0 2px'}}>{entry.command?.input ?? 'Unknown'}</span>
+                            <span style={{margin: '0 2px'}}>{entry.summary[CollectorsMap.CommandCollector]?.input ?? 'Unknown'}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
-                            <span>{formatDate(entry.console.request.startTime)}</span>
+                            <span>{formatDate(entry.summary[CollectorsMap.ConsoleAppInfoCollector].request.startTime)}</span>
                         </Typography>
                     </>
                 )}

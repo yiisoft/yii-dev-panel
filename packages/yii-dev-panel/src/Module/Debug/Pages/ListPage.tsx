@@ -9,6 +9,7 @@ import {DataTable} from '@yiisoft/yii-dev-panel-sdk/Component/Grid';
 import {format, fromUnixTime} from 'date-fns';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
+import {CollectorsMap} from "@yiisoft/yii-dev-panel-sdk/Helper/collectors";
 
 const columns: GridColDef<DebugEntry>[] = [
     {
@@ -20,7 +21,7 @@ const columns: GridColDef<DebugEntry>[] = [
         field: 'url',
         flex: 1,
         headerName: 'URL / Command',
-        valueGetter: ({row}) => row.request?.path ?? row.command?.input,
+        valueGetter: ({row}) => row.summary[CollectorsMap.RequestCollector]?.path ?? row.summary[CollectorsMap.CommandCollector]?.input,
     },
     // {
     //     field: 'env',
@@ -30,17 +31,17 @@ const columns: GridColDef<DebugEntry>[] = [
     {
         field: 'time',
         headerName: 'Time',
-        renderCell: ({row}) => <>{((row.web || row.console).request.processingTime * 1000).toFixed(1)} ms</>,
+        renderCell: ({row}) => <>{((row.summary[CollectorsMap.WebAppInfoCollector] || row.summary[CollectorsMap.ConsoleAppInfoCollector]).request.processingTime * 1000).toFixed(1)} ms</>,
     },
     {
         field: 'timeAt',
         headerName: 'Time at',
-        renderCell: ({row}) => <>{format(fromUnixTime((row.web || row.console).request.startTime), 'HH:mm:ss')}</>,
+        renderCell: ({row}) => <>{format(fromUnixTime((row.summary[CollectorsMap.WebAppInfoCollector] || row.summary[CollectorsMap.ConsoleAppInfoCollector]).request.startTime), 'HH:mm:ss')}</>,
     },
-    {field: 'logs', headerName: 'Logs', valueGetter: ({row}) => row.logger?.total ?? '–'},
-    {field: 'events', headerName: 'Events', valueGetter: ({row}) => row.event?.total ?? '–'},
+    {field: 'logs', headerName: 'Logs', valueGetter: ({row}) => row.summary[CollectorsMap.LogCollector]?.total ?? '–'},
+    {field: 'events', headerName: 'Events', valueGetter: ({row}) => row.summary[CollectorsMap.EventCollector]?.total ?? '–'},
     // {field: 'middlewares', headerName: 'Middlewares', valueGetter: ({row}) => row.middleware?.total ?? '–'},
-    {field: 'services', headerName: 'Services', valueGetter: ({row}) => row.service?.total ?? '–'},
+    {field: 'services', headerName: 'Services', valueGetter: ({row}) => row.summary[CollectorsMap.ServiceCollector]?.total ?? '–'},
     {
         field: 'actions',
         headerName: 'Actions',
