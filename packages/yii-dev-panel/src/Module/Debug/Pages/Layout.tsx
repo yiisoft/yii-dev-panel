@@ -157,7 +157,7 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
             return [entry.summary[CollectorsMap.CommandCollector]?.exitCode === 0 ? '[OK]' : '[ERROR]', entry.summary[CollectorsMap.CommandCollector]?.input].filter(Boolean).join(' ');
         }
         if (isDebugEntryAboutWeb(entry)) {
-            return ['[' + entry.summary[CollectorsMap.RequestCollector]?.statusCode + ']', entry.summary[CollectorsMap.RequestCollector]?.method, entry.summary[CollectorsMap.RequestCollector]?.path].join(' ');
+            return ['[' + entry.summary[CollectorsMap.RequestCollector]?.response.statusCode + ']', entry.summary[CollectorsMap.RequestCollector]?.request.method, entry.summary[CollectorsMap.RequestCollector]?.request.path].join(' ');
         }
         return entry.id;
     }, []);
@@ -176,10 +176,10 @@ const DebugEntryAutocomplete = ({data, onChange}: DebugEntryAutocompleteProps) =
                         <Typography component="span" sx={{flex: 1}}>
                             <Chip
                                 sx={{borderRadius: '5px 5px', margin: '0 2px'}}
-                                label={`${entry.summary[CollectorsMap.RequestCollector]?.statusCode} ${entry.summary[CollectorsMap.RequestCollector]?.method}`}
+                                label={`${entry.summary[CollectorsMap.RequestCollector]?.response.statusCode} ${entry.summary[CollectorsMap.RequestCollector]?.request.method}`}
                                 color={buttonColorHttp(entry.summary[CollectorsMap.RequestCollector]?.statusCode)}
                             />
-                            <span style={{margin: '0 2px'}}>{entry.summary[CollectorsMap.RequestCollector]?.path}</span>
+                            <span style={{margin: '0 2px'}}>{entry.summary[CollectorsMap.RequestCollector]?.request.path}</span>
                         </Typography>
                         <Typography component="span" sx={{margin: '0 auto'}}>
                             <span>{formatDate(entry.summary[CollectorsMap.WebAppInfoCollector]?.request.startTime)}</span>
