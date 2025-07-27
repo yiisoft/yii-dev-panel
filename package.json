@@ -26,7 +26,7 @@
     "lerna": "^8.1.8",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.4.4",
-    "verdaccio": "^5.30.3",
+    "verdaccio": "^6.1.6",
     "vite": "^5.4.1",
     "vite-plugin-svgr": "^4.2.0",
     "vite-tsconfig-paths": "^5.0.1"
