@@ -33,7 +33,7 @@ export function SharedPage() {
     return (
         <React.Suspense fallback={<FullScreenCircularProgress />}>
             <ModuleLoader
-                url={'http://localhost:3002/external.js'}
+                url={'http://localhost:3002/assets/external.js'}
                 module={'./LogPanel'}
                 scope={'remote'}
                 props={{
@@ -41,7 +41,7 @@ export function SharedPage() {
                 }}
             />
             <ModuleLoader
-                url={'http://localhost:3002/external.js'}
+                url={'http://localhost:3002/assets/external.js'}
                 module={'./CachePanel'}
                 scope={'remote'}
                 props={{
