@@ -86,6 +86,10 @@ export const routes = [
             },
             {
                 path: 'config',
+                element: <Pages.ConfigManagementPage />,
+            },
+            {
+                path: 'config',
                 element: <Pages.ConfigurationPage />,
             },
             {
