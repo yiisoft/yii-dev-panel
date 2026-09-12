@@ -23,7 +23,7 @@
     "@types/node": "^22.3.0",
     "@vitejs/plugin-react": "^4.2.1",
     "gh-pages": "^6.1.1",
-    "lerna": "^8.1.8",
+    "lerna": "^8.1.9",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.4.4",
     "verdaccio": "^6.2.4",
