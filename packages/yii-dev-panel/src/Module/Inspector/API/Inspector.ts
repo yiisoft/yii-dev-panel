@@ -189,6 +189,10 @@ export type EventsResponse = {
     console: EventListenersType;
     web: EventListenersType;
 };
+export type MergePlanResponseType = {
+    path: string;
+    data: any;
+};
 
 type Response<T = any> = {
     data: T;
@@ -330,6 +334,10 @@ export const inspectorApi = createApi({
             transformResponse: (result: Response<CommandResponseType>) => result.data,
             invalidatesTags: ['inspector/composer'],
         }),
+        getMergePlan: builder.query<MergePlanResponseType, void>({
+            query: (key) => `config/merge-plan`,
+            transformResponse: (result: Response<MergePlanResponseType>) => result.data,
+        }),
     }),
 });
 
@@ -361,5 +369,6 @@ export const {
     usePostComposerRequirePackageMutation,
     usePostCurlBuildMutation,
     useGetEventsQuery,
+    useGetMergePlanQuery,
     useGetOpcacheQuery,
 } = inspectorApi;
